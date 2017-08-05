@@ -18,30 +18,47 @@
 #' tournament$k <- 20
 #' elo.calc(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament, k = k)
 #' @export
-elo.run <- function(formula, data, k, na.action, subset, initial.elo = NULL, ...)
+elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
 {
   Call <- match.call()
 
-  indx <- match(c("formula", "data", "subset", "na.action", "k"), names(Call), nomatch = 0)
+  indx <- match(c("formula", "data", "subset", "na.action"), names(Call), nomatch = 0)
   if(indx[1] == 0) stop("A formula argument is required.")
-  if(indx[5] == 0) stop("Please specify the 'k' value column (or vector).")
 
   temp.call <- Call[c(1, indx)]
   temp.call[[1L]] <- quote(stats::model.frame)
-  temp.call$formula <- if(missing(data)) terms(formula, "adjust") else terms(formula, "adjust", data = data)
+  specials <- c("adjust", "k")
+  temp.call$formula <- if(missing(data)) terms(formula, specials) else terms(formula, specials, data = data)
 
 
-  if (!is.null(attr(temp.call$formula, "specials")$adjust))
+  adjenv <- new.env(parent = environment(formula))
+  if(!is.null(attr(temp.call$formula, "specials")$adjust))
   {
-    adjenv <- new.env(parent = environment(formula))
-    assign("adjust", function(x, y){attr(x, "adjust") <- y; class(x) <- c("adjustedElo", class(x)); x}, env = adjenv)
-    environment(temp.call$formula) <- adjenv
+    assign("adjust", function(x, y){attr(x, "adjust") <- y; class(x) <- c("adjustedElo", class(x)); x}, envir = adjenv)
   }
+  if(!is.null(attr(temp.call$formula, "specials")$k))
+  {
+    assign("k", function(x) x, envir = adjenv)
+  }
+  environment(temp.call$formula) <- adjenv
+
 
   mf <- eval(temp.call, parent.frame())
 
   if(nrow(mf) == 0) stop("No (non-missing) observations")
-  if(ncol(mf) != 4) stop("The left-hand side of 'formula' should have one term and the right-hand side should have two terms.")
+  k.col <- attr(terms(mf), "specials")$k
+  if(is.null(k.col))
+  {
+    if(ncol(mf) != 3) stop("'formula' doesn't appear to be specified correctly.")
+    if(is.null(k)) stop("'k' is not in 'formula' or specified as numeric constant.")
+    if(!is.numeric(k) || length(k) != 1 || anyNA(k)) stop("'k' should be a numeric constant.")
+    mf$`(k)` <- rep(k, times = nrow(mf))
+  } else
+  {
+    if(ncol(mf) != 4) stop("'formula' doesn't appear to be specified correctly.")
+    if(!identical(k.col, 4L)) stop("'k()' should be the last term in 'formula'.")
+    colnames(mf)[4L] <- "(k)"
+  }
 
   adjs <- attr(terms(mf), "specials")$adjust
   mf$`(adj1)` <- if(is.null(adjs) || !any(adjs == 2)) 0 else attr(mf[[2]], "adjust")

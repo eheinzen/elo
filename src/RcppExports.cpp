@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // eloRun
 NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA, NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB, NumericVector initialElo, int flag);
-RcppExport SEXP elo_eloRun(SEXP teamASEXP, SEXP teamBSEXP, SEXP winsASEXP, SEXP kSEXP, SEXP adjTeamASEXP, SEXP adjTeamBSEXP, SEXP initialEloSEXP, SEXP flagSEXP) {
+RcppExport SEXP _elo_eloRun(SEXP teamASEXP, SEXP teamBSEXP, SEXP winsASEXP, SEXP kSEXP, SEXP adjTeamASEXP, SEXP adjTeamBSEXP, SEXP initialEloSEXP, SEXP flagSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -22,4 +22,14 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(eloRun(teamA, teamB, winsA, k, adjTeamA, adjTeamB, initialElo, flag));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_elo_eloRun", (DL_FUNC) &_elo_eloRun, 8},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_elo(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }
