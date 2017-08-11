@@ -17,3 +17,8 @@ A vector containing 0, 1, and 0.5 (for ties).
 \description{
 Create a 1/0/0.5 win "indicator" based on two teams' scores.
 }
+\examples{
+score(12, 10)
+score(10, 10)
+score(10, 12)
+}
