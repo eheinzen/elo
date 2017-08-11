@@ -8,7 +8,8 @@ df <- data.frame(
   wins.A = c(1, 1, 0),
   dummy.A = 1500,
   dummy.B = 1500,
-  k.column = 20
+  k.column = 20,
+  home.field = 10
 )
 
 init <- c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400)
@@ -18,10 +19,7 @@ init <- c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400)
 ###########################################################################################################
 
 test_that("Basic Elo calculations work", {
-  expect_identical(
-    elo.run(wins.A ~ team.A + team.B + k(k.column), data = df)$elos,
-    elo.run(wins.A ~ team.A + team.B, k = 20, data = df)$elos
-  )
+
   expect_identical(
     round(elo.run(wins.A ~ team.A + team.B, k = 20, data = df)$elos[4, ], 3),
     c("Team A" = 1519.712, "Team B" = 1500.008, "Team C" = 1480.279)
@@ -37,8 +35,25 @@ test_that("Basic Elo calculations work", {
     c("Team B" = 1500.288, "Team C" = 1490)
   )
 
+  expect_warning(elo.run(wins.A ~ dummy.A + dummy.B, k = 20, data = df))
+
   expect_identical(
     suppressWarnings(elo.run(wins.A ~ dummy.A + dummy.B, k = 20, data = df)),
     data.frame(elo.A = c(1510, 1510, 1490), elo.B = c(1490, 1490, 1510))
   )
+})
+
+test_that("'k' specification works either as vector or constant", {
+  expect_identical(
+    elo.run(wins.A ~ team.A + team.B + k(k.column), data = df)$elos,
+    elo.run(wins.A ~ team.A + team.B, k = 20, data = df)$elos
+  )
+})
+
+test_that("'adjust' specification works either as a vector or constant", {
+  expect_identical(
+    elo.run(wins.A ~ adjust(team.A, 10) + team.B, data = df, k = 20)$elos,
+    elo.run(wins.A ~ adjust(team.A, home.field) + team.B, data = df, k = 20)$elos
+  )
+
 })
