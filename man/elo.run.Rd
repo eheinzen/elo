@@ -2,9 +2,13 @@
 % Please edit documentation in R/elo.run.R
 \name{elo.run}
 \alias{elo.run}
+\alias{elo.run}
+\alias{print.elo.run}
 \title{Calculate Elos for a series of matches}
 \usage{
 elo.run(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
+
+\method{print}{elo.run}(x, ...)
 }
 \arguments{
 \item{formula}{A formula. See "details", below.}
@@ -20,6 +24,8 @@ elo.run(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
 \item{initial.elo}{An optional named vector containing initial Elo ratings for all teams in \code{formula}.}
 
 \item{...}{Other arguments (not used at this time).}
+
+\item{x}{An object of class \code{"elo.run"}.}
 }
 \description{
 Calculate Elos for a series of matches.
