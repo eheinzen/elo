@@ -4,21 +4,18 @@
 \alias{elo.run}
 \title{Calculate Elos for a series of matches}
 \usage{
-elo.run(formula, data, k, na.action, subset, initial.elo = NULL, ...)
+elo.run(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
 }
 \arguments{
-\item{formula}{A formula of the form \code{wins.A ~ team.A + team.B}, where \code{team.A} and \code{team.B}
-are character vectors or factors denoting which two teams played, and \code{wins.A} is between 0 and 1,
-denoting whether team A won or lost (or something between). The teams can be adjusted for other variables.
-See "details", below.}
+\item{formula}{A formula. See "details", below.}
 
-\item{data}{A \code{data.frame} in which to look for objects in \code{formula} and \code{k}.}
-
-\item{k}{The k-value, specified as a vector. This allows for complicated Elo updates. See "details", below.}
+\item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 
 \item{na.action}{A function which indicates what should happen when the data contain NAs.}
 
 \item{subset}{An optional vector specifying a subset of observations.}
+
+\item{k}{A constant k-value. See "details", below.}
 
 \item{initial.elo}{An optional named vector containing initial Elo ratings for all teams in \code{formula}.}
 
@@ -27,8 +24,32 @@ See "details", below.}
 \description{
 Calculate Elos for a series of matches.
 }
+\details{
+\code{formula} is usually of the form \code{wins.A ~ team.A + team.B}, where \code{team.A} and \code{team.B}
+  are character vectors or factors denoting which two teams played, and \code{wins.A} is between 0 and 1,
+  denoting whether team A won or lost (or something between).
+
+It is also acceptable for either \code{team.A} or \code{team.B} to be a numeric column (if, for example,
+  the Elo of one team or the other is known or fixed). If both are numeric, a warning will be issued,
+  and results will be calculated using \code{\link{elo.calc}}.
+
+\code{formula} accepts two special functions in it. \code{k()} allows for complicated Elo updates. For
+  constant Elo updates, use the \code{k = } argument instead of this special function.
+  \code{adjust()} allows for Elos to be adjusted for, e.g., home-field advantage. The second argument
+  to this function can be a scalar or vector of appropriate length. See the examples.
+}
 \examples{
 data(tournament)
-tournament$k <- 20
-elo.calc(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament, k = k)
+elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament, k = 20)
+
+# Create non-constant 'k'
+elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor +
+  k(20*log(abs(points.Home - points.Visitor) + 1)), data = tournament)
+
+# Adjust Elo for, e.g., home-field advantage
+elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor, data = tournament, k = 20)
+
+tournament$home.field <- 10
+elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, home.field) + team.Visitor, data = tournament, k = 20)
+
 }
