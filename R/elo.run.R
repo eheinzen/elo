@@ -34,7 +34,18 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
   adjenv <- new.env(parent = environment(formula))
   if(!is.null(attr(temp.call$formula, "specials")$adjust))
   {
-    assign("adjust", function(x, y){attr(x, "adjust") <- y; class(x) <- c("adjustedElo", class(x)); x}, envir = adjenv)
+    assign("adjust", function(x, y) {
+      if(length(y) == 1)
+      {
+        attr(x, "adjust") <- rep(y, times = length(x))
+      } else if(length(y) == length(x))
+      {
+        attr(x, "adjust") <- y
+      } else stop("The second argument to 'adjust' needs to be length 1 or the same length as the first argument.")
+
+      class(x) <- c("adjustedElo", class(x))
+      x
+    }, envir = adjenv)
   }
   if(!is.null(attr(temp.call$formula, "specials")$k))
   {
