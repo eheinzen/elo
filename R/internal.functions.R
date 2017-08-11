@@ -100,6 +100,7 @@ make_tournament_dataset <- function(seed = NULL)
   tournament$adjust.Home <- NULL
 
   rownames(tournament) <- NULL
+  attr(tournament, "out.attrs") <- NULL
 
   tournament
 }
