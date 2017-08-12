@@ -23,9 +23,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// eloRunAsMatrix
+NumericMatrix eloRunAsMatrix(NumericMatrix mat);
+RcppExport SEXP _elo_eloRunAsMatrix(SEXP matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
+    rcpp_result_gen = Rcpp::wrap(eloRunAsMatrix(mat));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_elo_eloRun", (DL_FUNC) &_elo_eloRun, 8},
+    {"_elo_eloRunAsMatrix", (DL_FUNC) &_elo_eloRunAsMatrix, 1},
     {NULL, NULL, 0}
 };
 

@@ -77,3 +77,34 @@ NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector win
   return out;
 }
 
+// [[Rcpp::export]]
+NumericMatrix eloRunAsMatrix(NumericMatrix mat)
+{
+  double nTeams = max(mat(_, 1)) + 1;
+  double nGames = max(mat(_, 0)) + 1;
+  NumericMatrix out(nGames, nTeams);
+  int row = 0;
+  int nRows = mat.nrow();
+
+  for(int i = 0; i < nGames; i++)
+  {
+    if(i > 0)
+    {
+      out(i, _) = out(i-1, _);
+    }
+
+    do
+    {
+      out(i, mat(row, 1)) = mat(row, 2);
+      row++;
+    } while (row < nRows && mat(row, 0) == i);
+
+  }
+  return out;
+}
+
+
+
+
+
+
