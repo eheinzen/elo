@@ -21,17 +21,17 @@ init <- c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400)
 test_that("Basic Elo calculations work", {
 
   expect_identical(
-    round(elo.run(wins.A ~ team.A + team.B, k = 20, data = df)$elos[4, ], 3),
+    round(as.matrix(elo.run(wins.A ~ team.A + team.B, k = 20, data = df))[4, ], 3),
     c("Team A" = 1519.712, "Team B" = 1500.008, "Team C" = 1480.279)
   )
 
   expect_identical(
-    round(elo.run(wins.A ~ team.A + dummy.B + k(k.column), data = df)$elos[4, ], 3),
+    round(as.matrix(elo.run(wins.A ~ team.A + dummy.B + k(k.column), data = df))[4, ], 3),
     c("Team A" = 1519.712, "Team C" = 1490)
   )
 
   expect_identical(
-    round(elo.run(wins.A ~ dummy.B + team.B, k = 20, data = df)$elos[4, ], 3),
+    round(as.matrix(elo.run(wins.A ~ dummy.B + team.B, k = 20, data = df))[4, ], 3),
     c("Team B" = 1500.288, "Team C" = 1490)
   )
 
