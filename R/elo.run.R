@@ -120,9 +120,10 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
                 checked$adj.team.B,
                 checked$initial.elo,
                 checked$flag)
-  colnames(out) <- names(checked$initial.elo)
 
-  return(structure(list(elos = out, model.frame = mf), class = "elo.run"))
+  return(structure(list(elos = out,
+                        teams = names(checked$initial.elo),
+                        model.frame = mf), class = "elo.run"))
 }
 
 
@@ -131,10 +132,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
 print.elo.run <- function(x, ...)
 {
   cat("\nAn object of class 'elo.run', containing information on ",
-      ncol(x$elos), " teams and ", nrow(x$elos), " matches.\n\n", sep = "")
-  cat("Final Elos:\n")
-  print(x$elos[nrow(x$elos), ])
-  cat("\n")
+      length(x$teams), " teams and ", max(x$elos[, 1]), " matches.\n\n", sep = "")
   invisible(x)
 }
 

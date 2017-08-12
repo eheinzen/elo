@@ -5,3 +5,7 @@ eloRun <- function(teamA, teamB, winsA, k, adjTeamA, adjTeamB, initialElo, flag)
     .Call('_elo_eloRun', PACKAGE = 'elo', teamA, teamB, winsA, k, adjTeamA, adjTeamB, initialElo, flag)
 }
 
+eloRunAsMatrix <- function(mat) {
+    .Call('_elo_eloRunAsMatrix', PACKAGE = 'elo', mat)
+}
+
