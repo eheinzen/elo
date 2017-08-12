@@ -16,46 +16,62 @@ NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector win
                      NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB,
                      NumericVector initialElo, int flag)
 {
-  int nr = winsA.size() + 1, nc = initialElo.size();
-  NumericMatrix out(nr, nc);
+  int mult = (flag != 1) + (flag != 2);
+  int nTeams = initialElo.size();
+  int nGames = winsA.size();
+  NumericVector currElo(nTeams);
+  currElo = initialElo;
+  NumericMatrix out(mult*nGames + nTeams, 3);
   double tmp = 0;
-  double e1, e2, j1, j2;
+  int row = 0;
+  double e1 = 0, e2 = 0, j1 = 0, j2 = 0;
 
-  out(0, _) = initialElo;
-
-  for(int i=1; i < nr; i++)
+  // Get the initial Elos in the first few spots
+  for(int i = 0; i < nTeams; i++)
   {
-    out(i, _) = out(i-1, _);
+    out(i, 0) = 0; // the zeroth game
+    out(i, 1) = i; // the ith team
+    out(i, 2) = currElo[i];
+  }
 
+  for(int i = 0; i < nGames; i++)
+  {
     if(flag == 1)
     {
-      e1 = teamA[i-1];
+      e1 = teamA[i];
     } else
     {
-      j1 = teamA[i-1];
-      e1 = out(i, j1);
+      j1 = teamA[i];
+      e1 = currElo[j1];
     }
 
     if(flag == 2)
     {
-      e2 = teamB[i-1];
+      e2 = teamB[i];
     } else
     {
-      j2 = teamB[i-1];
-      e2 = out(i, j2);
+      j2 = teamB[i];
+      e2 = currElo[j2];
     }
 
-    tmp = eloUpdate(e1 + adjTeamA[i-1], e2 + adjTeamB[i-1], winsA[i-1], k[i-1]);
+    tmp = eloUpdate(e1 + adjTeamA[i], e2 + adjTeamB[i], winsA[i], k[i]);
 
     if(flag != 1)
     {
-      out(i, j1) = out(i, j1) + tmp;
+      row = nTeams + mult*i;
+      out(row, 0) = i + 1;
+      out(row, 1) = j1;
+      out(row, 2) = e1 + tmp;
+      currElo[j1] = e1 + tmp;
     }
     if(flag != 2)
     {
-      out(i, j2) = out(i, j2) - tmp;
+      row = nTeams + mult*i + (mult - 1);
+      out(row, 0) = i + 1;
+      out(row, 1) = j2;
+      out(row, 2) = e2 - tmp;
+      currElo[j2] = e2 - tmp;
     }
-
   }
 
   return out;
