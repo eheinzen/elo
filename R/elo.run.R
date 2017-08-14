@@ -11,6 +11,7 @@
 #' @param initial.elo An optional named vector containing initial Elo ratings for all teams in \code{formula}.
 #' @param ... Other arguments (not used at this time).
 #' @param x An object of class \code{"elo.run"}.
+#' @return An object of class \code{"elo.run"}.
 #' @details
 #' \code{formula} is usually of the form \code{wins.A ~ team.A + team.B}, where \code{team.A} and \code{team.B}
 #'   are character vectors or factors denoting which two teams played, and \code{wins.A} is between 0 and 1,
@@ -39,6 +40,7 @@
 #' tournament$home.field <- 10
 #' elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, home.field) + team.Visitor, data = tournament, k = 20)
 #'
+#' @seealso \code{\link{elo.run}}
 #' @name elo.run
 NULL
 #> NULL
@@ -120,6 +122,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
                 checked$adj.team.B,
                 checked$initial.elo,
                 checked$flag)
+  colnames(out) <- c("Game", "Team", "Elo")
 
   return(structure(list(elos = out,
                         teams = names(checked$initial.elo),

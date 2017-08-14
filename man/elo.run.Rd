@@ -27,6 +27,9 @@ elo.run(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
 
 \item{x}{An object of class \code{"elo.run"}.}
 }
+\value{
+An object of class \code{"elo.run"}.
+}
 \description{
 Calculate Elos for a series of matches.
 }
@@ -58,4 +61,7 @@ elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visito
 tournament$home.field <- 10
 elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, home.field) + team.Visitor, data = tournament, k = 20)
 
+}
+\seealso{
+\code{\link{elo.run}}
 }
