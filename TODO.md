@@ -2,4 +2,4 @@
 
 - Vignette
 
-- Summary and print methods
+- Summary method?
