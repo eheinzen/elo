@@ -14,7 +14,7 @@
 #'
 #' @examples
 #' library(elo)
-#'
+#' @references Elo, A. E. 1978. The Rating of Chess Players, Past and Present. New York: Arco.
 #' @docType package
 #' @name elo
 #'

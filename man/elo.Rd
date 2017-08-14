@@ -24,5 +24,7 @@ Below are listed some of the functions available in \code{elo}:
 
 \examples{
 library(elo)
-
+}
+\references{
+Elo, A. E. 1978. The Rating of Chess Players, Past and Present. New York: Arco.
 }
