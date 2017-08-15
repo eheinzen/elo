@@ -28,7 +28,7 @@ A matrix, a data.frame, or a named vector.
 \code{as.matrix.elo.run} converts an object from \code{\link{elo.run}} into a matrix of running Elos.
 }
 \details{
-\code{as.data.frame.elo.run} converts the \code{"elos"} componenet of an object from \code{\link{elo.run}} into a data.frame.
+\code{as.data.frame.elo.run} converts the \code{"elos"} component of an object from \code{\link{elo.run}} into a data.frame.
 
 \code{last} is a generic function, whose \code{\link{elo.run}} method extracts the last Elo per team.
 }
