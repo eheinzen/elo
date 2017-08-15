@@ -60,7 +60,10 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
   temp.call <- Call[c(1, indx)]
   temp.call[[1L]] <- quote(stats::model.frame)
   specials <- c("adjust", "k")
-  temp.call$formula <- if(missing(data)) terms(formula, specials) else terms(formula, specials, data = data)
+  temp.call$formula <- if(missing(data))
+  {
+    stats::terms(formula, specials)
+  } else stats::terms(formula, specials, data = data)
 
 
   adjenv <- new.env(parent = environment(formula))
@@ -89,7 +92,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
   mf <- eval(temp.call, parent.frame())
 
   if(nrow(mf) == 0) stop("No (non-missing) observations")
-  k.col <- attr(terms(mf), "specials")$k
+  k.col <- attr(stats::terms(mf), "specials")$k
   if(is.null(k.col))
   {
     if(ncol(mf) != 3) stop("'formula' doesn't appear to be specified correctly.")
@@ -103,7 +106,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
     colnames(mf)[4L] <- "(k)"
   }
 
-  adjs <- attr(terms(mf), "specials")$adjust
+  adjs <- attr(stats::terms(mf), "specials")$adjust
   mf$`(adj1)` <- if(is.null(adjs) || !any(adjs == 2)) 0 else attr(mf[[2]], "adjust")
   mf$`(adj2)` <- if(is.null(adjs) || !any(adjs == 3)) 0 else attr(mf[[3]], "adjust")
 

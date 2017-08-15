@@ -79,11 +79,11 @@ make_tournament_dataset <- function(seed = NULL)
   tournament$adjust.Home <- 200
 
   tournament$p.Home <- elo.prob(tournament$elo.Home + tournament$adjust.Home, tournament$elo.Visitor)
-  tournament$wins.Home <- runif(nrow(tournament)) < tournament$p.Home
+  tournament$wins.Home <- stats::runif(nrow(tournament)) < tournament$p.Home
 
   tournament$elo.Diff <- tournament$elo.Home + tournament$adjust.Home - tournament$elo.Visitor
 
-  tournament$points.Home <- rpois(nrow(tournament), lambda = 10)
+  tournament$points.Home <- stats::rpois(nrow(tournament), lambda = 10)
   tournament$points.Visitor <- tournament$points.Home +
     ifelse(tournament$elo.Diff >= 0 & tournament$wins.Home >  0, pmin(-floor(tournament$elo.Diff / 100), -1), # home team was supposed to win and did
     ifelse(tournament$elo.Diff >= 0 & tournament$wins.Home == 0, pmax(2 - floor(tournament$elo.Diff / 100),  1), # home team was supposed to win but didn't

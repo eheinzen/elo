@@ -53,7 +53,8 @@ last.elo.run <- function(x, ...)
 {
   y <- as.data.frame(x, ...)
   idx <- !duplicated(y$Team, fromLast = TRUE)
-  tmp <- setNames(y$Elo[idx], as.character(y$Team[idx]))
+  tmp <- y$Elo[idx]
+  names(tmp) <- as.character(y$Team[idx])
   tmp[match(names(tmp), x$teams)]
 }
 
