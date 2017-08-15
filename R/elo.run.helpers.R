@@ -10,7 +10,12 @@
 #' @param x An object of class \code{"elo.run"}.
 #' @param ... Other arguments (Not in use at this time).
 #' @return A matrix, a data.frame, or a named vector.
-#'
+#' @examples
+#' e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
+#'              data = tournament, k = 20)
+#' head(as.matrix(e))
+#' str(as.data.frame(e))
+#' last(e)
 #' @seealso \code{\link{elo.run}}
 #' @name elo.run.helpers
 NULL

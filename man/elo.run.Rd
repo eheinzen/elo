@@ -49,17 +49,20 @@ It is also acceptable for either \code{team.A} or \code{team.B} to be a numeric 
 }
 \examples{
 data(tournament)
-elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament, k = 20)
+elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
+        data = tournament, k = 20)
 
 # Create non-constant 'k'
 elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor +
-  k(20*log(abs(points.Home - points.Visitor) + 1)), data = tournament)
+        k(20*log(abs(points.Home - points.Visitor) + 1)), data = tournament)
 
 # Adjust Elo for, e.g., home-field advantage
-elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor, data = tournament, k = 20)
+elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+        data = tournament, k = 20)
 
 tournament$home.field <- 10
-elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, home.field) + team.Visitor, data = tournament, k = 20)
+elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, home.field) + team.Visitor,
+        data = tournament, k = 20)
 
 }
 \seealso{
