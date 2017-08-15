@@ -1,0 +1,128 @@
+---
+title: "The 'elo' Package"
+author: "Ethan Heinzen"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# The `elo` Package
+
+The `elo` package includes functions to address all kinds of Elo calculations. Most functions
+begin with the prefix "elo.", for easy autocompletion.
+
+```{r}
+library(elo)
+```
+
+## Naming Schema
+
+- Vectors or scalars of Elo scores are denoted `elo.A` or `elo.B`.
+
+- Vectors or scalars of wins by team A are denoted by `wins.A`.
+
+- Vectors or scalars of win probabilities are denoted by `p.A`.
+
+- Vectors of team names are denoted `team.A` or `team.B`.
+
+# Basic Functions
+
+To calculate the probability team.A beats team.B, use `elo.prob()`:
+
+```{r}
+elo.A <- c(1500, 1500)
+elo.B <- c(1500, 1600)
+elo.prob(elo.A, elo.B)
+```
+
+To calculate the score update after the two teams play, use `elo.update()`:
+
+```{r}
+wins.A <- c(1, 0)
+elo.update(elo.A, elo.B, wins.A, k = 20)
+```
+
+To calculate the new Elo scores after the update, use `elo.calc()`:
+
+```{r}
+elo.calc(elo.A, elo.B, wins.A, k = 20)
+```
+
+# The `elo.run` function
+
+## With two variable Elos
+
+To calculate a series of Elo updates, use `elo.run()`. This function has a `formula = ` and 
+`data = ` interface. We first load the dataset `tournament`.
+
+```{r}
+data(tournament)
+str(tournament)
+```
+
+`formula = ` should be in the format of `wins.A ~ team.A + team.B`. The `score()` function
+will help to calculate winners on the fly (1 = win, 0.5 = tie, 0 = loss).
+
+```{r}
+tournament$wins.A <- tournament$points.Home > tournament$points.Visitor
+elo.run(wins.A ~ team.Home + team.Visitor, data = tournament, k = 20)
+elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament, k = 20)
+```
+
+For more complicated Elo updates, you can include the special function `k()` in the
+`formula = ` argument. Here we're taking the log of the win margin as part of our update.
+
+```{r}
+elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor +
+        k(20*log(abs(points.Home - points.Visitor) + 1)), data = tournament)
+```
+
+It's also possible to adjust one team's Elo for a variety of factors
+(e.g., home-field advantage). The `adjust()` special function will take as its second
+argument a vector or a constant.
+
+```{r}
+elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+        data = tournament, k = 20)
+```
+
+## With a fixed-Elo opponent
+
+`elo.run()` also recognizes if one of the columns is numeric,
+and interprets that as a fixed-Elo opponent.
+
+```{r}
+tournament$elo.Visitor <- 1500
+elo.run(score(points.Home, points.Visitor) ~ team.Home + elo.Visitor,
+        data = tournament, k = 20)
+```
+
+## Helper functions
+
+There are several helper functions that are useful to use when interacting with
+objects of class `"elo.run"`.
+
+`as.matrix.elo.run()` creates a matrix of running Elos.
+
+```{r}
+e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
+             data = tournament, k = 20)
+head(as.matrix(e))
+```
+
+`as.data.frame.elo.run()` gives the long version (perfect, for, e.g., `ggplot2`).
+
+```{r}
+str(as.data.frame(e))
+```
+
+Finally, `last()` will extract the final Elos per team.
+
+```{r}
+last(e)
+```
