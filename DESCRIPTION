@@ -1,7 +1,7 @@
 Package: elo
 Title: Implementation of Elo Ratings for General Use
 Version: 0.0.0.9000
-Date: 2017-07-18
+Date: 2017-08-14
 Authors@R: c(
     person("Ethan", "Heinzen", email = "heinzen.ethan@mayo.edu", role = c("aut", "cre"))
   )
@@ -12,7 +12,8 @@ Imports:
     Rcpp
 Suggests:
     knitr,
-    testthat
+    testthat,
+    rmarkdown
 VignetteBuilder: knitr
 License: GPL (>= 2)
 RoxygenNote: 6.0.1
