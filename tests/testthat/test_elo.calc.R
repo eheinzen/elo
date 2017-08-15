@@ -26,12 +26,17 @@ test_that("Basic Elo calculations work", {
   )
 
   expect_identical(
-    round(as.matrix(elo.run(wins.A ~ team.A + dummy.B + k(k.column), data = df))[4, ], 3),
+    round(as.matrix(elo.run(wins.A ~ team.A + team.B, k = 20, data = df))[4, ], 3),
+    round(last(elo.run(wins.A ~ team.A + team.B, k = 20, data = df)), 3)
+  )
+
+  expect_identical(
+    round(last(elo.run(wins.A ~ team.A + dummy.B + k(k.column), data = df)), 3),
     c("Team A" = 1519.712, "Team C" = 1490)
   )
 
   expect_identical(
-    round(as.matrix(elo.run(wins.A ~ dummy.B + team.B, k = 20, data = df))[4, ], 3),
+    round(last(elo.run(wins.A ~ dummy.B + team.B, k = 20, data = df)), 3),
     c("Team B" = 1500.288, "Team C" = 1490)
   )
 
