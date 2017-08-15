@@ -3,11 +3,19 @@
 [![Downloads](http://cranlogs.r-pkg.org/badges/elo)](http://cran.rstudio.com/package=elo)
 [![Travis-CI Build Status](https://travis-ci.org/eheinzen/elo.svg?branch=master)](https://travis-ci.org/eheinzen/elo)
 
+
 # The `elo` Package
 
+The `elo` package includes functions to address all kinds of Elo calculations. Most functions
+begin with the prefix "elo.", for easy autocompletion.
 
+```{r}
+library(elo)
+```
 
-## Naming Schema
+Please see the vignette for examples.
+
+# Naming Schema
 
 - Vectors or scalars of Elo scores are denoted `elo.A` or `elo.B`.
 
