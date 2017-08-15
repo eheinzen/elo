@@ -1,6 +1,6 @@
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/elo)](http://cran.r-project.org/web/packages/elo)
-[![Downloads](http://cranlogs.r-pkg.org/badges/elo)](http://cran.rstudio.com/package=elo)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/elo)](https://cran.r-project.org/package=elo)
+[![Downloads](http://cranlogs.r-pkg.org/badges/elo)](https://cran.r-project.org/package=elo)
 [![Travis-CI Build Status](https://travis-ci.org/eheinzen/elo.svg?branch=master)](https://travis-ci.org/eheinzen/elo)
 
 
