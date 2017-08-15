@@ -1,6 +1,6 @@
 Package: elo
 Title: Implementation of Elo Ratings for General Use
-Version: 0.0.0.9000
+Version: 0.1.0
 Date: 2017-08-14
 Authors@R: c(
     person("Ethan", "Heinzen", email = "heinzen.ethan@mayo.edu", role = c("aut", "cre"))
