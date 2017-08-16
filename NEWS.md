@@ -1,3 +1,11 @@
+# elo 0.1.1
+
+* Made the title more succinct.
+
+* Elaborated the description of the package.
+
+* Tweak the internal `elo.run` object.
+
 # elo 0.1.0
 
 * Submit first version of `elo` to CRAN.

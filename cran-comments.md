@@ -1,3 +1,13 @@
+## Resubmission
+
+This is a resubmission. In this version I have:
+
+* Made the title more succinct.
+
+* Elaborated the description of the package.
+
+* Tweak the internal `elo.run` object.
+
 ## Test environments
 
 * ubuntu 14.04 (on travis-ci): R 3.4.1, R devel, R 3.3.3
