@@ -8,6 +8,8 @@ This is a resubmission. In this version I have:
 
 * Tweak the internal `elo.run` object.
 
+* Tweaked the README and vignette.
+
 ## Test environments
 
 * ubuntu 14.04 (on travis-ci): R 3.4.1, R devel, R 3.3.3
