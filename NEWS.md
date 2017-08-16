@@ -6,6 +6,8 @@
 
 * Tweak the internal `elo.run` object.
 
+* Tweaked the README and vignette.
+
 # elo 0.1.0
 
 * Submit first version of `elo` to CRAN.

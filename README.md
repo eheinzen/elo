@@ -6,8 +6,7 @@
 
 # The `elo` Package
 
-The `elo` package includes functions to address all kinds of Elo calculations. Most functions
-begin with the prefix "elo.", for easy autocompletion.
+The `elo` package includes functions to address all kinds of Elo calculations.
 
 ```{r}
 library(elo)
@@ -16,6 +15,8 @@ library(elo)
 Please see the vignette for examples.
 
 # Naming Schema
+
+Most functions begin with the prefix "elo.", for easy autocompletion.
 
 - Vectors or scalars of Elo scores are denoted `elo.A` or `elo.B`.
 
