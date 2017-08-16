@@ -2,13 +2,7 @@
 
 This is a resubmission. In this version I have:
 
-* Made the title more succinct.
-
-* Elaborated the description of the package.
-
-* Tweak the internal `elo.run` object.
-
-* Tweaked the README and vignette.
+* Fixed a spelling error in DESCRIPTION.
 
 ## Test environments
 

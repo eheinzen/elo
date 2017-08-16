@@ -1,3 +1,7 @@
+# elo 0.1.2
+
+* Fixed a spelling error in DESCRIPTION.
+
 # elo 0.1.1
 
 * Made the title more succinct.
