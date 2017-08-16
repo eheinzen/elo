@@ -1,11 +1,15 @@
 Package: elo
-Title: Implementation of Elo Ratings for General Use
-Version: 0.1.0.9000
-Date: 2017-08-14
+Title: Elo Ratings
+Version: 0.1.1
+Date: 2017-08-16
 Authors@R: c(
     person("Ethan", "Heinzen", email = "heinzen.ethan@mayo.edu", role = c("aut", "cre"))
   )
-Description: An implementation of Elo ratings for general use in 'R'.
+Description: A flexible framework for calculating Elo ratings and resulting
+    rankings of any two-team-per-matchup system (chess, sports leagues, 'Go',
+    etc.). This implementation is capable of evaluating a variety of matchups,
+    Elo rating updates, and win probablities, all based on the basic Elo
+    rating system.
 Depends:
     R (>= 3.3.1)
 Imports:
