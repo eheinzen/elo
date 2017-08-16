@@ -36,7 +36,7 @@ as.matrix.elo.run <- function(x, ...)
 as.data.frame.elo.run <- function(x, ...)
 {
   out <- as.data.frame(x$elos)
-  out$Team <- factor(out$Team, levels = seq_along(x$teams) - 1, labels = x$teams)
+  out$team <- factor(out$team, levels = seq_along(x$teams) - 1, labels = x$teams)
   out
 }
 
@@ -52,9 +52,9 @@ last <- function(x, ...)
 last.elo.run <- function(x, ...)
 {
   y <- as.data.frame(x, ...)
-  idx <- !duplicated(y$Team, fromLast = TRUE)
-  tmp <- y$Elo[idx]
-  names(tmp) <- as.character(y$Team[idx])
+  idx <- !duplicated(y$team, fromLast = TRUE)
+  tmp <- y$elo[idx]
+  names(tmp) <- as.character(y$team[idx])
   tmp[match(names(tmp), x$teams)]
 }
 

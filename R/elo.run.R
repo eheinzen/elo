@@ -128,7 +128,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
                 checked$adj.team.B,
                 checked$initial.elo,
                 checked$flag)
-  colnames(out) <- c("Game", "Team", "Elo")
+  colnames(out) <- c("game", "team", "elo")
 
   return(structure(list(elos = out,
                         teams = names(checked$initial.elo),
