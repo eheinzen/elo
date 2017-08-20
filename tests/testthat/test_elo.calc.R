@@ -43,7 +43,7 @@ test_that("Basic Elo calculations work", {
   expect_warning(elo.run(wins.A ~ dummy.A + dummy.B, k = 20, data = df))
 
   expect_identical(
-    suppressWarnings(elo.run(wins.A ~ dummy.A + dummy.B, k = 20, data = df)),
+    elo.calc(df$dummy.A, df$dummy.B, df$wins.A, k = 20),
     data.frame(elo.A = c(1510, 1510, 1490), elo.B = c(1490, 1490, 1510))
   )
 })
@@ -60,5 +60,5 @@ test_that("'adjust' specification works either as a vector or constant", {
     elo.run(wins.A ~ adjust(team.A, 10) + team.B, data = df, k = 20)$elos,
     elo.run(wins.A ~ adjust(team.A, home.field) + team.B, data = df, k = 20)$elos
   )
-
 })
+
