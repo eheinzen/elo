@@ -60,7 +60,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
   temp.call <- Call[c(1, indx)]
   temp.call[[1L]] <- quote(stats::model.frame)
   specials <- c("adjust", "k")
-  temp.call$formula <- if(missing(data))
+  Terms <- temp.call$formula <- if(missing(data))
   {
     stats::terms(formula, specials)
   } else stats::terms(formula, specials, data = data)
@@ -128,11 +128,11 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
                 checked$adj.team.B,
                 checked$initial.elo,
                 checked$flag)
-  colnames(out) <- c("game", "team", "elo")
+  colnames(out) <- c("game", "team", "elo", "p.Win", "wins")
 
   return(structure(list(elos = out,
                         teams = names(checked$initial.elo),
-                        model.frame = mf), class = "elo.run"))
+                        terms = Terms), class = "elo.run"))
 }
 
 
@@ -144,8 +144,4 @@ print.elo.run <- function(x, ...)
       length(x$teams), " teams and ", max(x$elos[, 1]), " matches.\n\n", sep = "")
   invisible(x)
 }
-
-
-
-
 
