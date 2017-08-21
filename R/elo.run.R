@@ -3,11 +3,8 @@
 #'
 #' Calculate Elos for a series of matches.
 #'
-#' @param formula A formula. See "details", below.
-#' @param data A \code{data.frame} in which to look for objects in \code{formula}.
+#' @inheritParams elo.model.frame
 #' @param k A constant k-value. See "details", below.
-#' @param na.action A function which indicates what should happen when the data contain NAs.
-#' @param subset An optional vector specifying a subset of observations.
 #' @param initial.elo An optional named vector containing initial Elo ratings for all teams in \code{formula}.
 #' @param ... Other arguments (not used at this time).
 #' @param x An object of class \code{"elo.run"}.
@@ -53,7 +50,7 @@ NULL
 elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
 {
   Call <- match.call()
-  Call[[1L]] <- quote(prep_elo_formula)
+  Call[[1L]] <- quote(elo.model.frame)
   Call$envir <- parent.frame()
   mf <- eval(Call, parent.frame())
   Terms <- stats::terms(mf)
