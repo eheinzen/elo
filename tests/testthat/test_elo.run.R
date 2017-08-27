@@ -1,6 +1,6 @@
 
 
-context("Testing the elo.calc function")
+context("Testing the elo.run function")
 
 df <- data.frame(
   team.A = c("Team A", "Team A", "Team C"),
