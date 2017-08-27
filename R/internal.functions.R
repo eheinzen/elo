@@ -6,13 +6,8 @@
   out
 }
 
-check_elo_vars <- function(mf, initial.elo = NULL)
+check_elo_run_vars <- function(mf, initial.elo = NULL)
 {
-  wins.A <- as.numeric(mf[[1]])
-  if(!is.numeric(wins.A) || anyNA(wins.A) || !all(0 <= wins.A & wins.A <= 1)) stop("The wins should be between 0 and 1 (inclusive).")
-  if(!is.numeric(mf$`(adj1)`) || !is.numeric(mf$`(adj2)`)) stop("Any Elo adjustments should be numeric!")
-  if(!is.numeric(mf$`(k)`)) stop("'k' should be numeric.")
-
   t1 <- mf[[2]]
   t2 <- mf[[3]]
   all.teams <- character(0)
@@ -32,7 +27,7 @@ check_elo_vars <- function(mf, initial.elo = NULL)
   if(flag == 3L)
   {
     if(!is.null(initial.elo)) warning("Initial Elo specifications being ignored.")
-    return(list(wins.A = wins.A, team.A = t1, team.B = t2, k = mf$`(k)`,
+    return(list(wins.A = mf[[1]], team.A = t1, team.B = t2, k = mf[[4]],
                 adj.team.A = mf$`(adj1)`, adj.team.B = mf$`(adj2)`,
                 initial.elo = 0, flag = flag))
   }
@@ -55,7 +50,7 @@ check_elo_vars <- function(mf, initial.elo = NULL)
   if(flag != 1) t1 <- as.integer(factor(t1, levels = names(initial.elo))) - 1L
   if(flag != 2) t2 <- as.integer(factor(t2, levels = names(initial.elo))) - 1L
 
-  return(list(wins.A = mf[[1]], team.A = t1, team.B = t2, k = mf$`(k)`,
+  return(list(wins.A = mf[[1]], team.A = t1, team.B = t2, k = mf[[4]],
               adj.team.A = mf$`(adj1)`, adj.team.B = mf$`(adj2)`,
               initial.elo = initial.elo, flag = flag))
 }

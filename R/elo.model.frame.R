@@ -12,10 +12,10 @@
 #'   \code{\link{parent.frame}}.
 #' @seealso \code{\link{elo.run}}, \code{\link{elo.calc}}, \code{\link{elo.prob}}
 #' @export
-elo.model.frame <- function(formula, data, na.action, subset, ..., envir)
+elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "teams")
 {
   Call <- match.call()
-
+  required.vars <- match.arg(required.vars, c("wins", "teams", "k"), several.ok = TRUE)
   indx <- match(c("formula", "data", "subset", "na.action"), names(Call), nomatch = 0)
   if(indx[1] == 0) stop("A formula argument is required.")
 
@@ -50,10 +50,64 @@ elo.model.frame <- function(formula, data, na.action, subset, ..., envir)
   }
   environment(temp.call$formula) <- adjenv
 
+  mf <- eval(temp.call, parent.frame())
+    if(nrow(mf) == 0) stop("No (non-missing) observations")
 
-  mf <- eval(temp.call, envir)
+  Terms <- stats::terms(mf)
 
-  if(nrow(mf) == 0) stop("No (non-missing) observations")
+  #####################################################################
+
+  has.wins <- attr(Terms, "response") == 1
+  if("wins" %in% required.vars && !has.wins)
+  {
+    stop("A 'wins' component is required in 'formula'.")
+  } else if("wins" %in% required.vars)
+  {
+    wins.A <- mf[[1]]
+    if(!is.numeric(wins.A) || anyNA(wins.A) || !all(0 <= wins.A & wins.A <= 1))
+      stop("The wins should be between 0 and 1 (inclusive).")
+  }
+
+  #####################################################################
+
+  k.col <- attr(Terms, "specials")$k
+  has.k <- !is.null(k.col) || !is.null(k)
+
+  if(!has.k && "k" %in% required.vars) stop("'k' is not in 'formula' or specified as an argument.")
+
+  if(is.null(k.col) && !is.null(k))
+  {
+    if(ncol(mf) != 2 + has.wins) stop("'formula' doesn't appear to be specified correctly.")
+    mf$`(k)` <- k
+    k.col <- 3 + has.wins
+  } else if(!is.null(k.col))
+  {
+    if(!is.null(k)) warning("'k = ' argument being ignored.")
+    if(ncol(mf) != 3 + has.wins) stop("'formula' doesn't appear to be specified correctly.")
+    if(!identical(k.col, as.integer(3 + has.wins))) stop("'k()' should be the last term in 'formula'.")
+  } else
+  {
+    if(ncol(mf) != 2 + has.wins) stop("'formula' doesn't appear to be specified correctly.")
+  }
+
+  if("k" %in% required.vars && (!is.numeric(mf[[k.col]]) || anyNA(mf[[k.col]])))
+    stop("'k' should be numeric and non-NA.")
+
+  #####################################################################
+
+  adjs <- attr(Terms, "specials")$adjust
+  mf$`(adj1)` <- if(is.null(adjs) || !any(adjs == 1 + has.wins)) 0 else attr(mf[[1 + has.wins]], "adjust")
+  mf$`(adj2)` <- if(is.null(adjs) || !any(adjs == 2 + has.wins)) 0 else attr(mf[[2 + has.wins]], "adjust")
+
+  if(!is.numeric(mf$`(adj1)`) || !is.numeric(mf$`(adj2)`)) stop("Any Elo adjustments should be numeric!")
+
+  #####################################################################
+
+  attr(mf, "has.wins") <- has.wins
+  attr(mf, "has.k") <- has.k
+
+  if(4 + has.wins + has.k != ncol(mf)) stop("Something went wrong parsing the formula into a model.frame.")
+
   return(mf)
 }
 

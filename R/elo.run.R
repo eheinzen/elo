@@ -51,29 +51,12 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
-  Call$envir <- parent.frame()
+  Call$required.vars <- c("wins", "teams", "k")
   mf <- eval(Call, parent.frame())
   Terms <- stats::terms(mf)
 
-  k.col <- attr(stats::terms(mf), "specials")$k
-  if(is.null(k.col))
-  {
-    if(ncol(mf) != 3) stop("'formula' doesn't appear to be specified correctly.")
-    if(is.null(k)) stop("'k' is not in 'formula' or specified as numeric constant.")
-    if(!is.numeric(k) || length(k) != 1 || anyNA(k)) stop("'k' should be a numeric constant.")
-    mf$`(k)` <- rep(k, times = nrow(mf))
-  } else
-  {
-    if(ncol(mf) != 4) stop("'formula' doesn't appear to be specified correctly.")
-    if(!identical(k.col, 4L)) stop("'k()' should be the last term in 'formula'.")
-    colnames(mf)[4L] <- "(k)"
-  }
 
-  adjs <- attr(Terms, "specials")$adjust
-  mf$`(adj1)` <- if(is.null(adjs) || !any(adjs == 2)) 0 else attr(mf[[2]], "adjust")
-  mf$`(adj2)` <- if(is.null(adjs) || !any(adjs == 3)) 0 else attr(mf[[3]], "adjust")
-
-  checked <- check_elo_vars(mf, initial.elo)
+  checked <- check_elo_run_vars(mf, initial.elo)
 
   if(checked$flag == 3)
   {
