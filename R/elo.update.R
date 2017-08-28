@@ -2,9 +2,7 @@
 #' Elo functions
 #'
 #' Calculate the update value for a given Elo matchup. This is used in
-#' \code{\link{elo.calc}}, which reports the post-update Elo values.
-#'
-#' These are all vectorized.
+#' \code{\link{elo.calc}}, which reports the post-update Elo values. This is vectorized.
 #'
 #' @inheritParams elo.model.frame
 #' @inheritParams elo.calc
@@ -31,7 +29,7 @@ elo.update.default <- function(elo.A, elo.B, wins.A, k, ...)
 
 #' @rdname elo.update
 #' @export
-elo.update.formula <- function(formula, data, na.action, subset, ...)
+elo.update.formula <- function(formula, data, na.action, subset, k = NULL, ...)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)

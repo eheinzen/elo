@@ -11,7 +11,7 @@ elo.update(elo.A, ...)
 
 \method{elo.update}{default}(elo.A, elo.B, wins.A, k, ...)
 
-\method{elo.update}{formula}(formula, data, na.action, subset, ...)
+\method{elo.update}{formula}(formula, data, na.action, subset, k = NULL, ...)
 }
 \arguments{
 \item{elo.A}{Numeric vectors of elo scores.}
@@ -34,10 +34,7 @@ elo.update(elo.A, ...)
 }
 \description{
 Calculate the update value for a given Elo matchup. This is used in
-\code{\link{elo.calc}}, which reports the post-update Elo values.
-}
-\details{
-These are all vectorized.
+\code{\link{elo.calc}}, which reports the post-update Elo values. This is vectorized.
 }
 \examples{
 elo.update(c(1500, 1500), c(1500, 1600), c(1, 0), k = 20)

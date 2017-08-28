@@ -20,7 +20,7 @@ elo.calc(elo.A, ...)
 
 \item{wins.A}{Numeric vector of wins by team A.}
 
-\item{k}{Numeric vector or scalar of k-values.}
+\item{k}{A constant k-value (or a vector, where appropriate). See "details", below.}
 
 \item{formula}{A formula. See "details", below.}
 
@@ -31,16 +31,7 @@ elo.calc(elo.A, ...)
 \item{subset}{An optional vector specifying a subset of observations.}
 }
 \description{
-\code{elo.prob} calculates the probability that team A beats team B.
-\code{elo.update} calculates the update value for a given Elo matchup, and is used in
-\code{elo.calc}, which reports the post-update Elo values.
-}
-\details{
-These are all vectorized.
-
-
-  Originally, I was going to script these in Rcpp, but the performance benefits are only realized
-  when the vectors get to be ~1000 elements long.
+Calculate post-update Elo values. This is vectorized.
 }
 \examples{
 elo.calc(c(1500, 1500), c(1500, 1600), c(1, 0), k = 20)
