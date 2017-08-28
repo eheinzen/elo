@@ -114,6 +114,11 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
 
   #####################################################################
 
+  mf[[1 + has.wins]] <- remove_adjustedElo(mf[[1 + has.wins]])
+  mf[[2 + has.wins]] <- remove_adjustedElo(mf[[2 + has.wins]])
+
+  #####################################################################
+
   attr(mf, "has.wins") <- has.wins
   attr(mf, "has.k") <- has.k
 

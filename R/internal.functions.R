@@ -6,6 +6,13 @@
   out
 }
 
+remove_adjustedElo <- function(x)
+{
+  class(x) <- class(x)[!(class(x) %in% "adjustedElo")]
+  attr(x, "adjust") <- NULL
+  x
+}
+
 check_elo_run_vars <- function(mf, initial.elo = NULL)
 {
   t1 <- mf[[2]]
