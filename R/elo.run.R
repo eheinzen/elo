@@ -4,7 +4,6 @@
 #' Calculate Elos for a series of matches.
 #'
 #' @inheritParams elo.model.frame
-#' @param k A constant k-value. See "details", below.
 #' @param initial.elo An optional named vector containing initial Elo ratings for all teams in \code{formula}.
 #' @param ... Other arguments (not used at this time).
 #' @param x An object of class \code{"elo.run"}.

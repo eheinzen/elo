@@ -22,7 +22,7 @@ elo.update(elo.A, ...)
 
 \item{wins.A}{Numeric vector of wins by team A.}
 
-\item{k}{Numeric vector or scalar of k-values.}
+\item{k}{A constant k-value (or a vector, where appropriate). See "details", below.}
 
 \item{formula}{A formula. See "details", below.}
 

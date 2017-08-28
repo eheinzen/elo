@@ -39,7 +39,7 @@ elo.calc.default <- function(elo.A, elo.B, wins.A, k, ...)
 
 #' @rdname elo.calc
 #' @export
-elo.calc.formula <- function(formula, data, na.action, subset, ...)
+elo.calc.formula <- function(formula, data, na.action, subset, k = NULL, ...)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)

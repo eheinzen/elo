@@ -4,7 +4,8 @@
 \alias{elo.model.frame}
 \title{Interpret formulas in \code{elo} functions}
 \usage{
-elo.model.frame(formula, data, na.action, subset, ..., envir)
+elo.model.frame(formula, data, na.action, subset, k = NULL, ...,
+  required.vars = "teams")
 }
 \arguments{
 \item{formula}{A formula. See "details", below.}
@@ -15,10 +16,12 @@ elo.model.frame(formula, data, na.action, subset, ..., envir)
 
 \item{subset}{An optional vector specifying a subset of observations.}
 
+\item{k}{A constant k-value (or a vector, where appropriate). See "details", below.}
+
 \item{...}{Other arguments (not in use at this time).}
 
-\item{envir}{An environment in which to evaluate \code{\link[stats]{model.frame}}. Almost always
-\code{\link{parent.frame}}.}
+\item{required.vars}{One or more of \code{c("wins", "teams", "k")}, denoting which variables
+are required to appear in the final model.frame..}
 }
 \description{
 A helper function to create the model frame for many \code{elo} functions.

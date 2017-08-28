@@ -19,7 +19,7 @@ elo.run(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
 
 \item{subset}{An optional vector specifying a subset of observations.}
 
-\item{k}{A constant k-value. See "details", below.}
+\item{k}{A constant k-value (or a vector, where appropriate). See "details", below.}
 
 \item{initial.elo}{An optional named vector containing initial Elo ratings for all teams in \code{formula}.}
 

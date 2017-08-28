@@ -7,9 +7,10 @@
 #' @param data A \code{data.frame} in which to look for objects in \code{formula}.
 #' @param na.action A function which indicates what should happen when the data contain NAs.
 #' @param subset An optional vector specifying a subset of observations.
+#' @param k A constant k-value (or a vector, where appropriate). See "details", below.
 #' @param ... Other arguments (not in use at this time).
-#' @param envir An environment in which to evaluate \code{\link[stats]{model.frame}}. Almost always
-#'   \code{\link{parent.frame}}.
+#' @param required.vars One or more of \code{c("wins", "teams", "k")}, denoting which variables
+#'   are required to appear in the final model.frame..
 #' @seealso \code{\link{elo.run}}, \code{\link{elo.calc}}, \code{\link{elo.prob}}
 #' @export
 elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "teams")

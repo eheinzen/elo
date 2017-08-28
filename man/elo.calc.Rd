@@ -11,7 +11,7 @@ elo.calc(elo.A, ...)
 
 \method{elo.calc}{default}(elo.A, elo.B, wins.A, k, ...)
 
-\method{elo.calc}{formula}(formula, data, na.action, subset, ...)
+\method{elo.calc}{formula}(formula, data, na.action, subset, k = NULL, ...)
 }
 \arguments{
 \item{elo.A, elo.B}{Numeric vectors of elo scores.}
