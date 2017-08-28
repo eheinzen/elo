@@ -10,6 +10,10 @@ test_that("elo.prob works", {
     elo.prob(dat$dummy.A, dat$dummy.B),
     elo.prob(~ dummy.A + dummy.B, data = dat)
   )
+  expect_equal(
+    elo.prob(~ dummy.A + dummy.B, data = dat),
+    elo.prob(wins.A ~ dummy.A + dummy.B + k(k.column), data = dat)
+  )
 })
 
 test_that("elo.update works", {
