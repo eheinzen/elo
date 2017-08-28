@@ -32,8 +32,7 @@ elo.prob.formula <- function(formula, data, na.action, subset, ...)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
-  Call$envir <- parent.frame()
+  Call$required.vars <- "teams"
   mf <- eval(Call, parent.frame())
-
-
+  elo.prob(mf[[1 + has.wins(mf)]] + mf$`(adj1)`, mf[[2 + has.wins(mf)]] + mf$`(adj2)`, ...)
 }
