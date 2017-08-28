@@ -31,6 +31,10 @@ elo.prob(elo.A, ...)
 \description{
 Calculate the probability that team A beats team B. This is vectorized.
 }
+\details{
+Note that \code{formula} can be missing the \code{wins.A} component. If
+  present, it's ignored by \code{\link{elo.model.frame}}.
+}
 \examples{
 elo.prob(1500, 1500)
 elo.prob(c(1500, 1500), c(1500, 1600))

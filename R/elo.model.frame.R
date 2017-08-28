@@ -11,6 +11,17 @@
 #' @param ... Other arguments (not in use at this time).
 #' @param required.vars One or more of \code{c("wins", "teams", "k")}, denoting which variables
 #'   are required to appear in the final model.frame..
+#' @details
+#' With the exception of the formula in \code{\link{elo.run}},
+#'   \code{formula} is usually of the form \code{wins.A ~ elo.A + elo.B}, where \code{elo.A} and \code{elo.B}
+#'   are vectors of Elos, and \code{wins.A} is between 0 and 1,
+#'   denoting whether team A (Elo A) won or lost (or something between).
+#'
+#' \code{formula} accepts two special functions in it. \code{k()} allows for complicated Elo updates. For
+#'   constant Elo updates, use the \code{k = } argument instead of this special function.
+#'   \code{adjust()} allows for Elos to be adjusted for, e.g., home-field advantage. The second argument
+#'   to this function can be a scalar or vector of appropriate length.
+#'
 #' @seealso \code{\link{elo.run}}, \code{\link{elo.calc}}, \code{\link{elo.prob}}
 #' @export
 elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "teams")

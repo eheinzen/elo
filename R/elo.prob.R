@@ -3,6 +3,9 @@
 #' Calculate the probability that team A beats team B. This is vectorized.
 #'
 #' @inheritParams elo.calc
+#' @details
+#'   Note that \code{formula} can be missing the \code{wins.A} component. If
+#'   present, it's ignored by \code{\link{elo.model.frame}}.
 #' @seealso \code{\link{elo.update}}, \code{\link{elo.calc}}
 #' @examples
 #' elo.prob(1500, 1500)
