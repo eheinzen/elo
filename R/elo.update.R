@@ -15,15 +15,16 @@ NULL
 
 #' @rdname elo.update
 #' @export
-elo.update <- function(elo.A, ...)
+elo.update <- function(wins.A, ...)
 {
   UseMethod("elo.update")
 }
 
 #' @rdname elo.update
 #' @export
-elo.update.default <- function(elo.A, elo.B, wins.A, k, ...)
+elo.update.default <- function(wins.A, elo.A, elo.B, k, ...)
 {
+  validate_score(wins.A)
   k*(wins.A - elo.prob(elo.A, elo.B))
 }
 
@@ -33,8 +34,8 @@ elo.update.formula <- function(formula, data, na.action, subset, k = NULL, ...)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
-  Call$envir <- parent.frame()
+  Call$required.vars <- c("wins", "teams", "k")
   mf <- eval(Call, parent.frame())
-
+  elo.update(mf[[1]], mf[[2]] + mf$`(adj1)`, mf[[3]] + mf$`(adj2)`, k = mf[[4]], ...)
 }
 
