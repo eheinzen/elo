@@ -5,7 +5,7 @@
 * Changed the signatures of `elo.calc()` and `elo.update()` to match formula interface.
 
 * Changed `elo.calc()`, `elo.update()`, and `elo.prob()` to S3 generics, and implemented
-  formula methods. The default methods now include options to adjust Elos.
+  formula methods. The default methods now include options to adjust Elos. (#3)
   
 * Added `is.score()` to test for "score-ness".
 
