@@ -39,7 +39,7 @@
 #' elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, home.field) + team.Visitor,
 #'         data = tournament, k = 20)
 #'
-#' @seealso \code{\link{elo.run}}
+#' @seealso \code{\link{score}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}}
 #' @name elo.run
 NULL
 #> NULL
@@ -60,9 +60,10 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
   if(checked$flag == 3)
   {
     warning("Both teams are detected as numeric. Will revert to elo.calc()")
-    return(elo.calc(checked$team.A + checked$adj.team.A,
+    return(elo.calc(checked$wins.A,
+                    checked$team.A + checked$adj.team.A,
                     checked$team.B + checked$adj.team.B,
-                    checked$wins.A, checked$k))
+                    k = checked$k))
   }
 
   out <- eloRun(checked$team.A,
