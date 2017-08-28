@@ -16,16 +16,17 @@ NULL
 
 #' @rdname elo.calc
 #' @export
-elo.calc <- function(elo.A, ...)
+elo.calc <- function(wins.A, ...)
 {
   UseMethod("elo.calc")
 }
 
 #' @rdname elo.calc
 #' @export
-elo.calc.default <- function(elo.A, elo.B, wins.A, k, ...)
+elo.calc.default <- function(wins.A, elo.A, elo.B, k, ...)
 {
-  elo.up <- elo.update(elo.A = elo.A, elo.B = elo.B, wins.A = wins.A, k = k)
+  validate_score(wins.A)
+  elo.up <- elo.update(wins.A = wins.A, elo.A = elo.A, elo.B = elo.B, k = k)
   data.frame(elo.A = elo.A + elo.up, elo.B = elo.B - elo.up)
 }
 
@@ -35,6 +36,7 @@ elo.calc.formula <- function(formula, data, na.action, subset, k = NULL, ...)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
-  Call$envir <- parent.frame()
+  Call$required.vars <- c("wins", "teams", "k")
   mf <- eval(Call, parent.frame())
+  elo.calc(mf[[1]], mf[[2]] + mf$`(adj1)`, mf[[3]] + mf$`(adj2)`, k = mf[[4]], ...)
 }
