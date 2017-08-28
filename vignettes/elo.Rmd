@@ -45,16 +45,16 @@ To calculate the score update after the two teams play, use `elo.update()`:
 
 ```{r}
 wins.A <- c(1, 0)
-elo.update(elo.A, elo.B, wins.A, k = 20)
+elo.update(wins.A, elo.A, elo.B, k = 20)
 ```
 
 To calculate the new Elo scores after the update, use `elo.calc()`:
 
 ```{r}
-elo.calc(elo.A, elo.B, wins.A, k = 20)
+elo.calc(wins.A, elo.A, elo.B, k = 20)
 ```
 
-# The `elo.run` function
+# The `elo.run()` function
 
 ## With two variable Elos
 
@@ -126,4 +126,30 @@ Finally, `last()` will extract the final Elos per team.
 
 ```{r}
 last(e)
+```
+
+# Basic Functions Revisited - Formula Interface
+
+All three of the "basic" functions accept formulas as input, just like
+`elo.run()`.
+
+```{r}
+dat <- data.frame(elo.A = c(1500, 1500), elo.B = c(1500, 1600),
+                  wins.A = c(1, 0), k = 20)
+form <- wins.A ~ elo.A + elo.B + k(k)
+elo.prob(form, data = dat)
+elo.update(form, data = dat)
+elo.calc(form, data = dat)
+```
+
+Note that for `elo.prob()`, `formula = ` can be more succinct:
+
+```{r}
+elo.prob(~ elo.A + elo.B, data = dat)
+```
+
+We can even adjust the Elos:
+
+```{r}
+elo.calc(wins.A ~ adjust(elo.A, 10) + elo.B + k(k), data = dat)
 ```

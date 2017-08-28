@@ -6,13 +6,15 @@
   out
 }
 
-check_elo_vars <- function(mf, initial.elo = NULL)
+remove_adjustedElo <- function(x)
 {
-  wins.A <- as.numeric(mf[[1]])
-  if(!is.numeric(wins.A) || anyNA(wins.A) || !all(0 <= wins.A & wins.A <= 1)) stop("The wins should be between 0 and 1 (inclusive).")
-  if(!is.numeric(mf$`(adj1)`) || !is.numeric(mf$`(adj2)`)) stop("Any Elo adjustments should be numeric!")
-  if(!is.numeric(mf$`(k)`)) stop("'k' should be numeric.")
+  class(x) <- class(x)[!(class(x) %in% "adjustedElo")]
+  attr(x, "adjust") <- NULL
+  x
+}
 
+check_elo_run_vars <- function(mf, initial.elo = NULL)
+{
   t1 <- mf[[2]]
   t2 <- mf[[3]]
   all.teams <- character(0)
@@ -32,7 +34,7 @@ check_elo_vars <- function(mf, initial.elo = NULL)
   if(flag == 3L)
   {
     if(!is.null(initial.elo)) warning("Initial Elo specifications being ignored.")
-    return(list(wins.A = wins.A, team.A = t1, team.B = t2, k = mf$`(k)`,
+    return(list(wins.A = mf[[1]], team.A = t1, team.B = t2, k = mf[[4]],
                 adj.team.A = mf$`(adj1)`, adj.team.B = mf$`(adj2)`,
                 initial.elo = 0, flag = flag))
   }
@@ -55,57 +57,7 @@ check_elo_vars <- function(mf, initial.elo = NULL)
   if(flag != 1) t1 <- as.integer(factor(t1, levels = names(initial.elo))) - 1L
   if(flag != 2) t2 <- as.integer(factor(t2, levels = names(initial.elo))) - 1L
 
-  return(list(wins.A = mf[[1]], team.A = t1, team.B = t2, k = mf$`(k)`,
+  return(list(wins.A = mf[[1]], team.A = t1, team.B = t2, k = mf[[4]],
               adj.team.A = mf$`(adj1)`, adj.team.B = mf$`(adj2)`,
               initial.elo = initial.elo, flag = flag))
 }
-
-
-make_tournament_dataset <- function(seed = NULL)
-{
-  set.seed(seed)
-
-  all.teams <- c("Athletic Armadillos", "Blundering Baboons", "Cunning Cats", "Defense-less Dogs", "Elegant Emus",
-                 "Fabulous Frogs", "Gallivanting Gorillas", "Helpless Hyenas")
-  true.elo <- c(1800, 1200, 1700, 1300, 1600, 1550, 1400, 1450)
-  names(true.elo) <- all.teams
-
-  tournament <- expand.grid(team.Home = all.teams, team.Visitor = all.teams)
-  tournament <- tournament[tournament$team.Home != tournament$team.Visitor, ]
-
-  tournament$elo.Home <- true.elo[tournament$team.Home]
-  tournament$elo.Visitor <- true.elo[tournament$team.Visitor]
-
-  tournament$adjust.Home <- 200
-
-  tournament$p.Home <- elo.prob(tournament$elo.Home + tournament$adjust.Home, tournament$elo.Visitor)
-  tournament$wins.Home <- stats::runif(nrow(tournament)) < tournament$p.Home
-
-  tournament$elo.Diff <- tournament$elo.Home + tournament$adjust.Home - tournament$elo.Visitor
-
-  tournament$points.Home <- stats::rpois(nrow(tournament), lambda = 10)
-  tournament$points.Visitor <- tournament$points.Home +
-    ifelse(tournament$elo.Diff >= 0 & tournament$wins.Home >  0, pmin(-floor(tournament$elo.Diff / 100), -1), # home team was supposed to win and did
-    ifelse(tournament$elo.Diff >= 0 & tournament$wins.Home == 0, pmax(2 - floor(tournament$elo.Diff / 100),  1), # home team was supposed to win but didn't
-    ifelse(tournament$elo.Diff <  0 & tournament$wins.Home >  0, pmin(2 + floor(tournament$elo.Diff / 100), -1), # visiting team was supposed to win but didn't
-    ifelse(tournament$elo.Diff <  0 & tournament$wins.Home == 0, pmax(-floor(tournament$elo.Diff / 100),  1), NA # visiting team was supposed to win and did
-    ))))
-
-  stopifnot(isSymmetric(matrix(table(tournament$wins.Home, tournament$points.Home > tournament$points.Visitor), nrow = 2)))
-  tournament$elo.Home <- NULL
-  tournament$elo.Visitor <- NULL
-  tournament$elo.Diff <- NULL
-  tournament$p.Home <- NULL
-  tournament$wins.Home <- NULL
-  tournament$adjust.Home <- NULL
-
-  rownames(tournament) <- NULL
-  attr(tournament, "out.attrs") <- NULL
-
-  tournament
-}
-
-
-
-
-

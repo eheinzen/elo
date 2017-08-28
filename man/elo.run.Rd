@@ -19,7 +19,7 @@ elo.run(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
 
 \item{subset}{An optional vector specifying a subset of observations.}
 
-\item{k}{A constant k-value. See "details", below.}
+\item{k}{A constant k-value (or a vector, where appropriate).}
 
 \item{initial.elo}{An optional named vector containing initial Elo ratings for all teams in \code{formula}.}
 
@@ -34,18 +34,18 @@ An object of class \code{"elo.run"}.
 Calculate Elos for a series of matches.
 }
 \details{
-\code{formula} is usually of the form \code{wins.A ~ team.A + team.B}, where \code{team.A} and \code{team.B}
-  are character vectors or factors denoting which two teams played, and \code{wins.A} is between 0 and 1,
+The formula in this function is slightly different from the other elo package functions.
+  Here, \code{formula} is usually of the form \code{wins.A ~ team.A + team.B},
+  where \code{team.A} and \code{team.B} are character vectors or factors denoting
+  which two teams played, and \code{wins.A} is between 0 and 1,
   denoting whether team A won or lost (or something between).
 
 It is also acceptable for either \code{team.A} or \code{team.B} to be a numeric column (if, for example,
   the Elo of one team or the other is known or fixed). If both are numeric, a warning will be issued,
   and results will be calculated using \code{\link{elo.calc}}.
 
-\code{formula} accepts two special functions in it. \code{k()} allows for complicated Elo updates. For
-  constant Elo updates, use the \code{k = } argument instead of this special function.
-  \code{adjust()} allows for Elos to be adjusted for, e.g., home-field advantage. The second argument
-  to this function can be a scalar or vector of appropriate length. See the examples.
+The special functions documented in \code{\link{elo.model.frame}} are still valid here
+  (perhaps moreso than in the other functions!).
 }
 \examples{
 data(tournament)
@@ -66,5 +66,5 @@ elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, home.field) + tea
 
 }
 \seealso{
-\code{\link{elo.run}}
+\code{\link{score}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}}
 }

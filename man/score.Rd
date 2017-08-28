@@ -2,20 +2,28 @@
 % Please edit documentation in R/score.R
 \name{score}
 \alias{score}
+\alias{score}
+\alias{is.score}
 \title{Create a 1/0/0.5 win "indicator"}
 \usage{
 score(score.A, score.B)
+
+is.score(x)
 }
 \arguments{
 \item{score.A}{Numeric; the score of the first team (whose wins are to be denoted by 1).}
 
 \item{score.B}{Numeric; the score of the second team (whose wins are to be denoted by 0).}
+
+\item{x}{An R object.}
 }
 \value{
-A vector containing 0, 1, and 0.5 (for ties).
+For \code{score}, a vector containing 0, 1, and 0.5 (for ties). For
+  \code{is.score}, \code{TRUE} or \code{FALSE} depending on whether all values of
+  \code{x} are between 0 and 1 (inclusive).
 }
 \description{
-Create a 1/0/0.5 win "indicator" based on two teams' scores.
+Create a 1/0/0.5 win "indicator" based on two teams' scores, and test for "score-ness".
 }
 \examples{
 score(12, 10)
