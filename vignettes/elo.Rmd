@@ -45,13 +45,13 @@ To calculate the score update after the two teams play, use `elo.update()`:
 
 ```{r}
 wins.A <- c(1, 0)
-elo.update(elo.A, elo.B, wins.A, k = 20)
+elo.update(wins.A, elo.A, elo.B, k = 20)
 ```
 
 To calculate the new Elo scores after the update, use `elo.calc()`:
 
 ```{r}
-elo.calc(elo.A, elo.B, wins.A, k = 20)
+elo.calc(wins.A, elo.A, elo.B, k = 20)
 ```
 
 # The `elo.run` function
