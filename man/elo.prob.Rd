@@ -34,6 +34,13 @@ Calculate the probability that team A beats team B. This is vectorized.
 \examples{
 elo.prob(1500, 1500)
 elo.prob(c(1500, 1500), c(1500, 1600))
+
+dat <- data.frame(wins.A = c(1, 0), elo.A = c(1500, 1500),
+                  elo.B = c(1500, 1600), k = c(20, 20))
+elo.prob(~ elo.A + elo.B, data = dat)
+
+## Also works to include the wins and k:
+elo.calc(wins.A ~ elo.A + elo.B + k(k), data = dat)
 }
 \seealso{
 \code{\link{elo.update}}, \code{\link{elo.calc}}

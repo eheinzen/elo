@@ -37,7 +37,11 @@ Calculate the update value for a given Elo matchup. This is used in
 \code{\link{elo.calc}}, which reports the post-update Elo values. This is vectorized.
 }
 \examples{
-elo.update(c(1500, 1500), c(1500, 1600), c(1, 0), k = 20)
+elo.update(c(1, 0), c(1500, 1500), c(1500, 1600), k = 20)
+
+dat <- data.frame(wins.A = c(1, 0), elo.A = c(1500, 1500),
+                  elo.B = c(1500, 1600), k = c(20, 20))
+elo.update(wins.A ~ elo.A + elo.B + k(k), data = dat)
 }
 \seealso{
 \code{\link{elo.prob}}, \code{\link{elo.calc}}
