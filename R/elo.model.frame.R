@@ -63,7 +63,7 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
     stop("A 'wins' component is required in 'formula'.")
   } else if("wins" %in% required.vars)
   {
-    wins.A <- mf[[1]]
+    wins.A <- mf[[1]] <- as.numeric(mf[[1]])
     if(!is.numeric(wins.A) || anyNA(wins.A) || !all(0 <= wins.A & wins.A <= 1))
       stop("The wins should be between 0 and 1 (inclusive).")
   }
