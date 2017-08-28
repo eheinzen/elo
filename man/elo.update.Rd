@@ -9,7 +9,8 @@
 \usage{
 elo.update(wins.A, ...)
 
-\method{elo.update}{default}(wins.A, elo.A, elo.B, k, ...)
+\method{elo.update}{default}(wins.A, elo.A, elo.B, k, ..., adjust.A = 0,
+  adjust.B = 0)
 
 \method{elo.update}{formula}(formula, data, na.action, subset, k = NULL, ...)
 }
@@ -23,6 +24,10 @@ elo.update(wins.A, ...)
 \item{elo.B}{Numeric vectors of elo scores.}
 
 \item{k}{A constant k-value (or a vector, where appropriate).}
+
+\item{adjust.A}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
+
+\item{adjust.B}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
 
 \item{formula}{A formula. See the "details" section of \code{\link{elo.model.frame}}.}
 

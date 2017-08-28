@@ -9,7 +9,8 @@
 \usage{
 elo.calc(wins.A, ...)
 
-\method{elo.calc}{default}(wins.A, elo.A, elo.B, k, ...)
+\method{elo.calc}{default}(wins.A, elo.A, elo.B, k, ..., adjust.A = 0,
+  adjust.B = 0)
 
 \method{elo.calc}{formula}(formula, data, na.action, subset, k = NULL, ...)
 }
@@ -21,6 +22,8 @@ elo.calc(wins.A, ...)
 \item{elo.A, elo.B}{Numeric vectors of elo scores.}
 
 \item{k}{A constant k-value (or a vector, where appropriate).}
+
+\item{adjust.A, adjust.B}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
 
 \item{formula}{A formula. See the "details" section of \code{\link{elo.model.frame}}.}
 

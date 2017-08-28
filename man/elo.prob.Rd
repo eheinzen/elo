@@ -9,7 +9,7 @@
 \usage{
 elo.prob(elo.A, ...)
 
-\method{elo.prob}{default}(elo.A, elo.B, ...)
+\method{elo.prob}{default}(elo.A, elo.B, ..., adjust.A = 0, adjust.B = 0)
 
 \method{elo.prob}{formula}(formula, data, na.action, subset, ...)
 }
@@ -19,6 +19,10 @@ elo.prob(elo.A, ...)
 \item{...}{Other arguments (not in use at this time).}
 
 \item{elo.B}{Numeric vectors of elo scores.}
+
+\item{adjust.A}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
+
+\item{adjust.B}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
 
 \item{formula}{A formula. See the "details" section of \code{\link{elo.model.frame}}.}
 
