@@ -16,7 +16,7 @@ elo.model.frame(formula, data, na.action, subset, k = NULL, ...,
 
 \item{subset}{An optional vector specifying a subset of observations.}
 
-\item{k}{A constant k-value (or a vector, where appropriate). See "details", below.}
+\item{k}{A constant k-value (or a vector, where appropriate).}
 
 \item{...}{Other arguments (not in use at this time).}
 

@@ -2,7 +2,6 @@
 #'
 #' Calculate the probability that team A beats team B. This is vectorized.
 #'
-#' @inheritParams elo.model.frame
 #' @inheritParams elo.calc
 #' @seealso \code{\link{elo.update}}, \code{\link{elo.calc}}
 #' @examples

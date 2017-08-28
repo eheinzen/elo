@@ -7,24 +7,24 @@
 \alias{elo.update.formula}
 \title{Elo functions}
 \usage{
-elo.update(elo.A, ...)
+elo.update(wins.A, ...)
 
-\method{elo.update}{default}(elo.A, elo.B, wins.A, k, ...)
+\method{elo.update}{default}(wins.A, elo.A, elo.B, k, ...)
 
 \method{elo.update}{formula}(formula, data, na.action, subset, k = NULL, ...)
 }
 \arguments{
-\item{elo.A}{Numeric vectors of elo scores.}
+\item{wins.A}{Numeric vector of wins by team A.}
 
 \item{...}{Other arguments (not in use at this time).}
 
+\item{elo.A}{Numeric vectors of elo scores.}
+
 \item{elo.B}{Numeric vectors of elo scores.}
 
-\item{wins.A}{Numeric vector of wins by team A.}
+\item{k}{A constant k-value (or a vector, where appropriate).}
 
-\item{k}{A constant k-value (or a vector, where appropriate). See "details", below.}
-
-\item{formula}{A formula. See "details", below.}
+\item{formula}{A formula. See the "details" section of \code{\link{elo.model.frame}}.}
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 

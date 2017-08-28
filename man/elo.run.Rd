@@ -19,7 +19,7 @@ elo.run(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
 
 \item{subset}{An optional vector specifying a subset of observations.}
 
-\item{k}{A constant k-value (or a vector, where appropriate). See "details", below.}
+\item{k}{A constant k-value (or a vector, where appropriate).}
 
 \item{initial.elo}{An optional named vector containing initial Elo ratings for all teams in \code{formula}.}
 
@@ -66,5 +66,5 @@ elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, home.field) + tea
 
 }
 \seealso{
-\code{\link{elo.run}}
+\code{\link{score}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}}
 }

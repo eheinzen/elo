@@ -20,7 +20,7 @@ elo.prob(elo.A, ...)
 
 \item{elo.B}{Numeric vectors of elo scores.}
 
-\item{formula}{A formula. See "details", below.}
+\item{formula}{A formula. See the "details" section of \code{\link{elo.model.frame}}.}
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 

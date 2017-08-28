@@ -7,7 +7,7 @@
 #' @param data A \code{data.frame} in which to look for objects in \code{formula}.
 #' @param na.action A function which indicates what should happen when the data contain NAs.
 #' @param subset An optional vector specifying a subset of observations.
-#' @param k A constant k-value (or a vector, where appropriate). See "details", below.
+#' @param k A constant k-value (or a vector, where appropriate).
 #' @param ... Other arguments (not in use at this time).
 #' @param required.vars One or more of \code{c("wins", "teams", "k")}, denoting which variables
 #'   are required to appear in the final model.frame..

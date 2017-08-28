@@ -7,22 +7,22 @@
 \alias{elo.calc.formula}
 \title{Elo functions}
 \usage{
-elo.calc(elo.A, ...)
+elo.calc(wins.A, ...)
 
-\method{elo.calc}{default}(elo.A, elo.B, wins.A, k, ...)
+\method{elo.calc}{default}(wins.A, elo.A, elo.B, k, ...)
 
 \method{elo.calc}{formula}(formula, data, na.action, subset, k = NULL, ...)
 }
 \arguments{
-\item{elo.A, elo.B}{Numeric vectors of elo scores.}
+\item{wins.A}{Numeric vector of wins by team A.}
 
 \item{...}{Other arguments (not in use at this time).}
 
-\item{wins.A}{Numeric vector of wins by team A.}
+\item{elo.A, elo.B}{Numeric vectors of elo scores.}
 
-\item{k}{A constant k-value (or a vector, where appropriate). See "details", below.}
+\item{k}{A constant k-value (or a vector, where appropriate).}
 
-\item{formula}{A formula. See "details", below.}
+\item{formula}{A formula. See the "details" section of \code{\link{elo.model.frame}}.}
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 

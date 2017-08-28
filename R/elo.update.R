@@ -4,7 +4,6 @@
 #' Calculate the update value for a given Elo matchup. This is used in
 #' \code{\link{elo.calc}}, which reports the post-update Elo values. This is vectorized.
 #'
-#' @inheritParams elo.model.frame
 #' @inheritParams elo.calc
 #' @examples
 #' elo.update(c(1500, 1500), c(1500, 1600), c(1, 0), k = 20)
