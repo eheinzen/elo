@@ -30,9 +30,9 @@ elo.prob <- function(elo.A, ...)
 
 #' @rdname elo.prob
 #' @export
-elo.prob.default <- function(elo.A, elo.B, ...)
+elo.prob.default <- function(elo.A, elo.B, ..., adjust.A = 0, adjust.B = 0)
 {
-  1/(1 + 10^((elo.B - elo.A)/400.0))
+  1/(1 + 10^(((elo.B + adjust.B) - (elo.A + adjust.A))/400.0))
 }
 
 #' @rdname elo.prob
@@ -43,5 +43,6 @@ elo.prob.formula <- function(formula, data, na.action, subset, ...)
   Call[[1L]] <- quote(elo.model.frame)
   Call$required.vars <- "teams"
   mf <- eval(Call, parent.frame())
-  elo.prob(mf[[1 + has.wins(mf)]] + mf$`(adj1)`, mf[[2 + has.wins(mf)]] + mf$`(adj2)`, ...)
+  elo.prob(mf[[1 + has.wins(mf)]], mf[[2 + has.wins(mf)]], ...,
+           adjust.A = mf$`(adj1)`, adjust.B = mf$`(adj2)`)
 }
