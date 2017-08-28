@@ -1,7 +1,7 @@
 
 #' Interpret formulas in \code{elo} functions
 #'
-#' A helper function to create the model frame for many \code{elo} functions.
+#' A helper function to create the \code{model.frame} for many \code{elo} functions.
 #'
 #' @param formula A formula. See "details", below.
 #' @param data A \code{data.frame} in which to look for objects in \code{formula}.

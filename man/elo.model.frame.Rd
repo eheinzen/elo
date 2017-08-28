@@ -24,7 +24,7 @@ elo.model.frame(formula, data, na.action, subset, k = NULL, ...,
 are required to appear in the final model.frame..}
 }
 \description{
-A helper function to create the model frame for many \code{elo} functions.
+A helper function to create the \code{model.frame} for many \code{elo} functions.
 }
 \seealso{
 \code{\link{elo.run}}, \code{\link{elo.calc}}, \code{\link{elo.prob}}
