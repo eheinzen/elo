@@ -112,5 +112,8 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   return(mf)
 }
 
-
+has.wins <- function(x)
+{
+  attr(x, "has.wins")
+}
 
