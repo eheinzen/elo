@@ -1,7 +1,7 @@
 
 #' Create a 1/0/0.5 win "indicator"
 #'
-#' Create a 1/0/0.5 win "indicator" based on two teams' scores.
+#' Create a 1/0/0.5 win "indicator" based on two teams' scores, and test for "score-ness".
 #'
 #' @param score.A Numeric; the score of the first team (whose wins are to be denoted by 1).
 #' @param score.B Numeric; the score of the second team (whose wins are to be denoted by 0).

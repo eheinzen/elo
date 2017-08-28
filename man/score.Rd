@@ -23,7 +23,7 @@ For \code{score}, a vector containing 0, 1, and 0.5 (for ties). For
   \code{x} are between 0 and 1 (inclusive).
 }
 \description{
-Create a 1/0/0.5 win "indicator" based on two teams' scores.
+Create a 1/0/0.5 win "indicator" based on two teams' scores, and test for "score-ness".
 }
 \examples{
 score(12, 10)
