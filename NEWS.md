@@ -9,6 +9,8 @@
   
 * Added `is.score()` to test for "score-ness".
 
+* `elo.run()` no longer accepts numeric values for `team.A`.
+
 # elo 0.1.2
 
 * Fixed a spelling error in DESCRIPTION.
