@@ -56,16 +56,6 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
 
 
   checked <- check_elo_run_vars(mf, initial.elo)
-
-  if(checked$flag == 3)
-  {
-    warning("Both teams are detected as numeric. Will revert to elo.calc()")
-    return(elo.calc(checked$wins.A,
-                    checked$team.A + checked$adj.team.A,
-                    checked$team.B + checked$adj.team.B,
-                    k = checked$k))
-  }
-
   out <- eloRun(checked$team.A,
                 checked$team.B,
                 checked$wins.A,

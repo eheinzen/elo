@@ -16,7 +16,7 @@ NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector win
                      NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB,
                      NumericVector initialElo, int flag)
 {
-  int mult = (flag != 1) + (flag != 2);
+  int mult = 1 + (flag != 2);
   int nTeams = initialElo.size();
   int nGames = winsA.size();
   NumericVector currElo(nTeams);
@@ -36,14 +36,8 @@ NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector win
 
   for(int i = 0; i < nGames; i++)
   {
-    if(flag == 1)
-    {
-      e1 = teamA[i];
-    } else
-    {
-      j1 = teamA[i];
-      e1 = currElo[j1];
-    }
+    j1 = teamA[i];
+    e1 = currElo[j1];
 
     if(flag == 2)
     {
@@ -56,19 +50,17 @@ NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector win
     prb = eloProb(e1 + adjTeamA[i], e2 + adjTeamB[i]);
     tmp = eloUpdate(e1 + adjTeamA[i], e2 + adjTeamB[i], winsA[i], k[i]);
 
-    if(flag != 1)
-    {
-      row = nTeams + mult*i;
-      out(row, 0) = i + 1;
-      out(row, 1) = j1;
-      out(row, 2) = e1 + tmp;
-      out(row, 3) = prb;
-      out(row, 4) = winsA[i];
-      currElo[j1] = e1 + tmp;
-    }
+    row = nTeams + mult*i;
+    out(row, 0) = i + 1;
+    out(row, 1) = j1;
+    out(row, 2) = e1 + tmp;
+    out(row, 3) = prb;
+    out(row, 4) = winsA[i];
+    currElo[j1] = e1 + tmp;
+
     if(flag != 2)
     {
-      row = nTeams + mult*i + (mult - 1);
+      row = nTeams + mult*i + 1;
       out(row, 0) = i + 1;
       out(row, 1) = j2;
       out(row, 2) = e2 - tmp;
