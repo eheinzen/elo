@@ -94,7 +94,7 @@ elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visito
 
 ## With a fixed-Elo opponent
 
-`elo.run()` also recognizes if one of the columns is numeric,
+`elo.run()` also recognizes if the second column is numeric,
 and interprets that as a fixed-Elo opponent.
 
 ```{r}

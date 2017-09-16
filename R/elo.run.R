@@ -16,9 +16,8 @@
 #'   which two teams played, and \code{wins.A} is between 0 and 1,
 #'   denoting whether team A won or lost (or something between).
 #'
-#' It is also acceptable for either \code{team.A} or \code{team.B} to be a numeric column (if, for example,
-#'   the Elo of one team or the other is known or fixed). If both are numeric, a warning will be issued,
-#'   and results will be calculated using \code{\link{elo.calc}}.
+#' It is also acceptable for \code{team.B} to be a numeric column (if, for example,
+#'   the Elo of one team is known or fixed). If \code{team.A} is numeric, an error will be issued.
 #'
 #' The special functions documented in \code{\link{elo.model.frame}} are still valid here
 #'   (perhaps moreso than in the other functions!).
@@ -56,16 +55,6 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
 
 
   checked <- check_elo_run_vars(mf, initial.elo)
-
-  if(checked$flag == 3)
-  {
-    warning("Both teams are detected as numeric. Will revert to elo.calc()")
-    return(elo.calc(checked$wins.A,
-                    checked$team.A + checked$adj.team.A,
-                    checked$team.B + checked$adj.team.B,
-                    k = checked$k))
-  }
-
   out <- eloRun(checked$team.A,
                 checked$team.B,
                 checked$wins.A,

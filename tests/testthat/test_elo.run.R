@@ -21,12 +21,8 @@ test_that("Basic Elo calculations work", {
     c("Team A" = 1519.712, "Team C" = 1490)
   )
 
-  expect_identical(
-    round(last(elo.run(wins.A ~ dummy.B + team.B, k = 20, data = dat)), 3),
-    c("Team B" = 1500.288, "Team C" = 1490)
-  )
-
-  expect_warning(elo.run(wins.A ~ dummy.A + dummy.B, k = 20, data = dat))
+  expect_error(elo.run(wins.A ~ dummy.B + team.B, k = 20, data = dat))
+  expect_error(elo.run(wins.A ~ dummy.A + dummy.B, k = 20, data = dat))
 
   expect_identical(
     elo.calc(dat$wins.A, dat$dummy.A, dat$dummy.B, k = 20),

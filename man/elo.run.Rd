@@ -40,9 +40,8 @@ The formula in this function is slightly different from the other elo package fu
   which two teams played, and \code{wins.A} is between 0 and 1,
   denoting whether team A won or lost (or something between).
 
-It is also acceptable for either \code{team.A} or \code{team.B} to be a numeric column (if, for example,
-  the Elo of one team or the other is known or fixed). If both are numeric, a warning will be issued,
-  and results will be calculated using \code{\link{elo.calc}}.
+It is also acceptable for \code{team.B} to be a numeric column (if, for example,
+  the Elo of one team is known or fixed). If \code{team.A} is numeric, an error will be issued.
 
 The special functions documented in \code{\link{elo.model.frame}} are still valid here
   (perhaps moreso than in the other functions!).
