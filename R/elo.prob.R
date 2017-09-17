@@ -66,8 +66,8 @@ elo.prob.formula <- function(formula, data, na.action, subset, ..., elos = NULL)
     all.teams <- sort(unique(all.teams))
     elos <- check_initial_elos(elos, all.teams)
 
-    if(!is.numeric(t1)) t1 <- elos[all.teams]
-    if(!is.numeric(t2)) t2 <- elos[all.teams]
+    if(!is.numeric(t1)) t1 <- unname(elos[t1])
+    if(!is.numeric(t2)) t2 <- unname(elos[t2])
   }
 
   elo.prob(t1, t2, ..., adjust.A = mf$`(adj1)`, adjust.B = mf$`(adj2)`)
