@@ -44,3 +44,13 @@ test_that("'adjust' specification works either as a vector or constant", {
   )
 })
 
+test_that("prediction works correctly", {
+  results <- elo.run(wins.A ~ adjust(team.A, 10) + team.B, data = dat, k = 20)
+  newdat <- data.frame(team.A = "Team A", team.B = "Team B")
+  expect_identical(
+    predict(results, newdata = newdat),
+    elo.prob(last(results)["Team A"], last(results)["Team B"], adjust.A = 10)
+  )
+  expect_equal(length(predict(results)), nrow(dat))
+})
+

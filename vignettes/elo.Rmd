@@ -128,6 +128,20 @@ Finally, `last()` will extract the final Elos per team.
 last(e)
 ```
 
+## Making Predictions
+
+It is also possible to use the Elos calculated by `elo.run()` to make predictions on future match-ups.
+
+```{r}
+results <- elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+                   data = tournament, k = 20)
+newdat <- data.frame(
+  team.Home = "Athletic Armadillos",
+  team.Visitor = "Blundering Baboons"
+)
+predict(results, newdata = newdat)
+```
+
 # Basic Functions Revisited - Formula Interface
 
 All three of the "basic" functions accept formulas as input, just like

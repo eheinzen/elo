@@ -49,8 +49,10 @@ check_initial_elos <- function(init.elos = NULL, teams)
   }
 
   if(!is.numeric(init.elos)) stop("Supplied Elos should be numeric.")
-  if(is.null(names(init.elos)) || anyDuplicated(names(init.elos))) stop("Supplied Elos should have (unique) names!")
-  if(any(!(teams %in% names(init.elos)))) stop("Names of supplied Elos should contain all teams specified in 'formula'.")
+  if(is.null(names(init.elos)) || anyDuplicated(names(init.elos)))
+    stop("Supplied Elos should have (unique) names!")
+  if(any(!(teams %in% names(init.elos))))
+    stop("Some teams were found without supplied Elos.")
 
   return(init.elos[teams])
 }

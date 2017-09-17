@@ -85,23 +85,30 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   #####################################################################
 
   k.col <- attr(Terms, "specials")$k
-  has.k <- !is.null(k.col) || !is.null(k)
+  isnullkcol <- is.null(k.col) || length(k.col) == 0
+  has.k <- !isnullkcol || !is.null(k)
 
   if(!has.k && "k" %in% required.vars) stop("'k' is not in 'formula' or specified as an argument.")
 
-  if(is.null(k.col) && !is.null(k))
+  check_cols <- function(expect, found)
   {
-    if(ncol(mf) != 2 + has.wins) stop("'formula' doesn't appear to be specified correctly.")
+    if(found != expect) stop("'formula' doesn't appear to be specified correctly. Expected ",
+                             expect, " columns, found ", found)
+  }
+
+  if(isnullkcol && !is.null(k))
+  {
+    check_cols(2 + has.wins, ncol(mf))
     mf$`(k)` <- k
     k.col <- 3 + has.wins
-  } else if(!is.null(k.col))
+  } else if(!isnullkcol)
   {
     if(!is.null(k)) warning("'k = ' argument being ignored.")
-    if(ncol(mf) != 3 + has.wins) stop("'formula' doesn't appear to be specified correctly.")
+    check_cols(3 + has.wins, ncol(mf))
     if(!identical(k.col, as.integer(3 + has.wins))) stop("'k()' should be the last term in 'formula'.")
   } else
   {
-    if(ncol(mf) != 2 + has.wins) stop("'formula' doesn't appear to be specified correctly.")
+    check_cols(2 + has.wins, ncol(mf))
   }
 
   if("k" %in% required.vars && (!is.numeric(mf[[k.col]]) || anyNA(mf[[k.col]])))

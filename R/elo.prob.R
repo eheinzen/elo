@@ -58,11 +58,11 @@ elo.prob.default <- function(elo.A, elo.B, ..., elos = NULL, adjust.A = 0, adjus
     all.teams <- sort(unique(all.teams))
     elos <- check_initial_elos(elos, all.teams)
 
-    if(!is.numeric(elo.A)) elo.A <- unname(elos[elo.A])
-    if(!is.numeric(elo.B)) elo.B <- unname(elos[elo.B])
+    if(!is.numeric(elo.A)) elo.A <- elos[elo.A]
+    if(!is.numeric(elo.B)) elo.B <- elos[elo.B]
   }
 
-  1/(1 + 10^(((elo.B + adjust.B) - (elo.A + adjust.A))/400.0))
+  as.numeric(1/(1 + 10^(((elo.B + adjust.B) - (elo.A + adjust.A))/400.0)))
 }
 
 #' @rdname elo.prob
