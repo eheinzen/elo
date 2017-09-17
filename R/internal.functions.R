@@ -20,16 +20,16 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
 
   if(is.numeric(t1)) stop("team.A shouldn't be numeric (team.B can be, though!)")
   all.teams <- t1 <- as.character(t1)
+  if(anyNA(t1)) stop("NAs were found in team.A; check that it can be coerced to character.")
   if(!is.numeric(t2))
   {
     t2 <- as.character(t2)
+    if(anyNA(t2)) stop("NAs were found in team.B; check that it can be coerced to character.")
     all.teams <- c(all.teams, t2)
   }
-  if(anyNA(t1) || anyNA(t2)) stop("The teams shouldn't be NA (if applicable, check they can be coerced to character)")
   flag <- is.numeric(t1) + 2L*is.numeric(t2) # now either 2 or 0
 
   all.teams <- sort(unique(all.teams))
-
   initial.elos <- check_initial_elos(initial.elos, all.teams)
 
   t1 <- as.integer(factor(t1, levels = names(initial.elos))) - 1L

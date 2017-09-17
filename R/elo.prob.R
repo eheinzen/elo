@@ -37,12 +37,38 @@ elo.prob.default <- function(elo.A, elo.B, ..., adjust.A = 0, adjust.B = 0)
 
 #' @rdname elo.prob
 #' @export
-elo.prob.formula <- function(formula, data, na.action, subset, ...)
+elo.prob.formula <- function(formula, data, na.action, subset, ..., elos = NULL)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
   Call$required.vars <- "teams"
   mf <- eval(Call, parent.frame())
-  elo.prob(mf[[1 + has.wins(mf)]], mf[[2 + has.wins(mf)]], ...,
-           adjust.A = mf$`(adj1)`, adjust.B = mf$`(adj2)`)
+
+  t1 <- mf[[1 + has.wins(mf)]]
+  t2 <- mf[[2 + has.wins(mf)]]
+
+  if(!is.numeric(t1) || !is.numeric(t2))
+  {
+    all.teams <- character(0)
+    if(!is.numeric(t1))
+    {
+      t1 <- as.character(t1)
+      if(anyNA(t1)) stop("NAs were found in team.A; check that it can be coerced to character.")
+      all.teams <- c(all.teams, t1)
+    }
+    if(!is.numeric(t2))
+    {
+      t2 <- as.character(t2)
+      if(anyNA(t2)) stop("NAs were found in team.B; check that it can be coerced to character.")
+      all.teams <- c(all.teams, t2)
+    }
+
+    all.teams <- sort(unique(all.teams))
+    elos <- check_initial_elos(elos, all.teams)
+
+    if(!is.numeric(t1)) t1 <- elos[all.teams]
+    if(!is.numeric(t2)) t2 <- elos[all.teams]
+  }
+
+  elo.prob(t1, t2, ..., adjust.A = mf$`(adj1)`, adjust.B = mf$`(adj2)`)
 }
