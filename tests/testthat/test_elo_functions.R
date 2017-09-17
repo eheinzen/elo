@@ -22,6 +22,22 @@ test_that("elo.prob works", {
     elo.prob(~ dummy.A + dummy.B, data = dat),
     elo.prob(wins.A ~ dummy.A + dummy.B + k(k.column), data = dat)
   )
+  expect_equal(
+    elo.prob(c(1600, 1600, 1400), c(1500, 1400, 1500)),
+    elo.prob(~ team.A + team.B, data = dat, elos = init)
+  )
+  expect_equal(
+    elo.prob(c(1600, 1600, 1400), c(1500, 1500, 1500)),
+    elo.prob(~ team.A + dummy.B, data = dat, elos = init)
+  )
+  expect_equal(
+    elo.prob(c(1600, 1600, 1400), c(1500, 1500, 1500), adjust.A = 20),
+    elo.prob(~ adjust(team.A, 20) + dummy.B, data = dat, elos = init)
+  )
+  expect_error(
+    elo.prob(~ team.A + team.B, na.action = na.pass,
+             data = data.frame(team.A = c("A", NA), team.B = 1500, stringsAsFactors = FALSE))
+  )
 })
 
 test_that("elo.update works", {
