@@ -15,6 +15,7 @@
 #'                    data = t1, k = 20)
 #' predict(results)
 #' predict(results, newdata = t2)
+#' @export
 predict.elo.run <- function(object, newdata, ...)
 {
   if(missing(newdata))
