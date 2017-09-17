@@ -22,6 +22,13 @@ test_that("elo.prob works", {
     elo.prob(~ dummy.A + dummy.B, data = dat),
     elo.prob(wins.A ~ dummy.A + dummy.B + k(k.column), data = dat)
   )
+
+  #### with teams ####
+
+  expect_equal(
+    elo.prob(dat$team.A, dat$team.B, elos = init),
+    elo.prob(~ team.A + team.B, data = dat, elos = init)
+  )
   expect_equal(
     elo.prob(c(1600, 1600, 1400), c(1500, 1400, 1500)),
     elo.prob(~ team.A + team.B, data = dat, elos = init)
