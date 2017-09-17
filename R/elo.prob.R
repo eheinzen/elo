@@ -3,7 +3,9 @@
 #' Calculate the probability that team A beats team B. This is vectorized.
 #'
 #' @inheritParams elo.calc
-#' @param
+#' @param elo.A,elo.B Numeric vectors of elo scores, or else vectors of teams.
+#' @param elos An optional named vector containing Elo ratings for all teams in \code{formula}
+#'   or \code{elo.A} and \code{elo.B}.
 #' @details
 #'   Note that \code{formula} can be missing the \code{wins.A} component. If
 #'   present, it's ignored by \code{\link{elo.model.frame}}.
@@ -17,7 +19,11 @@
 #' elo.prob(~ elo.A + elo.B, data = dat)
 #'
 #' ## Also works to include the wins and k:
-#' elo.calc(wins.A ~ elo.A + elo.B + k(k), data = dat)
+#' elo.prob(wins.A ~ elo.A + elo.B + k(k), data = dat)
+#'
+#' ## Also allows teams
+#' elo.prob(c("A", "B"), c("C", "C"), elos = c(A = 1500, B = 1600, C = 1500))
+#'
 #' @name elo.prob
 NULL
 #> NULL

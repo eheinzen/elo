@@ -3,24 +3,11 @@
 #'
 #' Calculate Elos for a series of matches.
 #'
-#' @param formula A formula. See "details", below.
-#' @inheritParams elo.model.frame
+#' @inheritParams elo.calc
 #' @param initial.elos An optional named vector containing initial Elo ratings for all teams in \code{formula}.
 #' @param ... Other arguments (not used at this time).
 #' @param x An object of class \code{"elo.run"}.
 #' @return An object of class \code{"elo.run"}.
-#' @details
-#' The formula in this function is slightly different from the other elo package functions.
-#'   Here, \code{formula} is usually of the form \code{wins.A ~ team.A + team.B},
-#'   where \code{team.A} and \code{team.B} are character vectors or factors denoting
-#'   which two teams played, and \code{wins.A} is between 0 and 1,
-#'   denoting whether team A won or lost (or something between).
-#'
-#' It is also acceptable for \code{team.B} to be a numeric column (if, for example,
-#'   the Elo of one team is known or fixed). If \code{team.A} is numeric, an error will be issued.
-#'
-#' The special functions documented in \code{\link{elo.model.frame}} are still valid here
-#'   (perhaps moreso than in the other functions!).
 #' @examples
 #' data(tournament)
 #' elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
