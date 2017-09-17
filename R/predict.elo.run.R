@@ -24,6 +24,7 @@ predict.elo.run <- function(object, newdata, ...)
     return(e[g > 0 & !duplicated(g), 4])
   } else
   {
-    return(elo.prob(object$terms, data = newdata, ..., elos = last(object)))
+    form <- formula(delete.response(terms(object)))
+    return(elo.prob(form, data = newdata, ..., elos = last(object)))
   }
 }
