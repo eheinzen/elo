@@ -3,6 +3,9 @@
 #' Calculate the probability that team A beats team B. This is vectorized.
 #'
 #' @inheritParams elo.calc
+#' @param elo.A,elo.B Numeric vectors of elo scores, or else vectors of teams.
+#' @param elos An optional named vector containing Elo ratings for all teams in \code{formula}
+#'   or \code{elo.A} and \code{elo.B}.
 #' @details
 #'   Note that \code{formula} can be missing the \code{wins.A} component. If
 #'   present, it's ignored by \code{\link{elo.model.frame}}.
@@ -16,7 +19,11 @@
 #' elo.prob(~ elo.A + elo.B, data = dat)
 #'
 #' ## Also works to include the wins and k:
-#' elo.calc(wins.A ~ elo.A + elo.B + k(k), data = dat)
+#' elo.prob(wins.A ~ elo.A + elo.B + k(k), data = dat)
+#'
+#' ## Also allows teams
+#' elo.prob(c("A", "B"), c("C", "C"), elos = c(A = 1500, B = 1600, C = 1500))
+#'
 #' @name elo.prob
 NULL
 #> NULL
@@ -30,19 +37,43 @@ elo.prob <- function(elo.A, ...)
 
 #' @rdname elo.prob
 #' @export
-elo.prob.default <- function(elo.A, elo.B, ..., adjust.A = 0, adjust.B = 0)
+elo.prob.default <- function(elo.A, elo.B, ..., elos = NULL, adjust.A = 0, adjust.B = 0)
 {
+  if(!is.numeric(elo.A) || !is.numeric(elo.B))
+  {
+    all.teams <- character(0)
+    if(!is.numeric(elo.A))
+    {
+      elo.A <- as.character(elo.A)
+      if(anyNA(elo.A)) stop("NAs were found in elo.A; check that it can be coerced to character.")
+      all.teams <- c(all.teams, elo.A)
+    }
+    if(!is.numeric(elo.B))
+    {
+      elo.B <- as.character(elo.B)
+      if(anyNA(elo.B)) stop("NAs were found in elo.B; check that it can be coerced to character.")
+      all.teams <- c(all.teams, elo.B)
+    }
+
+    all.teams <- sort(unique(all.teams))
+    elos <- check_initial_elos(elos, all.teams)
+
+    if(!is.numeric(elo.A)) elo.A <- unname(elos[elo.A])
+    if(!is.numeric(elo.B)) elo.B <- unname(elos[elo.B])
+  }
+
   1/(1 + 10^(((elo.B + adjust.B) - (elo.A + adjust.A))/400.0))
 }
 
 #' @rdname elo.prob
 #' @export
-elo.prob.formula <- function(formula, data, na.action, subset, ...)
+elo.prob.formula <- function(formula, data, na.action, subset, ..., elos = NULL)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
   Call$required.vars <- "teams"
   mf <- eval(Call, parent.frame())
+
   elo.prob(mf[[1 + has.wins(mf)]], mf[[2 + has.wins(mf)]], ...,
-           adjust.A = mf$`(adj1)`, adjust.B = mf$`(adj2)`)
+           adjust.A = mf$`(adj1)`, adjust.B = mf$`(adj2)`, elos = elos)
 }

@@ -9,16 +9,18 @@
 \usage{
 elo.prob(elo.A, ...)
 
-\method{elo.prob}{default}(elo.A, elo.B, ..., adjust.A = 0, adjust.B = 0)
+\method{elo.prob}{default}(elo.A, elo.B, ..., elos = NULL, adjust.A = 0,
+  adjust.B = 0)
 
-\method{elo.prob}{formula}(formula, data, na.action, subset, ...)
+\method{elo.prob}{formula}(formula, data, na.action, subset, ..., elos = NULL)
 }
 \arguments{
-\item{elo.A}{Numeric vectors of elo scores.}
+\item{elo.A, elo.B}{Numeric vectors of elo scores, or else vectors of teams.}
 
 \item{...}{Other arguments (not in use at this time).}
 
-\item{elo.B}{Numeric vectors of elo scores.}
+\item{elos}{An optional named vector containing Elo ratings for all teams in \code{formula}
+or \code{elo.A} and \code{elo.B}.}
 
 \item{adjust.A}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
 
@@ -48,7 +50,11 @@ dat <- data.frame(wins.A = c(1, 0), elo.A = c(1500, 1500),
 elo.prob(~ elo.A + elo.B, data = dat)
 
 ## Also works to include the wins and k:
-elo.calc(wins.A ~ elo.A + elo.B + k(k), data = dat)
+elo.prob(wins.A ~ elo.A + elo.B + k(k), data = dat)
+
+## Also allows teams
+elo.prob(c("A", "B"), c("C", "C"), elos = c(A = 1500, B = 1600, C = 1500))
+
 }
 \seealso{
 \code{\link{elo.update}}, \code{\link{elo.calc}}

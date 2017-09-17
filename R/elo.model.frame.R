@@ -12,10 +12,13 @@
 #' @param required.vars One or more of \code{c("wins", "teams", "k")}, denoting which variables
 #'   are required to appear in the final model.frame..
 #' @details
-#' With the exception of the formula in \code{\link{elo.run}},
-#'   \code{formula} is usually of the form \code{wins.A ~ elo.A + elo.B}, where \code{elo.A} and \code{elo.B}
+#' \code{formula} is usually of the form \code{wins.A ~ elo.A + elo.B}, where \code{elo.A} and \code{elo.B}
 #'   are vectors of Elos, and \code{wins.A} is between 0 and 1,
-#'   denoting whether team A (Elo A) won or lost (or something between).
+#'   denoting whether team A (Elo A) won or lost (or something between). \code{elo.prob} also allows
+#'   \code{elo.A} and \code{elo.B} to be character or factors, denoting which team(s) played. \code{elo.run}
+#'   requires \code{elo.A} to be a vector of teams (sometimes denoted by \code{"team.A"}),
+#'   but \code{elo.B} can be either a vector of teams or  else a numeric column
+#'   (denoting a fixed-Elo opponent).
 #'
 #' \code{formula} accepts two special functions in it. \code{k()} allows for complicated Elo updates. For
 #'   constant Elo updates, use the \code{k = } argument instead of this special function.

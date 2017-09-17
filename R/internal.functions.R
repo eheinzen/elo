@@ -13,40 +13,44 @@ remove_adjustedElo <- function(x)
   x
 }
 
-check_elo_run_vars <- function(mf, initial.elo = NULL)
+check_elo_run_vars <- function(mf, initial.elos = NULL)
 {
   t1 <- mf[[2]]
   t2 <- mf[[3]]
 
   if(is.numeric(t1)) stop("team.A shouldn't be numeric (team.B can be, though!)")
   all.teams <- t1 <- as.character(t1)
+  if(anyNA(t1)) stop("NAs were found in team.A; check that it can be coerced to character.")
   if(!is.numeric(t2))
   {
     t2 <- as.character(t2)
+    if(anyNA(t2)) stop("NAs were found in team.B; check that it can be coerced to character.")
     all.teams <- c(all.teams, t2)
   }
-  if(anyNA(t1) || anyNA(t2)) stop("The teams shouldn't be NA (if applicable, check they can be coerced to character)")
   flag <- is.numeric(t1) + 2L*is.numeric(t2) # now either 2 or 0
 
   all.teams <- sort(unique(all.teams))
+  initial.elos <- check_initial_elos(initial.elos, all.teams)
 
-  if(is.null(initial.elo))
-  {
-    initial.elo <- rep(1500, times = length(all.teams))
-    names(initial.elo) <- all.teams
-  }
-
-  if(!is.numeric(initial.elo)) stop("Initial Elo should be numeric.")
-  if(length(initial.elo) != length(all.teams)) stop(paste0(length(all.teams), " initial Elos should be specified; ", length(initial.elo), " given."))
-  if(is.null(names(initial.elo)) || anyDuplicated(names(initial.elo))) stop("Initial Elo should have (unique) names!")
-  if(!setequal(names(initial.elo), all.teams)) stop("names(initial.elo) should equal all teams specified in 'formula'.")
-
-  initial.elo <- initial.elo[all.teams]
-
-  t1 <- as.integer(factor(t1, levels = names(initial.elo))) - 1L
-  if(flag != 2) t2 <- as.integer(factor(t2, levels = names(initial.elo))) - 1L
+  t1 <- as.integer(factor(t1, levels = names(initial.elos))) - 1L
+  if(flag != 2) t2 <- as.integer(factor(t2, levels = names(initial.elos))) - 1L
 
   return(list(wins.A = mf[[1]], team.A = t1, team.B = t2, k = mf[[4]],
               adj.team.A = mf$`(adj1)`, adj.team.B = mf$`(adj2)`,
-              initial.elo = initial.elo, flag = flag))
+              initial.elos = initial.elos, flag = flag))
+}
+
+check_initial_elos <- function(init.elos = NULL, teams)
+{
+  if(is.null(init.elos))
+  {
+    init.elos <- rep(1500, times = length(teams))
+    names(init.elos) <- teams
+  }
+
+  if(!is.numeric(init.elos)) stop("Supplied Elos should be numeric.")
+  if(is.null(names(init.elos)) || anyDuplicated(names(init.elos))) stop("Supplied Elos should have (unique) names!")
+  if(any(!(teams %in% names(init.elos)))) stop("Names of supplied Elos should contain all teams specified in 'formula'.")
+
+  return(init.elos[teams])
 }

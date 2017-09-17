@@ -6,12 +6,13 @@
 \alias{print.elo.run}
 \title{Calculate Elos for a series of matches}
 \usage{
-elo.run(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
+elo.run(formula, data, na.action, subset, k = NULL, initial.elos = NULL,
+  ...)
 
 \method{print}{elo.run}(x, ...)
 }
 \arguments{
-\item{formula}{A formula. See "details", below.}
+\item{formula}{A formula. See the "details" section of \code{\link{elo.model.frame}}.}
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 
@@ -21,7 +22,7 @@ elo.run(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
 
 \item{k}{A constant k-value (or a vector, where appropriate).}
 
-\item{initial.elo}{An optional named vector containing initial Elo ratings for all teams in \code{formula}.}
+\item{initial.elos}{An optional named vector containing initial Elo ratings for all teams in \code{formula}.}
 
 \item{...}{Other arguments (not used at this time).}
 
@@ -32,19 +33,6 @@ An object of class \code{"elo.run"}.
 }
 \description{
 Calculate Elos for a series of matches.
-}
-\details{
-The formula in this function is slightly different from the other elo package functions.
-  Here, \code{formula} is usually of the form \code{wins.A ~ team.A + team.B},
-  where \code{team.A} and \code{team.B} are character vectors or factors denoting
-  which two teams played, and \code{wins.A} is between 0 and 1,
-  denoting whether team A won or lost (or something between).
-
-It is also acceptable for \code{team.B} to be a numeric column (if, for example,
-  the Elo of one team is known or fixed). If \code{team.A} is numeric, an error will be issued.
-
-The special functions documented in \code{\link{elo.model.frame}} are still valid here
-  (perhaps moreso than in the other functions!).
 }
 \examples{
 data(tournament)

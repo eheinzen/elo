@@ -14,13 +14,13 @@ double eloUpdate(double eloA, double eloB, double winsA, double k)
 // [[Rcpp::export]]
 NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
                      NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB,
-                     NumericVector initialElo, int flag)
+                     NumericVector initialElos, int flag)
 {
   int mult = 1 + (flag != 2);
-  int nTeams = initialElo.size();
+  int nTeams = initialElos.size();
   int nGames = winsA.size();
   NumericVector currElo(nTeams);
-  currElo = initialElo;
+  currElo = initialElos;
   NumericMatrix out(mult*nGames + nTeams, 5);
   double tmp = 0, prb = 0;
   int row = 0;
