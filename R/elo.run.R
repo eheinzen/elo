@@ -5,7 +5,7 @@
 #'
 #' @param formula A formula. See "details", below.
 #' @inheritParams elo.model.frame
-#' @param initial.elo An optional named vector containing initial Elo ratings for all teams in \code{formula}.
+#' @param initial.elos An optional named vector containing initial Elo ratings for all teams in \code{formula}.
 #' @param ... Other arguments (not used at this time).
 #' @param x An object of class \code{"elo.run"}.
 #' @return An object of class \code{"elo.run"}.
@@ -45,7 +45,7 @@ NULL
 
 #' @rdname elo.run
 #' @export
-elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
+elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = NULL, ...)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
@@ -54,19 +54,19 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elo = NU
   Terms <- stats::terms(mf)
 
 
-  checked <- check_elo_run_vars(mf, initial.elo)
+  checked <- check_elo_run_vars(mf, initial.elos)
   out <- eloRun(checked$team.A,
                 checked$team.B,
                 checked$wins.A,
                 checked$k,
                 checked$adj.team.A,
                 checked$adj.team.B,
-                checked$initial.elo,
+                checked$initial.elos,
                 checked$flag)
   colnames(out) <- c("game", "team", "elo", "p.Win", "wins")
 
   return(structure(list(elos = out,
-                        teams = names(checked$initial.elo),
+                        teams = names(checked$initial.elos),
                         terms = Terms), class = "elo.run"))
 }
 

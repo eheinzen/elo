@@ -6,7 +6,8 @@
 \alias{print.elo.run}
 \title{Calculate Elos for a series of matches}
 \usage{
-elo.run(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
+elo.run(formula, data, na.action, subset, k = NULL, initial.elos = NULL,
+  ...)
 
 \method{print}{elo.run}(x, ...)
 }
@@ -21,7 +22,7 @@ elo.run(formula, data, na.action, subset, k = NULL, initial.elo = NULL, ...)
 
 \item{k}{A constant k-value (or a vector, where appropriate).}
 
-\item{initial.elo}{An optional named vector containing initial Elo ratings for all teams in \code{formula}.}
+\item{initial.elos}{An optional named vector containing initial Elo ratings for all teams in \code{formula}.}
 
 \item{...}{Other arguments (not used at this time).}
 
