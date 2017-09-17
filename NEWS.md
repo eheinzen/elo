@@ -11,6 +11,8 @@
 
 * `elo.run()` no longer accepts numeric values for `team.A`.
 
+* `elo.prob()` now accepts vectors of team names (like `elo.run()`) as input.
+
 # elo 0.1.2
 
 * Fixed a spelling error in DESCRIPTION.
