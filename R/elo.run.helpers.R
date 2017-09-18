@@ -44,7 +44,7 @@ as.data.frame.elo.run <- function(x, ...)
 #' @export
 final.elos <- function(x, ...)
 {
-  UseMethod("last")
+  UseMethod("final.elos")
 }
 
 #' @rdname elo.run.helpers
