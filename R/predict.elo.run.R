@@ -26,6 +26,6 @@ predict.elo.run <- function(object, newdata, ...)
   } else
   {
     form <- stats::formula(stats::delete.response(stats::terms(object)))
-    return(elo.prob(form, data = newdata, ..., elos = last(object)))
+    return(elo.prob(form, data = newdata, ..., elos = final.elos(object)))
   }
 }
