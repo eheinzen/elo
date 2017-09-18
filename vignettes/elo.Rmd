@@ -122,10 +122,10 @@ head(as.matrix(e))
 str(as.data.frame(e))
 ```
 
-Finally, `last()` will extract the final Elos per team.
+Finally, `final.elos()` will extract the final Elos per team.
 
 ```{r}
-last(e)
+final.elos(e)
 ```
 
 ## Making Predictions
