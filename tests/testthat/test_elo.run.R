@@ -13,11 +13,11 @@ test_that("Basic Elo calculations work", {
 
   expect_identical(
     round(as.matrix(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat))[4, ], 3),
-    round(last(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat)), 3)
+    round(final.elos(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat)), 3)
   )
 
   expect_identical(
-    round(last(elo.run(wins.A ~ team.A + dummy.B + k(k.column), data = dat)), 3),
+    round(final.elos(elo.run(wins.A ~ team.A + dummy.B + k(k.column), data = dat)), 3),
     c("Team A" = 1519.712, "Team C" = 1490)
   )
 
@@ -49,7 +49,7 @@ test_that("prediction works correctly", {
   newdat <- data.frame(team.A = "Team A", team.B = "Team B")
   expect_identical(
     predict(results, newdata = newdat),
-    elo.prob(last(results)["Team A"], last(results)["Team B"], adjust.A = 10)
+    elo.prob(final.elos(results)["Team A"], final.elos(results)["Team B"], adjust.A = 10)
   )
   expect_equal(length(predict(results)), nrow(dat))
 })

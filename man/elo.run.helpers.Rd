@@ -4,17 +4,17 @@
 \alias{elo.run.helpers}
 \alias{as.matrix.elo.run}
 \alias{as.data.frame.elo.run}
-\alias{last}
-\alias{last.elo.run}
+\alias{final.elos}
+\alias{final.elos.elo.run}
 \title{Helper functions for \code{elo.run}}
 \usage{
 \method{as.matrix}{elo.run}(x, ...)
 
 \method{as.data.frame}{elo.run}(x, ...)
 
-last(x, ...)
+final.elos(x, ...)
 
-\method{last}{elo.run}(x, ...)
+\method{final.elos}{elo.run}(x, ...)
 }
 \arguments{
 \item{x}{An object of class \code{"elo.run"}.}
@@ -37,7 +37,7 @@ e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
              data = tournament, k = 20)
 head(as.matrix(e))
 str(as.data.frame(e))
-last(e)
+final.elos(e)
 }
 \seealso{
 \code{\link{elo.run}}

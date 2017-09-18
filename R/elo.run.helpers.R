@@ -15,7 +15,7 @@
 #'              data = tournament, k = 20)
 #' head(as.matrix(e))
 #' str(as.data.frame(e))
-#' last(e)
+#' final.elos(e)
 #' @seealso \code{\link{elo.run}}
 #' @name elo.run.helpers
 NULL
@@ -42,14 +42,14 @@ as.data.frame.elo.run <- function(x, ...)
 
 #' @rdname elo.run.helpers
 #' @export
-last <- function(x, ...)
+final.elos <- function(x, ...)
 {
-  UseMethod("last")
+  UseMethod("final.elos")
 }
 
 #' @rdname elo.run.helpers
 #' @export
-last.elo.run <- function(x, ...)
+final.elos.elo.run <- function(x, ...)
 {
   y <- as.data.frame(x, ...)
   idx <- !duplicated(y$team, fromLast = TRUE)

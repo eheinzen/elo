@@ -15,6 +15,8 @@
 
 * `elo.prob()` now accepts vectors of team names (like `elo.run()`) as input. (#6)
 
+* Renamed `last()` to `final.elos()` (#9).
+
 # elo 0.1.2
 
 * Fixed a spelling error in DESCRIPTION.
