@@ -13,6 +13,8 @@
 
 * `elo.run()` no longer accepts numeric values for `team.A`.
 
+* The `$elos` component of `"elo.run"` objects now uses one-based indexing for the teams column. 
+
 * `elo.prob()` now accepts vectors of team names (like `elo.run()`) as input. (#6)
 
 * Renamed `last()` to `final.elos()` (#9).

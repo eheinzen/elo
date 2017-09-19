@@ -36,7 +36,7 @@ as.matrix.elo.run <- function(x, ...)
 as.data.frame.elo.run <- function(x, ...)
 {
   out <- as.data.frame(x$elos)
-  out$team <- factor(out$team, levels = seq_along(x$teams) - 1, labels = x$teams)
+  out$team <- factor(out$team, levels = seq_along(x$teams), labels = x$teams)
   out
 }
 

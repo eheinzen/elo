@@ -16,6 +16,7 @@ NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector win
                      NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB,
                      NumericVector initialElos, int flag)
 {
+  // this function uses 0-based indexing, since the incoming vectors used -1L
   int mult = 1 + (flag != 2);
   int nTeams = initialElos.size();
   int nGames = winsA.size();
@@ -30,7 +31,7 @@ NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector win
   for(int i = 0; i < nTeams; i++)
   {
     out(i, 0) = 0; // the zeroth game
-    out(i, 1) = i; // the ith team
+    out(i, 1) = i + 1; // the (i+1)th team
     out(i, 2) = currElo[i];
   }
 
@@ -52,7 +53,7 @@ NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector win
 
     row = nTeams + mult*i;
     out(row, 0) = i + 1;
-    out(row, 1) = j1;
+    out(row, 1) = j1 + 1;
     out(row, 2) = e1 + tmp;
     out(row, 3) = prb;
     out(row, 4) = winsA[i];
@@ -62,7 +63,7 @@ NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector win
     {
       row = nTeams + mult*i + 1;
       out(row, 0) = i + 1;
-      out(row, 1) = j2;
+      out(row, 1) = j2 + 1;
       out(row, 2) = e2 - tmp;
       out(row, 3) = 1 - prb;
       out(row, 4) = 1 - winsA[i];
@@ -76,7 +77,8 @@ NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector win
 // [[Rcpp::export]]
 NumericMatrix eloRunAsMatrix(NumericMatrix mat)
 {
-  double nTeams = max(mat(_, 1)) + 1;
+  // this function uses 1-based indexing, since the incoming matrix is
+  double nTeams = max(mat(_, 1));
   double nGames = max(mat(_, 0)) + 1;
   NumericMatrix out(nGames, nTeams);
   int row = 0;
@@ -91,7 +93,7 @@ NumericMatrix eloRunAsMatrix(NumericMatrix mat)
 
     do
     {
-      out(i, mat(row, 1)) = mat(row, 2);
+      out(i, mat(row, 1) - 1) = mat(row, 2);
       row++;
     } while (row < nRows && mat(row, 0) == i);
 
