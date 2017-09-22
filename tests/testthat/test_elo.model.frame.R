@@ -7,7 +7,19 @@ context("Testing the elo.model.frame function")
 test_that("Basic model.frame stuff works", {
   expect_identical(
     dim(elo.model.frame(wins.A ~ team.A + team.B, data = dat, k = 20)),
+    c(3L, 4L)
+  )
+
+  expect_identical(
+    dim(elo.model.frame(wins.A ~ team.A + team.B, data = dat, k = 20,
+                        required.vars = c("wins", "teams", "k"))),
     c(3L, 6L)
+  )
+
+  expect_identical(
+    dim(elo.model.frame(wins.A ~ team.A + team.B, data = dat, k = 20,
+                        required.vars = c("wins", "teams", "k", "group", "regress"))),
+    c(3L, 8L)
   )
 
   expect_identical(
