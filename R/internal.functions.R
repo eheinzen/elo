@@ -13,10 +13,18 @@ remove_adjustedElo <- function(x)
   x
 }
 
+"[.regressElo" <- function(x, i)
+{
+  out <- NextMethod()
+  attr(out, "to") <- attr(x, "to")
+  attr(out, "by") <- attr(x, "by")
+  x
+}
+
 check_elo_run_vars <- function(mf, initial.elos = NULL)
 {
-  t1 <- mf[[2]]
-  t2 <- mf[[3]]
+  t1 <- mf$elo.A
+  t2 <- mf$elo.B
 
   if(is.numeric(t1)) stop("team.A shouldn't be numeric (team.B can be, though!)")
   all.teams <- t1 <- as.character(t1)
@@ -35,8 +43,8 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   t1 <- as.integer(factor(t1, levels = names(initial.elos))) - 1L
   if(flag != 2) t2 <- as.integer(factor(t2, levels = names(initial.elos))) - 1L
 
-  return(list(wins.A = mf[[1]], team.A = t1, team.B = t2, k = mf[[4]],
-              adj.team.A = mf$`(adj1)`, adj.team.B = mf$`(adj2)`,
+  return(list(wins.A = mf$wins.A, team.A = t1, team.B = t2, k = mf$k,
+              adj.A = mf$adj.A, adj.B = mf$adj.B,
               initial.elos = initial.elos, flag = flag))
 }
 

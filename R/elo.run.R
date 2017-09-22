@@ -36,7 +36,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
-  Call$required.vars <- c("wins", "teams", "k")
+  Call$required.vars <- c("wins", "elos", "k", "group", "regress")
   mf <- eval(Call, parent.frame())
   Terms <- stats::terms(mf)
 
@@ -46,8 +46,8 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
                 checked$team.B,
                 checked$wins.A,
                 checked$k,
-                checked$adj.team.A,
-                checked$adj.team.B,
+                checked$adj.A,
+                checked$adj.B,
                 checked$initial.elos,
                 checked$flag)
   colnames(out) <- c("game", "team", "elo", "p.Win", "wins")
