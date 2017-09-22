@@ -34,4 +34,5 @@ is.score <- function(x)
 validate_score <- function(x)
 {
   if(!is.score(x)) stop("The wins should be between 0 and 1 (inclusive).")
+  invisible(x)
 }
