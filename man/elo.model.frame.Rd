@@ -5,7 +5,7 @@
 \title{Interpret formulas in \code{elo} functions}
 \usage{
 elo.model.frame(formula, data, na.action, subset, k = NULL, ...,
-  required.vars = "teams")
+  required.vars = "elos")
 }
 \arguments{
 \item{formula}{A formula. See "details", below.}
@@ -20,8 +20,8 @@ elo.model.frame(formula, data, na.action, subset, k = NULL, ...,
 
 \item{...}{Other arguments (not in use at this time).}
 
-\item{required.vars}{One or more of \code{c("wins", "teams", "k")}, denoting which variables
-are required to appear in the final model.frame..}
+\item{required.vars}{One or more of \code{c("wins", "elos", "k", "group", "regress")},
+denoting which variables are required to appear in the final model.frame.}
 }
 \description{
 A helper function to create the \code{model.frame} for many \code{elo} functions.

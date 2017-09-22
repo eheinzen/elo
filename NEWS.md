@@ -1,6 +1,6 @@
 # elo ...
 
-* Implemented `elo.model.frame()`.
+* Implemented `elo.model.frame()`. The output is a `data.frame` with appropriately named columns.
 
 * Implemented `predict.elo.run()` (#2).
 
