@@ -7,12 +7,12 @@ context("Testing the elo.run function")
 test_that("Basic Elo calculations work", {
 
   expect_identical(
-    round(as.matrix(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat))[4, ], 3),
+    round(as.matrix(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat))[3, ], 3),
     c("Team A" = 1519.712, "Team B" = 1500.008, "Team C" = 1480.279)
   )
 
   expect_identical(
-    round(as.matrix(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat))[4, ], 3),
+    round(as.matrix(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat))[3, ], 3),
     round(final.elos(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat)), 3)
   )
 
