@@ -1,4 +1,4 @@
-context("Testing the elo.run function")
+context("Testing the elo.run function for group() and regress()")
 
 ###########################################################################################################
 #### Do some simple checks
@@ -21,7 +21,15 @@ test_that("regress works", {
 
 test_that("group works", {
   expect_identical(
-    1,
-    1
+    as.matrix(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat))[2:3, ],
+    as.matrix(elo.run(wins.A ~ team.A + team.B + group(week), k = 20, data = dat))
+  )
+  expect_identical(
+    as.matrix(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat))[2:3, ],
+    as.matrix(elo.run(wins.A ~ team.A + team.B + group(c(FALSE, TRUE, TRUE)), k = 20, data = dat))
   )
 })
+
+
+
+
