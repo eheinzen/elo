@@ -65,12 +65,26 @@ check_initial_elos <- function(init.elos = NULL, teams)
   return(init.elos[teams])
 }
 
-check_group_regress <- function(x)
+check_group_regress <- function(x, gt.zero = FALSE)
 {
   if(anyNA(x)) stop("NAs found in group or regress columns.")
   if(!is.logical(x))
   {
     x <- !duplicated(x, fromLast = TRUE)
   }
+  if(gt.zero)
+  {
+    if(sum(x) == 0) stop("At least one entry in group column must be TRUE.")
+  }
   x
 }
+
+check_as_matrix <- function(x, group)
+{
+  stopifnot(length(x$teams) == ncol(x$elos.regressed))
+  stopifnot(is.matrix(x$elos), is.numeric(x$elos))
+  stopifnot(is.matrix(x$elos.regressed), is.numeric(x$elos.regressed))
+  group <- check_group_regress(group, gt.zero = TRUE)
+  stopifnot(length(group) == max(x$elos[, 1]))
+}
+

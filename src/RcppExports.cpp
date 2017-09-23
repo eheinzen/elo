@@ -27,22 +27,23 @@ BEGIN_RCPP
 END_RCPP
 }
 // eloRunAsMatrix
-NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericMatrix regMat, LogicalVector regress);
-RcppExport SEXP _elo_eloRunAsMatrix(SEXP matSEXP, SEXP regMatSEXP, SEXP regressSEXP) {
+NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericMatrix regMat, LogicalVector regress, LogicalVector group);
+RcppExport SEXP _elo_eloRunAsMatrix(SEXP matSEXP, SEXP regMatSEXP, SEXP regressSEXP, SEXP groupSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type regMat(regMatSEXP);
     Rcpp::traits::input_parameter< LogicalVector >::type regress(regressSEXP);
-    rcpp_result_gen = Rcpp::wrap(eloRunAsMatrix(mat, regMat, regress));
+    Rcpp::traits::input_parameter< LogicalVector >::type group(groupSEXP);
+    rcpp_result_gen = Rcpp::wrap(eloRunAsMatrix(mat, regMat, regress, group));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_elo_eloRun", (DL_FUNC) &_elo_eloRun, 11},
-    {"_elo_eloRunAsMatrix", (DL_FUNC) &_elo_eloRunAsMatrix, 3},
+    {"_elo_eloRunAsMatrix", (DL_FUNC) &_elo_eloRunAsMatrix, 4},
     {NULL, NULL, 0}
 };
 
