@@ -107,9 +107,6 @@ NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericMatrix regMat,
     {
       curr = regMat(regRow, _);
       regRow++;
-    } else
-    {
-      curr = out(i-1, _);
     }
 
     do
