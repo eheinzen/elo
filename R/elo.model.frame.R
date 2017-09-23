@@ -110,7 +110,9 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
     warning("'k = ' argument being ignored.")
   }
 
-  sum.empty <- !empty(k.col) + !empty(grp.col) + !empty(reg.col)
+  # need all the parens b/c ! is a low-precident operator
+  sum.empty <- (!empty(k.col)) + (!empty(grp.col)) + (!empty(reg.col))
+
   if(has.wins + sum.empty + 2 != ncol(mf))
   {
     stop("'formula' not specified correctly: found ", ncol(mf), " columns; expected ",

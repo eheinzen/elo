@@ -26,7 +26,9 @@ NULL
 as.matrix.elo.run <- function(x, ...)
 {
   stopifnot(length(x$teams) == ncol(x$elos.regressed))
-  out <- eloRunAsMatrix(x$elos, x$elos.regressed[1, ])
+  stopifnot(is.matrix(x$elos), is.numeric(x$elos))
+  stopifnot(is.matrix(x$elos.regressed), is.numeric(x$elos.regressed))
+  out <- eloRunAsMatrix(x$elos, x$elos.regressed, check_group_regress(x$regress))
   colnames(out) <- x$teams
   out
 }

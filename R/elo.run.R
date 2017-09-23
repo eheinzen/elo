@@ -41,9 +41,11 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
   Terms <- stats::terms(mf)
 
   checked <- check_elo_run_vars(mf, initial.elos)
+
   out <- eloRun(checked$team.A, checked$team.B, checked$wins.A,
                 checked$k, checked$adj.A, checked$adj.B,
-                checked$regress, checked$to, checked$by,
+                check_group_regress(mf$regress),
+                attr(mf$regress, "to"), attr(mf$regress, "by"),
                 checked$initial.elos, checked$flag)
   elos <- out[[1]]
   colnames(elos) <- c("game", "team", "elo", "p.Win", "wins")

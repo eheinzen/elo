@@ -45,8 +45,6 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
 
   return(list(wins.A = mf$wins.A, team.A = t1, team.B = t2, k = mf$k,
               adj.A = mf$adj.A, adj.B = mf$adj.B,
-              regress = check_group_regress(mf$regress),
-              to = attr(mf$regress, "to"), by = attr(mf$regress, "by"),
               initial.elos = initial.elos, flag = flag))
 }
 
