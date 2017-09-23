@@ -6,7 +6,9 @@ dat <- data.frame(
   dummy.A = 1500,
   dummy.B = 1500,
   k.column = 20,
-  home.field = 10
+  home.field = 10,
+  season = c(1, 2, 2),
+  week = c(1, 1, 2)
 )
 
 init <- c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400)
