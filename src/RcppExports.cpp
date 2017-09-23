@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // eloRun
-NumericMatrix eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA, NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB, NumericVector initialElos, int flag);
-RcppExport SEXP _elo_eloRun(SEXP teamASEXP, SEXP teamBSEXP, SEXP winsASEXP, SEXP kSEXP, SEXP adjTeamASEXP, SEXP adjTeamBSEXP, SEXP initialElosSEXP, SEXP flagSEXP) {
+List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA, NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB, LogicalVector regress, double to, double by, NumericVector initialElos, int flag);
+RcppExport SEXP _elo_eloRun(SEXP teamASEXP, SEXP teamBSEXP, SEXP winsASEXP, SEXP kSEXP, SEXP adjTeamASEXP, SEXP adjTeamBSEXP, SEXP regressSEXP, SEXP toSEXP, SEXP bySEXP, SEXP initialElosSEXP, SEXP flagSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -17,27 +17,31 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type k(kSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type adjTeamA(adjTeamASEXP);
     Rcpp::traits::input_parameter< NumericVector >::type adjTeamB(adjTeamBSEXP);
+    Rcpp::traits::input_parameter< LogicalVector >::type regress(regressSEXP);
+    Rcpp::traits::input_parameter< double >::type to(toSEXP);
+    Rcpp::traits::input_parameter< double >::type by(bySEXP);
     Rcpp::traits::input_parameter< NumericVector >::type initialElos(initialElosSEXP);
     Rcpp::traits::input_parameter< int >::type flag(flagSEXP);
-    rcpp_result_gen = Rcpp::wrap(eloRun(teamA, teamB, winsA, k, adjTeamA, adjTeamB, initialElos, flag));
+    rcpp_result_gen = Rcpp::wrap(eloRun(teamA, teamB, winsA, k, adjTeamA, adjTeamB, regress, to, by, initialElos, flag));
     return rcpp_result_gen;
 END_RCPP
 }
 // eloRunAsMatrix
-NumericMatrix eloRunAsMatrix(NumericMatrix mat);
-RcppExport SEXP _elo_eloRunAsMatrix(SEXP matSEXP) {
+NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericVector initialElos);
+RcppExport SEXP _elo_eloRunAsMatrix(SEXP matSEXP, SEXP initialElosSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
-    rcpp_result_gen = Rcpp::wrap(eloRunAsMatrix(mat));
+    Rcpp::traits::input_parameter< NumericVector >::type initialElos(initialElosSEXP);
+    rcpp_result_gen = Rcpp::wrap(eloRunAsMatrix(mat, initialElos));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_elo_eloRun", (DL_FUNC) &_elo_eloRun, 8},
-    {"_elo_eloRunAsMatrix", (DL_FUNC) &_elo_eloRunAsMatrix, 1},
+    {"_elo_eloRun", (DL_FUNC) &_elo_eloRun, 11},
+    {"_elo_eloRunAsMatrix", (DL_FUNC) &_elo_eloRunAsMatrix, 2},
     {NULL, NULL, 0}
 };
 

@@ -25,7 +25,8 @@ NULL
 #' @export
 as.matrix.elo.run <- function(x, ...)
 {
-  out <- eloRunAsMatrix(x$elos)
+  stopifnot(length(x$teams) == ncol(x$elos.regressed))
+  out <- eloRunAsMatrix(x$elos, x$elos.regressed[1, ])
   colnames(out) <- x$teams
   out
 }
