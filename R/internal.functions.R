@@ -45,6 +45,8 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
 
   return(list(wins.A = mf$wins.A, team.A = t1, team.B = t2, k = mf$k,
               adj.A = mf$adj.A, adj.B = mf$adj.B,
+              regress = check_group_regress(mf$regress),
+              to = attr(mf$regress, "to"), by = attr(mf$regress, "by"),
               initial.elos = initial.elos, flag = flag))
 }
 
@@ -63,4 +65,14 @@ check_initial_elos <- function(init.elos = NULL, teams)
     stop("Some teams were found without supplied Elos.")
 
   return(init.elos[teams])
+}
+
+check_group_regress <- function(x)
+{
+  if(anyNA(x)) stop("NAs found in group or regress columns.")
+  if(!is.logical(x))
+  {
+    x <- !duplicated(x, fromLast = TRUE)
+  }
+  x
 }

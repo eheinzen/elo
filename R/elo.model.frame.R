@@ -70,6 +70,9 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   if(!is.null(attr(temp.call$formula, "specials")$regress))
   {
     assign("regress", function(x, to, by) {
+      if(!is.numeric(to) || length(to) != 1 || anyNA(to)) stop("regress: 'to' must be numeric.")
+      if(!is.numeric(by) || length(by) != 1 || anyNA(by) || by > 1 || by < 0)
+        stop("regress: 'by' must be 0 <= by <= 1")
       attr(x, "to") <- to
       attr(x, "by") <- by
       class(x) <- c("regressElo", class(x))
@@ -141,6 +144,11 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   if("regress" %in% required.vars)
   {
     out$regress <- if(empty(reg.col)) FALSE else mf[[reg.col]]
+    if(empty(reg.col))
+    {
+      attr(out$regress, "to") <- 1500
+      attr(out$regress, "by") <- 0
+    }
   }
 
   adjs <- attr(Terms, "specials")$adjust
