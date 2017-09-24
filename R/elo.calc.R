@@ -9,7 +9,8 @@
 #' @param wins.A Numeric vector of wins by team A.
 #' @param ... Other arguments (not in use at this time).
 #' @param adjust.A,adjust.B Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.
-#' @seealso \code{\link{elo.prob}}, \code{\link{elo.update}}
+#' @seealso \code{\link{elo.prob}}, \code{\link{elo.update}},
+#'   \code{elo.model.frame}
 #' @examples
 #' elo.calc(c(1, 0), c(1500, 1500), c(1500, 1600), k = 20)
 #'

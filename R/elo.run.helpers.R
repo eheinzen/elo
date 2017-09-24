@@ -12,7 +12,7 @@
 #' @param group A grouping vector, telling which rows to output in the matrix.
 #' @return A matrix, a data.frame, or a named vector.
 #' @examples
-#' e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
+#' e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week),
 #'              data = tournament, k = 20)
 #' head(as.matrix(e))
 #' str(as.data.frame(e))

@@ -18,14 +18,19 @@
 #'         k(20*log(abs(points.Home - points.Visitor) + 1)), data = tournament)
 #'
 #' # Adjust Elo for, e.g., home-field advantage
-#' elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+#' elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 30) + team.Visitor,
 #'         data = tournament, k = 20)
 #'
-#' tournament$home.field <- 10
+#' tournament$home.field <- 30
 #' elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, home.field) + team.Visitor,
 #'         data = tournament, k = 20)
 #'
-#' @seealso \code{\link{score}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}}
+#' # Regress the Elos back toward 1500 at the end of the half-season
+#' elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 30) +
+#'         team.Visitor + regress(half, 1500, 0.2), data = tournament, k = 20)
+#'
+#' @seealso \code{\link{score}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}},
+#'   \code{elo.model.frame}
 #' @name elo.run
 NULL
 #> NULL

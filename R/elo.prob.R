@@ -9,7 +9,8 @@
 #' @details
 #'   Note that \code{formula} can be missing the \code{wins.A} component. If
 #'   present, it's ignored by \code{\link{elo.model.frame}}.
-#' @seealso \code{\link{elo.update}}, \code{\link{elo.calc}}
+#' @seealso \code{\link{elo.update}}, \code{\link{elo.calc}},
+#'   \code{elo.model.frame}
 #' @examples
 #' elo.prob(1500, 1500)
 #' elo.prob(c(1500, 1500), c(1500, 1600))

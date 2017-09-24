@@ -20,12 +20,25 @@
 #'   but \code{elo.B} can be either a vector of teams or  else a numeric column
 #'   (denoting a fixed-Elo opponent).
 #'
-#' \code{formula} accepts two special functions in it. \code{k()} allows for complicated Elo updates. For
+#' \code{formula} accepts four special functions in it:
+#'
+#' \code{k()} allows for complicated Elo updates. For
 #'   constant Elo updates, use the \code{k = } argument instead of this special function.
-#'   \code{adjust()} allows for Elos to be adjusted for, e.g., home-field advantage. The second argument
+#'
+#' \code{adjust()} allows for Elos to be adjusted for, e.g., home-field advantage. The second argument
 #'   to this function can be a scalar or vector of appropriate length.
 #'
-#' @seealso \code{\link{elo.run}}, \code{\link{elo.calc}}, \code{\link{elo.prob}}
+#' \code{regress()} can be used to regress Elos back to a fixed value
+#'   after certain matches. Giving a logical vector identifies these matches after which to
+#'   regress back to the mean. Giving any other kind of vector regresses after the appropriate
+#'   groupings (see, e.g., \code{\link{duplicated}(..., fromLast = TRUE)}). The other two arguments determine
+#'   what Elo to regress to (\code{to = }), and by how much to regress toward that value
+#'   (\code{by = }).
+#'
+#' \code{group()} is used to group matches (by, e.g., week). It is fed to \code{\link{as.matrix.elo.run}}
+#'   to produce only certain rows of matrix output.
+#'
+#' @seealso \code{\link{elo.run}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}}
 #' @export
 elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "elos")
 {
