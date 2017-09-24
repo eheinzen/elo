@@ -18,14 +18,19 @@
 #'         k(20*log(abs(points.Home - points.Visitor) + 1)), data = tournament)
 #'
 #' # Adjust Elo for, e.g., home-field advantage
-#' elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+#' elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 30) + team.Visitor,
 #'         data = tournament, k = 20)
 #'
-#' tournament$home.field <- 10
+#' tournament$home.field <- 30
 #' elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, home.field) + team.Visitor,
 #'         data = tournament, k = 20)
 #'
-#' @seealso \code{\link{score}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}}
+#' # Regress the Elos back toward 1500 at the end of the half-season
+#' elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 30) +
+#'         team.Visitor + regress(half, 1500, 0.2), data = tournament, k = 20)
+#'
+#' @seealso \code{\link{score}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}},
+#'   \code{elo.model.frame}
 #' @name elo.run
 NULL
 #> NULL
@@ -36,24 +41,25 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
-  Call$required.vars <- c("wins", "teams", "k")
+  Call$required.vars <- c("wins", "elos", "k", "group", "regress")
   mf <- eval(Call, parent.frame())
   Terms <- stats::terms(mf)
 
-
   checked <- check_elo_run_vars(mf, initial.elos)
-  out <- eloRun(checked$team.A,
-                checked$team.B,
-                checked$wins.A,
-                checked$k,
-                checked$adj.team.A,
-                checked$adj.team.B,
-                checked$initial.elos,
-                checked$flag)
-  colnames(out) <- c("game", "team", "elo", "p.Win", "wins")
 
-  return(structure(list(elos = out,
+  out <- eloRun(checked$team.A, checked$team.B, checked$wins.A,
+                checked$k, checked$adj.A, checked$adj.B,
+                check_group_regress(mf$regress),
+                attr(mf$regress, "to"), attr(mf$regress, "by"),
+                checked$initial.elos, checked$flag)
+  elos <- out[[1]]
+  colnames(elos) <- c("game", "team", "elo", "p.Win", "wins")
+
+  return(structure(list(elos = elos,
+                        elos.regressed = out[[2]],
                         teams = names(checked$initial.elos),
+                        group = mf$group,
+                        regress = mf$regress,
                         terms = Terms), class = "elo.run"))
 }
 

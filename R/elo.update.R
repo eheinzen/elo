@@ -11,7 +11,8 @@
 #' dat <- data.frame(wins.A = c(1, 0), elo.A = c(1500, 1500),
 #'                   elo.B = c(1500, 1600), k = c(20, 20))
 #' elo.update(wins.A ~ elo.A + elo.B + k(k), data = dat)
-#' @seealso \code{\link{elo.prob}}, \code{\link{elo.calc}}
+#' @seealso \code{\link{elo.prob}}, \code{\link{elo.calc}},
+#'   \code{elo.model.frame}
 #' @name elo.update
 NULL
 #> NULL
@@ -37,9 +38,9 @@ elo.update.formula <- function(formula, data, na.action, subset, k = NULL, ...)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
-  Call$required.vars <- c("wins", "teams", "k")
+  Call$required.vars <- c("wins", "elos", "k")
   mf <- eval(Call, parent.frame())
-  elo.update(mf[[1]], mf[[2]], mf[[3]], k = mf[[4]], ...,
-             adjust.A = mf$`(adj1)`, adjust.B = mf$`(adj2)`)
+  elo.update(mf$wins.A, mf$elo.A, mf$elo.B, k = mf$k, ...,
+             adjust.A = mf$adj.A, adjust.B = mf$adj.B)
 }
 

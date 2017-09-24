@@ -9,7 +9,8 @@
 #' @details
 #'   Note that \code{formula} can be missing the \code{wins.A} component. If
 #'   present, it's ignored by \code{\link{elo.model.frame}}.
-#' @seealso \code{\link{elo.update}}, \code{\link{elo.calc}}
+#' @seealso \code{\link{elo.update}}, \code{\link{elo.calc}},
+#'   \code{elo.model.frame}
 #' @examples
 #' elo.prob(1500, 1500)
 #' elo.prob(c(1500, 1500), c(1500, 1600))
@@ -71,9 +72,7 @@ elo.prob.formula <- function(formula, data, na.action, subset, ..., elos = NULL)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
-  Call$required.vars <- "teams"
   mf <- eval(Call, parent.frame())
 
-  elo.prob(mf[[1 + has.wins(mf)]], mf[[2 + has.wins(mf)]], ...,
-           adjust.A = mf$`(adj1)`, adjust.B = mf$`(adj2)`, elos = elos)
+  elo.prob(mf$elo.A, mf$elo.B, ..., adjust.A = mf$adj.A, adjust.B = mf$adj.B, elos = elos)
 }

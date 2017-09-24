@@ -57,5 +57,6 @@ elo.prob(c("A", "B"), c("C", "C"), elos = c(A = 1500, B = 1600, C = 1500))
 
 }
 \seealso{
-\code{\link{elo.update}}, \code{\link{elo.calc}}
+\code{\link{elo.update}}, \code{\link{elo.calc}},
+  \code{elo.model.frame}
 }

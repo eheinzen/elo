@@ -8,7 +8,7 @@
 \alias{final.elos.elo.run}
 \title{Helper functions for \code{elo.run}}
 \usage{
-\method{as.matrix}{elo.run}(x, ...)
+\method{as.matrix}{elo.run}(x, ..., group = x$group)
 
 \method{as.data.frame}{elo.run}(x, ...)
 
@@ -20,6 +20,8 @@ final.elos(x, ...)
 \item{x}{An object of class \code{"elo.run"}.}
 
 \item{...}{Other arguments (Not in use at this time).}
+
+\item{group}{A grouping vector, telling which rows to output in the matrix.}
 }
 \value{
 A matrix, a data.frame, or a named vector.
@@ -33,7 +35,7 @@ A matrix, a data.frame, or a named vector.
 \code{last} is a generic function, whose \code{\link{elo.run}} method extracts the last Elo per team.
 }
 \examples{
-e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
+e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week),
              data = tournament, k = 20)
 head(as.matrix(e))
 str(as.data.frame(e))

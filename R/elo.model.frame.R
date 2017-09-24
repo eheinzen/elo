@@ -9,8 +9,8 @@
 #' @param subset An optional vector specifying a subset of observations.
 #' @param k A constant k-value (or a vector, where appropriate).
 #' @param ... Other arguments (not in use at this time).
-#' @param required.vars One or more of \code{c("wins", "teams", "k")}, denoting which variables
-#'   are required to appear in the final model.frame..
+#' @param required.vars One or more of \code{c("wins", "elos", "k", "group", "regress")},
+#'   denoting which variables are required to appear in the final model.frame.
 #' @details
 #' \code{formula} is usually of the form \code{wins.A ~ elo.A + elo.B}, where \code{elo.A} and \code{elo.B}
 #'   are vectors of Elos, and \code{wins.A} is between 0 and 1,
@@ -20,23 +20,36 @@
 #'   but \code{elo.B} can be either a vector of teams or  else a numeric column
 #'   (denoting a fixed-Elo opponent).
 #'
-#' \code{formula} accepts two special functions in it. \code{k()} allows for complicated Elo updates. For
+#' \code{formula} accepts four special functions in it:
+#'
+#' \code{k()} allows for complicated Elo updates. For
 #'   constant Elo updates, use the \code{k = } argument instead of this special function.
-#'   \code{adjust()} allows for Elos to be adjusted for, e.g., home-field advantage. The second argument
+#'
+#' \code{adjust()} allows for Elos to be adjusted for, e.g., home-field advantage. The second argument
 #'   to this function can be a scalar or vector of appropriate length.
 #'
-#' @seealso \code{\link{elo.run}}, \code{\link{elo.calc}}, \code{\link{elo.prob}}
+#' \code{regress()} can be used to regress Elos back to a fixed value
+#'   after certain matches. Giving a logical vector identifies these matches after which to
+#'   regress back to the mean. Giving any other kind of vector regresses after the appropriate
+#'   groupings (see, e.g., \code{\link{duplicated}(..., fromLast = TRUE)}). The other two arguments determine
+#'   what Elo to regress to (\code{to = }), and by how much to regress toward that value
+#'   (\code{by = }).
+#'
+#' \code{group()} is used to group matches (by, e.g., week). It is fed to \code{\link{as.matrix.elo.run}}
+#'   to produce only certain rows of matrix output.
+#'
+#' @seealso \code{\link{elo.run}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}}
 #' @export
-elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "teams")
+elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "elos")
 {
   Call <- match.call()
-  required.vars <- match.arg(required.vars, c("wins", "teams", "k"), several.ok = TRUE)
+  required.vars <- match.arg(required.vars, c("wins", "elos", "k", "group", "regress"), several.ok = TRUE)
   indx <- match(c("formula", "data", "subset", "na.action"), names(Call), nomatch = 0)
   if(indx[1] == 0) stop("A formula argument is required.")
 
   temp.call <- Call[c(1, indx)]
   temp.call[[1L]] <- quote(stats::model.frame)
-  specials <- c("adjust", "k")
+  specials <- c("adjust", "k", "group", "regress")
 
   temp.call$formula <- if(missing(data))
   {
@@ -63,6 +76,22 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   {
     assign("k", function(x) x, envir = adjenv)
   }
+  if(!is.null(attr(temp.call$formula, "specials")$group))
+  {
+    assign("group", function(x) x, envir = adjenv)
+  }
+  if(!is.null(attr(temp.call$formula, "specials")$regress))
+  {
+    assign("regress", function(x, to, by) {
+      if(!is.numeric(to) || length(to) != 1 || anyNA(to)) stop("regress: 'to' must be numeric.")
+      if(!is.numeric(by) || length(by) != 1 || anyNA(by) || by > 1 || by < 0)
+        stop("regress: 'by' must be 0 <= by <= 1")
+      attr(x, "to") <- to
+      attr(x, "by") <- by
+      class(x) <- c("regressElo", class(x))
+      x
+    }, envir = adjenv)
+  }
   environment(temp.call$formula) <- adjenv
 
   mf <- eval(temp.call, parent.frame())
@@ -72,73 +101,78 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
 
   #####################################################################
 
+  empty <- function(x) is.null(x) || length(x) == 0
   has.wins <- attr(Terms, "response") == 1
-  if("wins" %in% required.vars && !has.wins)
-  {
-    stop("A 'wins' component is required in 'formula'.")
-  } else if("wins" %in% required.vars)
-  {
-    mf[[1]] <- as.numeric(mf[[1]])
-    validate_score(mf[[1]])
-  }
-
-  #####################################################################
 
   k.col <- attr(Terms, "specials")$k
-  isnullkcol <- is.null(k.col) || length(k.col) == 0
-  has.k <- !isnullkcol || !is.null(k)
+  has.k <- !empty(k.col) || !is.null(k)
 
-  if(!has.k && "k" %in% required.vars) stop("'k' is not in 'formula' or specified as an argument.")
+  grp.col <- attr(Terms, "specials")$group
+  reg.col <- attr(Terms, "specials")$regress
 
-  check_cols <- function(expect, found)
+  if("wins" %in% required.vars && !has.wins)
   {
-    if(found != expect) stop("'formula' doesn't appear to be specified correctly. Expected ",
-                             expect, " columns, found ", found)
+    stop("A 'wins' component is required in the left-hand side of 'formula'.")
   }
 
-  if(isnullkcol && !is.null(k))
+  if("k" %in% required.vars && !has.k)
   {
-    check_cols(2 + has.wins, ncol(mf))
-    mf$`(k)` <- k
-    k.col <- 3 + has.wins
-  } else if(!isnullkcol)
+    stop("'k' is not in 'formula' or specified as an argument.")
+  } else if(!empty(k.col) && !is.null(k))
   {
-    if(!is.null(k)) warning("'k = ' argument being ignored.")
-    check_cols(3 + has.wins, ncol(mf))
-    if(!identical(k.col, as.integer(3 + has.wins))) stop("'k()' should be the last term in 'formula'.")
-  } else
-  {
-    check_cols(2 + has.wins, ncol(mf))
+    warning("'k = ' argument being ignored.")
   }
 
-  if("k" %in% required.vars && (!is.numeric(mf[[k.col]]) || anyNA(mf[[k.col]])))
-    stop("'k' should be numeric and non-NA.")
+  # need all the parens b/c ! is a low-precident operator
+  sum.empty <- (!empty(k.col)) + (!empty(grp.col)) + (!empty(reg.col))
+
+  if(has.wins + sum.empty + 2 != ncol(mf))
+  {
+    stop("'formula' not specified correctly: found ", ncol(mf), " columns; expected ",
+         has.wins + sum.empty + 2)
+  }
+
+  # figure out which columns are the "real" ones
+  elo.cols <- if(sum.empty == 0)
+  {
+    (1:2) + has.wins
+  } else setdiff(1:ncol(mf), c(if(has.wins) 1, k.col, grp.col, reg.col))
+  if(length(elo.cols) != 2) stop("Trouble finding the Elo columns.")
 
   #####################################################################
+
+  out <- data.frame(
+    elo.A = remove_adjustedElo(mf[[elo.cols[1]]]),
+    elo.B = remove_adjustedElo(mf[[elo.cols[2]]])
+  )
+
+  if("wins" %in% required.vars) out$wins.A <- validate_score(as.numeric(mf[[1]]))
+  if("k" %in% required.vars)
+  {
+    out$k <- if(empty(k.col)) k else mf[[k.col]]
+    if(!is.numeric(out$k) || anyNA(out$k)) stop("'k' should be numeric and non-NA.")
+  }
+  if("group" %in% required.vars)
+  {
+    out$group <- if(empty(grp.col)) TRUE else mf[[grp.col]]
+  }
+  if("regress" %in% required.vars)
+  {
+    out$regress <- if(empty(reg.col)) FALSE else mf[[reg.col]]
+    if(empty(reg.col))
+    {
+      attr(out$regress, "to") <- 1500
+      attr(out$regress, "by") <- 0
+    }
+  }
 
   adjs <- attr(Terms, "specials")$adjust
-  mf$`(adj1)` <- if(is.null(adjs) || !any(adjs == 1 + has.wins)) 0 else attr(mf[[1 + has.wins]], "adjust")
-  mf$`(adj2)` <- if(is.null(adjs) || !any(adjs == 2 + has.wins)) 0 else attr(mf[[2 + has.wins]], "adjust")
+  out$adj.A <- if(empty(adjs) || !any(adjs == elo.cols[1])) 0 else attr(mf[[elo.cols[1]]], "adjust")
+  out$adj.B <- if(empty(adjs) || !any(adjs == elo.cols[2])) 0 else attr(mf[[elo.cols[2]]], "adjust")
 
-  if(!is.numeric(mf$`(adj1)`) || !is.numeric(mf$`(adj2)`)) stop("Any Elo adjustments should be numeric!")
+  if(!is.numeric(out$adj.A) || !is.numeric(out$adj.B)) stop("Any Elo adjustments should be numeric!")
 
-  #####################################################################
+  attr(out, "terms") <- Terms
 
-  mf[[1 + has.wins]] <- remove_adjustedElo(mf[[1 + has.wins]])
-  mf[[2 + has.wins]] <- remove_adjustedElo(mf[[2 + has.wins]])
-
-  #####################################################################
-
-  attr(mf, "has.wins") <- has.wins
-  attr(mf, "has.k") <- has.k
-
-  if(4 + has.wins + has.k != ncol(mf)) stop("Something went wrong parsing the formula into a model.frame.")
-
-  return(mf)
+  return(out)
 }
-
-has.wins <- function(x)
-{
-  attr(x, "has.wins")
-}
-

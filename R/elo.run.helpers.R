@@ -9,9 +9,10 @@
 #'
 #' @param x An object of class \code{"elo.run"}.
 #' @param ... Other arguments (Not in use at this time).
+#' @param group A grouping vector, telling which rows to output in the matrix.
 #' @return A matrix, a data.frame, or a named vector.
 #' @examples
-#' e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
+#' e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week),
 #'              data = tournament, k = 20)
 #' head(as.matrix(e))
 #' str(as.data.frame(e))
@@ -23,9 +24,13 @@ NULL
 
 #' @rdname elo.run.helpers
 #' @export
-as.matrix.elo.run <- function(x, ...)
+as.matrix.elo.run <- function(x, ..., group = x$group)
 {
-  out <- eloRunAsMatrix(x$elos)
+  check_as_matrix(x, group)
+
+  out <- eloRunAsMatrix(x$elos, x$elos.regressed,
+                        check_group_regress(x$regress),
+                        check_group_regress(group, gt.zero = TRUE))
   colnames(out) <- x$teams
   out
 }

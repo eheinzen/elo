@@ -9,7 +9,8 @@
 #' @param wins.A Numeric vector of wins by team A.
 #' @param ... Other arguments (not in use at this time).
 #' @param adjust.A,adjust.B Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.
-#' @seealso \code{\link{elo.prob}}, \code{\link{elo.update}}
+#' @seealso \code{\link{elo.prob}}, \code{\link{elo.update}},
+#'   \code{elo.model.frame}
 #' @examples
 #' elo.calc(c(1, 0), c(1500, 1500), c(1500, 1600), k = 20)
 #'
@@ -43,8 +44,8 @@ elo.calc.formula <- function(formula, data, na.action, subset, k = NULL, ...)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo.model.frame)
-  Call$required.vars <- c("wins", "teams", "k")
+  Call$required.vars <- c("wins", "elos", "k")
   mf <- eval(Call, parent.frame())
-  elo.calc(mf[[1]], mf[[2]], mf[[3]], k = mf[[4]], ...,
-           adjust.A = mf$`(adj1)`, adjust.B = mf$`(adj2)`)
+  elo.calc(mf$wins.A, mf$elo.A, mf$elo.B, k = mf$k, ...,
+           adjust.A = mf$adj.A, adjust.B = mf$adj.B)
 }

@@ -49,5 +49,6 @@ dat <- data.frame(wins.A = c(1, 0), elo.A = c(1500, 1500),
 elo.update(wins.A ~ elo.A + elo.B + k(k), data = dat)
 }
 \seealso{
-\code{\link{elo.prob}}, \code{\link{elo.calc}}
+\code{\link{elo.prob}}, \code{\link{elo.calc}},
+  \code{elo.model.frame}
 }

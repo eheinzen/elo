@@ -1,8 +1,8 @@
 # elo ...
 
-* Implemented `elo.model.frame()`.
+* Implemented `elo.model.frame()`. The output is a `data.frame` with appropriately named columns.
 
-* Implemented `predict.elo.run()` (#2).
+* Implemented `predict.elo.run()`. (#2)
 
 * Changed the signatures of `elo.calc()` and `elo.update()` to match formula interface.
 
@@ -13,11 +13,15 @@
 
 * `elo.run()` no longer accepts numeric values for `team.A`.
 
+* `elo.run()` now accepts special functions `group()` and `regress()`. (#11, #12)
+
 * The `$elos` component of `"elo.run"` objects now uses one-based indexing for the teams column. 
 
 * `elo.prob()` now accepts vectors of team names (like `elo.run()`) as input. (#6)
 
 * Renamed `last()` to `final.elos()` (#9).
+
+* Changed `tournament` dataset.
 
 # elo 0.1.2
 
