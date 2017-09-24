@@ -19,6 +19,8 @@
 
 * Renamed `last()` to `final.elos()` (#9).
 
+* Changed `tournament` dataset.
+
 # elo 0.1.2
 
 * Fixed a spelling error in DESCRIPTION.
