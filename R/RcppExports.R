@@ -9,3 +9,7 @@ eloRunAsMatrix <- function(mat, regMat, regress, group) {
     .Call('_elo_eloRunAsMatrix', PACKAGE = 'elo', mat, regMat, regress, group)
 }
 
+finalElos <- function(mat, nTeams) {
+    .Call('_elo_finalElos', PACKAGE = 'elo', mat, nTeams)
+}
+

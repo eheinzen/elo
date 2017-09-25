@@ -15,7 +15,7 @@
 
 * `elo.run()` now accepts special functions `group()` and `regress()`. (#11, #12)
 
-* The `$elos` component of `"elo.run"` objects now uses one-based indexing for the teams column. 
+* The `$elos` component of `"elo.run"` objects has been completely reworked, and now uses 1-based indexing. 
 
 * `elo.prob()` now accepts vectors of team names (like `elo.run()`) as input. (#6)
 

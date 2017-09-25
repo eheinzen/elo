@@ -52,10 +52,8 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
                 check_group_regress(mf$regress),
                 attr(mf$regress, "to"), attr(mf$regress, "by"),
                 checked$initial.elos, checked$flag)
-  elos <- out[[1]]
-  colnames(elos) <- c("game", "team", "elo", "p.Win", "wins")
 
-  return(structure(list(elos = elos,
+  return(structure(list(elos = out[[1]],
                         elos.regressed = out[[2]],
                         teams = names(checked$initial.elos),
                         group = mf$group,
