@@ -41,7 +41,9 @@ as.matrix.elo.run <- function(x, ..., group = x$group)
 as.data.frame.elo.run <- function(x, ...)
 {
   out <- as.data.frame(x$elos)
-  out$team <- factor(out$team, levels = seq_along(x$teams), labels = x$teams)
+  colnames(out) <- c("team.A", "team.B", "p.A", "wins.A", "update", "elo.A", "elo.B")
+  out$team.A <- factor(out$team.A, levels = seq_along(x$teams), labels = x$teams)
+  out$team.B <- factor(out$team.B, levels = seq_along(x$teams), labels = x$teams)
   out
 }
 
