@@ -85,6 +85,11 @@ check_as_matrix <- function(x, group)
   stopifnot(is.matrix(x$elos), is.numeric(x$elos))
   stopifnot(is.matrix(x$elos.regressed), is.numeric(x$elos.regressed))
   group <- check_group_regress(group, gt.zero = TRUE)
-  stopifnot(length(group) == max(x$elos[, 1]))
+  stopifnot(length(group) == nrow(x$elos))
 }
 
+check_final_elos <- function(x, len)
+{
+  stopifnot(is.matrix(x$elos), is.numeric(x$elos))
+  stopifnot(length(x$teams) == max(c(x$elos[, 1], x$elos[, 2])))
+}

@@ -40,10 +40,23 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// finalElos
+NumericVector finalElos(NumericMatrix mat, int nTeams);
+RcppExport SEXP _elo_finalElos(SEXP matSEXP, SEXP nTeamsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< int >::type nTeams(nTeamsSEXP);
+    rcpp_result_gen = Rcpp::wrap(finalElos(mat, nTeams));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_elo_eloRun", (DL_FUNC) &_elo_eloRun, 11},
     {"_elo_eloRunAsMatrix", (DL_FUNC) &_elo_eloRunAsMatrix, 4},
+    {"_elo_finalElos", (DL_FUNC) &_elo_finalElos, 2},
     {NULL, NULL, 0}
 };
 

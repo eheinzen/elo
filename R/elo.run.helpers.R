@@ -56,11 +56,10 @@ final.elos <- function(x, ...)
 #' @export
 final.elos.elo.run <- function(x, ...)
 {
-  y <- as.data.frame(x, ...)
-  idx <- !duplicated(y$team, fromLast = TRUE)
-  tmp <- y$elo[idx]
-  names(tmp) <- as.character(y$team[idx])
-  tmp[match(names(tmp), x$teams)]
+  check_final_elos(x, length(x$teams))
+  out <- finalElos(x$elos, length(x$teams))
+  names(out) <- x$teams
+  out
 }
 
 
