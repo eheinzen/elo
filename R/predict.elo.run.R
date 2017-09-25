@@ -20,9 +20,7 @@ predict.elo.run <- function(object, newdata, ...)
 {
   if(missing(newdata))
   {
-    e <- object$elos
-    g <- e[, 1]
-    return(e[g > 0 & !duplicated(g), 4])
+    return(object$elos[, 3])
   } else
   {
     form <- stats::formula(stats::delete.response(stats::terms(object)))
