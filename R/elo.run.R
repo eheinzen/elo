@@ -67,7 +67,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
 print.elo.run <- function(x, ...)
 {
   cat("\nAn object of class 'elo.run', containing information on ",
-      length(x$teams), " teams and ", max(x$elos[, 1]), " matches.\n\n", sep = "")
+      length(x$teams), " teams and ", nrow(x$elos), " matches.\n\n", sep = "")
   invisible(x)
 }
 
