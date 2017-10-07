@@ -93,7 +93,7 @@ NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericMatrix regMat,
   double nOut = sum(group);
   NumericMatrix out(nOut, nTeams);
   NumericVector curr(nTeams);
-  int row = 0, regRow = 1, outRow = 0;
+  int regRow = 1, outRow = 0;
 
   for(int i = 0; i < nGames; i++)
   {
