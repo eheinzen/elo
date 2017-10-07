@@ -18,7 +18,7 @@ remove_adjustedElo <- function(x)
   out <- NextMethod()
   attr(out, "to") <- attr(x, "to")
   attr(out, "by") <- attr(x, "by")
-  x
+  out
 }
 
 check_elo_run_vars <- function(mf, initial.elos = NULL)
