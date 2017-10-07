@@ -1,4 +1,5 @@
 
+#' @export
 "[.adjustedElo" <- function(x, i)
 {
   out <- NextMethod()
@@ -13,6 +14,7 @@ remove_adjustedElo <- function(x)
   x
 }
 
+#' @export
 "[.regressElo" <- function(x, i)
 {
   out <- NextMethod()
