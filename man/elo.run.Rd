@@ -4,12 +4,15 @@
 \alias{elo.run}
 \alias{elo.run}
 \alias{print.elo.run}
+\alias{print.elo.run.regressed}
 \title{Calculate Elos for a series of matches}
 \usage{
 elo.run(formula, data, na.action, subset, k = NULL, initial.elos = NULL,
   ...)
 
 \method{print}{elo.run}(x, ...)
+
+\method{print}{elo.run.regressed}(x, ...)
 }
 \arguments{
 \item{formula}{A formula. See the "details" section of \code{\link{elo.model.frame}}.}
@@ -26,10 +29,10 @@ elo.run(formula, data, na.action, subset, k = NULL, initial.elos = NULL,
 
 \item{...}{Other arguments (not used at this time).}
 
-\item{x}{An object of class \code{"elo.run"}.}
+\item{x}{An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.}
 }
 \value{
-An object of class \code{"elo.run"}.
+An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
 }
 \description{
 Calculate Elos for a series of matches.
@@ -58,5 +61,5 @@ elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 30) +
 }
 \seealso{
 \code{\link{score}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}},
-  \code{elo.model.frame}
+  \code{elo.model.frame}, \link{elo.run.helpers}{elo.run helpers}.
 }

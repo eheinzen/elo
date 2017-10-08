@@ -1,13 +1,14 @@
 
 #' Helper functions for \code{elo.run}
 #'
-#' \code{as.matrix.elo.run} converts an object from \code{\link{elo.run}} into a matrix of running Elos.
+#' \code{as.matrix} converts an Elo object into a matrix of running Elos.
 #'
-#' \code{as.data.frame.elo.run} converts the \code{"elos"} component of an object from \code{\link{elo.run}} into a data.frame.
+#' \code{as.data.frame} converts the \code{"elos"} component of an object
+#'   from \code{\link{elo.run}} into a data.frame.
 #'
-#' \code{last} is a generic function, whose \code{\link{elo.run}} method extracts the last Elo per team.
+#' \code{final.elos} is a generic function to extract the last Elo per team.
 #'
-#' @param x An object of class \code{"elo.run"}.
+#' @param x An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
 #' @param ... Other arguments (Not in use at this time).
 #' @param group A grouping vector, telling which rows to output in the matrix.
 #' @return A matrix, a data.frame, or a named vector.

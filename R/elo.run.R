@@ -6,8 +6,8 @@
 #' @inheritParams elo.calc
 #' @param initial.elos An optional named vector containing initial Elo ratings for all teams in \code{formula}.
 #' @param ... Other arguments (not used at this time).
-#' @param x An object of class \code{"elo.run"}.
-#' @return An object of class \code{"elo.run"}.
+#' @param x An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
+#' @return An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
 #' @examples
 #' data(tournament)
 #' elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
@@ -30,7 +30,7 @@
 #'         team.Visitor + regress(half, 1500, 0.2), data = tournament, k = 20)
 #'
 #' @seealso \code{\link{score}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}},
-#'   \code{elo.model.frame}
+#'   \code{elo.model.frame}, \link{elo.run.helpers}{elo.run helpers}.
 #' @name elo.run
 NULL
 #> NULL
