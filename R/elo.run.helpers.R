@@ -28,7 +28,7 @@ as.matrix.elo.run <- function(x, ..., group = x$group)
 {
   check_as_matrix(x, group)
 
-  out <- eloRunAsMatrix(x$elos, x$elos.regressed,
+  out <- eloRunAsMatrix(x$elos, x$initial.elos, x$elos.regressed,
                         check_group_regress(x$regress),
                         check_group_regress(group, gt.zero = TRUE))
   colnames(out) <- x$teams

@@ -27,16 +27,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // eloRunAsMatrix
-NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericMatrix regMat, LogicalVector regress, LogicalVector group);
-RcppExport SEXP _elo_eloRunAsMatrix(SEXP matSEXP, SEXP regMatSEXP, SEXP regressSEXP, SEXP groupSEXP) {
+NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericVector initialElos, NumericMatrix regMat, LogicalVector regress, LogicalVector group);
+RcppExport SEXP _elo_eloRunAsMatrix(SEXP matSEXP, SEXP initialElosSEXP, SEXP regMatSEXP, SEXP regressSEXP, SEXP groupSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type initialElos(initialElosSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type regMat(regMatSEXP);
     Rcpp::traits::input_parameter< LogicalVector >::type regress(regressSEXP);
     Rcpp::traits::input_parameter< LogicalVector >::type group(groupSEXP);
-    rcpp_result_gen = Rcpp::wrap(eloRunAsMatrix(mat, regMat, regress, group));
+    rcpp_result_gen = Rcpp::wrap(eloRunAsMatrix(mat, initialElos, regMat, regress, group));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -55,7 +56,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_elo_eloRun", (DL_FUNC) &_elo_eloRun, 11},
-    {"_elo_eloRunAsMatrix", (DL_FUNC) &_elo_eloRunAsMatrix, 4},
+    {"_elo_eloRunAsMatrix", (DL_FUNC) &_elo_eloRunAsMatrix, 5},
     {"_elo_finalElos", (DL_FUNC) &_elo_finalElos, 2},
     {NULL, NULL, 0}
 };

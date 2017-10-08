@@ -5,8 +5,8 @@ eloRun <- function(teamA, teamB, winsA, k, adjTeamA, adjTeamB, regress, to, by, 
     .Call('_elo_eloRun', PACKAGE = 'elo', teamA, teamB, winsA, k, adjTeamA, adjTeamB, regress, to, by, initialElos, flag)
 }
 
-eloRunAsMatrix <- function(mat, regMat, regress, group) {
-    .Call('_elo_eloRunAsMatrix', PACKAGE = 'elo', mat, regMat, regress, group)
+eloRunAsMatrix <- function(mat, initialElos, regMat, regress, group) {
+    .Call('_elo_eloRunAsMatrix', PACKAGE = 'elo', mat, initialElos, regMat, regress, group)
 }
 
 finalElos <- function(mat, nTeams) {
