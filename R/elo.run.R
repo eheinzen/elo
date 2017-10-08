@@ -52,16 +52,17 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
                 checked$k, checked$adj.A, checked$adj.B,
                 regr, attr(mf$regress, "to"), attr(mf$regress, "by"),
                 checked$initial.elos, checked$flag)
+  any.regr <- any(regr)
 
   return(structure(list(
     elos = out[[1]],
     initial.elos = checked$initial.elos,
-    elos.regressed = if(any(regr)) out[[2]] else NULL,
+    elos.regressed = if(any.regr) out[[2]] else NULL,
     teams = names(checked$initial.elos),
     group = mf$group,
-    regress = mf$regress,
+    regress = if(any.regr) mf$regress else NULL,
     terms = Terms
-  ), class = c(if(any(regr)) "elo.run.regressed", "elo.run")))
+  ), class = c(if(any.regr) "elo.run.regressed", "elo.run")))
 }
 
 #' @rdname elo.run
