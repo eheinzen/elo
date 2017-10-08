@@ -31,11 +31,10 @@ List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
   currElo = initialElos;
 
   NumericMatrix out(nGames, 7);
-  NumericMatrix regOut(1 + nRegress, nTeams);
-  regOut(0, _) = initialElos;
+  NumericMatrix regOut(nRegress, nTeams);
 
   double tmp = 0, prb = 0;
-  int regRow = 1;
+  int regRow = 0;
   double e1 = 0, e2 = 0, j1 = 0, j2 = 0;
 
   for(int i = 0; i < nGames; i++)

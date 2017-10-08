@@ -47,20 +47,22 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
 
   checked <- check_elo_run_vars(mf, initial.elos)
 
+  regr <- check_group_regress(mf$regress)
   out <- eloRun(checked$team.A, checked$team.B, checked$wins.A,
                 checked$k, checked$adj.A, checked$adj.B,
-                check_group_regress(mf$regress),
-                attr(mf$regress, "to"), attr(mf$regress, "by"),
+                regr, attr(mf$regress, "to"), attr(mf$regress, "by"),
                 checked$initial.elos, checked$flag)
 
-  return(structure(list(elos = out[[1]],
-                        elos.regressed = out[[2]],
-                        teams = names(checked$initial.elos),
-                        group = mf$group,
-                        regress = mf$regress,
-                        terms = Terms), class = "elo.run"))
+  return(structure(list(
+    elos = out[[1]],
+    initial.elos = checked$initial.elos,
+    elos.regressed = if(any(regr)) out[[2]] else NULL,
+    teams = names(checked$initial.elos),
+    group = mf$group,
+    regress = mf$regress,
+    terms = Terms
+  ), class = c(if(any(regr)) "elo.run.regressed", "elo.run")))
 }
-
 
 #' @rdname elo.run
 #' @export
@@ -71,3 +73,13 @@ print.elo.run <- function(x, ...)
   invisible(x)
 }
 
+
+#' @rdname elo.run
+#' @export
+print.elo.run.regressed <- function(x, ...)
+{
+  cat("\nAn object of class 'elo.run.regress', containing information on ",
+      length(x$teams), " teams and ", nrow(x$elos), " matches, with ",
+      nrow(x$elos.regressed) - 1, " regressions.\n\n", sep = "")
+  invisible(x)
+}
