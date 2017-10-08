@@ -81,15 +81,21 @@ check_group_regress <- function(x, gt.zero = FALSE)
   x
 }
 
-check_as_matrix <- function(x, group)
+check_as_matrix <- function(x, group, regr = FALSE)
 {
-  stopifnot(length(x$teams) == ncol(x$elos.regressed))
-  stopifnot(length(x$teams) == length(x$initial.elos))
   stopifnot(is.matrix(x$elos), is.numeric(x$elos))
   stopifnot(is.numeric(x$initial.elos))
-  stopifnot(is.matrix(x$elos.regressed), is.numeric(x$elos.regressed))
+  stopifnot(length(x$teams) == length(x$initial.elos))
+
+  if(regr)
+  {
+    stopifnot(is.matrix(x$elos.regressed), is.numeric(x$elos.regressed))
+    stopifnot(length(x$teams) == ncol(x$elos.regressed))
+  }
+
   group <- check_group_regress(group, gt.zero = TRUE)
   stopifnot(length(group) == nrow(x$elos))
+  invisible(group) # to avoid checking it again later
 }
 
 check_final_elos <- function(x, len)

@@ -26,15 +26,23 @@ NULL
 #' @export
 as.matrix.elo.run <- function(x, ..., group = x$group)
 {
-  check_as_matrix(x, group)
-
-  out <- eloRunAsMatrix(x$elos, x$initial.elos, x$elos.regressed,
-                        check_group_regress(x$regress),
-                        check_group_regress(group, gt.zero = TRUE))
+  group <- check_as_matrix(x, group)
+  out <- eloRunAsMatrix(x$elos, x$initial.elos, group)
   colnames(out) <- x$teams
   out
 }
 
+#' @rdname elo.run.helpers
+#' @export
+as.matrix.elo.run.regressed <- function(x, ..., group = x$group)
+{
+  group <- check_as_matrix(x, group, regr = TRUE)
+  out <- eloRunRegressedAsMatrix(x$elos, x$initial.elos, x$elos.regressed,
+                                 check_group_regress(x$regress),
+                                 group)
+  colnames(out) <- x$teams
+  out
+}
 
 #' @rdname elo.run.helpers
 #' @export
