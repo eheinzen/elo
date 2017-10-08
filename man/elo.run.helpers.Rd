@@ -7,6 +7,7 @@
 \alias{as.data.frame.elo.run}
 \alias{final.elos}
 \alias{final.elos.elo.run}
+\alias{final.elos.elo.run.regressed}
 \title{Helper functions for \code{elo.run}}
 \usage{
 \method{as.matrix}{elo.run}(x, ..., group = x$group)
@@ -18,6 +19,8 @@
 final.elos(x, ...)
 
 \method{final.elos}{elo.run}(x, ...)
+
+\method{final.elos}{elo.run.regressed}(x, regressed = NULL, ...)
 }
 \arguments{
 \item{x}{An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.}
@@ -25,6 +28,12 @@ final.elos(x, ...)
 \item{...}{Other arguments (Not in use at this time).}
 
 \item{group}{A grouping vector, telling which rows to output in the matrix.}
+
+\item{regressed}{Logical, denoting whether to use the post-regressed (\code{TRUE}) or
+pre-regressed (\code{FALSE}) final Elos. Note that \code{TRUE} only makes sense when the
+final Elos were regressed one last time (i.e., if the last element of the \code{regress()})
+vector yields \code{TRUE}). The default (\code{NULL}) is to use the post-regressed Elos
+in only this circumstance.}
 }
 \value{
 A matrix, a data.frame, or a named vector.
