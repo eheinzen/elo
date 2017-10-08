@@ -81,6 +81,6 @@ print.elo.run.regressed <- function(x, ...)
 {
   cat("\nAn object of class 'elo.run.regress', containing information on ",
       length(x$teams), " teams and ", nrow(x$elos), " matches, with ",
-      nrow(x$elos.regressed) - 1, " regressions.\n\n", sep = "")
+      nrow(x$elos.regressed), " regressions.\n\n", sep = "")
   invisible(x)
 }
