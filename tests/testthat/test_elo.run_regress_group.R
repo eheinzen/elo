@@ -19,8 +19,14 @@ test_that("regress works()", {
   )
   expect_identical(
     round(final.elos(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
-                            k = 20, data = dat)), 3),
+                             k = 20, data = dat), regressed = FALSE), 3),
     ref1
+  )
+  expect_identical(
+    round(as.vector(final.elos(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
+                                       k = 20, data = dat))), 3),
+    round(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
+                  k = 20, data = dat)$elos.regressed[2, ], 3)
   )
   expect_identical(
     round(as.matrix(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),

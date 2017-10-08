@@ -11,6 +11,11 @@
 #' @param x An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
 #' @param ... Other arguments (Not in use at this time).
 #' @param group A grouping vector, telling which rows to output in the matrix.
+#' @param regressed Logical, denoting whether to use the post-regressed (\code{TRUE}) or
+#'   pre-regressed (\code{FALSE}) final Elos. Note that \code{TRUE} only makes sense when the
+#'   final Elos were regressed one last time (i.e., if the last element of the \code{regress()})
+#'   vector yields \code{TRUE}). The default (\code{NULL}) is to use the post-regressed Elos
+#'   in only this circumstance.
 #' @return A matrix, a data.frame, or a named vector.
 #' @examples
 #' e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week),
@@ -73,4 +78,17 @@ final.elos.elo.run <- function(x, ...)
   out
 }
 
+#' @rdname elo.run.helpers
+#' @export
+final.elos.elo.run.regressed <- function(x, regressed = NULL, ...)
+{
+  if(is.null(regressed)) regressed <- utils::tail(check_group_regress(x$regress), 1)
+  if(!regressed)
+  {
+    return(NextMethod())
+  }
+  out <- x$elos.regressed[nrow(x$elos.regressed), ]
+  names(out) <- x$teams
+  out
+}
 
