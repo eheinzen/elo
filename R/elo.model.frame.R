@@ -101,11 +101,10 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
 
   #####################################################################
 
-  empty <- function(x) is.null(x) || length(x) == 0
   has.wins <- attr(Terms, "response") == 1
 
   k.col <- attr(Terms, "specials")$k
-  has.k <- !empty(k.col) || !is.null(k)
+  has.k <- !null_or_length0(k.col) || !is.null(k)
 
   grp.col <- attr(Terms, "specials")$group
   reg.col <- attr(Terms, "specials")$regress
@@ -118,13 +117,13 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   if("k" %in% required.vars && !has.k)
   {
     stop("'k' is not in 'formula' or specified as an argument.")
-  } else if(!empty(k.col) && !is.null(k))
+  } else if(!null_or_length0(k.col) && !is.null(k))
   {
     warning("'k = ' argument being ignored.")
   }
 
   # need all the parens b/c ! is a low-precident operator
-  sum.empty <- (!empty(k.col)) + (!empty(grp.col)) + (!empty(reg.col))
+  sum.empty <- (!null_or_length0(k.col)) + (!null_or_length0(grp.col)) + (!null_or_length0(reg.col))
 
   if(has.wins + sum.empty + 2 != ncol(mf))
   {
@@ -149,17 +148,17 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   if("wins" %in% required.vars) out$wins.A <- validate_score(as.numeric(mf[[1]]))
   if("k" %in% required.vars)
   {
-    out$k <- if(empty(k.col)) k else mf[[k.col]]
+    out$k <- if(null_or_length0(k.col)) k else mf[[k.col]]
     if(!is.numeric(out$k) || anyNA(out$k)) stop("'k' should be numeric and non-NA.")
   }
   if("group" %in% required.vars)
   {
-    out$group <- if(empty(grp.col)) TRUE else mf[[grp.col]]
+    out$group <- if(null_or_length0(grp.col)) TRUE else mf[[grp.col]]
   }
   if("regress" %in% required.vars)
   {
-    out$regress <- if(empty(reg.col)) FALSE else mf[[reg.col]]
-    if(empty(reg.col))
+    out$regress <- if(null_or_length0(reg.col)) FALSE else mf[[reg.col]]
+    if(null_or_length0(reg.col))
     {
       attr(out$regress, "to") <- 1500
       attr(out$regress, "by") <- 0
@@ -167,8 +166,8 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   }
 
   adjs <- attr(Terms, "specials")$adjust
-  out$adj.A <- if(empty(adjs) || !any(adjs == elo.cols[1])) 0 else attr(mf[[elo.cols[1]]], "adjust")
-  out$adj.B <- if(empty(adjs) || !any(adjs == elo.cols[2])) 0 else attr(mf[[elo.cols[2]]], "adjust")
+  out$adj.A <- if(null_or_length0(adjs) || !any(adjs == elo.cols[1])) 0 else attr(mf[[elo.cols[1]]], "adjust")
+  out$adj.B <- if(null_or_length0(adjs) || !any(adjs == elo.cols[2])) 0 else attr(mf[[elo.cols[2]]], "adjust")
 
   if(!is.numeric(out$adj.A) || !is.numeric(out$adj.B)) stop("Any Elo adjustments should be numeric!")
 
