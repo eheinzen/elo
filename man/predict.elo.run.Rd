@@ -2,9 +2,13 @@
 % Please edit documentation in R/predict.elo.run.R
 \name{predict.elo.run}
 \alias{predict.elo.run}
+\alias{predict.elo.run}
+\alias{predict.elo.run.regressed}
 \title{Make Predictions on an \code{elo.run} Object}
 \usage{
 \method{predict}{elo.run}(object, newdata, ...)
+
+\method{predict}{elo.run.regressed}(object, newdata, regressed = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class \code{"\link{elo.run}"}.}
@@ -14,6 +18,8 @@ that made \code{object}. If missing, the predicted win probabilities from
 \code{object} will be returned.}
 
 \item{...}{Other arguments to be passed to \code{\link{elo.prob}}.}
+
+\item{regressed}{See the note on \code{final.elos}.}
 }
 \value{
 A vector of win probabilities.

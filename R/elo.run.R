@@ -6,8 +6,8 @@
 #' @inheritParams elo.calc
 #' @param initial.elos An optional named vector containing initial Elo ratings for all teams in \code{formula}.
 #' @param ... Other arguments (not used at this time).
-#' @param x An object of class \code{"elo.run"}.
-#' @return An object of class \code{"elo.run"}.
+#' @param x An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
+#' @return An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
 #' @examples
 #' data(tournament)
 #' elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
@@ -30,7 +30,7 @@
 #'         team.Visitor + regress(half, 1500, 0.2), data = tournament, k = 20)
 #'
 #' @seealso \code{\link{score}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}},
-#'   \code{elo.model.frame}
+#'   \code{elo.model.frame}, \link{elo.run.helpers}{elo.run helpers}.
 #' @name elo.run
 NULL
 #> NULL
@@ -47,20 +47,23 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
 
   checked <- check_elo_run_vars(mf, initial.elos)
 
+  regr <- check_group_regress(mf$regress)
   out <- eloRun(checked$team.A, checked$team.B, checked$wins.A,
                 checked$k, checked$adj.A, checked$adj.B,
-                check_group_regress(mf$regress),
-                attr(mf$regress, "to"), attr(mf$regress, "by"),
+                regr, attr(mf$regress, "to"), attr(mf$regress, "by"),
                 checked$initial.elos, checked$flag)
+  any.regr <- any(regr)
 
-  return(structure(list(elos = out[[1]],
-                        elos.regressed = out[[2]],
-                        teams = names(checked$initial.elos),
-                        group = mf$group,
-                        regress = mf$regress,
-                        terms = Terms), class = "elo.run"))
+  return(structure(list(
+    elos = out[[1]],
+    initial.elos = checked$initial.elos,
+    elos.regressed = if(any.regr) out[[2]] else NULL,
+    teams = names(checked$initial.elos),
+    group = mf$group,
+    regress = if(any.regr) mf$regress else NULL,
+    terms = Terms
+  ), class = c(if(any.regr) "elo.run.regressed", "elo.run")))
 }
-
 
 #' @rdname elo.run
 #' @export
@@ -71,3 +74,13 @@ print.elo.run <- function(x, ...)
   invisible(x)
 }
 
+
+#' @rdname elo.run
+#' @export
+print.elo.run.regressed <- function(x, ...)
+{
+  cat("\nAn object of class 'elo.run.regressed', containing information on ",
+      length(x$teams), " teams and ", nrow(x$elos), " matches, with ",
+      nrow(x$elos.regressed), " regressions.\n\n", sep = "")
+  invisible(x)
+}

@@ -31,11 +31,10 @@ List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
   currElo = initialElos;
 
   NumericMatrix out(nGames, 7);
-  NumericMatrix regOut(1 + nRegress, nTeams);
-  regOut(0, _) = initialElos;
+  NumericMatrix regOut(nRegress, nTeams);
 
   double tmp = 0, prb = 0;
-  int regRow = 1;
+  int regRow = 0;
   double e1 = 0, e2 = 0, j1 = 0, j2 = 0;
 
   for(int i = 0; i < nGames; i++)
@@ -82,82 +81,3 @@ List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
 
   return List::create(out, regOut);
 }
-
-// [[Rcpp::export]]
-NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericMatrix regMat,
-                             LogicalVector regress, LogicalVector group)
-{
-  // this function uses 1-based indexing, since the incoming matrix does, too
-  double nTeams = regMat.ncol();
-  double nGames = mat.nrow();
-  double nOut = sum(group);
-  NumericMatrix out(nOut, nTeams);
-  NumericVector curr(nTeams);
-  int regRow = 1, outRow = 0;
-
-  for(int i = 0; i < nGames; i++)
-  {
-    if(i == 0)
-    {
-      curr = regMat(0, _);
-    } else if(regress[i - 1])
-    {
-      curr = regMat(regRow, _);
-      regRow++;
-    }
-
-    curr(mat(i, 0) - 1) = mat(i, 5);
-    if(mat(i, 1) > 0)
-    {
-      curr(mat(i, 1) - 1) = mat(i, 6);
-    }
-
-    if(group[i])
-    {
-      out(outRow, _) = curr;
-      outRow++;
-    }
-  }
-  return out;
-}
-
-bool anyZero(NumericVector x)
-{
-  for(int i = 0; i < x.size(); i++)
-  {
-    if(x[i] == 0)
-    {
-      return true;
-    }
-  }
-  return false;
-}
-
-// [[Rcpp::export]]
-NumericVector finalElos(NumericMatrix mat, int nTeams)
-{
-  NumericVector out(nTeams);
-  int t1 = 0, t2 = 0;
-  for(int row = mat.nrow() - 1; row > -1; row--)
-  {
-    t1 = mat(row, 0) - 1;
-    t2 = mat(row, 1) - 1;
-    if(out[t1] == 0)
-    {
-      out[t1] = mat(row, 5);
-    }
-    if(t2 >= 0 && out[t2] == 0)
-    {
-      out[t2] = mat(row, 6);
-    }
-
-    if(!anyZero(out))
-    {
-      return out;
-    }
-  }
-  return out;
-}
-
-
-

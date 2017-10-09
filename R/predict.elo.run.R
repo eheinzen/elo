@@ -5,6 +5,7 @@
 #' @param newdata A new dataset containing the same variables as the call
 #'   that made \code{object}. If missing, the predicted win probabilities from
 #'   \code{object} will be returned.
+#' @param regressed See the note on \code{final.elos}.
 #' @param ... Other arguments to be passed to \code{\link{elo.prob}}.
 #' @return A vector of win probabilities.
 #' @examples
@@ -15,6 +16,26 @@
 #'                    data = t1, k = 20)
 #' predict(results)
 #' predict(results, newdata = t2)
+#' @name predict.elo.run
+NULL
+#> NULL
+
+null_or_length0 <- function(x) is.null(x) || length(x) == 0
+
+clean_elo_formula <- function(Terms)
+{
+  k.col <- attr(Terms, "specials")$k
+  grp.col <- attr(Terms, "specials")$group
+  reg.col <- attr(Terms, "specials")$regress
+
+  if(!null_or_length0(k.col) || !null_or_length0(grp.col) || !null_or_length0(reg.col))
+  {
+    Terms <- stats::drop.terms(Terms, dropx = c(k.col, grp.col, reg.col) - 1, keep.response = TRUE)
+  }
+  stats::formula(stats::delete.response(Terms))
+}
+
+#' @rdname predict.elo.run
 #' @export
 predict.elo.run <- function(object, newdata, ...)
 {
@@ -23,7 +44,22 @@ predict.elo.run <- function(object, newdata, ...)
     return(object$elos[, 3])
   } else
   {
-    form <- stats::formula(stats::delete.response(stats::terms(object)))
+    form <- clean_elo_formula(stats::terms(object))
     return(elo.prob(form, data = newdata, ..., elos = final.elos(object)))
+  }
+}
+
+
+#' @rdname predict.elo.run
+#' @export
+predict.elo.run.regressed <- function(object, newdata, regressed = NULL, ...)
+{
+  if(missing(newdata))
+  {
+    return(object$elos[, 3])
+  } else
+  {
+    form <- clean_elo_formula(stats::terms(object))
+    return(elo.prob(form, data = newdata, ..., elos = final.elos(object, regressed = regressed)))
   }
 }
