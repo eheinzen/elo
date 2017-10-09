@@ -66,3 +66,12 @@ test_that("'formula' can be in any order", {
 })
 
 
+test_that("prediction works correctly", {
+  results <- elo.run(wins.A ~ adjust(team.A, 10) + team.B + regress(season, 1500, 0.2), data = dat, k = 20)
+  newdat <- data.frame(team.A = "Team A", team.B = "Team B")
+  expect_identical(
+    predict(results, newdata = newdat),
+    elo.prob(final.elos(results)["Team A"], final.elos(results)["Team B"], adjust.A = 10)
+  )
+  expect_equal(length(predict(results)), nrow(dat))
+})
