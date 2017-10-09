@@ -41,7 +41,7 @@ predict.elo.run <- function(object, newdata, ...)
 {
   if(missing(newdata))
   {
-    return(object$elos[, 3])
+    return(itted(object))
   } else
   {
     form <- clean_elo_formula(stats::terms(object))
@@ -56,7 +56,7 @@ predict.elo.run.regressed <- function(object, newdata, regressed = NULL, ...)
 {
   if(missing(newdata))
   {
-    return(object$elos[, 3])
+    return(fitted(object))
   } else
   {
     form <- clean_elo_formula(stats::terms(object))
