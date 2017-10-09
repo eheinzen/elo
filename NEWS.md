@@ -2,7 +2,7 @@
 
 * Implemented `elo.model.frame()`. The output is a `data.frame` with appropriately named columns.
 
-* Implemented `predict.elo.run()`. (#2)
+* Implemented `predict.elo.run()` and `predict.elo.run.regressed()`. (#2, #19)
 
 * Changed the signatures of `elo.calc()` and `elo.update()` to match formula interface.
 
@@ -13,7 +13,8 @@
 
 * `elo.run()` no longer accepts numeric values for `team.A`.
 
-* `elo.run()` now accepts special functions `group()` and `regress()`. (#11, #12)
+* `elo.run()` now accepts special functions `group()` and `regress()`. If the latter is used,
+  the class of the returned object becomes `"elo.run.regressed"`. (#11, #12, #19)
 
 * The `$elos` component of `"elo.run"` objects has been completely reworked, and now uses 1-based indexing.
   Because of this, the `print.elo.run()` method also had to be fixed. (#16)
