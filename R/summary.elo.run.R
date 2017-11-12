@@ -46,6 +46,7 @@ summary.elo.run <- function(object, ...)
 {
   object$favored <- favored(object)
   object$mse <- mse(object)
+  object$auc <- auc.elo.run(object)
   class(object) <- c("summary.elo.run", class(object))
   object
 }
@@ -55,8 +56,11 @@ summary.elo.run <- function(object, ...)
 print.summary.elo.run <- function(x, ...)
 {
   NextMethod()
-  cat("Favored Teams vs. Actual Wins: \n")
+  cat("Mean Square Error: ", round(x$mse, 4), "\n",
+      "AUC: ", round(x$auc, 4), "\n",
+      "Favored Teams vs. Actual Wins: \n",
+      sep = "")
   print(x$favored)
-  cat("Mean Square Error:", round(mse(x), 4))
+
   invisible(x)
 }
