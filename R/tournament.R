@@ -34,8 +34,8 @@ make_tournament_dataset <- function(seed = NULL)
   tournament <- expand.grid(team.Home = all.teams, team.Visitor = all.teams, stringsAsFactors = FALSE)
   tournament <- tournament[tournament$team.Home != tournament$team.Visitor, ]
 
-  tournament$points.Home <- vapply(means[tournament$team.Home] + 3, rpois, 0, n = 1)
-  tournament$points.Visitor <- vapply(means[tournament$team.Visitor], rpois, 0, n = 1)
+  tournament$points.Home <- vapply(means[tournament$team.Home] + 3, stats::rpois, 0, n = 1)
+  tournament$points.Visitor <- vapply(means[tournament$team.Visitor], stats::rpois, 0, n = 1)
 
   tournament$week <- 0
   tournament$week[1] <- 1

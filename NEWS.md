@@ -23,6 +23,10 @@
 
 * Renamed `last()` to `final.elos()` (#9).
 
+* Implemented `summary.elo.run()`, along with helpers to calculate AUC and MSE (`auc()` and `mse()`). (#15)
+
+* The `elo` package now imports `pROC::auc()`.
+
 * Changed `tournament` dataset.
 
 # elo 0.1.2
