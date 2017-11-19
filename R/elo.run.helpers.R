@@ -14,8 +14,7 @@
 #' @param regressed Logical, denoting whether to use the post-regressed (\code{TRUE}) or
 #'   pre-regressed (\code{FALSE}) final Elos. Note that \code{TRUE} only makes sense when the
 #'   final Elos were regressed one last time (i.e., if the last element of the \code{regress()})
-#'   vector yields \code{TRUE}). The default (\code{NULL}) is to use the post-regressed Elos
-#'   in only this circumstance.
+#'   vector yields \code{TRUE}).
 #' @return A matrix, a data.frame, or a named vector.
 #' @examples
 #' e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week),
@@ -80,9 +79,10 @@ final.elos.elo.run <- function(x, ...)
 
 #' @rdname elo.run.helpers
 #' @export
-final.elos.elo.run.regressed <- function(x, regressed = NULL, ...)
+final.elos.elo.run.regressed <- function(x, regressed = FALSE, ...)
 {
-  if(is.null(regressed)) regressed <- utils::tail(check_group_regress(x$regress), 1)
+  if(regressed && !utils::tail(check_group_regress(x$regress), 1))
+    warning("'regressed = TRUE' only makes sense if the final Elos are regressed after the final game.")
   if(!regressed)
   {
     return(NextMethod())

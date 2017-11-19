@@ -5,7 +5,7 @@
 #' @param newdata A new dataset containing the same variables as the call
 #'   that made \code{object}. If missing, the predicted win probabilities from
 #'   \code{object} will be returned.
-#' @param regressed See the note on \code{final.elos}.
+#' @param regressed See the note on \code{\link{final.elos}}.
 #' @param ... Other arguments to be passed to \code{\link{elo.prob}}.
 #' @return A vector of win probabilities.
 #' @examples
@@ -52,7 +52,7 @@ predict.elo.run <- function(object, newdata, ...)
 
 #' @rdname predict.elo.run
 #' @export
-predict.elo.run.regressed <- function(object, newdata, regressed = NULL, ...)
+predict.elo.run.regressed <- function(object, newdata, regressed = FALSE, ...)
 {
   if(missing(newdata))
   {
