@@ -34,6 +34,13 @@ test_that("regress works()", {
     round(as.matrix(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
                             k = 20, data = dat, subset = week < 2))[2, ], 3)
   )
+  expect_identical(
+    round(final.elos(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
+                             k = 20, data = dat,
+                             initial.elos = c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400)),
+                     regressed = FALSE), 3),
+    c("Team A" = 1590.870, "Team B" = 1501.457, "Team C" = 1387.673)
+  )
 })
 
 test_that("group works()", {
