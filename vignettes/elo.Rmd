@@ -128,11 +128,17 @@ to group together in `as.matrix()` (below).
 There are several helper functions that are useful to use when interacting with
 objects of class `"elo.run"`.
 
-`as.matrix.elo.run()` creates a matrix of running Elos.
+`summary.elo.run()` reports some summary statistics.
 
 ```{r}
 e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
              data = tournament, k = 20)
+summary(e)
+```
+
+`as.matrix.elo.run()` creates a matrix of running Elos.
+
+```{r}
 head(as.matrix(e))
 ```
 
