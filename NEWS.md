@@ -1,33 +1,43 @@
-# elo ...
+# elo v1.0.0
 
-* Implemented `elo.model.frame()`. The output is a `data.frame` with appropriately named columns.
+This version is not backwards compatible!
 
-* Implemented `predict.elo.run()` and `predict.elo.run.regressed()`. (#2, #19)
+## Major Changes:
 
 * Changed the signatures of `elo.calc()` and `elo.update()` to match formula interface.
 
 * Changed `elo.calc()`, `elo.update()`, and `elo.prob()` to S3 generics, and implemented
   formula methods. The default methods now include options to adjust Elos. (#3)
-  
-* Added `is.score()` to test for "score-ness".
 
-* `elo.run()` no longer accepts numeric values for `team.A`.
+* `elo.run()`:
 
-* `elo.run()` now accepts special functions `group()` and `regress()`. If the latter is used,
-  the class of the returned object becomes `"elo.run.regressed"`. (#11, #12, #19, #22)
+    - `elo.run()` no longer accepts numeric values for `team.A`.
 
-* The `$elos` component of `"elo.run"` objects has been completely reworked, and now uses 1-based indexing.
-  Because of this, the `print.elo.run()` method also had to be fixed. (#16)
+    - `elo.run()` now accepts special functions `group()` and `regress()`. If the latter is used,
+      the class of the returned object becomes `"elo.run.regressed"`. (#11, #12, #19, #22)
 
-* `elo.prob()` now accepts vectors of team names (like `elo.run()`) as input. (#6)
+    - The `$elos` component of `"elo.run"` objects has been completely reworked, and now uses 1-based indexing.
+      Because of this, the `print.elo.run()` method also had to be fixed. (#16)
 
 * Renamed `last()` to `final.elos()` (#9).
 
-* Implemented `summary.elo.run()`, along with helpers to calculate AUC and MSE (`auc()` and `mse()`). (#15)
+* Changed `tournament` dataset.
+
+## Smaller Changes:
 
 * The `elo` package now imports `pROC::auc()`.
 
-* Changed `tournament` dataset.
+* `elo.prob()` now accepts vectors of team names (like `elo.run()`) as input. (#6)
+
+## New Functions:
+
+* Implemented `elo.model.frame()`. The output is a `data.frame` with appropriately named columns.
+
+* Implemented `predict.elo.run()` and `predict.elo.run.regressed()`. (#2, #19)
+
+* Added `is.score()` to test for "score-ness".
+
+* Implemented `summary.elo.run()`, along with helpers to calculate AUC and MSE (`auc()` and `mse()`). (#15)
 
 # elo 0.1.2
 

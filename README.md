@@ -13,7 +13,7 @@ The `elo` package includes functions to address all kinds of Elo calculations.
 library(elo)
 ```
 
-Please see the vignette for examples.
+Please see the vignette for examples. Note that v1.0.0 is very much not backwards-compatible.
 
 # Naming Schema
 
