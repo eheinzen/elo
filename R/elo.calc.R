@@ -11,6 +11,7 @@
 #' @param adjust.A,adjust.B Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.
 #' @seealso \code{\link{elo.prob}}, \code{\link{elo.update}},
 #'   \code{elo.model.frame}
+#' @return A data.frame with two columns, giving the new Elo values after each update.
 #' @examples
 #' elo.calc(c(1, 0), c(1500, 1500), c(1500, 1600), k = 20)
 #'

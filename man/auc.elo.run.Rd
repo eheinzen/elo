@@ -11,10 +11,16 @@
 
 \item{...}{Other arguments (not used at this time).}
 }
+\value{
+The AUC of the predicted Elo probabilities and the actual win results.
+}
 \description{
 Calculate AUC on an \code{elo.run} object
 }
 \references{
 Adapted from code here:
   \url{https://stat.ethz.ch/pipermail/r-help/2005-September/079872.html}
+}
+\seealso{
+\code{pROC::\link[pROC]{auc}}, \code{\link{elo.run}}.
 }

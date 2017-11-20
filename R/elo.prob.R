@@ -6,6 +6,7 @@
 #' @param elo.A,elo.B Numeric vectors of elo scores, or else vectors of teams.
 #' @param elos An optional named vector containing Elo ratings for all teams in \code{formula}
 #'   or \code{elo.A} and \code{elo.B}.
+#' @return A vector of Elo probabilities.
 #' @details
 #'   Note that \code{formula} can be missing the \code{wins.A} component. If
 #'   present, it's ignored by \code{\link{elo.model.frame}}.

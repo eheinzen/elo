@@ -33,6 +33,9 @@ elo.calc(wins.A, ...)
 
 \item{subset}{An optional vector specifying a subset of observations.}
 }
+\value{
+A data.frame with two columns, giving the new Elo values after each update.
+}
 \description{
 Calculate post-update Elo values. This is vectorized.
 }

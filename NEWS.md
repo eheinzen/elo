@@ -29,6 +29,8 @@ This version is not backwards compatible!
 
 * `elo.prob()` now accepts vectors of team names (like `elo.run()`) as input. (#6)
 
+* Documentation and the vignette have been updated.
+
 ## New Functions:
 
 * Implemented `elo.model.frame()`. The output is a `data.frame` with appropriately named columns.

@@ -5,6 +5,7 @@
 #' \code{\link{elo.calc}}, which reports the post-update Elo values. This is vectorized.
 #'
 #' @inheritParams elo.calc
+#' @return A vector of Elo updates.
 #' @examples
 #' elo.update(c(1, 0), c(1500, 1500), c(1500, 1600), k = 20)
 #'

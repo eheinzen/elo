@@ -34,6 +34,9 @@ or \code{elo.A} and \code{elo.B}.}
 
 \item{subset}{An optional vector specifying a subset of observations.}
 }
+\value{
+A vector of Elo probabilities.
+}
 \description{
 Calculate the probability that team A beats team B. This is vectorized.
 }

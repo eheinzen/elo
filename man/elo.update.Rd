@@ -37,6 +37,9 @@ elo.update(wins.A, ...)
 
 \item{subset}{An optional vector specifying a subset of observations.}
 }
+\value{
+A vector of Elo updates.
+}
 \description{
 Calculate the update value for a given Elo matchup. This is used in
 \code{\link{elo.calc}}, which reports the post-update Elo values. This is vectorized.

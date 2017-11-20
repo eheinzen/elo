@@ -5,6 +5,8 @@
 #' @param ... Other arguments (not used at this time).
 #' @references Adapted from code here:
 #'   \url{https://stat.ethz.ch/pipermail/r-help/2005-September/079872.html}
+#' @return The AUC of the predicted Elo probabilities and the actual win results.
+#' @seealso \code{pROC::\link[pROC]{auc}}, \code{\link{elo.run}}.
 #' @export
 auc.elo.run <- function(object, ...)
 {
