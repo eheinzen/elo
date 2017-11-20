@@ -4,7 +4,7 @@
 \alias{auc.elo.run}
 \title{Calculate AUC on an \code{elo.run} object}
 \usage{
-auc.elo.run(object, ...)
+\method{auc}{elo.run}(object, ...)
 }
 \arguments{
 \item{object}{An object of class \code{\link{elo.run}}.}
