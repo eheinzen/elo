@@ -14,7 +14,7 @@
 * `elo.run()` no longer accepts numeric values for `team.A`.
 
 * `elo.run()` now accepts special functions `group()` and `regress()`. If the latter is used,
-  the class of the returned object becomes `"elo.run.regressed"`. (#11, #12, #19)
+  the class of the returned object becomes `"elo.run.regressed"`. (#11, #12, #19, #22)
 
 * The `$elos` component of `"elo.run"` objects has been completely reworked, and now uses 1-based indexing.
   Because of this, the `print.elo.run()` method also had to be fixed. (#16)

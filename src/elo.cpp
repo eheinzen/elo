@@ -11,9 +11,17 @@ double eloUpdate(double eloA, double eloB, double winsA, double k)
   return k*(winsA - eloProb(eloA, eloB));
 }
 
-NumericVector eloRegress(NumericVector eloA, double to, double by)
+NumericVector eloRegress(NumericVector eloA, double to, double by, LogicalVector idx)
 {
-  return eloA + by*(to - eloA);
+  for(int i = 0; i < eloA.size(); i++)
+  {
+    if(idx[i])
+    {
+      eloA[i] = eloA[i] + by*(to - eloA[i]);
+    }
+  }
+
+  return eloA;
 }
 
 // [[Rcpp::export]]
@@ -28,6 +36,7 @@ List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
   int nRegress = sum(regress);
 
   NumericVector currElo(nTeams);
+  LogicalVector usedYet(nTeams);
   currElo = initialElos;
 
   NumericMatrix out(nGames, 7);
@@ -41,6 +50,7 @@ List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
   {
     j1 = teamA[i];
     e1 = currElo[j1];
+    usedYet[j1] = true;
 
     if(flag == 2)
     {
@@ -49,6 +59,7 @@ List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
     {
       j2 = teamB[i];
       e2 = currElo[j2];
+      usedYet[j2] = true;
     }
     prb = eloProb(e1 + adjTeamA[i], e2 + adjTeamB[i]);
     tmp = eloUpdate(e1 + adjTeamA[i], e2 + adjTeamB[i], winsA[i], k[i]);
@@ -73,7 +84,7 @@ List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
 
     if(regress[i])
     {
-      currElo = eloRegress(currElo, to, by);
+      currElo = eloRegress(currElo, to, by, usedYet);
       regOut(regRow, _) = currElo;
       regRow++;
     }
