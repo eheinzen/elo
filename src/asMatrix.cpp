@@ -10,7 +10,7 @@ NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericVector initialElos, Logic
   double nOut = sum(group);
   NumericMatrix out(nOut, nTeams);
   NumericVector curr(nTeams);
-  curr = initialElos;
+  curr = clone(initialElos);
   int outRow = 0;
 
   for(int i = 0; i < nGames; i++)
@@ -40,7 +40,7 @@ NumericMatrix eloRunRegressedAsMatrix(NumericMatrix mat, NumericVector initialEl
   double nOut = sum(group);
   NumericMatrix out(nOut, nTeams);
   NumericVector curr(nTeams);
-  curr = initialElos;
+  curr = clone(initialElos);
   int regRow = 0, outRow = 0;
 
   for(int i = 0; i < nGames; i++)

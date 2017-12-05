@@ -37,7 +37,7 @@ List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
 
   NumericVector currElo(nTeams);
   LogicalVector usedYet(nTeams);
-  currElo = initialElos;
+  currElo = clone(initialElos);
 
   NumericMatrix out(nGames, 7);
   NumericMatrix regOut(nRegress, nTeams);
