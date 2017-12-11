@@ -44,8 +44,8 @@ test_that("'adjust' specification works either as a vector or constant", {
   )
 })
 
+results <- elo.run(wins.A ~ adjust(team.A, 10) + team.B, data = dat, k = 20)
 test_that("prediction works correctly", {
-  results <- elo.run(wins.A ~ adjust(team.A, 10) + team.B, data = dat, k = 20)
   newdat <- data.frame(team.A = "Team A", team.B = "Team B")
   expect_identical(
     predict(results, newdata = newdat),
@@ -54,3 +54,7 @@ test_that("prediction works correctly", {
   expect_equal(length(predict(results)), nrow(dat))
 })
 
+test_that("#25: Deep copying", {
+  expect_equal(results$initial.elos, c("Team A" = 1500, "Team B" = 1500, "Team C" = 1500))
+  expect_equal(unname(as.matrix(results)[1, "Team C"]), 1500)
+})

@@ -36,9 +36,8 @@ test_that("regress works()", {
   )
   expect_identical(
     round(final.elos(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
-                             k = 20, data = dat,
-                             initial.elos = c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400)),
-                     regressed = FALSE), 3),
+      k = 20, data = dat, initial.elos = c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400)),
+      regressed = FALSE), 3),
     c("Team A" = 1590.870, "Team B" = 1501.457, "Team C" = 1387.673)
   )
 })
@@ -72,9 +71,8 @@ test_that("'formula' can be in any order", {
   )
 })
 
-
+results <- elo.run(wins.A ~ adjust(team.A, 10) + team.B + regress(season, 1500, 0.2), data = dat, k = 20)
 test_that("prediction works correctly", {
-  results <- elo.run(wins.A ~ adjust(team.A, 10) + team.B + regress(season, 1500, 0.2), data = dat, k = 20)
   newdat <- data.frame(team.A = "Team A", team.B = "Team B")
   expect_identical(
     predict(results, newdata = newdat),
@@ -82,3 +80,14 @@ test_that("prediction works correctly", {
   )
   expect_equal(length(predict(results)), nrow(dat))
 })
+
+results2 <- elo.run(wins.A ~ adjust(team.A, 10) + team.B + regress(season, 1500, 0.2), data = dat,
+                    k = 20, initial.elos = c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400))
+test_that("#25: Deep copying with regressed", {
+  expect_equal(results$initial.elos, c("Team A" = 1500, "Team B" = 1500, "Team C" = 1500))
+  expect_equal(unname(as.matrix(results)[1, "Team C"]), 1500)
+
+  expect_equal(results2$initial.elos, c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400))
+  expect_equal(unname(as.matrix(results2)[1, "Team C"]), 1400)
+})
+
