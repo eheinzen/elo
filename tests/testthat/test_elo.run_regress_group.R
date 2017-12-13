@@ -40,6 +40,11 @@ test_that("regress works()", {
       regressed = FALSE), 3),
     c("Team A" = 1590.870, "Team B" = 1501.457, "Team C" = 1387.673)
   )
+  expect_identical(
+    round(final.elos(elo.run(wins.A ~ team.A + team.B + regress(week, 1500, 0.2, FALSE),
+                             k = 20, data = dat), regressed = TRUE), 3),
+    c("Team A" = 1515.770, "Team B" = 1501.605, "Team C" = 1485.779)
+  )
 })
 
 test_that("group works()", {
