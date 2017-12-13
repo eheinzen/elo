@@ -4,6 +4,8 @@
 
 * Fixed a bug with initial Elos and deep copying in C++. (#25)
 
+* Added an argument to `regress()` allowing users to stop regressing teams which have stopped playing. (#26)
+
 # elo v1.0.0
 
 This version is not backwards compatible!

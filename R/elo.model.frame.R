@@ -33,8 +33,8 @@
 #'   regress back to the mean. Giving any other kind of vector regresses after the appropriate
 #'   groupings (see, e.g., \code{\link{duplicated}(..., fromLast = TRUE)}). The other three arguments determine
 #'   what Elo to regress to (\code{to = }), by how much to regress toward that value
-#'   (\code{by = }), and whether teams which have played at least one game but which
-#'   haven't been used in a given regression period should still be regressed (\code{regress.unused}).
+#'   (\code{by = }), and whether to continue regressing teams which have stopped playing (\code{regress.unused},
+#'   default = \code{TRUE}).
 #'
 #' \code{group()} is used to group matches (by, e.g., week). It is fed to \code{\link{as.matrix.elo.run}}
 #'   to produce only certain rows of matrix output.
