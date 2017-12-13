@@ -46,9 +46,10 @@ A helper function to create the \code{model.frame} for many \code{elo} functions
 \code{regress()} can be used to regress Elos back to a fixed value
   after certain matches. Giving a logical vector identifies these matches after which to
   regress back to the mean. Giving any other kind of vector regresses after the appropriate
-  groupings (see, e.g., \code{\link{duplicated}(..., fromLast = TRUE)}). The other two arguments determine
-  what Elo to regress to (\code{to = }), and by how much to regress toward that value
-  (\code{by = }).
+  groupings (see, e.g., \code{\link{duplicated}(..., fromLast = TRUE)}). The other three arguments determine
+  what Elo to regress to (\code{to = }), by how much to regress toward that value
+  (\code{by = }), and whether to continue regressing teams which have stopped playing (\code{regress.unused},
+  default = \code{TRUE}).
 
 \code{group()} is used to group matches (by, e.g., week). It is fed to \code{\link{as.matrix.elo.run}}
   to produce only certain rows of matrix output.

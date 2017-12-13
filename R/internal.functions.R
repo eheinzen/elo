@@ -20,6 +20,7 @@ remove_adjustedElo <- function(x)
   out <- NextMethod()
   attr(out, "to") <- attr(x, "to")
   attr(out, "by") <- attr(x, "by")
+  attr(out, "regress.unused") <- attr(x, "regress.unused")
   out
 }
 

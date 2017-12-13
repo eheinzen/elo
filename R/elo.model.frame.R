@@ -31,9 +31,10 @@
 #' \code{regress()} can be used to regress Elos back to a fixed value
 #'   after certain matches. Giving a logical vector identifies these matches after which to
 #'   regress back to the mean. Giving any other kind of vector regresses after the appropriate
-#'   groupings (see, e.g., \code{\link{duplicated}(..., fromLast = TRUE)}). The other two arguments determine
-#'   what Elo to regress to (\code{to = }), and by how much to regress toward that value
-#'   (\code{by = }).
+#'   groupings (see, e.g., \code{\link{duplicated}(..., fromLast = TRUE)}). The other three arguments determine
+#'   what Elo to regress to (\code{to = }), by how much to regress toward that value
+#'   (\code{by = }), and whether to continue regressing teams which have stopped playing (\code{regress.unused},
+#'   default = \code{TRUE}).
 #'
 #' \code{group()} is used to group matches (by, e.g., week). It is fed to \code{\link{as.matrix.elo.run}}
 #'   to produce only certain rows of matrix output.
@@ -82,12 +83,15 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   }
   if(!is.null(attr(temp.call$formula, "specials")$regress))
   {
-    assign("regress", function(x, to, by) {
+    assign("regress", function(x, to, by, regress.unused = TRUE) {
       if(!is.numeric(to) || length(to) != 1 || anyNA(to)) stop("regress: 'to' must be numeric.")
       if(!is.numeric(by) || length(by) != 1 || anyNA(by) || by > 1 || by < 0)
         stop("regress: 'by' must be 0 <= by <= 1")
+      if(!is.logical(regress.unused) || length(regress.unused) != 1 || anyNA(regress.unused))
+        stop("regress: 'regress.unused' must be a single logical value.")
       attr(x, "to") <- to
       attr(x, "by") <- by
+      attr(x, "regress.unused") <- regress.unused
       class(x) <- c("regressElo", class(x))
       x
     }, envir = adjenv)
@@ -162,6 +166,7 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
     {
       attr(out$regress, "to") <- 1500
       attr(out$regress, "by") <- 0
+      attr(out$regress, "regress.unused") <- FALSE
     }
   }
 

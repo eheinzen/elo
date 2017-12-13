@@ -51,7 +51,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
   out <- eloRun(checked$team.A, checked$team.B, checked$wins.A,
                 checked$k, checked$adj.A, checked$adj.B,
                 regr, attr(mf$regress, "to"), attr(mf$regress, "by"),
-                checked$initial.elos, checked$flag)
+                attr(mf$regress, "regress.unused"), checked$initial.elos, checked$flag)
   any.regr <- any(regr)
 
   return(structure(list(
