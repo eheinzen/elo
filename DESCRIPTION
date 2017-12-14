@@ -1,6 +1,6 @@
 Package: elo
 Title: Elo Ratings
-Version: 1.0.1
+Version: 1.0.1.9000
 Date: 2017-12-14
 Authors@R: c(
     person("Ethan", "Heinzen", email = "heinzen.ethan@mayo.edu", role = c("aut", "cre"))
