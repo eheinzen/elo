@@ -6,6 +6,9 @@
 #' @param x An object of class \code{"summary.elo.run"}.
 #' @param ... Other arguments
 #' @return A summary of \code{object}.
+#' @examples
+#' summary(elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
+#'   data = tournament, k = 20))
 #' @name summary.elo.run
 NULL
 #> NULL
@@ -15,7 +18,8 @@ NULL
 #' @export
 favored <- function(x, ...)
 {
-  table(factor(fitted(x) > 0, levels = c(TRUE, FALSE)), x$elos[, 4], dnn = c("Favored", "Actual"))
+  table(factor(score(fitted(x), 0.5), levels = c(1, 0.5, 0), labels = c("TRUE", "(tie)", "FALSE")),
+        x$elos[, 4], dnn = c("Favored", "Actual"))
 }
 
 #' @rdname summary.elo.run

@@ -37,3 +37,7 @@ A summary of \code{object}.
 \description{
 Summarize an \code{elo.run} Object
 }
+\examples{
+summary(elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
+  data = tournament, k = 20))
+}
