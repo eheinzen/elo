@@ -3,7 +3,6 @@
 #'
 #' Calculate post-update Elo values. This is vectorized.
 #'
-#' @param formula A formula. See the "details" section of \code{\link{elo.model.frame}}.
 #' @inheritParams elo.model.frame
 #' @param elo.A,elo.B Numeric vectors of elo scores.
 #' @param wins.A Numeric vector of wins by team A.
