@@ -1,6 +1,20 @@
 
-#' Details on \code{elo} formulas
+#' Details on \code{elo} formulas and the specials therein
 #'
+#' Details on \code{elo} functions and the special functions allowed in them to change functions' behaviors.
+#' Note that these functions aren't defined in the namespace (exported or otherwise); rather, they live inside the
+#' functions which use them (i.e., see \code{\link{elo.model.frame}}).
+#' @usage
+#' k(x)
+#' adjust(x, adjustment)
+#' regress(x, to, by, regress.unused = TRUE)
+#' group(x)
+#' @aliases k adjust regress group
+#' @param x A vector.
+#' @param adjustment A single value or a vector of the same length as \code{x}: how much to adjust the Elos in \code{x}.
+#' @param to Numeric: what Elo to regress to.
+#' @param by Numeric: by how much should Elos be regressed toward \code{to}.
+#' @param regress.unused Logical: whether to continue regressing teams which have stopped playing.
 #' @details
 #' In the functions in this package, \code{formula} is usually of the form \code{wins.A ~ elo.A + elo.B},
 #'   where \code{elo.A} and \code{elo.B} are vectors of Elos, and \code{wins.A} is between 0 and 1,
@@ -28,7 +42,6 @@
 #'
 #' \code{group()} is used to group matches (by, e.g., week). It is fed to \code{\link{as.matrix.elo.run}}
 #'   to produce only certain rows of matrix output.
-#'
 #' @name formula.specials
 NULL
 #> NULL

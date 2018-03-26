@@ -2,9 +2,32 @@
 % Please edit documentation in R/formula.specials.R
 \name{formula.specials}
 \alias{formula.specials}
-\title{Details on \code{elo} formulas}
+\alias{k}
+\alias{adjust}
+\alias{regress}
+\alias{group}
+\title{Details on \code{elo} formulas and the specials therein}
+\usage{
+k(x)
+adjust(x, adjustment)
+regress(x, to, by, regress.unused = TRUE)
+group(x)
+}
+\arguments{
+\item{x}{A vector.}
+
+\item{adjustment}{A single value or a vector of the same length as \code{x}: how much to adjust the Elos in \code{x}.}
+
+\item{to}{Numeric: what Elo to regress to.}
+
+\item{by}{Numeric: by how much should Elos be regressed toward \code{to}.}
+
+\item{regress.unused}{Logical: whether to continue regressing teams which have stopped playing.}
+}
 \description{
-Details on \code{elo} formulas
+Details on \code{elo} functions and the special functions allowed in them to change functions' behaviors.
+Note that these functions aren't defined in the namespace (exported or otherwise); rather, they live inside the
+functions which use them (i.e., see \code{\link{elo.model.frame}}).
 }
 \details{
 In the functions in this package, \code{formula} is usually of the form \code{wins.A ~ elo.A + elo.B},
