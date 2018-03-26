@@ -15,7 +15,7 @@ elo.run(formula, data, na.action, subset, k = NULL, initial.elos = NULL,
 \method{print}{elo.run.regressed}(x, ...)
 }
 \arguments{
-\item{formula}{A formula. See the "details" section of \code{\link{elo.model.frame}}.}
+\item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 

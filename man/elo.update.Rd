@@ -29,7 +29,7 @@ elo.update(wins.A, ...)
 
 \item{adjust.B}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
 
-\item{formula}{A formula. See the "details" section of \code{\link{elo.model.frame}}.}
+\item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 
