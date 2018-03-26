@@ -104,3 +104,18 @@ check_final_elos <- function(x, len)
   stopifnot(is.matrix(x$elos), is.numeric(x$elos))
   stopifnot(length(x$teams) == max(c(x$elos[, 1], x$elos[, 2])))
 }
+
+null_or_length0 <- function(x) is.null(x) || length(x) == 0
+
+clean_elo_formula <- function(Terms)
+{
+  k.col <- attr(Terms, "specials")$k
+  grp.col <- attr(Terms, "specials")$group
+  reg.col <- attr(Terms, "specials")$regress
+
+  if(!null_or_length0(k.col) || !null_or_length0(grp.col) || !null_or_length0(reg.col))
+  {
+    Terms <- stats::drop.terms(Terms, dropx = c(k.col, grp.col, reg.col) - 1, keep.response = TRUE)
+  }
+  stats::formula(stats::delete.response(Terms))
+}
