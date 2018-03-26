@@ -4,12 +4,6 @@
 #' Details on \code{elo} functions and the special functions allowed in them to change functions' behaviors.
 #' Note that these functions aren't defined in the namespace (exported or otherwise); rather, they live inside the
 #' functions which use them (i.e., see \code{\link{elo.model.frame}}).
-#' @usage
-#' k(x)
-#' adjust(x, adjustment)
-#' regress(x, to, by, regress.unused = TRUE)
-#' group(x)
-#' @aliases k adjust regress group
 #' @param x A vector.
 #' @param adjustment A single value or a vector of the same length as \code{x}: how much to adjust the Elos in \code{x}.
 #' @param to Numeric: what Elo to regress to.
@@ -45,3 +39,37 @@
 #' @name formula.specials
 NULL
 #> NULL
+
+#' @rdname formula.specials
+#' @export
+k <- function(x) x
+
+#' @rdname formula.specials
+#' @export
+adjust <- function(x, adjustment) {
+  if(!(length(adjustment) %in% c(1, length(x))))
+    stop("The second argument to 'adjust()' needs to be length 1 or the same length as the first argument.")
+
+  attr(x, "adjust") <- if(length(adjustment) == 1) rep(adjustment, times = length(x)) else adjustment
+  class(x) <- c("adjustedElo", class(x))
+  x
+}
+
+#' @rdname formula.specials
+#' @export
+regress <- function(x, to, by, regress.unused = TRUE) {
+  if(!is.numeric(to) || length(to) != 1 || anyNA(to)) stop("regress: 'to' must be numeric.")
+  if(!is.numeric(by) || length(by) != 1 || anyNA(by) || by > 1 || by < 0)
+    stop("regress: 'by' must be 0 <= by <= 1")
+  if(!is.logical(regress.unused) || length(regress.unused) != 1 || anyNA(regress.unused))
+    stop("regress: 'regress.unused' must be a single logical value.")
+  attr(x, "to") <- to
+  attr(x, "by") <- by
+  attr(x, "regress.unused") <- regress.unused
+  class(x) <- c("regressElo", class(x))
+  x
+}
+
+#' @rdname formula.specials
+#' @export
+group <- function(x) x

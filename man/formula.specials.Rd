@@ -9,8 +9,11 @@
 \title{Details on \code{elo} formulas and the specials therein}
 \usage{
 k(x)
+
 adjust(x, adjustment)
+
 regress(x, to, by, regress.unused = TRUE)
+
 group(x)
 }
 \arguments{

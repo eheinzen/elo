@@ -29,43 +29,6 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
     stats::terms(formula, specials)
   } else stats::terms(formula, specials, data = data)
 
-  adjenv <- new.env(parent = environment(formula))
-  if(!is.null(attr(temp.call$formula, "specials")$adjust))
-  {
-    assign("adjust", function(x, adjustment) {
-      if(!(length(adjustment) %in% c(1, length(x))))
-        stop("The second argument to 'adjust()' needs to be length 1 or the same length as the first argument.")
-
-      attr(x, "adjust") <- if(length(adjustment) == 1) rep(adjustment, times = length(x)) else adjustment
-      class(x) <- c("adjustedElo", class(x))
-      x
-    }, envir = adjenv)
-  }
-  if(!is.null(attr(temp.call$formula, "specials")$k))
-  {
-    assign("k", function(x) x, envir = adjenv)
-  }
-  if(!is.null(attr(temp.call$formula, "specials")$group))
-  {
-    assign("group", function(x) x, envir = adjenv)
-  }
-  if(!is.null(attr(temp.call$formula, "specials")$regress))
-  {
-    assign("regress", function(x, to, by, regress.unused = TRUE) {
-      if(!is.numeric(to) || length(to) != 1 || anyNA(to)) stop("regress: 'to' must be numeric.")
-      if(!is.numeric(by) || length(by) != 1 || anyNA(by) || by > 1 || by < 0)
-        stop("regress: 'by' must be 0 <= by <= 1")
-      if(!is.logical(regress.unused) || length(regress.unused) != 1 || anyNA(regress.unused))
-        stop("regress: 'regress.unused' must be a single logical value.")
-      attr(x, "to") <- to
-      attr(x, "by") <- by
-      attr(x, "regress.unused") <- regress.unused
-      class(x) <- c("regressElo", class(x))
-      x
-    }, envir = adjenv)
-  }
-  environment(temp.call$formula) <- adjenv
-
   mf <- eval(temp.call, parent.frame())
     if(nrow(mf) == 0) stop("No (non-missing) observations")
 
