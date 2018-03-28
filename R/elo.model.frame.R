@@ -76,8 +76,8 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   #####################################################################
 
   out <- data.frame(
-    elo.A = remove_adjustedElo(mf[[elo.cols[1]]]),
-    elo.B = remove_adjustedElo(mf[[elo.cols[2]]])
+    elo.A = remove_elo_adjust(mf[[elo.cols[1]]]),
+    elo.B = remove_elo_adjust(mf[[elo.cols[2]]])
   )
 
   if("wins" %in% required.vars) out$wins.A <- validate_score(as.numeric(mf[[1]]))

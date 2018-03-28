@@ -42,7 +42,7 @@ NULL
 
 #' @rdname formula.specials
 #' @export
-k <- function(x) x
+k <- function(x) structure(x, class = c("elo.k", class(x)))
 
 #' @rdname formula.specials
 #' @export
@@ -51,7 +51,7 @@ adjust <- function(x, adjustment) {
     stop("The second argument to 'adjust()' needs to be length 1 or the same length as the first argument.")
 
   attr(x, "adjust") <- if(length(adjustment) == 1) rep(adjustment, times = length(x)) else adjustment
-  class(x) <- c("adjustedElo", class(x))
+  class(x) <- c("elo.adjust", class(x))
   x
 }
 
@@ -66,10 +66,10 @@ regress <- function(x, to, by, regress.unused = TRUE) {
   attr(x, "to") <- to
   attr(x, "by") <- by
   attr(x, "regress.unused") <- regress.unused
-  class(x) <- c("regressElo", class(x))
+  class(x) <- c("elo.regress", class(x))
   x
 }
 
 #' @rdname formula.specials
 #' @export
-group <- function(x) x
+group <- function(x) structure(x, class = c("elo.group", class(x)))

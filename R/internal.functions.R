@@ -1,27 +1,23 @@
 
 #' @export
-"[.adjustedElo" <- function(x, i)
+"[.elo.adjust" <- function(x, i)
 {
   out <- NextMethod()
-  attr(out, "adjust") <- if(!missing(i)) attr(x, "adjust")[i] else attr(x, "adjust")
-  out
+  adjust(out, attr(x, "adjust")[i])
 }
 
-remove_adjustedElo <- function(x)
+remove_elo_adjust <- function(x)
 {
-  class(x) <- class(x)[!(class(x) %in% "adjustedElo")]
+  class(x) <- class(x)[!(class(x) %in% "elo.adjust")]
   attr(x, "adjust") <- NULL
   x
 }
 
 #' @export
-"[.regressElo" <- function(x, i)
+"[.elo.regress" <- function(x, i)
 {
   out <- NextMethod()
-  attr(out, "to") <- attr(x, "to")
-  attr(out, "by") <- attr(x, "by")
-  attr(out, "regress.unused") <- attr(x, "regress.unused")
-  out
+  regress(out, attr(x, "to"), attr(x, "by"), attr(x, "regress.unused"))
 }
 
 check_elo_run_vars <- function(mf, initial.elos = NULL)
