@@ -109,9 +109,9 @@ clean_elo_formula <- function(Terms)
   grp.col <- attr(Terms, "specials")$group
   reg.col <- attr(Terms, "specials")$regress
 
-  if(!null_or_length0(k.col) || !null_or_length0(grp.col) || !null_or_length0(reg.col))
+  if(!null_or_length0(cols <- c(k.col, grp.col, reg.col)))
   {
-    Terms <- stats::drop.terms(Terms, dropx = c(k.col, grp.col, reg.col) - 1, keep.response = TRUE)
+    Terms <- stats::drop.terms(Terms, dropx = cols - 1, keep.response = TRUE)
   }
   stats::formula(stats::delete.response(Terms))
 }
