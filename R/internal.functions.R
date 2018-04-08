@@ -1,25 +1,4 @@
 
-#' @export
-"[.elo.adjust" <- function(x, i)
-{
-  out <- NextMethod()
-  adjust(out, attr(x, "adjust")[i])
-}
-
-remove_elo_adjust <- function(x)
-{
-  class(x) <- class(x)[!(class(x) %in% "elo.adjust")]
-  attr(x, "adjust") <- NULL
-  x
-}
-
-#' @export
-"[.elo.regress" <- function(x, i)
-{
-  out <- NextMethod()
-  regress(out, attr(x, "to"), attr(x, "by"), attr(x, "regress.unused"))
-}
-
 check_elo_run_vars <- function(mf, initial.elos = NULL)
 {
   t1 <- mf$elo.A

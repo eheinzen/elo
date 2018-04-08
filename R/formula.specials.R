@@ -55,6 +55,21 @@ adjust <- function(x, adjustment) {
   x
 }
 
+
+#' @export
+"[.elo.adjust" <- function(x, i)
+{
+  out <- NextMethod()
+  adjust(out, attr(x, "adjust")[i])
+}
+
+remove_elo_adjust <- function(x)
+{
+  class(x) <- class(x)[!(class(x) %in% "elo.adjust")]
+  attr(x, "adjust") <- NULL
+  x
+}
+
 #' @rdname formula.specials
 #' @export
 regress <- function(x, to, by, regress.unused = TRUE) {
@@ -68,6 +83,13 @@ regress <- function(x, to, by, regress.unused = TRUE) {
   attr(x, "regress.unused") <- regress.unused
   class(x) <- c("elo.regress", class(x))
   x
+}
+
+#' @export
+"[.elo.regress" <- function(x, i)
+{
+  out <- NextMethod()
+  regress(out, attr(x, "to"), attr(x, "by"), attr(x, "regress.unused"))
 }
 
 #' @rdname formula.specials
