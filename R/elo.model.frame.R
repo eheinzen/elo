@@ -92,13 +92,10 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   }
   if("regress" %in% required.vars)
   {
-    out$regress <- if(null_or_length0(reg.col)) FALSE else mf[[reg.col]]
-    if(null_or_length0(reg.col))
+    out$regress <- if(null_or_length0(reg.col))
     {
-      attr(out$regress, "to") <- 1500
-      attr(out$regress, "by") <- 0
-      attr(out$regress, "regress.unused") <- FALSE
-    }
+      regress(rep(FALSE, times = nrow(out)), 1500, 0, FALSE)
+    } else mf[[reg.col]]
   }
 
   adjs <- attr(Terms, "specials")$adjust
