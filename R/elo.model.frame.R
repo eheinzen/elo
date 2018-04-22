@@ -22,7 +22,7 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
 
   temp.call <- Call[c(1, indx)]
   temp.call[[1L]] <- quote(stats::model.frame)
-  specials <- c("adjust", "k", "group", "regress")
+  specials <- c("adjust", "k", "group", "regress", "players")
 
   temp.call$formula <- if(missing(data))
   {
@@ -30,7 +30,7 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   } else stats::terms(formula, specials, data = data)
 
   mf <- eval(temp.call, parent.frame())
-    if(nrow(mf) == 0) stop("No (non-missing) observations")
+  if(nrow(mf) == 0) stop("No (non-missing) observations")
 
   Terms <- stats::terms(mf)
 
@@ -75,10 +75,9 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
 
   #####################################################################
 
-  out <- data.frame(
-    elo.A = remove_elo_adjust(mf[[elo.cols[1]]]),
-    elo.B = remove_elo_adjust(mf[[elo.cols[2]]])
-  )
+  out <- data.frame(row.names = 1:nrow(mf)) # in case one of the next two lines is a matrix
+  out$elo.A <- remove_elo_adjust(mf[[elo.cols[1]]])
+  out$elo.B <- remove_elo_adjust(mf[[elo.cols[2]]])
 
   if("wins" %in% required.vars) out$wins.A <- validate_score(as.numeric(mf[[1]]))
   if("k" %in% required.vars)
