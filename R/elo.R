@@ -24,7 +24,7 @@
 #' library(elo)
 #' @references Elo, A. E. 1978. The Rating of Chess Players, Past and Present. New York: Arco.
 #'
-#' @importFrom stats predict fitted residuals
+#' @importFrom stats predict fitted residuals weights
 #' @importFrom pROC auc
 #' @docType package
 #' @name elo

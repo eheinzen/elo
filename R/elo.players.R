@@ -37,4 +37,4 @@ as.matrix.elo.players.matrix <- function(x, ...)
 length.elo.players.matrix <- function(x) nrow(x)
 
 #' @export
-weights.elo.players.matrix <- function(x) attr(x, "weights")
+weights.elo.players.matrix <- function(object, ...) attr(object, "weights")
