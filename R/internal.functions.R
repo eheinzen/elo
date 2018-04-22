@@ -29,10 +29,9 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   all.teams <- sort(unique(all.teams))
   initial.elos <- check_initial_elos(initial.elos, all.teams)
 
-  make_int <- function(x) as.integer(factor(x, levels = names(initial.elos))) - 1L
-
-  t1 <- apply(t1, 2, make_int)
-  if(flag != 2) t2 <- apply(t2, 2, make_int)
+  tmp <- setNames(seq_along(initial.elos) - 1L, names(initial.elos))
+  t1 <- matrix(tmp[t1], nrow = nrow(t1))
+  if(flag != 2) t2 <- matrix(tmp[t2], nrow = nrow(t2))
 
   return(list(winsA = mf$wins.A, teamA = t1, teamB = t2, weightsA = wts1, weightsB = wts2,
               k = mf$k, adjTeamA = mf$adj.A, adjTeamB = mf$adj.B,
