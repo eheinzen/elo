@@ -9,16 +9,18 @@
 #' @param to Numeric: what Elo to regress to.
 #' @param by Numeric: by how much should Elos be regressed toward \code{to}.
 #' @param regress.unused Logical: whether to continue regressing teams which have stopped playing.
+#' @param ... Vectors to be coerced to character, which comprise of the players of a team.
+#' @param weights A vector giving the weights of Elo updates for the players in \code{...}.
 #' @details
 #' In the functions in this package, \code{formula} is usually of the form \code{wins.A ~ elo.A + elo.B},
 #'   where \code{elo.A} and \code{elo.B} are vectors of Elos, and \code{wins.A} is between 0 and 1,
 #'   denoting whether team A (Elo A) won or lost (or something between). \code{elo.prob} also allows
 #'   \code{elo.A} and \code{elo.B} to be character or factors, denoting which team(s) played. \code{elo.run}
-#'   requires \code{elo.A} to be a vector of teams (sometimes denoted by \code{"team.A"}),
-#'   but \code{elo.B} can be either a vector of teams or  else a numeric column
-#'   (denoting a fixed-Elo opponent).
+#'   requires \code{elo.A} to be a vector of teams or a players matrix from \code{players()}
+#'   (sometimes denoted by \code{"team.A"}), but \code{elo.B} can be either a vector of teams or
+#'   players matrix (\code{"team.B"}) or else a numeric column (denoting a fixed-Elo opponent).
 #'
-#' \code{formula} accepts four special functions in it:
+#' \code{formula} accepts five special functions in it:
 #'
 #' \code{k()} allows for complicated Elo updates. For
 #'   constant Elo updates, use the \code{k = } argument instead of this special function.
@@ -36,6 +38,9 @@
 #'
 #' \code{group()} is used to group matches (by, e.g., week). It is fed to \code{\link{as.matrix.elo.run}}
 #'   to produce only certain rows of matrix output.
+#'
+#' \code{players()} is used for multiple players on a team contributing to an overall Elo. The Elo updates
+#'   are then assigned based on the specified weights.
 #' @name formula.specials
 NULL
 #> NULL
@@ -57,7 +62,7 @@ adjust <- function(x, adjustment) {
 
 
 #' @export
-"[.elo.adjust" <- function(x, i)
+"[.elo.adjust" <- function(x, i, j, drop = FALSE)
 {
   out <- NextMethod()
   adjust(out, attr(x, "adjust")[i])
