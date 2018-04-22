@@ -5,23 +5,36 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   t2 <- mf$elo.B
 
   if(is.numeric(t1)) stop("team.A shouldn't be numeric (team.B can be, though!)")
-  all.teams <- t1 <- as.character(t1)
+  if(!inherits(t1, "elo.players.matrix"))
+  {
+    t1 <- players(t1)
+  }
   if(anyNA(t1)) stop("NAs were found in team.A; check that it can be coerced to character.")
+  all.teams <- as.character(t1)
+  wts1 <- weights(t1)
+
+  flag <- 2L*is.numeric(t2) # now either 2 or 0
   if(!is.numeric(t2))
   {
-    t2 <- as.character(t2)
+    if(!inherits(t2, "elo.players.matrix")) t2 <- players(t2)
     if(anyNA(t2)) stop("NAs were found in team.B; check that it can be coerced to character.")
-    all.teams <- c(all.teams, t2)
+    all.teams <- c(all.teams, as.character(t2))
+    wts2 <- weights(t2)
+  } else
+  {
+    t2 <- matrix(t2, ncol = 1)
+    wts2 <- 1
   }
-  flag <- is.numeric(t1) + 2L*is.numeric(t2) # now either 2 or 0
 
   all.teams <- sort(unique(all.teams))
   initial.elos <- check_initial_elos(initial.elos, all.teams)
 
-  t1 <- as.integer(factor(t1, levels = names(initial.elos))) - 1L
-  if(flag != 2) t2 <- as.integer(factor(t2, levels = names(initial.elos))) - 1L
+  make_int <- function(x) as.integer(factor(x, levels = names(initial.elos))) - 1L
 
-  return(list(wins.A = mf$wins.A, team.A = t1, team.B = t2, k = mf$k,
+  t1 <- apply(t1, 2, make_int)
+  if(flag != 2) t2 <- apply(t2, 2, make_int)
+
+  return(list(wins.A = mf$wins.A, team.A = t1, team.B = t2, wts.A = wts1, wts.B = wts2, k = mf$k,
               adj.A = mf$adj.A, adj.B = mf$adj.B,
               initial.elos = initial.elos, flag = flag))
 }

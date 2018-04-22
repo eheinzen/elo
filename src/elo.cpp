@@ -11,6 +11,11 @@ double eloUpdate(double eloA, double eloB, double winsA, double k)
   return k*(winsA - eloProb(eloA, eloB));
 }
 
+double eloUpdate2(double prob, double winsA, double k)
+{
+  return k*(winsA - prob);
+}
+
 NumericVector eloRegress(NumericVector eloA, double to, double by, LogicalVector idx)
 {
   for(int i = 0; i < eloA.size(); i++)
@@ -25,13 +30,16 @@ NumericVector eloRegress(NumericVector eloA, double to, double by, LogicalVector
 }
 
 // [[Rcpp::export]]
-List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
-                     NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB,
-                     LogicalVector regress, double to, double by, bool regressUnused,
-                     NumericVector initialElos, int flag)
+List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, NumericVector weightsB,
+            NumericVector winsA, NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB,
+            LogicalVector regress, double to, double by, bool regressUnused,
+            NumericVector initialElos, int flag)
 {
   // this function uses 0-based indexing, since the incoming vectors used -1L
   int nTeams = initialElos.size();
+  int ncolA = teamA.ncol();
+  int ncolB = teamB.ncol();
+  int nBoth = ncolA + ncolB;
   int nGames = winsA.size();
   int nRegress = sum(regress);
 
@@ -39,49 +47,73 @@ List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
   LogicalVector usedYet(nTeams);
   currElo = clone(initialElos);
 
-  NumericMatrix out(nGames, 7);
+  NumericMatrix out(nGames, 3 + 2*(ncolA + ncolB));
   NumericMatrix regOut(nRegress, nTeams);
 
-  double tmp = 0, prb = 0;
   int regRow = 0;
-  double e1 = 0, e2 = 0, j1 = 0, j2 = 0;
-
   for(int i = 0; i < nGames; i++)
   {
-    j1 = teamA[i];
-    e1 = currElo[j1];
-    usedYet[j1] = true;
+    NumericVector t1(ncolA);
+    NumericVector t2(ncolB);
+    NumericVector e1(ncolA);
+    NumericVector e2(ncolB);
 
-    if(flag == 2)
+    // get initial Elos for team A
+    for(int j = 0; j < ncolA; j++)
     {
-      e2 = teamB[i];
-    } else
-    {
-      j2 = teamB[i];
-      e2 = currElo[j2];
-      usedYet[j2] = true;
-    }
-    prb = eloProb(e1 + adjTeamA[i], e2 + adjTeamB[i]);
-    tmp = eloUpdate(e1 + adjTeamA[i], e2 + adjTeamB[i], winsA[i], k[i]);
-
-    out(i, 0) = j1 + 1;
-    out(i, 2) = prb;
-    out(i, 3) = winsA[i];
-    out(i, 4) = tmp;
-    out(i, 5) = e1 + tmp;
-    currElo[j1] = e1 + tmp;
-
-    if(flag == 2)
-    {
-      out(i, 1) = 0;
-      out(i, 6) = e2;
-    } else
-    {
-      out(i, 1) = j2 + 1;
-      out(i, 6) = e2 - tmp;
-      currElo[j2] = e2 - tmp;
+      double tmA = teamA(i, j);
+      e1[j] = currElo[tmA];
+      usedYet[tmA] = true;
+      out(i, j) = tmA + 1;
     }
 
+    // get initial Elos for team B
+    for(int k = 0; k < ncolB; k++)
+    {
+      if(flag == 2)
+      {
+        e2[k] = teamB(i, k);
+        out(i, ncolA + k) = 0;
+      } else
+      {
+        double tmB = teamB(i, k);
+        e2[k] = currElo[tmB];
+        usedYet[tmB] = true;
+        out(i, ncolA + k) = tmB + 1;
+      }
+    }
+
+    // calculate and store the update
+    double prb = eloProb(sum(e1) + adjTeamA[i], sum(e2) + adjTeamB[i]);
+    double updt = eloUpdate2(prb, winsA[i], k[i]);
+
+    out(i, nBoth) = prb;
+    out(i, nBoth + 1) = winsA[i];
+    out(i, nBoth + 2) = updt;
+
+    // store new Elos for team A
+    for(int j = 0; j < ncolA; j++)
+    {
+      double tmp = e1[j] + updt * weightsA[j];
+      out(i, nBoth + 3 + j) = tmp;
+      currElo[teamA(i, j)] = tmp;
+    }
+
+    // store new Elos for team B
+    for(int k = 0; k < ncolA; k++)
+    {
+      if(flag == 2)
+      {
+        out(i, nBoth + 3 + ncolA + k) = e2[k];
+      } else
+      {
+        double tmp = e2[k] - updt * weightsB[k];
+        out(i, nBoth + 3 + ncolA + k) = tmp;
+        currElo[teamB(i, k)] = tmp;
+      }
+    }
+
+    // This part is fine
     if(regress[i])
     {
       currElo = eloRegress(currElo, to, by, usedYet);
@@ -99,3 +131,4 @@ List eloRun(NumericVector teamA, NumericVector teamB, NumericVector winsA,
 
   return List::create(out, regOut);
 }
+
