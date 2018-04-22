@@ -34,9 +34,9 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   t1 <- apply(t1, 2, make_int)
   if(flag != 2) t2 <- apply(t2, 2, make_int)
 
-  return(list(wins.A = mf$wins.A, team.A = t1, team.B = t2, wts.A = wts1, wts.B = wts2, k = mf$k,
-              adj.A = mf$adj.A, adj.B = mf$adj.B,
-              initial.elos = initial.elos, flag = flag))
+  return(list(winsA = mf$wins.A, teamA = t1, teamB = t2, weightsA = wts1, weightsB = wts2,
+              k = mf$k, adjTeamA = mf$adj.A, adjTeamB = mf$adj.B,
+              initialElos = initial.elos, flag = flag))
 }
 
 check_initial_elos <- function(init.elos = NULL, teams)
