@@ -47,7 +47,7 @@ List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, Nu
   LogicalVector usedYet(nTeams);
   currElo = clone(initialElos);
 
-  NumericMatrix out(nGames, 3 + 2*(ncolA + ncolB));
+  NumericMatrix out(nGames, 3 + 2*nBoth);
   NumericMatrix regOut(nRegress, nTeams);
 
   int regRow = 0;
@@ -100,7 +100,7 @@ List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, Nu
     }
 
     // store new Elos for team B
-    for(int k = 0; k < ncolA; k++)
+    for(int k = 0; k < ncolB; k++)
     {
       if(flag == 2)
       {
