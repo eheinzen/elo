@@ -5,25 +5,37 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   t2 <- mf$elo.B
 
   if(is.numeric(t1)) stop("team.A shouldn't be numeric (team.B can be, though!)")
-  all.teams <- t1 <- as.character(t1)
+  if(!is.players(t1))
+  {
+    t1 <- players(t1)
+  }
   if(anyNA(t1)) stop("NAs were found in team.A; check that it can be coerced to character.")
+  all.teams <- as.character(t1)
+  wts1 <- weights(t1)
+
+  flag <- 2L*is.numeric(t2) # now either 2 or 0
   if(!is.numeric(t2))
   {
-    t2 <- as.character(t2)
+    if(!is.players(t2)) t2 <- players(t2)
     if(anyNA(t2)) stop("NAs were found in team.B; check that it can be coerced to character.")
-    all.teams <- c(all.teams, t2)
+    all.teams <- c(all.teams, as.character(t2))
+    wts2 <- weights(t2)
+  } else
+  {
+    t2 <- matrix(t2, ncol = 1)
+    wts2 <- 1
   }
-  flag <- is.numeric(t1) + 2L*is.numeric(t2) # now either 2 or 0
 
   all.teams <- sort(unique(all.teams))
   initial.elos <- check_initial_elos(initial.elos, all.teams)
 
-  t1 <- as.integer(factor(t1, levels = names(initial.elos))) - 1L
-  if(flag != 2) t2 <- as.integer(factor(t2, levels = names(initial.elos))) - 1L
+  tmp <- setNames(seq_along(initial.elos) - 1L, names(initial.elos))
+  t1 <- matrix(tmp[t1], nrow = nrow(t1))
+  if(flag != 2) t2 <- matrix(tmp[t2], nrow = nrow(t2))
 
-  return(list(wins.A = mf$wins.A, team.A = t1, team.B = t2, k = mf$k,
-              adj.A = mf$adj.A, adj.B = mf$adj.B,
-              initial.elos = initial.elos, flag = flag))
+  return(list(winsA = mf$wins.A, teamA = t1, teamB = t2, weightsA = wts1, weightsB = wts2,
+              k = mf$k, adjTeamA = mf$adj.A, adjTeamB = mf$adj.B,
+              initialElos = initial.elos, flag = flag))
 }
 
 check_initial_elos <- function(init.elos = NULL, teams)
@@ -77,7 +89,7 @@ check_as_matrix <- function(x, group, regr = FALSE)
 check_final_elos <- function(x, len)
 {
   stopifnot(is.matrix(x$elos), is.numeric(x$elos))
-  stopifnot(length(x$teams) == max(c(x$elos[, 1], x$elos[, 2])))
+  stopifnot(length(x$teams) == max(x$elos[, 1:sum(x$n.players)]))
 }
 
 null_or_length0 <- function(x) is.null(x) || length(x) == 0

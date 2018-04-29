@@ -8,18 +8,18 @@ test_that("regress works()", {
 
   ref1 <- c("Team A" = 1517.770, "Team B" = 1501.949, "Team C" = 1480.281)
   expect_identical(
-    round(as.matrix(elo.run(wins.A ~ team.A + team.B + regress(season == 1, 1500, 0.2),
-                            k = 20, data = dat))[3, ], 3),
+    rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season == 1, 1500, 0.2),
+                    k = 20, data = dat), 3),
     ref1
   )
   expect_identical(
-    round(as.matrix(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
-                            k = 20, data = dat))[3, ], 3),
+    rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
+                    k = 20, data = dat), 3),
     ref1
   )
   expect_identical(
-    round(final.elos(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
-                             k = 20, data = dat), regressed = FALSE), 3),
+    rnd.fin(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
+                    k = 20, data = dat), regressed = FALSE),
     ref1
   )
   expect_identical(
@@ -29,20 +29,20 @@ test_that("regress works()", {
                   k = 20, data = dat)$elos.regressed[2, ], 3)
   )
   expect_identical(
-    round(as.matrix(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
-                            k = 20, data = dat))[2, ], 3),
-    round(as.matrix(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
-                            k = 20, data = dat, subset = week < 2))[2, ], 3)
+    rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
+                    k = 20, data = dat), 2),
+    rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
+                    k = 20, data = dat, subset = week < 2), 2)
   )
   expect_identical(
-    round(final.elos(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
-      k = 20, data = dat, initial.elos = c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400)),
-      regressed = FALSE), 3),
+    rnd.fin(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
+                    k = 20, data = dat, initial.elos = c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400)),
+            regressed = FALSE),
     c("Team A" = 1590.870, "Team B" = 1501.457, "Team C" = 1387.673)
   )
   expect_identical(
-    round(final.elos(elo.run(wins.A ~ team.A + team.B + regress(week, 1500, 0.2, FALSE),
-                             k = 20, data = dat), regressed = TRUE), 3),
+    rnd.fin(elo.run(wins.A ~ team.A + team.B + regress(week, 1500, 0.2, FALSE),
+                    k = 20, data = dat), regressed = TRUE),
     c("Team A" = 1515.770, "Team B" = 1501.605, "Team C" = 1485.779)
   )
 })
@@ -60,19 +60,19 @@ test_that("group works()", {
 
 test_that("'group()' and 'regress()' both work", {
   expect_identical(
-    round(as.matrix(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
-                            k = 20, data = dat))[2:3, ], 3),
-    round(as.matrix(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2) + group(week),
-                            k = 20, data = dat)), 3)
+    rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
+                    k = 20, data = dat), 2:3),
+    rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2) + group(week),
+                    k = 20, data = dat))
   )
 })
 
 test_that("'formula' can be in any order", {
   expect_identical(
-    round(as.matrix(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
-                            k = 20, data = dat))[2:3, ], 3),
-    round(as.matrix(elo.run(wins.A ~ k(k.column) + team.A + regress(season, 1500, 0.2) +
-                              group(week) + team.B, data = dat)), 3)
+    rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
+                    k = 20, data = dat), 2:3),
+    rnd.mat(elo.run(wins.A ~ k(k.column) + team.A + regress(season, 1500, 0.2) +
+                      group(week) + team.B, data = dat))
   )
 })
 

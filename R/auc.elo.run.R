@@ -11,7 +11,7 @@
 auc.elo.run <- function(object, ...)
 {
   probs <- fitted(object)
-  wins <- object$elos[, 4]
+  wins <- object$elos[, sum(object$n.players) + 2]
   x.won <- probs[wins == 1]
   x.lost <- probs[wins == 0]
 

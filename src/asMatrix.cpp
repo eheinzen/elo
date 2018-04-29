@@ -8,6 +8,7 @@ NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericVector initialElos, Logic
   double nTeams = initialElos.size();
   double nGames = mat.nrow();
   double nOut = sum(group);
+  int nBoth = (mat.ncol() - 3) / 2;
   NumericMatrix out(nOut, nTeams);
   NumericVector curr(nTeams);
   curr = clone(initialElos);
@@ -15,10 +16,13 @@ NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericVector initialElos, Logic
 
   for(int i = 0; i < nGames; i++)
   {
-    curr(mat(i, 0) - 1) = mat(i, 5);
-    if(mat(i, 1) > 0)
+    for(int j = 0; j < nBoth; j++)
     {
-      curr(mat(i, 1) - 1) = mat(i, 6);
+      double tm = mat(i, j);
+      if(tm > 0)
+      {
+        curr[tm - 1] = mat(i, nBoth + 3 + j);
+      }
     }
 
     if(group[i])
@@ -38,6 +42,7 @@ NumericMatrix eloRunRegressedAsMatrix(NumericMatrix mat, NumericVector initialEl
   double nTeams = initialElos.size();
   double nGames = mat.nrow();
   double nOut = sum(group);
+  int nBoth = (mat.ncol() - 3) / 2;
   NumericMatrix out(nOut, nTeams);
   NumericVector curr(nTeams);
   curr = clone(initialElos);
@@ -51,10 +56,13 @@ NumericMatrix eloRunRegressedAsMatrix(NumericMatrix mat, NumericVector initialEl
       regRow++;
     }
 
-    curr(mat(i, 0) - 1) = mat(i, 5);
-    if(mat(i, 1) > 0)
+    for(int j = 0; j < nBoth; j++)
     {
-      curr(mat(i, 1) - 1) = mat(i, 6);
+      double tm = mat(i, j);
+      if(tm > 0)
+      {
+        curr[tm - 1] = mat(i, nBoth + 3 + j);
+      }
     }
 
     if(group[i])

@@ -46,25 +46,25 @@ elo.prob.default <- function(elo.A, elo.B, ..., elos = NULL, adjust.A = 0, adjus
     all.teams <- character(0)
     if(!is.numeric(elo.A))
     {
-      elo.A <- as.character(elo.A)
+      if(!is.players(elo.A)) elo.A <- players(elo.A)
       if(anyNA(elo.A)) stop("NAs were found in elo.A; check that it can be coerced to character.")
-      all.teams <- c(all.teams, elo.A)
+      all.teams <- as.character(elo.A)
     }
     if(!is.numeric(elo.B))
     {
-      elo.B <- as.character(elo.B)
+      if(!is.players(elo.B)) elo.B <- players(elo.B)
       if(anyNA(elo.B)) stop("NAs were found in elo.B; check that it can be coerced to character.")
-      all.teams <- c(all.teams, elo.B)
+      all.teams <- c(all.teams, as.character(elo.B))
     }
 
     all.teams <- sort(unique(all.teams))
     elos <- check_initial_elos(elos, all.teams)
 
-    if(!is.numeric(elo.A)) elo.A <- elos[elo.A]
-    if(!is.numeric(elo.B)) elo.B <- elos[elo.B]
+    if(!is.numeric(elo.A)) elo.A <- rowSums(matrix(elos[elo.A], nrow = nrow(elo.A)))
+    if(!is.numeric(elo.B)) elo.B <- rowSums(matrix(elos[elo.B], nrow = nrow(elo.B)))
   }
 
-  as.numeric(1/(1 + 10^(((elo.B + adjust.B) - (elo.A + adjust.A))/400.0)))
+  unname(1/(1 + 10^(((elo.B + adjust.B) - (elo.A + adjust.A))/400.0)))
 }
 
 #' @rdname elo.prob
