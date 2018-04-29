@@ -12,3 +12,5 @@ dat <- data.frame(
 )
 
 init <- c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400)
+rnd.mat <- function(x, i) round(as.matrix(x)[i, ], 3)
+rnd.fin <- function(x, ...) round(final.elos(x, ...), 3)
