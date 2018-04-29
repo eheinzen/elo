@@ -91,3 +91,6 @@ test_that("prediction works correctly with players()", {
   expect_equal(length(predict(results)), nrow(dat))
 })
 
+test_that("auc() works correctly with players()", {
+  expect_equal(auc(results), 0)
+})

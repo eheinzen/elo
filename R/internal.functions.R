@@ -89,7 +89,7 @@ check_as_matrix <- function(x, group, regr = FALSE)
 check_final_elos <- function(x, len)
 {
   stopifnot(is.matrix(x$elos), is.numeric(x$elos))
-  stopifnot(length(x$teams) == max(x$elos[, 1:(ncol(x$elos - 3)/2)]))
+  stopifnot(length(x$teams) == max(x$elos[, 1:sum(x$n.players)]))
 }
 
 null_or_length0 <- function(x) is.null(x) || length(x) == 0

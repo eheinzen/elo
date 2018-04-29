@@ -19,21 +19,21 @@ NULL
 favored <- function(x, ...)
 {
   table(factor(score(fitted(x), 0.5), levels = c(1, 0.5, 0), labels = c("TRUE", "(tie)", "FALSE")),
-        x$elos[, 4], dnn = c("Favored", "Actual"))
+        x$elos[, sum(x$n.players) + 2], dnn = c("Favored", "Actual"))
 }
 
 #' @rdname summary.elo.run
 #' @export
 fitted.elo.run <- function(object, ...)
 {
-  object$elos[, 3]
+  object$elos[, sum(object$n.players) + 1]
 }
 
 #' @rdname summary.elo.run
 #' @export
 residuals.elo.run <- function(object, ...)
 {
-  object$elos[, 4] - fitted(object)
+  object$elos[, sum(object$n.players) + 2] - fitted(object)
 }
 
 #' @rdname summary.elo.run
