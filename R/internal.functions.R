@@ -5,7 +5,7 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   t2 <- mf$elo.B
 
   if(is.numeric(t1)) stop("team.A shouldn't be numeric (team.B can be, though!)")
-  if(!inherits(t1, "elo.players.matrix"))
+  if(!is.players(t1))
   {
     t1 <- players(t1)
   }
@@ -16,7 +16,7 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   flag <- 2L*is.numeric(t2) # now either 2 or 0
   if(!is.numeric(t2))
   {
-    if(!inherits(t2, "elo.players.matrix")) t2 <- players(t2)
+    if(!is.players(t2)) t2 <- players(t2)
     if(anyNA(t2)) stop("NAs were found in team.B; check that it can be coerced to character.")
     all.teams <- c(all.teams, as.character(t2))
     wts2 <- weights(t2)

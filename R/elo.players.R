@@ -38,3 +38,5 @@ length.elo.players.matrix <- function(x) nrow(x)
 
 #' @export
 weights.elo.players.matrix <- function(object, ...) attr(object, "weights")
+
+is.players <- function(x) inherits(x, "elo.players.matrix")
