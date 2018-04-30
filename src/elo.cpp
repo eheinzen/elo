@@ -53,8 +53,6 @@ List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, Nu
   int regRow = 0;
   for(int i = 0; i < nGames; i++)
   {
-    NumericVector t1(ncolA);
-    NumericVector t2(ncolB);
     NumericVector e1(ncolA);
     NumericVector e2(ncolB);
 
@@ -68,18 +66,18 @@ List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, Nu
     }
 
     // get initial Elos for team B
-    for(int k = 0; k < ncolB; k++)
+    for(int l = 0; l < ncolB; l++)
     {
       if(flag == 2)
       {
-        e2[k] = teamB(i, k);
-        out(i, ncolA + k) = 0;
+        e2[l] = teamB(i, l);
+        out(i, ncolA + l) = 0;
       } else
       {
-        double tmB = teamB(i, k);
-        e2[k] = currElo[tmB];
+        double tmB = teamB(i, l);
+        e2[l] = currElo[tmB];
         usedYet[tmB] = true;
-        out(i, ncolA + k) = tmB + 1;
+        out(i, ncolA + l) = tmB + 1;
       }
     }
 
@@ -100,16 +98,16 @@ List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, Nu
     }
 
     // store new Elos for team B
-    for(int k = 0; k < ncolB; k++)
+    for(int l = 0; l < ncolB; l++)
     {
       if(flag == 2)
       {
-        out(i, nBoth + 3 + ncolA + k) = e2[k];
+        out(i, nBoth + 3 + ncolA + l) = e2[l];
       } else
       {
-        double tmp = e2[k] - updt * weightsB[k];
-        out(i, nBoth + 3 + ncolA + k) = tmp;
-        currElo[teamB(i, k)] = tmp;
+        double tmp = e2[l] - updt * weightsB[l];
+        out(i, nBoth + 3 + ncolA + l) = tmp;
+        currElo[teamB(i, l)] = tmp;
       }
     }
 
@@ -121,9 +119,9 @@ List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, Nu
       regRow++;
       if(!regressUnused)
       {
-        for(int k = 0; k < nTeams; k++)
+        for(int l = 0; l < nTeams; l++)
         {
-          usedYet[k] = false;
+          usedYet[l] = false;
         }
       }
     }

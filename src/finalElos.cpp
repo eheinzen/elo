@@ -18,7 +18,6 @@ NumericVector finalElos(NumericMatrix mat, int nTeams)
 {
   int nBoth = (mat.ncol() - 3) / 2;
   NumericVector out(nTeams);
-  int t1 = 0, t2 = 0;
   for(int row = mat.nrow() - 1; row > -1; row--)
   {
     for(int j = 0; j < nBoth; j++)
