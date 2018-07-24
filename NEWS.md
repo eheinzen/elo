@@ -1,6 +1,16 @@
 # elo v1.0.1.9000
 
+* Widened the version dependency to R 3.3.0.
 
+* Allowed `players()` matrices in `elo.run()` to find Elos of individual players playing at the same time.
+
+* Added `elo.glm()`, a simple function to run logistic regressions on Elo setups.
+
+* Fixed a bug in the `favored()` function (used in `summary.elo.run()`). (#29)
+
+* Exported and revamped the class structure of the specials allowed in formulas. (#30)
+
+* Allowed access to `elo.model.frame()` even when the package isn't loaded. (#34)
 
 # elo v1.0.1
 
