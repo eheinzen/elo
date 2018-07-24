@@ -43,7 +43,7 @@ elo.calc.default <- function(wins.A, elo.A, elo.B, k, ..., adjust.A = 0, adjust.
 elo.calc.formula <- function(formula, data, na.action, subset, k = NULL, ...)
 {
   Call <- match.call()
-  Call[[1L]] <- quote(elo.model.frame)
+  Call[[1L]] <- quote(elo::elo.model.frame)
   Call$required.vars <- c("wins", "elos", "k")
   mf <- eval(Call, parent.frame())
   elo.calc(mf$wins.A, mf$elo.A, mf$elo.B, k = mf$k, ...,

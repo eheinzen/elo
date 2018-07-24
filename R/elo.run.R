@@ -40,7 +40,7 @@ NULL
 elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = NULL, ...)
 {
   Call <- match.call()
-  Call[[1L]] <- quote(elo.model.frame)
+  Call[[1L]] <- quote(elo::elo.model.frame)
   Call$required.vars <- c("wins", "elos", "k", "group", "regress")
   mf <- eval(Call, parent.frame())
   Terms <- stats::terms(mf)

@@ -72,7 +72,7 @@ elo.prob.default <- function(elo.A, elo.B, ..., elos = NULL, adjust.A = 0, adjus
 elo.prob.formula <- function(formula, data, na.action, subset, ..., elos = NULL)
 {
   Call <- match.call()
-  Call[[1L]] <- quote(elo.model.frame)
+  Call[[1L]] <- quote(elo::elo.model.frame)
   mf <- eval(Call, parent.frame())
 
   elo.prob(mf$elo.A, mf$elo.B, ..., adjust.A = mf$adj.A, adjust.B = mf$adj.B, elos = elos)
