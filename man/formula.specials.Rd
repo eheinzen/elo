@@ -45,6 +45,7 @@ In the functions in this package, \code{formula} is usually of the form \code{wi
   requires \code{elo.A} to be a vector of teams or a players matrix from \code{players()}
   (sometimes denoted by \code{"team.A"}), but \code{elo.B} can be either a vector of teams or
   players matrix (\code{"team.B"}) or else a numeric column (denoting a fixed-Elo opponent).
+  \code{elo.glm} requires both to be a vector of teams or players matrix.
 
 \code{formula} accepts five special functions in it:
 
