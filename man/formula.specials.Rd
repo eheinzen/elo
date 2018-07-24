@@ -36,8 +36,6 @@ group(x)
 }
 \description{
 Details on \code{elo} functions and the special functions allowed in them to change functions' behaviors.
-Note that these functions aren't defined in the namespace (exported or otherwise); rather, they live inside the
-functions which use them (i.e., see \code{\link{elo.model.frame}}).
 }
 \details{
 In the functions in this package, \code{formula} is usually of the form \code{wins.A ~ elo.A + elo.B},

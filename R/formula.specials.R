@@ -2,8 +2,7 @@
 #' Details on \code{elo} formulas and the specials therein
 #'
 #' Details on \code{elo} functions and the special functions allowed in them to change functions' behaviors.
-#' Note that these functions aren't defined in the namespace (exported or otherwise); rather, they live inside the
-#' functions which use them (i.e., see \code{\link{elo.model.frame}}).
+#'
 #' @param x A vector.
 #' @param adjustment A single value or a vector of the same length as \code{x}: how much to adjust the Elos in \code{x}.
 #' @param to Numeric: what Elo to regress to.
