@@ -105,5 +105,5 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
 
   attr(out, "terms") <- Terms
 
-  return(out)
+  out
 }

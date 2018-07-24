@@ -54,7 +54,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
   out <- do.call(eloRun, checked)
   any.regr <- any(regr)
 
-  return(structure(list(
+  structure(list(
     elos = out[[1]],
     n.players = c(ncol(checked$teamA), ncol(checked$teamB)),
     initial.elos = checked$initialElos,
@@ -63,7 +63,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
     group = mf$group,
     regress = if(any.regr) mf$regress else NULL,
     terms = Terms
-  ), class = c(if(any.regr) "elo.run.regressed", "elo.run")))
+  ), class = c(if(any.regr) "elo.run.regressed", "elo.run"))
 }
 
 #' @rdname elo.run

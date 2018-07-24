@@ -5,10 +5,7 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   t2 <- mf$elo.B
 
   if(is.numeric(t1)) stop("team.A shouldn't be numeric (team.B can be, though!)")
-  if(!is.players(t1))
-  {
-    t1 <- players(t1)
-  }
+  if(!is.players(t1)) t1 <- players(t1)
   if(anyNA(t1)) stop("NAs were found in team.A; check that it can be coerced to character.")
   all.teams <- as.character(t1)
   wts1 <- weights(t1)
@@ -33,9 +30,9 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   t1 <- matrix(tmp[t1], nrow = nrow(t1))
   if(flag != 2) t2 <- matrix(tmp[t2], nrow = nrow(t2))
 
-  return(list(winsA = mf$wins.A, teamA = t1, teamB = t2, weightsA = wts1, weightsB = wts2,
-              k = mf$k, adjTeamA = mf$adj.A, adjTeamB = mf$adj.B,
-              initialElos = initial.elos, flag = flag))
+  list(winsA = mf$wins.A, teamA = t1, teamB = t2, weightsA = wts1, weightsB = wts2,
+       k = mf$k, adjTeamA = mf$adj.A, adjTeamB = mf$adj.B,
+       initialElos = initial.elos, flag = flag)
 }
 
 check_initial_elos <- function(init.elos = NULL, teams)
@@ -52,7 +49,7 @@ check_initial_elos <- function(init.elos = NULL, teams)
   if(any(!(teams %in% names(init.elos))))
     stop("Some teams were found without supplied Elos.")
 
-  return(init.elos[teams])
+  init.elos[teams]
 }
 
 check_group_regress <- function(x, gt.zero = FALSE)

@@ -83,10 +83,9 @@ final.elos.elo.run.regressed <- function(x, regressed = FALSE, ...)
 {
   if(regressed && !utils::tail(check_group_regress(x$regress), 1))
     warning("'regressed = TRUE' only makes sense if the final Elos are regressed after the final game.")
-  if(!regressed)
-  {
-    return(NextMethod())
-  }
+
+  if(!regressed) return(NextMethod())
+
   out <- x$elos.regressed[nrow(x$elos.regressed), ]
   names(out) <- x$teams
   out
