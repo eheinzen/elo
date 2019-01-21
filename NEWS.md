@@ -1,4 +1,4 @@
-# elo v1.0.1.9000
+# elo v1.1.0
 
 * Widened the version dependency to R 3.3.0.
 
@@ -11,6 +11,8 @@
 * Exported and revamped the class structure of the specials allowed in formulas. (#30)
 
 * Allowed access to `elo.model.frame()` even when the package isn't loaded. (#34)
+
+* Allowed regression to different values for each team. (#35)
 
 # elo v1.0.1
 
