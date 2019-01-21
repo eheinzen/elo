@@ -108,8 +108,10 @@ elo.run(score(points.Home, points.Visitor) ~ team.Home + elo.Visitor,
 The special function `regress()` can be used to regress Elos back to a fixed value
 after certain matches. Giving a logical vector identifies these matches after which to
 regress back to the mean. Giving any other kind of vector regresses after the appropriate
-groupings (see, e.g., `duplicated(..., fromLast = TRUE)`). The other two arguments determine
-what Elo to regress to (`to = `), and by how much to regress toward that value (`by = `).
+groupings (see, e.g., `duplicated(..., fromLast = TRUE)`). The other three arguments determine
+what Elo to regress to (`to = `, which could be a different value for different teams),
+by how much to regress toward that value (`by = `), and whether to regress teams which aren't
+actively playing (`regress.unused = `).
 
 ```{r}
 tournament$elo.Visitor <- 1500
