@@ -4,9 +4,10 @@ context("Testing the elo.run function for group() and regress()")
 #### Do some simple checks
 ###########################################################################################################
 
-test_that("regress works()", {
+test_that("basic regression works, both as logical and numeric", {
 
   ref1 <- c("Team A" = 1517.770, "Team B" = 1501.949, "Team C" = 1480.281)
+  # check basic regressions: logical and numeric
   expect_identical(
     rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season == 1, 1500, 0.2),
                     k = 20, data = dat), 3),
@@ -22,6 +23,9 @@ test_that("regress works()", {
                     k = 20, data = dat), regressed = FALSE),
     ref1
   )
+})
+
+test_that("final elos work with regression", {
   expect_identical(
     round(as.vector(final.elos(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
                                        k = 20, data = dat), regressed = TRUE)), 3),
@@ -34,16 +38,30 @@ test_that("regress works()", {
     rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
                     k = 20, data = dat, subset = week < 2), 2)
   )
+})
+
+test_that("regression works with initial elos", {
   expect_identical(
     rnd.fin(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2),
-                    k = 20, data = dat, initial.elos = c("Team A" = 1600, "Team B" = 1500, "Team C" = 1400)),
+                    k = 20, data = dat, initial.elos = init),
             regressed = FALSE),
     c("Team A" = 1590.870, "Team B" = 1501.457, "Team C" = 1387.673)
   )
+})
+
+test_that("regress.unused works", {
   expect_identical(
     rnd.fin(elo.run(wins.A ~ team.A + team.B + regress(week, 1500, 0.2, FALSE),
                     k = 20, data = dat), regressed = TRUE),
     c("Team A" = 1515.770, "Team B" = 1501.605, "Team C" = 1485.779)
+  )
+})
+
+test_that("multiple regress 'to' works", {
+  expect_identical(
+    rnd.fin(elo.run(wins.A ~ team.A + team.B + regress(week, init, 0.2),
+                    k = 20, data = dat, initial.elos = init), regressed = TRUE),
+    c("Team A" = 1607.587, "Team B" = 1501.195, "Team C" = 1391.218)
   )
 })
 

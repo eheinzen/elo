@@ -46,13 +46,8 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
   Terms <- stats::terms(mf)
 
   checked <- check_elo_run_vars(mf, initial.elos)
-
-  checked$regress <- regr <- check_group_regress(mf$regress)
-  checked$to <- attr(mf$regress, "to")
-  checked$by <- attr(mf$regress, "by")
-  checked$regressUnused <- attr(mf$regress, "regress.unused")
   out <- do.call(eloRun, checked)
-  any.regr <- any(regr)
+  any.regr <- any(checked$regress)
 
   structure(list(
     elos = out[[1]],

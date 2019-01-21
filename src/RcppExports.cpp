@@ -34,7 +34,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // eloRun
-List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, NumericVector weightsB, NumericVector winsA, NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB, LogicalVector regress, double to, double by, bool regressUnused, NumericVector initialElos, int flag);
+List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, NumericVector weightsB, NumericVector winsA, NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB, LogicalVector regress, NumericVector to, double by, bool regressUnused, NumericVector initialElos, int flag);
 RcppExport SEXP _elo_eloRun(SEXP teamASEXP, SEXP teamBSEXP, SEXP weightsASEXP, SEXP weightsBSEXP, SEXP winsASEXP, SEXP kSEXP, SEXP adjTeamASEXP, SEXP adjTeamBSEXP, SEXP regressSEXP, SEXP toSEXP, SEXP bySEXP, SEXP regressUnusedSEXP, SEXP initialElosSEXP, SEXP flagSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -48,7 +48,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type adjTeamA(adjTeamASEXP);
     Rcpp::traits::input_parameter< NumericVector >::type adjTeamB(adjTeamBSEXP);
     Rcpp::traits::input_parameter< LogicalVector >::type regress(regressSEXP);
-    Rcpp::traits::input_parameter< double >::type to(toSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type to(toSEXP);
     Rcpp::traits::input_parameter< double >::type by(bySEXP);
     Rcpp::traits::input_parameter< bool >::type regressUnused(regressUnusedSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type initialElos(initialElosSEXP);

@@ -16,13 +16,13 @@ double eloUpdate2(double prob, double winsA, double k)
   return k*(winsA - prob);
 }
 
-NumericVector eloRegress(NumericVector eloA, double to, double by, LogicalVector idx)
+NumericVector eloRegress(NumericVector eloA, NumericVector to, double by, LogicalVector idx)
 {
   for(int i = 0; i < eloA.size(); i++)
   {
     if(idx[i])
     {
-      eloA[i] = eloA[i] + by*(to - eloA[i]);
+      eloA[i] = eloA[i] + by*(to[i] - eloA[i]);
     }
   }
 
@@ -32,7 +32,7 @@ NumericVector eloRegress(NumericVector eloA, double to, double by, LogicalVector
 // [[Rcpp::export]]
 List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, NumericVector weightsB,
             NumericVector winsA, NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB,
-            LogicalVector regress, double to, double by, bool regressUnused,
+            LogicalVector regress, NumericVector to, double by, bool regressUnused,
             NumericVector initialElos, int flag)
 {
   // this function uses 0-based indexing, since the incoming vectors used -1L

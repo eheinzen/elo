@@ -24,22 +24,28 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   }
 
   all.teams <- sort(unique(all.teams))
-  initial.elos <- check_initial_elos(initial.elos, all.teams)
+  initial.elos <- check_named_elos(initial.elos, all.teams)
+
+  regress <- check_group_regress(mf$regress)
+  to <- check_named_elos(attr(mf$regress, "to"), all.teams)
 
   tmp <- stats::setNames(seq_along(initial.elos) - 1L, names(initial.elos))
   t1 <- matrix(tmp[t1], nrow = nrow(t1))
   if(flag != 2) t2 <- matrix(tmp[t2], nrow = nrow(t2))
 
   list(winsA = mf$wins.A, teamA = t1, teamB = t2, weightsA = wts1, weightsB = wts2,
-       k = mf$k, adjTeamA = mf$adj.A, adjTeamB = mf$adj.B,
+       k = mf$k, adjTeamA = mf$adj.A, adjTeamB = mf$adj.B, regress = regress,
+       to = to, by = attr(mf$regress, "by"),
+       regressUnused = attr(mf$regress, "regress.unused"),
        initialElos = initial.elos, flag = flag)
 }
 
-check_initial_elos <- function(init.elos = NULL, teams)
+check_named_elos <- function(init.elos = NULL, teams)
 {
-  if(is.null(init.elos))
+  sing <- length(init.elos) == 1 && is.null(names(init.elos))
+  if(is.null(init.elos) || sing)
   {
-    init.elos <- rep(1500, times = length(teams))
+    init.elos <- rep(if(sing) init.elos else 1500, times = length(teams))
     names(init.elos) <- teams
   }
 

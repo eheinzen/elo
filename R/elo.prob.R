@@ -58,7 +58,7 @@ elo.prob.default <- function(elo.A, elo.B, ..., elos = NULL, adjust.A = 0, adjus
     }
 
     all.teams <- sort(unique(all.teams))
-    elos <- check_initial_elos(elos, all.teams)
+    elos <- check_named_elos(elos, all.teams)
 
     if(!is.numeric(elo.A)) elo.A <- rowSums(matrix(elos[elo.A], nrow = nrow(elo.A)))
     if(!is.numeric(elo.B)) elo.B <- rowSums(matrix(elos[elo.B], nrow = nrow(elo.B)))

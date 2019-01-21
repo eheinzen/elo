@@ -5,7 +5,8 @@
 #'
 #' @param x A vector.
 #' @param adjustment A single value or a vector of the same length as \code{x}: how much to adjust the Elos in \code{x}.
-#' @param to Numeric: what Elo to regress to.
+#' @param to Numeric: what Elo to regress to. Can be a single value or named vector the same length
+#'   as the number of teams.
 #' @param by Numeric: by how much should Elos be regressed toward \code{to}.
 #' @param regress.unused Logical: whether to continue regressing teams which have stopped playing.
 #' @param ... Vectors to be coerced to character, which comprise of the players of a team.
@@ -78,7 +79,7 @@ remove_elo_adjust <- function(x)
 #' @rdname formula.specials
 #' @export
 regress <- function(x, to, by, regress.unused = TRUE) {
-  if(!is.numeric(to) || length(to) != 1 || anyNA(to)) stop("regress: 'to' must be numeric.")
+  if(!is.numeric(to) || anyNA(to)) stop("regress: 'to' must be numeric.")
   if(!is.numeric(by) || length(by) != 1 || anyNA(by) || by > 1 || by < 0)
     stop("regress: 'by' must be 0 <= by <= 1")
   if(!is.logical(regress.unused) || length(regress.unused) != 1 || anyNA(regress.unused))

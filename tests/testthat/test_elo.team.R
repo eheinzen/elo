@@ -40,18 +40,22 @@ test_that("elo.run works with adjust(players())", {
 test_that("'group()' and 'regress()' work with players()", {
   tmp <- c("Player 1" = 747.117, "Player 2" = 758.827, "Player 3" = 747.944,
            "Player 4" = 628.056, "Player 5" = 861.173, "Player 6" = 756.883)
+
+  # as.matrix gives right regression results
   expect_identical(
     rnd.mat(elo.run(wins.A ~ players(p1.A, p2.A) + players(p1.B, p2.B) + regress(season, 750, 0.2),
                     k = 20, data = dat, initial.elos = init.ply), 3),
     tmp
   )
 
+  # final.elos gives right regression results
   expect_identical(
     rnd.fin(elo.run(wins.A ~ players(p1.A, p2.A) + players(p1.B, p2.B) + regress(season, 750, 0.2),
                     k = 20, data = dat, initial.elos = init.ply)),
     tmp
   )
 
+  # regression works right the second time
   expect_identical(
     rnd.fin(elo.run(wins.A ~ players(p1.A, p2.A) + players(p1.B, p2.B) + regress(season, 750, 0.2),
                     k = 20, data = dat, initial.elos = init.ply), regressed = TRUE),
@@ -59,6 +63,16 @@ test_that("'group()' and 'regress()' work with players()", {
       "Player 4" = 652.445, "Player 5" = 838.938, "Player 6" = 755.507)
   )
 
+  # regression works right the second time
+  expect_identical(
+    rnd.fin(elo.run(wins.A ~ players(p1.A, p2.A) + players(p1.B, p2.B) +
+                      regress(season, init.ply, 0.2),
+                    k = 20, data = dat, initial.elos = init.ply), regressed = TRUE),
+    c("Player 1" = 747.407, "Player 2" = 757.062, "Player 3" = 748.069,
+      "Player 4" = 598.731, "Player 5" = 892.938, "Player 6" = 755.793)
+  )
+
+  # as.matrix works right for grouping
   expect_identical(
     rnd.mat(elo.run(wins.A ~ players(p1.A, p2.A) + players(p1.B, p2.B) + regress(season, 750, 0.2),
                     k = 20, data = dat, initial.elos = init.ply), 2:3),
