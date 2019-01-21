@@ -28,7 +28,8 @@ group(x)
 
 \item{adjustment}{A single value or a vector of the same length as \code{x}: how much to adjust the Elos in \code{x}.}
 
-\item{to}{Numeric: what Elo to regress to.}
+\item{to}{Numeric: what Elo to regress to. Can be a single value or named vector the same length
+as the number of teams.}
 
 \item{by}{Numeric: by how much should Elos be regressed toward \code{to}.}
 

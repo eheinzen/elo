@@ -2,7 +2,6 @@
 % Please edit documentation in R/score.R
 \name{score}
 \alias{score}
-\alias{score}
 \alias{is.score}
 \title{Create a 1/0/0.5 win "indicator"}
 \usage{

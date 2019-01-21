@@ -2,7 +2,6 @@
 % Please edit documentation in R/elo.glm.R
 \name{elo.glm}
 \alias{elo.glm}
-\alias{elo.glm}
 \title{\code{elo.glm}}
 \usage{
 elo.glm(formula, data, na.action, subset, family = "binomial", ...,

@@ -24,7 +24,7 @@ VignetteBuilder: knitr
 License: GPL (>= 2)
 URL: https://github.com/eheinzen/elo, https://cran.r-project.org/package=elo
 BugReports: https://github.com/eheinzen/elo/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 LazyData: true
 LinkingTo: Rcpp
 Encoding: UTF-8

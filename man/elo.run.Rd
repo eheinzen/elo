@@ -2,13 +2,12 @@
 % Please edit documentation in R/elo.run.R
 \name{elo.run}
 \alias{elo.run}
-\alias{elo.run}
 \alias{print.elo.run}
 \alias{print.elo.run.regressed}
 \title{\code{elo.run}}
 \usage{
-elo.run(formula, data, na.action, subset, k = NULL, initial.elos = NULL,
-  ...)
+elo.run(formula, data, na.action, subset, k = NULL,
+  initial.elos = NULL, ...)
 
 \method{print}{elo.run}(x, ...)
 
