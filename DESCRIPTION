@@ -27,3 +27,4 @@ BugReports: https://github.com/eheinzen/elo/issues
 RoxygenNote: 6.0.1
 LazyData: true
 LinkingTo: Rcpp
+Encoding: UTF-8
