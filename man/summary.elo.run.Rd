@@ -4,28 +4,18 @@
 \alias{summary.elo.run}
 \alias{fitted.elo.run}
 \alias{residuals.elo.run}
-\alias{mse}
-\alias{print.summary.elo.run}
 \title{Summarize an \code{elo.run} Object}
 \usage{
 \method{fitted}{elo.run}(object, ...)
 
 \method{residuals}{elo.run}(object, ...)
 
-mse(object, subset)
-
 \method{summary}{elo.run}(object, ...)
-
-\method{print}{summary.elo.run}(x, ...)
 }
 \arguments{
 \item{object}{An object resulting from \code{\link{elo.run}}.}
 
 \item{...}{Other arguments}
-
-\item{subset}{A vector of indices on which to calculate the MSE.}
-
-\item{x}{An object of class \code{"summary.elo.run"}.}
 }
 \value{
 A summary of \code{object}.
