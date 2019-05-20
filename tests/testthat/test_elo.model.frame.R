@@ -47,3 +47,8 @@ test_that("Certain errors are issued appropriately", {
   expect_error(elo.model.frame(wins.A ~ team.A + team.B + k(k.column), data = dat2), NA)
 })
 
+test_that("is.na(adjust()) works", {
+  expect_true(all(is.na(adjust(1:5, NA_real_))))
+  expect_true(sum(is.na(adjust(1:3, c(1, NA, 3)))) == 1)
+  expect_error(elo.model.frame(wins.A ~ adjust(team.A, NA_real_) + team.B, data = dat, k = 20), "non-missing")
+})

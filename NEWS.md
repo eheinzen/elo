@@ -4,6 +4,8 @@
 
 * Made `favored()` S3 and added `favored.elo.glm()`. (#38)
 
+* Added `is.na.elo.adjust()` to test for NAs in the adjustment vector. (#41)
+
 # elo v1.1.0
 
 * Widened the version dependency to R 3.3.0.

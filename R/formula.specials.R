@@ -69,6 +69,13 @@ adjust <- function(x, adjustment) {
   adjust(out, attr(x, "adjust")[i])
 }
 
+#' @export
+is.na.elo.adjust <- function(x)
+{
+  out <- NextMethod()
+  out | is.na(attr(x, "adjust"))
+}
+
 remove_elo_adjust <- function(x)
 {
   class(x) <- class(x)[!(class(x) %in% "elo.adjust")]
