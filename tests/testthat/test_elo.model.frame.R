@@ -12,13 +12,13 @@ test_that("Basic model.frame stuff works", {
 
   expect_identical(
     dim(elo.model.frame(wins.A ~ team.A + team.B, data = dat, k = 20,
-                        required.vars = c("wins", "teams", "k"))),
+                        required.vars = c("wins", "elos", "k"))),
     c(3L, 6L)
   )
 
   expect_identical(
     dim(elo.model.frame(wins.A ~ team.A + team.B, data = dat, k = 20,
-                        required.vars = c("wins", "teams", "k", "group", "regress"))),
+                        required.vars = c("wins", "elos", "k", "group", "regress"))),
     c(3L, 8L)
   )
 
@@ -34,21 +34,26 @@ dat2$wins.A[2] <- 2
 
 test_that("Certain errors are issued appropriately", {
   expect_error(elo.model.frame(wins.A ~ team.A, data = dat), "specified correctly")
-  expect_error(elo.model.frame(~ team.A + team.B + k(k.column), data = dat, required.vars = c("wins", "teams")),
+  expect_error(elo.model.frame(~ team.A + team.B + k(k.column), data = dat, required.vars = c("wins", "elos")),
                "A 'wins' component")
-  expect_error(elo.model.frame(wins.A ~ team.A + team.B, data = dat, required.vars = c("k", "teams")),
+  expect_error(elo.model.frame(wins.A ~ team.A + team.B, data = dat, required.vars = c("k", "elos")),
                "'k' is not in")
   expect_warning(elo.model.frame(wins.A ~ team.A + team.B + k(k.column), data = dat, k = 20),
                  "argument being ignored")
-  expect_error(elo.model.frame(wins.A ~ team.A + team.B, data = dat2, k = 20, required.vars = c("wins", "teams")),
+  expect_error(elo.model.frame(wins.A ~ team.A + team.B, data = dat2, k = 20, required.vars = c("wins", "elos")),
                "between 0 and 1")
-  expect_error(elo.model.frame(~ team.A + team.B + k(k.column), data = dat2, required.vars = c("k", "teams")),
+  expect_error(elo.model.frame(~ team.A + team.B + k(k.column), data = dat2, required.vars = c("k", "elos")),
                "numeric and non-NA")
   expect_error(elo.model.frame(wins.A ~ team.A + team.B + k(k.column), data = dat2), NA)
 })
 
-test_that("is.na(adjust()) works", {
+test_that("is.na(adjust()) works (#41)", {
   expect_true(all(is.na(adjust(1:5, NA_real_))))
   expect_true(sum(is.na(adjust(1:3, c(1, NA, 3)))) == 1)
   expect_error(elo.model.frame(wins.A ~ adjust(team.A, NA_real_) + team.B, data = dat, k = 20), "non-missing")
+})
+
+test_that("elo.model.frame() obeys na.action w.r.t. adjustments (#40)", {
+  expect_equal(dim(elo.model.frame(replace(wins.A, 1, NA) ~ adjust(team.A, 10) + team.B,
+                                   data = dat, k = 20, required.vars = c("elos", "k"))), c(2, 5))
 })

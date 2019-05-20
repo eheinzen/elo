@@ -33,6 +33,7 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   if(nrow(mf) == 0) stop("No (non-missing) observations")
 
   Terms <- stats::terms(mf)
+  naaction <- stats::na.action(mf)
 
   #####################################################################
 
@@ -98,12 +99,13 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   }
 
   adjs <- attr(Terms, "specials")$adjust
-  out$adj.A <- if(null_or_length0(adjs) || !any(adjs == elo.cols[1])) 0 else attr(mf[[elo.cols[1]]], "adjust")
-  out$adj.B <- if(null_or_length0(adjs) || !any(adjs == elo.cols[2])) 0 else attr(mf[[elo.cols[2]]], "adjust")
+
+  out$adj.A <- if(null_or_length0(adjs) || !any(adjs == elo.cols[1])) 0 else attr(fix_adjust(mf[[elo.cols[1]]], naaction), "adjust")
+  out$adj.B <- if(null_or_length0(adjs) || !any(adjs == elo.cols[2])) 0 else attr(fix_adjust(mf[[elo.cols[2]]], naaction), "adjust")
 
   if(!is.numeric(out$adj.A) || !is.numeric(out$adj.B)) stop("Any Elo adjustments should be numeric!")
 
   attr(out, "terms") <- Terms
-
+  attr(out, "na.action") <- naaction
   out
 }

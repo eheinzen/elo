@@ -61,6 +61,15 @@ adjust <- function(x, adjustment) {
   x
 }
 
+fix_adjust <- function(x, na.action)
+{
+  # why do we need this? Well, model.frame conveniently assigns the original attributes back onto vectors after na.action
+  if(!is.null(na.action))
+  {
+    attr(x, "adjust") <- attr(x, "adjust")[-na.action]
+  }
+  x
+}
 
 #' @export
 "[.elo.adjust" <- function(x, i, j, drop = FALSE)
