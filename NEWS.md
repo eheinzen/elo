@@ -2,6 +2,8 @@
 
 * Added `auc.elo.glm()`. (#37)
 
+* Made `favored()` S3 and added `favored.elo.glm()`. (#38)
+
 # elo v1.1.0
 
 * Widened the version dependency to R 3.3.0.

@@ -13,15 +13,6 @@
 NULL
 #> NULL
 
-
-#' @rdname summary.elo.run
-#' @export
-favored <- function(x, ...)
-{
-  table(factor(score(fitted(x), 0.5), levels = c(1, 0.5, 0), labels = c("TRUE", "(tie)", "FALSE")),
-        x$elos[, sum(x$n.players) + 2], dnn = c("Favored", "Actual"))
-}
-
 #' @rdname summary.elo.run
 #' @export
 fitted.elo.run <- function(object, ...)
