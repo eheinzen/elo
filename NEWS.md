@@ -1,3 +1,7 @@
+# elo v1.1.0.9000
+
+* Added `auc.elo.glm()`. (#37)
+
 # elo v1.1.0
 
 * Widened the version dependency to R 3.3.0.
