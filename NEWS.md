@@ -4,6 +4,8 @@
 
 * Made `favored()` S3 and added `favored.elo.glm()`. (#38)
 
+* Made `mse()` S3 and added `mse.elo.glm()`. (#43)
+
 * Fixed a bug with adding NAs back in to fitted values and residuals with `na.exclude()` in `elo.glm()` and `elo.run()`.
   (#39, #42)
 

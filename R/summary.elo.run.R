@@ -2,8 +2,6 @@
 #' Summarize an \code{elo.run} Object
 #'
 #' @param object An object resulting from \code{\link{elo.run}}.
-#' @param subset A vector of indices on which to calculate the MSE.
-#' @param x An object of class \code{"summary.elo.run"}.
 #' @param ... Other arguments
 #' @return A summary of \code{object}.
 #' @examples
@@ -33,14 +31,6 @@ residuals.elo.run <- function(object, ...)
 
 #' @rdname summary.elo.run
 #' @export
-mse <- function(object, subset)
-{
-  sq <- if(missing(subset)) residuals(object)^2 else (residuals(object)[subset])^2
-  mean(sq)
-}
-
-#' @rdname summary.elo.run
-#' @export
 summary.elo.run <- function(object, ...)
 {
   object$favored <- favored(object)
@@ -50,7 +40,6 @@ summary.elo.run <- function(object, ...)
   object
 }
 
-#' @rdname summary.elo.run
 #' @export
 print.summary.elo.run <- function(x, ...)
 {
