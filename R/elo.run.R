@@ -57,7 +57,8 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
     teams = names(checked$initialElos),
     group = mf$group,
     regress = if(any.regr) mf$regress else NULL,
-    terms = Terms
+    terms = Terms,
+    na.action = stats::na.action(mf)
   ), class = c(if(any.regr) "elo.run.regressed", "elo.run"))
 }
 

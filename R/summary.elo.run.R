@@ -13,18 +13,22 @@
 NULL
 #> NULL
 
+## we also rely on stats:::terms.default
+
 #' @rdname summary.elo.run
 #' @export
 fitted.elo.run <- function(object, ...)
 {
-  object$elos[, sum(object$n.players) + 1]
+  out <- object$elos[, sum(object$n.players) + 1]
+  stats::napredict(object$na.action, out)
 }
 
 #' @rdname summary.elo.run
 #' @export
 residuals.elo.run <- function(object, ...)
 {
-  object$elos[, sum(object$n.players) + 2] - fitted(object)
+  out <- object$elos[, sum(object$n.players) + 2] - object$elos[, sum(object$n.players) + 1]
+  stats::naresid(object$na.action, out)
 }
 
 #' @rdname summary.elo.run

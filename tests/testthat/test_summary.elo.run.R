@@ -1,27 +1,37 @@
-context("Testing the summary functions")
+context("Testing the auxiliary  functions")
 
 ###########################################################################################################
 #### Do some simple checks
 ###########################################################################################################
 
-test_that("auc.elo.run works", {
-  results <- elo.run(wins.A ~ adjust(team.A, 10) + team.B, data = rbind(dat, dat), k = 20)
+results <- elo.run(wins.A ~ adjust(team.A, 10) + team.B, data = rbind(dat, dat), k = 20)
+results.na <- elo.run(replace(wins.A, 1, NA) ~ adjust(team.A, 10) + team.B,
+                      data = rbind(dat, dat), k = 20, na.action = na.exclude)
 
+results.glm <- elo.glm(wins.A ~ team.A + team.B, data = rbind(dat, dat))
+results.glm.na <- elo.glm(replace(wins.A, 1, NA) ~ team.A + team.B, data = rbind(dat, dat), na.action = na.exclude)
+
+test_that("fitted and residuals works with NAs (#39)", {
+  expect_true(is.na(fitted(results.glm.na)[1]))
+  expect_true(is.na(fitted(results.na)[1]))
+  expect_true(is.na(residuals(results.glm.na)[1]))
+  expect_true(is.na(residuals(results.na)[1]))
+})
+
+test_that("auc.elo.run works", {
   expect_equal(
     as.numeric(pROC::auc(results$elos[, 4], results$elos[, 3])),
     auc(results)
   )
 })
 
-test_that("auc.elo.glm works", {
-  results <- elo.glm(wins.A ~ team.A + team.B, data = rbind(dat, dat))
+test_that("auc.elo.glm works (#37)", {
   expect_equal(
-    as.numeric(pROC::auc(results$y, results$fitted.values)),
-    auc(results)
+    as.numeric(pROC::auc(results.glm$y, results.glm$fitted.values)),
+    auc(results.glm)
   )
 
-  results <- elo.glm(replace(wins.A, 1, NA) ~ team.A + team.B, data = rbind(dat, dat), na.action = na.exclude)
-  expect_false(is.na(auc(results)))
+  expect_false(is.na(auc(results.glm.na)))
 })
 
 test_that("favored.elo.run works", {
@@ -34,7 +44,7 @@ test_that("favored.elo.run works", {
   )
 })
 
-test_that("favored.elo.glm works", {
+test_that("favored.elo.glm works (#38)", {
   results <- elo.glm(wins.A ~ team.A + team.B, data = rbind(dat, dat))
 
   expect_equal(

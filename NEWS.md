@@ -4,6 +4,9 @@
 
 * Made `favored()` S3 and added `favored.elo.glm()`. (#38)
 
+* Fixed a bug with adding NAs back in to fitted values and residuals with `na.exclude()` in `elo.glm()` and `elo.run()`.
+  (#39, #42)
+
 * Fixed a bug with `adjust()` variables not getting subsetted correctly with `na.action` in `model.frame()`. (#40)
 
 * Added `is.na.elo.adjust()` to test for NAs in the adjustment vector. (#41)
