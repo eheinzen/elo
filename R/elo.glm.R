@@ -53,7 +53,7 @@ elo.glm <- function(formula, data, na.action, subset, family = "binomial", ..., 
 
   if(rm.ties) dat <- dat[dat$wins.A %in% 0:1, , drop = FALSE]
 
-  dat.glm <- stats::glm(wins.A ~ ., data = dat, family = family, na.action = na.pass, subset = NULL, ...)
+  dat.glm <- stats::glm(wins.A ~ ., data = dat, family = family, na.action = stats::na.pass, subset = NULL, ...)
   dat.glm$na.action <- stats::na.action(mf)
   structure(dat.glm, class = c("elo.glm", class(dat.glm)), rm.ties = rm.ties, all.teams = all.teams)
 }
