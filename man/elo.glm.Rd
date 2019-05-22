@@ -4,8 +4,8 @@
 \alias{elo.glm}
 \title{\code{elo.glm}}
 \usage{
-elo.glm(formula, data, na.action, subset, family = "binomial", ...,
-  rm.ties = FALSE, running = FALSE, skip = 0)
+elo.glm(formula, data, weights, na.action, subset, family = "binomial",
+  ..., rm.ties = FALSE, running = FALSE, skip = 0)
 }
 \arguments{
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}
@@ -16,7 +16,7 @@ elo.glm(formula, data, na.action, subset, family = "binomial", ...,
 
 \item{subset}{An optional vector specifying a subset of observations.}
 
-\item{family, ...}{Arguments passed to \code{\link[stats]{glm}}.}
+\item{family, weights, ...}{Arguments passed to \code{\link[stats]{glm}}.}
 
 \item{rm.ties}{Logical, denoting whether to remove ties on the left-hand side.}
 

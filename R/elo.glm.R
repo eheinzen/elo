@@ -4,7 +4,7 @@
 #' Compute a logistic regression model for a matchup.
 #'
 #' @inheritParams elo.calc
-#' @param family,... Arguments passed to \code{\link[stats]{glm}}.
+#' @param family,weights,... Arguments passed to \code{\link[stats]{glm}}.
 #' @param rm.ties Logical, denoting whether to remove ties on the left-hand side.
 #' @param running Logical, denoting whether to calculate "running" probabilities. If true, a model is fit for
 #'   group 1 on its own, then groups 1 and 2, then groups 1 through 3, etc. Groups are determined
@@ -34,11 +34,11 @@ NULL
 
 #' @rdname elo.glm
 #' @export
-elo.glm <- function(formula, data, na.action, subset, family = "binomial", ..., rm.ties = FALSE, running = FALSE, skip = 0)
+elo.glm <- function(formula, data, weights, na.action, subset, family = "binomial", ..., rm.ties = FALSE, running = FALSE, skip = 0)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
-  Call$required.vars <- c("wins", "elos", "group")
+  Call$required.vars <- c("wins", "elos", "group", "weights")
   mf <- eval(Call, parent.frame())
   Terms <- stats::terms(mf)
 
@@ -65,14 +65,15 @@ elo.glm <- function(formula, data, na.action, subset, family = "binomial", ..., 
     dat <- dat[idx, , drop = FALSE]
   }
 
-  dat.glm <- stats::glm(wins.A ~ ., data = dat, family = family, na.action = stats::na.pass, subset = NULL, ...)
+  wts <- mf$weights
+  dat.glm <- stats::glm(wins.A ~ ., data = dat, family = family, na.action = stats::na.pass, subset = NULL, weights = wts, ...)
   dat.glm$na.action <- stats::na.action(mf)
 
   if(running)
   {
     dat.mat <- cbind(1, as.matrix(dat[names(dat) != "wins.A"]))
     y <- dat$wins.A
-    if(is.null(wts <- stats::model.weights(dat.glm))) wts <- rep(1, nrow(dat.mat))
+    if(is.null(wts)) wts <- rep(1, nrow(dat.mat))
 
     ftd <- dat.glm$fitted.values
     grp2 <- check_group_regress(grp, gt.zero = FALSE)

@@ -25,3 +25,10 @@ test_that("Errors are thrown appropriately", {
   expect_error(elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn, running = TRUE, skip = 15),
                "0 and 14 (inclusive)", fixed = TRUE)
 })
+
+test_that("Running elo.glm works with weights", {
+  tmp.glm.sub <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn, subset = week %in% 1:6, weights = 1:nrow(trn))
+  tmp.glm.run <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn, running = TRUE, skip = 5, weights = 1:nrow(trn))
+  expect_equal(fitted(tmp.glm.run)[trn$week %in% 1:6], fitted(tmp.glm.sub))
+  expect_equal(mse(tmp.glm.run, subset = trn$week %in% 1:6), mse(tmp.glm.sub))
+})
