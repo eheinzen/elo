@@ -64,7 +64,6 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
 
   if(has.wins + sum.nonempty + 2 != ncol(mf))
   {
-    print(Terms)
     stop("'formula' not specified correctly: found ", ncol(mf), " columns; expected ",
          has.wins + sum.nonempty + 2)
   }
