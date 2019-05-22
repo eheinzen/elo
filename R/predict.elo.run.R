@@ -24,14 +24,9 @@ NULL
 #' @export
 predict.elo.run <- function(object, newdata, ...)
 {
-  if(missing(newdata))
-  {
-    return(fitted(object))
-  } else
-  {
-    form <- clean_elo_formula(stats::terms(object))
-    return(elo.prob(form, data = newdata, ..., elos = final.elos(object)))
-  }
+  if(missing(newdata)) return(fitted(object))
+  form <- clean_elo_formula(stats::terms(object))
+  elo.prob(form, data = newdata, ..., elos = final.elos(object))
 }
 
 
@@ -39,12 +34,7 @@ predict.elo.run <- function(object, newdata, ...)
 #' @export
 predict.elo.run.regressed <- function(object, newdata, regressed = FALSE, ...)
 {
-  if(missing(newdata))
-  {
-    return(fitted(object))
-  } else
-  {
-    form <- clean_elo_formula(stats::terms(object))
-    return(elo.prob(form, data = newdata, ..., elos = final.elos(object, regressed = regressed)))
-  }
+  if(missing(newdata)) return(fitted(object))
+  form <- clean_elo_formula(stats::terms(object))
+  elo.prob(form, data = newdata, ..., elos = final.elos(object, regressed = regressed))
 }
