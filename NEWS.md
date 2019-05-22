@@ -16,7 +16,9 @@
 * Added `summary.elo.glm()`.
 
 * Added the `running=TRUE` option to `elo.glm()`, with corresponding methods for `summary()`, `fitted()`, `mse()`,
-  `auc()`, and `favored()`.`
+  `auc()`, and `favored()`.
+  
+* Added `brier()` as a synonym for `mse()`.
 
 # elo v1.1.0
 
