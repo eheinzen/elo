@@ -4,16 +4,21 @@
 \alias{elo.auc}
 \alias{auc.elo.run}
 \alias{auc.elo.glm}
+\alias{auc.elo.glm.running}
 \title{Calculate AUC on an \code{elo.run} object}
 \usage{
 \method{auc}{elo.run}(object, ...)
 
 \method{auc}{elo.glm}(object, ...)
+
+\method{auc}{elo.glm.running}(object, running = TRUE, ...)
 }
 \arguments{
 \item{object}{An object of class \code{\link{elo.run}}.}
 
 \item{...}{Other arguments (not used at this time).}
+
+\item{running}{logical, denoting whether to use the running fitted values.}
 }
 \value{
 The AUC of the predicted Elo probabilities and the actual win results.

@@ -2,12 +2,17 @@
 % Please edit documentation in R/summary.elo.glm.R
 \name{summary.elo.glm}
 \alias{summary.elo.glm}
+\alias{fitted.elo.glm.running}
 \title{Summarize an \code{elo.glm} Object}
 \usage{
+\method{fitted}{elo.glm.running}(object, running = TRUE, ...)
+
 \method{summary}{elo.glm}(object, ...)
 }
 \arguments{
 \item{object}{An object resulting from \code{\link{elo.glm}}.}
+
+\item{running}{logical, denoting whether to use the running fitted values.}
 
 \item{...}{Other arguments}
 }
@@ -20,4 +25,7 @@ Summarize an \code{elo.glm} Object
 \examples{
 summary(elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
   data = tournament))
+}
+\seealso{
+\code{\link{elo.glm}}, \code{\link{favored}}, \code{\link{auc.elo.run}}, \code{\link{mse}}
 }

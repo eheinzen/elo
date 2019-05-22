@@ -5,6 +5,7 @@
 \alias{favored}
 \alias{favored.elo.run}
 \alias{favored.elo.glm}
+\alias{favored.elo.glm.running}
 \alias{favored.default}
 \title{Classify teams that are favored to win}
 \usage{
@@ -14,6 +15,8 @@ favored(x, ...)
 
 \method{favored}{elo.glm}(x, ...)
 
+\method{favored}{elo.glm.running}(x, running = TRUE, ...)
+
 \method{favored}{default}(x, p.A, ...)
 }
 \arguments{
@@ -21,6 +24,8 @@ favored(x, ...)
 a vector representing wins.A.}
 
 \item{...}{Other arguments (not in use at this time).}
+
+\item{running}{logical, denoting whether to use the running fitted values.}
 
 \item{p.A}{A vector of predicted win probabilities.}
 }

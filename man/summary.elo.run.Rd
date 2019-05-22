@@ -27,3 +27,6 @@ Summarize an \code{elo.run} Object
 summary(elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
   data = tournament, k = 20))
 }
+\seealso{
+\code{\link{elo.run}}, \code{\link{favored}}, \code{\link{auc.elo.run}}, \code{\link{mse}}
+}

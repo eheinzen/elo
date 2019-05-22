@@ -59,6 +59,6 @@ elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 30) +
 
 }
 \seealso{
-\code{\link{score}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}},
-  \code{\link{elo.model.frame}}, \link{elo.run.helpers}{elo.run helpers}.
+\code{\link{score}}, \link{elo.run.helpers}{elo.run helpers}, \code{\link{elo.calc}},
+  \code{\link{elo.update}}, \code{\link{elo.prob}}, \code{\link{elo.model.frame}}.
 }

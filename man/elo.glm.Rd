@@ -5,7 +5,7 @@
 \title{\code{elo.glm}}
 \usage{
 elo.glm(formula, data, na.action, subset, family = "binomial", ...,
-  rm.ties = TRUE)
+  rm.ties = FALSE, running = FALSE, skip = 0)
 }
 \arguments{
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}
@@ -19,9 +19,18 @@ elo.glm(formula, data, na.action, subset, family = "binomial", ...,
 \item{family, ...}{Arguments passed to \code{\link[stats]{glm}}.}
 
 \item{rm.ties}{Logical, denoting whether to remove ties on the left-hand side.}
+
+\item{running}{Logical, denoting whether to calculate "running" probabilities. If true, a model is fit for
+group 1 on its own, then groups 1 and 2, then groups 1 through 3, etc. Groups are determined
+in \code{formula}. Omitting a group term re-runs a glm model for each observation (a potentially
+time-consuming operation!)}
+
+\item{skip}{Integer, denoting how many groups to skip before fitting the running models. This is helpful if
+groups are small, where glm would have trouble converging for the first few groups.}
 }
 \value{
-An object of class \code{c("elo.glm", "glm")}.
+An object of class \code{c("elo.glm", "glm")}. If \code{running==TRUE}, the class \code{"elo.glm.running"}
+  is prepended.
 }
 \description{
 Compute a logistic regression model for a matchup.
@@ -42,5 +51,5 @@ elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = to
 
 }
 \seealso{
-\code{\link{score}}, \code{\link{elo.model.frame}}
+\code{\link[stats]{glm}}, \code{\link{summary.elo.glm}}, \code{\link{score}}, \code{\link{elo.model.frame}}
 }

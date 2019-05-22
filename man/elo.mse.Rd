@@ -2,16 +2,22 @@
 % Please edit documentation in R/mse.R
 \name{elo.mse}
 \alias{elo.mse}
+\alias{brier}
 \alias{mse}
-\alias{mse.elo.glm}
 \alias{mse.elo.run}
+\alias{mse.elo.glm}
+\alias{mse.elo.glm.running}
 \title{Calculate the mean square error}
 \usage{
+brier(object, subset, ...)
+
 mse(object, subset, ...)
+
+\method{mse}{elo.run}(object, subset, ...)
 
 \method{mse}{elo.glm}(object, subset, ...)
 
-\method{mse}{elo.run}(object, subset, ...)
+\method{mse}{elo.glm.running}(object, subset, running = TRUE, ...)
 }
 \arguments{
 \item{object}{An object}
@@ -19,10 +25,13 @@ mse(object, subset, ...)
 \item{subset}{(optional) A vector of indices on which to calculate the MSE.}
 
 \item{...}{Other arguments (not in use at this time).}
+
+\item{running}{logical, denoting whether to use the running fitted values.}
 }
 \description{
-Calculate the mean square error
+Calculate the mean square error (Brier score) for a model.
 }
 \details{
 Even though logistic regressions don't use the MSE on the y=0/1 scale, it can still be informative.
+  Note that the S3 method is \code{mse}.
 }
