@@ -32,3 +32,15 @@ test_that("Running elo.glm works with weights", {
   expect_equal(fitted(tmp.glm.run)[trn$week %in% 1:6], fitted(tmp.glm.sub))
   expect_equal(mse(tmp.glm.run, subset = trn$week %in% 1:6), mse(tmp.glm.sub))
 })
+
+test_that("predict.elo.glm works correctly", {
+  tmp.glm <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn)
+  expect_equal(fitted(tmp.glm), predict(tmp.glm))
+  expect_error(predict(tmp.glm, newdata = data.frame(team.Home = "Unknown", team.Visitor = "Unknown 2")), "Unknown teams: Unknown, Unknown 2")
+  expect_error(predict(tmp.glm, newdata = data.frame(team.Home = "Unknown")), "object 'team.Visitor' not found")
+
+  expect_equal(
+    tmp.glm$family$linkinv(sum(coef(tmp.glm) * c(1, 1, -1, rep(0, 6)))),
+    unname(predict(tmp.glm, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons")))
+  )
+})

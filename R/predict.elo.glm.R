@@ -1,0 +1,44 @@
+
+#' Make Predictions on an \code{elo.glm} Object
+#'
+#' @param object An object of class \code{"\link{elo.glm}"}.
+#' @param newdata A new dataset containing the same variables as the call
+#'   that made \code{object}. If missing, the predicted win probabilities from
+#'   \code{object} will be returned.
+#' @param running logical, denoting whether to use the running predicted values. Only makes
+#'   sense if \code{newdata} is missing.
+#' @param ... Other arguments.
+#' @return A vector of win probabilities.
+#' @examples
+#' data(tournament)
+#' t1 <- head(tournament, -3)
+#' t2 <- tail(tournament, 3)
+#' results <- elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = t1, subset = points.Home != points.Visitor)
+#' predict(results)
+#' predict(results, newdata = t2)
+#' @name predict.elo.glm
+NULL
+#> NULL
+
+#' @rdname predict.elo.glm
+#' @export
+predict.elo.glm <- function(object, newdata, type = "response", ...)
+{
+  if(missing(newdata)) return(fitted(object))
+  form <- clean_elo_formula(object$elo.terms)
+  mf <- elo.model.frame(form, data = newdata, required.vars = "elos")
+  newdata.wide <- mf_to_wide(mf, teams = object$teams)
+  stats::predict.glm(object, newdata = newdata.wide, type = type, ...)
+}
+
+
+#' @rdname predict.elo.glm
+#' @export
+predict.elo.glm.running <- function(object, newdata, type = "response", running = missing(newdata), ...)
+{
+  if(missing(newdata) && running)
+  {
+    return(fitted(object, running = TRUE))
+  } else if(missing(newdata)) return(fitted(object, running = FALSE))
+  NextMethod()
+}

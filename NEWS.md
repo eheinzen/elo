@@ -15,7 +15,9 @@
 
 * Added `summary.elo.glm()`.
 
-* Added the `running=TRUE` option to `elo.glm()`, with corresponding methods for `summary()`, `fitted()`, `mse()`,
+* Added `predict.elo.glm()`.
+
+* Added the `running=TRUE` option to `elo.glm()`, with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`,
   `auc()`, and `favored()`.
   
 * Added `weights=` to `elo.glm()`.
