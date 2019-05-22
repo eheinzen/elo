@@ -42,21 +42,9 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
   mf <- eval(Call, parent.frame())
   Terms <- stats::terms(mf)
 
-  t1 <- mf$elo.A
-  t2 <- mf$elo.B
-
-  if(is.numeric(t1) || is.numeric(t2)) stop("Neither team should be numeric")
-  if(!is.players(t1)) t1 <- players(t1)
-  if(anyNA(t1)) stop("NAs were found in team.A; check that it can be coerced to character.")
-
-  if(!is.players(t2)) t2 <- players(t2)
-  if(anyNA(t2)) stop("NAs were found in team.B; check that it can be coerced to character.")
-  all.teams <- sort(unique(c(as.character(t1), as.character(t2))))
-
-  dat <- lapply(all.teams, function(tm) (rowSums(t1 == tm) > 0) - (rowSums(t2 == tm) > 0))
-  names(dat) <- all.teams
+  dat <- mf_to_wide(mf)
+  all.teams <- attr(dat, "all.teams")
   dat$wins.A <- mf$wins.A
-  dat <- structure(dat, class = "data.frame", row.names = c(NA_integer_, nrow(mf)))
   grp <- mf$group
   if(rm.ties)
   {

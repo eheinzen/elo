@@ -109,3 +109,28 @@ clean_elo_formula <- function(Terms)
   }
   stats::formula(stats::delete.response(Terms))
 }
+
+
+
+mf_to_wide <- function(mf, teams = NULL)
+{
+  t1 <- mf$elo.A
+  t2 <- mf$elo.B
+
+  if(is.numeric(t1) || is.numeric(t2)) stop("Neither team should be numeric")
+  if(!is.players(t1)) t1 <- players(t1)
+  if(anyNA(t1)) stop("NAs were found in team.A; check that it can be coerced to character.")
+
+  if(!is.players(t2)) t2 <- players(t2)
+  if(anyNA(t2)) stop("NAs were found in team.B; check that it can be coerced to character.")
+  all.teams <- sort(unique(c(as.character(t1), as.character(t2))))
+  if(!is.null(teams))
+  {
+    if(!all(all.teams %in% teams)) stop("Unknown teams: ", paste0(unique(all.teams[!(all.teams %in% teams)]), collapse = ", "))
+    all.teams <- teams
+  }
+
+  dat <- lapply(all.teams, function(tm) (rowSums(t1 == tm) > 0) - (rowSums(t2 == tm) > 0))
+  names(dat) <- all.teams
+  structure(dat, class = "data.frame", row.names = c(NA_integer_, nrow(mf)), all.teams = all.teams)
+}
