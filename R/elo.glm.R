@@ -89,7 +89,7 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
       ftd[grp2 <= i] <- stats::glm.fit(dat.mat[sbst, , drop = FALSE], y[sbst], wts[sbst], family = dat.glm$family,
                                 control = dat.glm$control)$fitted.values[grp2 <= i]
     }
-    dat.glm$running.fitted.values <- ftd
+    dat.glm$running.values <- ftd
   }
 
   structure(dat.glm, class = c(if(running) "elo.glm.running", "elo.glm", class(dat.glm)),

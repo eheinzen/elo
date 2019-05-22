@@ -5,7 +5,7 @@
 #' @param x An object from \code{\link{elo.run}} or \code{\link{elo.glm}}, or for the default method
 #'   a vector representing wins.A.
 #' @param p.A A vector of predicted win probabilities.
-#' @param running logical, denoting whether to use the running fitted values.
+#' @param running logical, denoting whether to use the running predicted values.
 #' @param ... Other arguments (not in use at this time).
 #' @name elo.favored
 NULL
@@ -37,7 +37,7 @@ favored.elo.glm <- function(x, ...)
 favored.elo.glm.running <- function(x, running = TRUE, ...)
 {
   if(!running) return(NextMethod())
-  favored.default(x$y, x$running.fitted.values)
+  favored.default(x$y, x$running.values)
 }
 
 #' @rdname elo.favored

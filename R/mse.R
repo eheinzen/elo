@@ -3,7 +3,7 @@
 #' Calculate the mean square error (Brier score) for a model.
 #' @param object An object
 #' @param subset (optional) A vector of indices on which to calculate the MSE.
-#' @param running logical, denoting whether to use the running fitted values.
+#' @param running logical, denoting whether to use the running predicted values.
 #' @param ... Other arguments (not in use at this time).
 #' @details Even though logistic regressions don't use the MSE on the y=0/1 scale, it can still be informative.
 #'   Note that the S3 method is \code{mse}.
@@ -48,7 +48,7 @@ mse.elo.glm <- function(object, subset, ...)
 mse.elo.glm.running <- function(object, subset, running = TRUE, ...)
 {
   if(!running) return(NextMethod())
-  r <- object$running.fitted.values - object$y
+  r <- object$running.values - object$y
   if(!missing(subset)) r <- r[subset]
   mean(r^2)
 }
