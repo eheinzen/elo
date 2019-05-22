@@ -2,6 +2,7 @@
 #' Calculate AUC on an \code{elo.run} object
 #'
 #' @param object An object of class \code{\link{elo.run}}.
+#' @param running logical, denoting whether to use the running fitted values.
 #' @param ... Other arguments (not used at this time).
 #' @references Adapted from code here:
 #'   \url{https://stat.ethz.ch/pipermail/r-help/2005-September/079872.html}
@@ -36,3 +37,12 @@ auc.elo.glm <- function(object, ...)
 {
   get_auc(object$y, object$fitted.values)
 }
+
+#' @rdname elo.auc
+#' @export
+auc.elo.glm.running <- function(object, running = TRUE, ...)
+{
+  if(!running) return(NextMethod())
+  get_auc(object$y, object$running.fitted.values)
+}
+

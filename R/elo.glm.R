@@ -6,7 +6,14 @@
 #' @inheritParams elo.calc
 #' @param family,... Arguments passed to \code{\link[stats]{glm}}.
 #' @param rm.ties Logical, denoting whether to remove ties on the left-hand side.
-#' @return An object of class \code{c("elo.glm", "glm")}.
+#' @param running Logical, denoting whether to calculate "running" probabilities. If true, a model is fit for
+#'   group 1 on its own, then groups 1 and 2, then groups 1 through 3, etc. Groups are determined
+#'   in \code{formula}. Omitting a group term re-runs a glm model for each observation (a potentially
+#'   time-consuming operation!)
+#' @param skip Integer, denoting how many groups to skip before fitting the running models. This is helpful if
+#'   groups are small, where glm would have trouble converging for the first few groups.
+#' @return An object of class \code{c("elo.glm", "glm")}. If \code{running==TRUE}, the class \code{"elo.glm.running"}
+#'   is prepended.
 #' @details
 #'   The formula syntax is the same as other \code{elo} functions. A data.frame
 #'   of indicator variables is built, where an entry is 1 if a team is home, 0 if
@@ -20,18 +27,18 @@
 #' data(tournament)
 #' elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament)
 #'
-#' @seealso \code{\link{score}}, \code{\link{elo.model.frame}}
+#' @seealso \code{\link[stats]{glm}}, \code{\link{summary.elo.glm}}, \code{\link{score}}, \code{\link{elo.model.frame}}
 #' @name elo.glm
 NULL
 #> NULL
 
 #' @rdname elo.glm
 #' @export
-elo.glm <- function(formula, data, na.action, subset, family = "binomial", ..., rm.ties = TRUE)
+elo.glm <- function(formula, data, na.action, subset, family = "binomial", ..., rm.ties = FALSE, running = FALSE, skip = 0)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
-  Call$required.vars <- c("wins", "elos")
+  Call$required.vars <- c("wins", "elos", "group")
   mf <- eval(Call, parent.frame())
   Terms <- stats::terms(mf)
 
@@ -50,10 +57,40 @@ elo.glm <- function(formula, data, na.action, subset, family = "binomial", ..., 
   names(dat) <- all.teams
   dat$wins.A <- mf$wins.A
   dat <- structure(dat, class = "data.frame", row.names = c(NA_integer_, nrow(mf)))
-
-  if(rm.ties) dat <- dat[dat$wins.A %in% 0:1, , drop = FALSE]
+  grp <- mf$group
+  if(rm.ties)
+  {
+    idx <- dat$wins.A %in% 0:1
+    grp <- grp[idx]
+    dat <- dat[idx, , drop = FALSE]
+  }
 
   dat.glm <- stats::glm(wins.A ~ ., data = dat, family = family, na.action = stats::na.pass, subset = NULL, ...)
   dat.glm$na.action <- stats::na.action(mf)
-  structure(dat.glm, class = c("elo.glm", class(dat.glm)), rm.ties = rm.ties, all.teams = all.teams)
+
+  if(running)
+  {
+    dat.mat <- cbind(1, as.matrix(dat[names(dat) != "wins.A"]))
+    y <- dat$wins.A
+    if(is.null(wts <- stats::model.weights(dat.glm))) wts <- rep(1, nrow(dat.mat))
+
+    ftd <- dat.glm$fitted.values
+    grp2 <- check_group_regress(grp, gt.zero = FALSE)
+    grp2 <- rev(cumsum(rev(grp2)))
+    mx <- max(grp2)
+    if(skip > mx || skip < 0) stop("skip must be between 0 and ", mx, " (inclusive)")
+    grp2 <- mx + 1 - grp2 # from mx : 1 to 1 : mx
+    for(i in rev(setdiff(seq_len(mx-1), seq_len(skip))))
+    {
+      # we're looping over the groups in reverse, excluding the last group, whose estimates we already have from dat.glm
+      sbst <- grp2 %in% 1:i
+      # the "<=" here assigns the final fitted values from i=skip+1 to the skipped i <= skip
+      ftd[grp2 <= i] <- stats::glm.fit(dat.mat[sbst, , drop = FALSE], y[sbst], wts[sbst], family = dat.glm$family,
+                                control = dat.glm$control)$fitted.values[grp2 <= i]
+    }
+    dat.glm$running.fitted.values <- ftd
+  }
+
+  structure(dat.glm, class = c(if(running) "elo.glm.running", "elo.glm", class(dat.glm)),
+            rm.ties = rm.ties, all.teams = all.teams)
 }

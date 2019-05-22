@@ -15,6 +15,9 @@
 
 * Added `summary.elo.glm()`.
 
+* Added the `running=TRUE` option to `elo.glm()`, with corresponding methods for `summary()`, `fitted()`, `mse()`,
+  `auc()`, and `favored()`.`
+
 # elo v1.1.0
 
 * Widened the version dependency to R 3.3.0.
