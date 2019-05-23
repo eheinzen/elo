@@ -1,7 +1,7 @@
 Package: elo
 Title: Elo Ratings
-Version: 1.1.0.9001
-Date: 2019-05-22
+Version: 1.1.0.9002
+Date: 2019-05-23
 Authors@R: c(
     person("Ethan", "Heinzen", email = "heinzen.ethan@mayo.edu", role = c("aut", "cre"))
   )
@@ -10,7 +10,7 @@ Description: A flexible framework for calculating Elo ratings and resulting
     etc.). This implementation is capable of evaluating a variety of matchups,
     Elo rating updates, and win probabilities, all based on the basic Elo
     rating system. It also includes methods to benchmark performance,
-    including logistic regression.
+    including logistic regression and Markov chain models.
 Depends:
     R (>= 3.3.0),
     stats

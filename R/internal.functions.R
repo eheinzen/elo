@@ -134,3 +134,29 @@ mf_to_wide <- function(mf, teams = NULL)
   names(dat) <- all.teams
   structure(dat, class = "data.frame", row.names = c(NA_integer_, nrow(mf)), all.teams = all.teams)
 }
+
+check_elo_markovchain_vars <- function(mf)
+{
+  t1 <- mf$elo.A
+  t2 <- mf$elo.B
+
+  if(is.numeric(t1) || is.numeric(t2)) stop("Neither team should be numeric")
+  if(is.players(t1) || is.players(t2)) stop("Neither team should be a players() matrix")
+  t1 <- as.character(t1)
+  t2 <- as.character(t2)
+  if(anyNA(t1)) stop("NAs were found in team.A; check that it can be coerced to character.")
+  if(anyNA(t2)) stop("NAs were found in team.B; check that it can be coerced to character.")
+  all.teams <- sort(unique(c(t1, t2)))
+
+  tmp <- stats::setNames(seq_along(all.teams) - 1L, all.teams)
+  t1 <- tmp[t1]
+  t2 <- tmp[t2]
+
+  if(!all(mf$weights > 0)) stop("Weights should be positive numbers")
+
+  if(!all(0 <= mf$k & mf$k <= 1)) stop("Probabilities 'k' should be between 0 and 1 (inclusive)")
+
+  out <- data.frame(winsA = mf$wins.A, teamA = t1, teamB = t2, k = mf$k, weights = mf$weights)
+  attr(out, "teams") <- all.teams
+  out
+}

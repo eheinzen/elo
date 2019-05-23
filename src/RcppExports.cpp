@@ -69,12 +69,29 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// eloMarkovChain
+List eloMarkovChain(NumericVector teamA, NumericVector teamB, NumericVector winsA, NumericVector weights, NumericVector k, int nTeams);
+RcppExport SEXP _elo_eloMarkovChain(SEXP teamASEXP, SEXP teamBSEXP, SEXP winsASEXP, SEXP weightsSEXP, SEXP kSEXP, SEXP nTeamsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type teamA(teamASEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type teamB(teamBSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type winsA(winsASEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type k(kSEXP);
+    Rcpp::traits::input_parameter< int >::type nTeams(nTeamsSEXP);
+    rcpp_result_gen = Rcpp::wrap(eloMarkovChain(teamA, teamB, winsA, weights, k, nTeams));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_elo_eloRunAsMatrix", (DL_FUNC) &_elo_eloRunAsMatrix, 3},
     {"_elo_eloRunRegressedAsMatrix", (DL_FUNC) &_elo_eloRunRegressedAsMatrix, 5},
     {"_elo_eloRun", (DL_FUNC) &_elo_eloRun, 14},
     {"_elo_finalElos", (DL_FUNC) &_elo_finalElos, 2},
+    {"_elo_eloMarkovChain", (DL_FUNC) &_elo_eloMarkovChain, 6},
     {NULL, NULL, 0}
 };
 

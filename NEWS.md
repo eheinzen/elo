@@ -24,6 +24,8 @@
   
 * Added `brier()` as a synonym for `mse()`.
 
+* Added `elo.markovchain()`.
+
 # elo v1.1.0
 
 * Widened the version dependency to R 3.3.0.

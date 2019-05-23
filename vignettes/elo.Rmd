@@ -222,3 +222,11 @@ summary(results)
 predict(results, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE)) # the same thing
 ```
 
+## Markov Chain
+
+It's also possible to compare teams' skills using a Markov-chain-based model. See [here] for details.
+
+```{r}
+elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+                subset = points.Home != points.Visitor, k = 0.7)
+```
