@@ -195,3 +195,30 @@ We can even adjust the Elos:
 ```{r}
 elo.calc(wins.A ~ adjust(elo.A, 10) + elo.B + k(k), data = dat)
 ```
+
+# Comparison Models
+
+## Logistic Regression
+
+It's also possible to compare teams' skills using logistic regression. A matrix of dummy variables is constructed, one for each team,
+where a value of 1 indicates a home team and -1 indicates a visiting team. The intercept then indicates a home-field advantage.
+
+```{r}
+results <- elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week), data = tournament,
+                   subset = points.Home != points.Visitor) # to get rid of ties for now
+summary(results)
+predict(results, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE))
+```
+
+The models can be built "running", where predictions for the next group of games are made based on past data. Consider using the `skip=` argument
+to skip the first few groups (otherwise the model might have trouble converging).
+
+Note that predictions from this object use a model fit on all the data.
+
+```{r}
+results <- elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week), data = tournament,
+                   subset = points.Home != points.Visitor, running = TRUE, skip = 5)
+summary(results)
+predict(results, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE)) # the same thing
+```
+
