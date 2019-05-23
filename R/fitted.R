@@ -35,3 +35,10 @@ fitted.elo.glm.running <- function(object, running = TRUE, ...)
   if(!running) return(NextMethod())
   stats::napredict(object$na.action, object$running.values)
 }
+
+#' @rdname elo.fitted
+#' @export
+fitted.elo.markovchain <- function(object, ...)
+{
+  stats::fitted(object$fit)
+}

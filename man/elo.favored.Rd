@@ -7,6 +7,7 @@
 \alias{favored.elo.glm}
 \alias{favored.elo.glm.running}
 \alias{favored.default}
+\alias{favored.elo.markovchain}
 \title{Classify teams that are favored to win}
 \usage{
 favored(x, ...)
@@ -18,6 +19,8 @@ favored(x, ...)
 \method{favored}{elo.glm.running}(x, running = TRUE, ...)
 
 \method{favored}{default}(x, p.A, ...)
+
+\method{favored}{elo.markovchain}(x, ...)
 }
 \arguments{
 \item{x}{An object from \code{\link{elo.run}} or \code{\link{elo.glm}}, or for the default method

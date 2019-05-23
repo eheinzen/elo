@@ -5,6 +5,7 @@
 \alias{auc.elo.run}
 \alias{auc.elo.glm}
 \alias{auc.elo.glm.running}
+\alias{auc.elo.markovchain}
 \title{Calculate AUC on an \code{elo.run} object}
 \usage{
 \method{auc}{elo.run}(object, ...)
@@ -12,6 +13,8 @@
 \method{auc}{elo.glm}(object, ...)
 
 \method{auc}{elo.glm.running}(object, running = TRUE, ...)
+
+\method{auc}{elo.markovchain}(object, ...)
 }
 \arguments{
 \item{object}{An object of class \code{\link{elo.run}}.}

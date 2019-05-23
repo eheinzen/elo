@@ -5,6 +5,7 @@
 \alias{fitted.elo.run}
 \alias{residuals.elo.run}
 \alias{fitted.elo.glm.running}
+\alias{fitted.elo.markovchain}
 \title{Extract model values}
 \usage{
 \method{fitted}{elo.run}(object, ...)
@@ -12,6 +13,8 @@
 \method{residuals}{elo.run}(object, ...)
 
 \method{fitted}{elo.glm.running}(object, running = TRUE, ...)
+
+\method{fitted}{elo.markovchain}(object, ...)
 }
 \arguments{
 \item{object}{An object.}

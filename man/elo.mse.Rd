@@ -7,6 +7,7 @@
 \alias{mse.elo.run}
 \alias{mse.elo.glm}
 \alias{mse.elo.glm.running}
+\alias{mse.elo.markovchain}
 \title{Calculate the mean square error}
 \usage{
 brier(object, subset, ...)
@@ -18,6 +19,8 @@ mse(object, subset, ...)
 \method{mse}{elo.glm}(object, subset, ...)
 
 \method{mse}{elo.glm.running}(object, subset, running = TRUE, ...)
+
+\method{mse}{elo.markovchain}(object, subset, ...)
 }
 \arguments{
 \item{object}{An object}
