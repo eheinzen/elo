@@ -17,6 +17,8 @@
 that made \code{object}. If missing, the predicted win probabilities from
 \code{object} will be returned.}
 
+\item{type}{See \code{\link[stats]{predict.glm}}}
+
 \item{...}{Other arguments.}
 
 \item{running}{logical, denoting whether to use the running predicted values. Only makes
@@ -35,7 +37,8 @@ Note that the \code{"elo.glm.running"} objects will use a model fit on all the d
 data(tournament)
 t1 <- head(tournament, -3)
 t2 <- tail(tournament, 3)
-results <- elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = t1, subset = points.Home != points.Visitor)
+results <- elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = t1,
+  subset = points.Home != points.Visitor)
 predict(results)
 predict(results, newdata = t2)
 }

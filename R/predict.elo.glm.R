@@ -5,6 +5,7 @@
 #' @param newdata A new dataset containing the same variables as the call
 #'   that made \code{object}. If missing, the predicted win probabilities from
 #'   \code{object} will be returned.
+#' @param type See \code{\link[stats]{predict.glm}}
 #' @param running logical, denoting whether to use the running predicted values. Only makes
 #'   sense if \code{newdata} is missing.
 #' @param ... Other arguments.
@@ -15,7 +16,8 @@
 #' data(tournament)
 #' t1 <- head(tournament, -3)
 #' t2 <- tail(tournament, 3)
-#' results <- elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = t1, subset = points.Home != points.Visitor)
+#' results <- elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = t1,
+#'   subset = points.Home != points.Visitor)
 #' predict(results)
 #' predict(results, newdata = t2)
 #' @name predict.elo.glm
