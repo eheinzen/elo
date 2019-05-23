@@ -39,6 +39,7 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
   Call[[1L]] <- quote(elo::elo.model.frame)
   Call$required.vars <- c("wins", "elos", "group", "weights")
   mf <- eval(Call, parent.frame())
+  if(nrow(mf) == 0) stop("No (non-missing) observations")
   Terms <- stats::terms(mf)
 
   dat <- mf_to_wide(mf)
