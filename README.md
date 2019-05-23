@@ -13,6 +13,7 @@ The `elo` package includes functions to address all kinds of Elo calculations.
 library(elo)
 ```
 
+It also includes comparable models for accuracy (auc, MSE) benchmarking (see, e.g., `elo.glm()` which fits a logistic regression model).
 Please see the vignette for examples. Note that v1.0.0 is very much not backwards-compatible.
 
 # Naming Schema
