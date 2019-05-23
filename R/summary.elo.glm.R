@@ -3,7 +3,6 @@
 #'
 #' @param object An object resulting from \code{\link{elo.glm}}.
 #' @param ... Other arguments
-#' @param running logical, denoting whether to use the running predicted values.
 #' @return A summary of \code{object}.
 #' @examples
 #' summary(elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
@@ -12,14 +11,6 @@
 #' @name summary.elo.glm
 NULL
 #> NULL
-
-#' @rdname summary.elo.glm
-#' @export
-fitted.elo.glm.running <- function(object, running = TRUE, ...)
-{
-  if(!running) return(NextMethod())
-  stats::napredict(object$na.action, object$running.values)
-}
 
 #' @rdname summary.elo.glm
 #' @export

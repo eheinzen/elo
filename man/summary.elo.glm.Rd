@@ -2,17 +2,12 @@
 % Please edit documentation in R/summary.elo.glm.R
 \name{summary.elo.glm}
 \alias{summary.elo.glm}
-\alias{fitted.elo.glm.running}
 \title{Summarize an \code{elo.glm} Object}
 \usage{
-\method{fitted}{elo.glm.running}(object, running = TRUE, ...)
-
 \method{summary}{elo.glm}(object, ...)
 }
 \arguments{
 \item{object}{An object resulting from \code{\link{elo.glm}}.}
-
-\item{running}{logical, denoting whether to use the running predicted values.}
 
 \item{...}{Other arguments}
 }

@@ -2,14 +2,8 @@
 % Please edit documentation in R/summary.elo.run.R
 \name{summary.elo.run}
 \alias{summary.elo.run}
-\alias{fitted.elo.run}
-\alias{residuals.elo.run}
 \title{Summarize an \code{elo.run} Object}
 \usage{
-\method{fitted}{elo.run}(object, ...)
-
-\method{residuals}{elo.run}(object, ...)
-
 \method{summary}{elo.run}(object, ...)
 }
 \arguments{
