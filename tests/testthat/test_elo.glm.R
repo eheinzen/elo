@@ -40,7 +40,11 @@ test_that("predict.elo.glm works correctly", {
   expect_error(predict(tmp.glm, newdata = data.frame(team.Home = "Unknown")), "object 'team.Visitor' not found")
 
   expect_equal(
-    tmp.glm$family$linkinv(sum(coef(tmp.glm) * c(1, 1, -1, rep(0, 6)))),
+    tmp.glm$family$linkinv(sum(coef(tmp.glm) * c(1, 1, -1, rep(0, 5)))),
     unname(predict(tmp.glm, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons")))
+  )
+  expect_equal(
+    tmp.glm$family$linkinv(sum(coef(tmp.glm) * c(1, 1, rep(0, 6)))),
+    unname(predict(tmp.glm, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Helpless Hyenas")))
   )
 })

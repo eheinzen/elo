@@ -44,6 +44,11 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
 
   dat <- mf_to_wide(mf)
   all.teams <- attr(dat, "all.teams")
+
+  # find spanning set
+  QR <- qr(cbind(intercept = 1, dat))
+  dat <- dat[QR$pivot[seq_len(QR$rank)] - 1]
+
   dat$wins.A <- mf$wins.A
   grp <- mf$group
   if(rm.ties)
