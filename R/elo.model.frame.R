@@ -100,7 +100,10 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   }
   if("weights" %in% required.vars)
   {
-    out$weights <- mf[["(weights)"]] # if it's NULL, that's okay!
+    out$weights <- if(null_or_length0(wts.col))
+    {
+      rep(1, times = nrow(out))
+    } else mf[["(weights)"]]
   }
 
   adjs <- attr(Terms, "specials")$adjust

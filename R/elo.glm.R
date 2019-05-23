@@ -69,7 +69,6 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
   {
     dat.mat <- cbind(1, as.matrix(dat[names(dat) != "wins.A"]))
     y <- dat$wins.A
-    if(is.null(wts)) wts <- rep(1, nrow(dat))
 
     ftd <- rep(0, times = nrow(dat))
     grp2 <- check_group_regress(grp, gt.zero = FALSE)
