@@ -8,7 +8,7 @@ trn <- tournament
 trn$diff <- score(trn$points.Home, trn$points.Visitor)
 trn <- trn[trn$diff %in% 0:1, ]
 
-test_that("Running elo.glm works", {
+test_that("elo.glm(running=TRUE) works", {
   tmp.glm.run <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn, running = TRUE, skip = 5)
   expect_equal(
     tmp.glm.run$running.values[44:47],
@@ -21,6 +21,9 @@ test_that("Running elo.glm works", {
                    newdata = tail(tmp.glm.run$data, 4), type = "response"))
   )
   expect_equal(tmp.glm.run$running.values[1:19], rep(0.5, 19))
+
+  tmp.glm <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn)
+  expect_equal(predict(tmp.glm, newdata=head(trn, 2)), predict(tmp.glm.run, newdata=head(trn, 2)))
 })
 
 test_that("Errors are thrown appropriately", {
