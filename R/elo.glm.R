@@ -68,23 +68,27 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
   {
     dat.mat <- cbind(1, as.matrix(dat[names(dat) != "wins.A"]))
     y <- dat$wins.A
-    if(is.null(wts)) wts <- rep(1, nrow(dat.mat))
+    if(is.null(wts)) wts <- rep(1, nrow(dat))
 
-    ftd <- dat.glm$fitted.values
+    ftd <- rep(0, times = nrow(dat))
     grp2 <- check_group_regress(grp, gt.zero = FALSE)
     grp2 <- rev(cumsum(rev(grp2)))
     mx <- max(grp2)
     if(skip > mx || skip < 0) stop("skip must be between 0 and ", mx, " (inclusive)")
     grp2 <- mx + 1 - grp2 # from mx : 1 to 1 : mx
-    for(i in rev(setdiff(seq_len(mx-1), seq_len(skip))))
+    for(i in setdiff(seq_len(mx), seq_len(skip)))
     {
-      # we're looping over the groups in reverse, excluding the last group, whose estimates we already have from dat.glm
-      sbst <- grp2 %in% 1:i
-      # the "<=" here assigns the final fitted values from i=skip+1 to the skipped i <= skip
-      ftd[grp2 <= i] <- stats::glm.fit(dat.mat[sbst, , drop = FALSE], y[sbst], wts[sbst], family = dat.glm$family,
-                                control = dat.glm$control)$fitted.values[grp2 <= i]
+      if(i == 1) next
+      sbst <- grp2 %in% 1:(i-1)
+
+      # tmpfit <- stats::glm(wins.A ~ ., data = dat, subset = sbst, weights = wts, family = family)
+      # ftd[grp2 == i] <- predict(tmpfit, newdata = dat[grp2 == i, ], type = "link")
+
+      coeff <- stats::glm.fit(dat.mat[sbst, , drop = FALSE], y[sbst], wts[sbst], family = dat.glm$family,
+                                control = dat.glm$control)$coefficients
+      ftd[grp2 == i] <- apply(dat.mat[grp2 == i, , drop = FALSE], 1, function(x) sum(x * coeff))
     }
-    dat.glm$running.values <- ftd
+    dat.glm$running.values <- dat.glm$family$linkinv(ftd)
   }
 
   structure(dat.glm, class = c(if(running) "elo.glm.running", "elo.glm", class(dat.glm)),
