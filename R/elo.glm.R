@@ -59,9 +59,11 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
 
   wts <- mf$weights
   dat.glm <- stats::glm(wins.A ~ ., data = dat, family = family, na.action = stats::na.pass, subset = NULL, weights = wts, ...)
-  dat.glm$na.action <- stats::na.action(mf)
-  dat.glm$elo.terms <- Terms
   dat.glm$teams <- all.teams
+  dat.glm$group <- grp
+  dat.glm$elo.terms <- Terms
+  dat.glm$rm.ties <- rm.ties
+  dat.glm$na.action <- stats::na.action(mf)
 
   if(running)
   {
@@ -90,6 +92,5 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
     dat.glm$running.values <- dat.glm$family$linkinv(ftd)
   }
 
-  structure(dat.glm, class = c(if(running) "elo.glm.running", "elo.glm", class(dat.glm)),
-            rm.ties = rm.ties, all.teams = all.teams)
+  structure(dat.glm, class = c(if(running) "elo.glm.running", "elo.glm", class(dat.glm)))
 }
