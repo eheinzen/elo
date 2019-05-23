@@ -34,10 +34,15 @@ test_that("Errors are thrown appropriately", {
 })
 
 test_that("Running elo.glm works with weights", {
-  tmp.glm.sub <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn, subset = week %in% 1:6, weights = 1:nrow(trn))
-  tmp.glm.run <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn, running = TRUE, skip = 5, weights = 1:nrow(trn))
-  expect_equal(fitted(tmp.glm.run)[trn$week %in% 1:6], fitted(tmp.glm.sub))
-  expect_equal(mse(tmp.glm.run, subset = trn$week %in% 1:6), mse(tmp.glm.sub))
+  trn2 <- trn
+  trn2$wts <- 1:nrow(trn2)
+  tmp.glm.run <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn2, running = TRUE,
+                         skip = 5, weights = wts)
+  expect_equal(
+    tail(tmp.glm.run$running.values, 4),
+    unname(predict(glm(wins.A ~ ., data = head(tmp.glm.run$data, -4), family = "binomial", weights = head(trn2$wts, -4)),
+                   newdata = tail(tmp.glm.run$data, 4), type = "response"))
+  )
 })
 
 test_that("predict.elo.glm works correctly", {
