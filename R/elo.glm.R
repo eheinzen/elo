@@ -6,12 +6,13 @@
 #' @inheritParams elo.calc
 #' @param family,weights,... Arguments passed to \code{\link[stats]{glm}}.
 #' @param rm.ties Logical, denoting whether to remove ties on the left-hand side.
-#' @param running Logical, denoting whether to calculate "running" probabilities. If true, a model is fit for
-#'   group 1 on its own, then groups 1 and 2, then groups 1 through 3, etc. Groups are determined
-#'   in \code{formula}. Omitting a group term re-runs a glm model for each observation (a potentially
-#'   time-consuming operation!)
+#' @param running Logical, denoting whether to calculate "running" projected probabilities. If true, a model is fit for
+#'   group 1 on its own to predict group 2, then groups 1 and 2 to predict 3, then groups 1 through 3 to predict 4, etc.
+#'   Groups are determined in \code{formula}. Omitting a group term re-runs a glm model to predict each
+#'   observation (a potentially time-consuming operation!)
 #' @param skip Integer, denoting how many groups to skip before fitting the running models. This is helpful if
-#'   groups are small, where glm would have trouble converging for the first few groups.
+#'   groups are small, where glm would have trouble converging for the first few groups. The predicted values are then
+#'   set to 0.5 for the skipped groups.
 #' @return An object of class \code{c("elo.glm", "glm")}. If \code{running==TRUE}, the class \code{"elo.glm.running"}
 #'   is prepended.
 #' @details
@@ -20,9 +21,7 @@
 #'   a team didn't play, and -1 if a team is a visitor. A \code{\link{glm}} model is then
 #'   run to predict wins.
 #'
-#'   With this setup, usually one model term will be NA, as the input is linearly dependent.
-#'   Consider this team's skill to be zero relative to the other teams.
-#'   The intercept represents the home-field advantage.
+#'   With this setup, the intercept represents the home-field advantage.
 #' @examples
 #' data(tournament)
 #' elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament)

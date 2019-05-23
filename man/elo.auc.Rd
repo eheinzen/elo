@@ -18,7 +18,7 @@
 
 \item{...}{Other arguments (not used at this time).}
 
-\item{running}{logical, denoting whether to use the running fitted values.}
+\item{running}{logical, denoting whether to use the running predicted values.}
 }
 \value{
 The AUC of the predicted Elo probabilities and the actual win results.

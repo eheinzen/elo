@@ -9,6 +9,8 @@
 #'   sense if \code{newdata} is missing.
 #' @param ... Other arguments.
 #' @return A vector of win probabilities.
+#' @details
+#'   Note that the \code{"elo.glm.running"} objects will use a model fit on all the data to predict.
 #' @examples
 #' data(tournament)
 #' t1 <- head(tournament, -3)

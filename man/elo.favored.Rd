@@ -25,7 +25,7 @@ a vector representing wins.A.}
 
 \item{...}{Other arguments (not in use at this time).}
 
-\item{running}{logical, denoting whether to use the running fitted values.}
+\item{running}{logical, denoting whether to use the running predicted values.}
 
 \item{p.A}{A vector of predicted win probabilities.}
 }

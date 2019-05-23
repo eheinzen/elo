@@ -12,7 +12,7 @@
 \arguments{
 \item{object}{An object resulting from \code{\link{elo.glm}}.}
 
-\item{running}{logical, denoting whether to use the running fitted values.}
+\item{running}{logical, denoting whether to use the running predicted values.}
 
 \item{...}{Other arguments}
 }

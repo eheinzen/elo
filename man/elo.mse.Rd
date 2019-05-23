@@ -26,7 +26,7 @@ mse(object, subset, ...)
 
 \item{...}{Other arguments (not in use at this time).}
 
-\item{running}{logical, denoting whether to use the running fitted values.}
+\item{running}{logical, denoting whether to use the running predicted values.}
 }
 \description{
 Calculate the mean square error (Brier score) for a model.
