@@ -24,7 +24,8 @@
   
 * Added `brier()` as a synonym for `mse()`.
 
-* Added `elo.markovchain()`.
+* Added `elo.markovchain()`, with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`, `auc()`, and
+  `favored()`.
 
 # elo v1.1.0
 

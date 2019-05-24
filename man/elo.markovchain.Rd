@@ -34,7 +34,19 @@ set to 0.5 for the skipped groups.}
 \description{
 Compute a Markov chain model for a matchup.
 }
+\details{
+See the vignette for details on this method. The probabilities we call 'k' purely for conenience.
+  The differences in assigned scores (from the stationary distribution pi) are fed into a logistic
+  regression model to predict wins.
+
+  Note that by assigning probabilities in the right way, this function emits the
+  Logistic Regression Markov Chain model (LRMC).
+}
 \examples{
 elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
   subset = points.Home != points.Visitor, k = 0.7)
+}
+\references{
+Kvam, P. and Sokol, J.S. A logistic regression/Markov chain model for NCAA basketball.
+  Naval Research Logistics. 2006. 53; 788-803.
 }

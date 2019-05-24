@@ -224,7 +224,15 @@ predict(results, newdata = data.frame(team.Home = "Athletic Armadillos", team.Vi
 
 ## Markov Chain
 
-It's also possible to compare teams' skills using a Markov-chain-based model. See [here] for details.
+It's also possible to compare teams' skills using a Markov-chain-based model, as outlined in
+[Kvam and Sokol (2006)](https://scholarship.richmond.edu/cgi/viewcontent.cgi?article=1207&context=mathcs-faculty-publications).
+In short, imagine a judge who randomly picks one of two teams in a matchup, where the winner gets chosen with
+probability p (here, for convenience, 'k') and the loser with probability 1-p (1-k). This forms a transition
+matrix, whose stationary distribution gives a ranking of teams. The differences in ranking are then fed
+into a logistic regession model to predict win status.
+
+Note that by assigning probabilities in the right way, this function emits the Logistic Regression Markov Chain
+model (LRMC).
 
 ```{r}
 elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,

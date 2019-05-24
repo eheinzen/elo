@@ -8,6 +8,15 @@
 #' @examples
 #' elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
 #'   subset = points.Home != points.Visitor, k = 0.7)
+#' @details
+#'   See the vignette for details on this method. The probabilities we call 'k' purely for conenience.
+#'   The differences in assigned scores (from the stationary distribution pi) are fed into a logistic
+#'   regression model to predict wins.
+#'
+#'   Note that by assigning probabilities in the right way, this function emits the
+#'   Logistic Regression Markov Chain model (LRMC).
+#' @references Kvam, P. and Sokol, J.S. A logistic regression/Markov chain model for NCAA basketball.
+#'   Naval Research Logistics. 2006. 53; 788-803.
 #' @name elo.markovchain
 NULL
 #> NULL
@@ -41,7 +50,8 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
   vec <- stats::setNames(vec / sum(vec), all.teams)
   val <- as.numeric(eig$values[1])
 
-  mc.glm <- stats::glm(wins.A ~ diff, data = data.frame(wins.A = dat$winsA, diff = vec[dat$teamA+1] - vec[dat$teamB+1]), family = "binomial")
+  mc.glm <- stats::glm(wins.A ~ difference, family = "binomial",
+                       data = data.frame(wins.A = dat$winsA, difference = vec[dat$teamA+1] - vec[dat$teamB+1]))
 
   structure(list(
     transition = out[[1]],
