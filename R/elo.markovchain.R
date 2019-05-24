@@ -48,21 +48,25 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
   eig <- eigen(out[[1]])
   vec <- as.numeric(eig$vectors[, 1])
   vec <- stats::setNames(vec / sum(vec), all.teams)
-  val <- as.numeric(eig$values[1])
 
   mc.glm <- stats::glm(wins.A ~ difference, family = "binomial",
                        data = data.frame(wins.A = dat$winsA, difference = vec[dat$teamA+1] - vec[dat$teamB+1]))
-
-  structure(list(
+  out <- list(
+    fit = mc.glm,
+    mc.weights = mf$weights,
     transition = out[[1]],
     n.games = out[[2]],
     pi = vec,
-    eigenvalue = val,
-    fit = mc.glm,
-    na.action = stats::na.action(mf),
-    terms = Terms,
-    teams = all.teams
-  ), class = c(if(running) "elo.markovchain.running", "elo.markovchain"))
+    eigenvalue = as.numeric(eig$values[1]),
+    y = mc.glm$y,
+    fitted.values = mc.glm$fitted.values,
+    teams = all.teams,
+    group = grp,
+    elo.terms = Terms,
+    na.action = stats::na.action(mf)
+  )
+
+  structure(out, class = c(if(running) "elo.markovchain.running", "elo.markovchain"))
 }
 
 #' @export

@@ -42,15 +42,12 @@ favored.elo.glm.running <- function(x, running = TRUE, ...)
 
 #' @rdname elo.favored
 #' @export
+favored.elo.markovchain <- favored.elo.glm
+
+#' @rdname elo.favored
+#' @export
 favored.default <- function(x, p.A, ...)
 {
   table(factor(score(p.A, 0.5), levels = c(1, 0.5, 0), labels = c("TRUE", "(tie)", "FALSE")),
         x, dnn = c("Favored", "Actual"))
-}
-
-#' @rdname elo.favored
-#' @export
-favored.elo.markovchain <- function(x, ...)
-{
-  favored.default(x$fit$y, x$fit$fitted.values)
 }

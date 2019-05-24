@@ -53,12 +53,6 @@ mse.elo.glm.running <- function(object, subset, running = TRUE, ...)
   mean(r^2)
 }
 
-
 #' @rdname elo.mse
 #' @export
-mse.elo.markovchain <- function(object, subset, ...)
-{
-  r <- object$fit$fitted.values - object$fit$y
-  if(!missing(subset)) r <- r[subset]
-  mean(r^2)
-}
+mse.elo.markovchain <- mse.elo.glm

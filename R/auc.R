@@ -48,9 +48,6 @@ auc.elo.glm.running <- function(object, running = TRUE, ...)
 
 #' @rdname elo.auc
 #' @export
-auc.elo.markovchain <- function(object, ...)
-{
-  get_auc(object$fit$y, object$fit$fitted.values)
-}
+auc.elo.markovchain <- auc.elo.glm
 
 
