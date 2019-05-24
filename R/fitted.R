@@ -30,7 +30,7 @@ residuals.elo.run <- function(object, ...)
 
 #' @rdname elo.fitted
 #' @export
-fitted.elo.glm.running <- function(object, running = TRUE, ...)
+fitted.elo.running <- function(object, running = TRUE, ...)
 {
   if(!running) return(NextMethod())
   stats::napredict(object$na.action, object$running.values)

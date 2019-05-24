@@ -160,3 +160,12 @@ check_elo_markovchain_vars <- function(mf)
   attr(out, "teams") <- all.teams
   out
 }
+
+group_to_int <- function(grp, skip)
+{
+  grp2 <- check_group_regress(grp, gt.zero = FALSE)
+  grp2 <- rev(cumsum(rev(grp2)))
+  mx <- max(grp2)
+  if(skip > mx || skip < 0) stop("skip must be between 0 and ", mx, " (inclusive)")
+  mx + 1 - grp2 # from mx : 1 to 1 : mx
+}

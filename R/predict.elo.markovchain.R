@@ -15,6 +15,7 @@
 #'   subset = points.Home != points.Visitor, k = 0.7)
 #' predict(results)
 #' predict(results, newdata = t2)
+#' @seealso \code{\link{predict.elo.running}}
 #' @name predict.elo.markovchain
 NULL
 #> NULL

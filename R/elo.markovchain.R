@@ -66,7 +66,34 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
     na.action = stats::na.action(mf)
   )
 
-  structure(out, class = c(if(running) "elo.markovchain.running", "elo.markovchain"))
+  if(running)
+  {
+    ftd <- rep(0, times = nrow(dat))
+    grp2 <- group_to_int(grp, skip)
+    y <- dat$winsA
+
+    for(i in setdiff(seq_len(max(grp2)), seq_len(skip)))
+    {
+      if(i == 1) next
+      sbst <- grp2 %in% 1:(i-1)
+      dat.tmp <- dat[sbst, ]
+
+      eig <- eigen(do.call(eloMarkovChain, c(as.list(dat.tmp), list(nTeams = length(all.teams))))[[1]])
+      vec <- as.numeric(eig$vectors[, 1])
+      vec <- stats::setNames(vec / sum(vec), all.teams)
+      difference <- vec[dat$teamA+1] - vec[dat$teamB+1]
+
+      # tmpfit <- stats::glm(dat$winsA ~ difference, subset = sbst, family = "binomial")
+      # ftd[grp2 == i] <- predict(tmpfit, newdata = data.frame(difference = difference[grp2 == i]), type = "link")
+
+      coeff <- stats::glm.fit(cbind(1, difference[sbst]),
+                              dat.tmp$winsA, family = mc.glm$family, control = mc.glm$control)$coefficients
+      ftd[grp2 == i] <- apply(cbind(1, difference[grp2 == i]), 1, function(x) sum(x * coeff))
+    }
+    out$running.values <- mc.glm$family$linkinv(ftd)
+  }
+
+  structure(out, class = c(if(running) "elo.running", "elo.markovchain"))
 }
 
 #' @export

@@ -45,7 +45,7 @@ mse.elo.glm <- function(object, subset, ...)
 
 #' @rdname elo.mse
 #' @export
-mse.elo.glm.running <- function(object, subset, running = TRUE, ...)
+mse.elo.running <- function(object, subset, running = TRUE, ...)
 {
   if(!running) return(NextMethod())
   r <- object$running.values - object$y

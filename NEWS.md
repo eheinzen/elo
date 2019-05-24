@@ -17,15 +17,15 @@
 
 * Added `predict.elo.glm()`.
 
-* Added the `running=TRUE` option to `elo.glm()`, with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`,
-  `auc()`, and `favored()`.
+* Added the `running=TRUE` option to `elo.glm()`. This gives an object of class `"elo.running"`,
+  with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`, `auc()`, and `favored()`.
   
 * Added `weights=` to `elo.glm()`.
   
 * Added `brier()` as a synonym for `mse()`.
 
 * Added `elo.markovchain()`, with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`, `auc()`, and
-  `favored()`.
+  `favored()`. This also has the `running=TRUE` option.
 
 # elo v1.1.0
 

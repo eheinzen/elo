@@ -34,7 +34,7 @@ favored.elo.glm <- function(x, ...)
 
 #' @rdname elo.favored
 #' @export
-favored.elo.glm.running <- function(x, running = TRUE, ...)
+favored.elo.running <- function(x, running = TRUE, ...)
 {
   if(!running) return(NextMethod())
   favored.default(x$y, x$running.values)

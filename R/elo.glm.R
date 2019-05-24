@@ -72,12 +72,9 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
     y <- dat$wins.A
 
     ftd <- rep(0, times = nrow(dat))
-    grp2 <- check_group_regress(grp, gt.zero = FALSE)
-    grp2 <- rev(cumsum(rev(grp2)))
-    mx <- max(grp2)
-    if(skip > mx || skip < 0) stop("skip must be between 0 and ", mx, " (inclusive)")
-    grp2 <- mx + 1 - grp2 # from mx : 1 to 1 : mx
-    for(i in setdiff(seq_len(mx), seq_len(skip)))
+    grp2 <- group_to_int(grp, skip)
+
+    for(i in setdiff(seq_len(max(grp2)), seq_len(skip)))
     {
       if(i == 1) next
       sbst <- grp2 %in% 1:(i-1)

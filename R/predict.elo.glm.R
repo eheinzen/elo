@@ -38,7 +38,7 @@ predict.elo.glm <- function(object, newdata, type = "response", ...)
 
 #' @rdname predict.elo.glm
 #' @export
-predict.elo.glm.running <- function(object, newdata, type = "response", running = missing(newdata), ...)
+predict.elo.running <- function(object, newdata, running = TRUE, ...)
 {
   if(missing(newdata) && running)
   {

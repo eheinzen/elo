@@ -40,7 +40,7 @@ auc.elo.glm <- function(object, ...)
 
 #' @rdname elo.auc
 #' @export
-auc.elo.glm.running <- function(object, running = TRUE, ...)
+auc.elo.running <- function(object, running = TRUE, ...)
 {
   if(!running) return(NextMethod())
   get_auc(object$y, object$running.values)
