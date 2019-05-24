@@ -30,3 +30,6 @@ results <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team
 predict(results)
 predict(results, newdata = t2)
 }
+\seealso{
+\code{\link{predict.elo.running}}
+}

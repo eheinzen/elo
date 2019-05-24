@@ -2,13 +2,12 @@
 % Please edit documentation in R/predict.elo.glm.R
 \name{predict.elo.glm}
 \alias{predict.elo.glm}
-\alias{predict.elo.glm.running}
+\alias{predict.elo.running}
 \title{Make Predictions on an \code{elo.glm} Object}
 \usage{
 \method{predict}{elo.glm}(object, newdata, type = "response", ...)
 
-\method{predict}{elo.glm.running}(object, newdata, type = "response",
-  running = missing(newdata), ...)
+\method{predict}{elo.running}(object, newdata, running = TRUE, ...)
 }
 \arguments{
 \item{object}{An object of class \code{"\link{elo.glm}"}.}
