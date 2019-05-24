@@ -235,6 +235,19 @@ Note that by assigning probabilities in the right way, this function emits the L
 model (LRMC).
 
 ```{r}
-elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
-                subset = points.Home != points.Visitor, k = 0.7)
+mc <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+                      subset = points.Home != points.Visitor, k = 0.7)
+predict(mc, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE))
+```
+
+These models can also be built "running", where predictions for the next group of games are made based on past data.
+Consider using the `skip=` argument to skip the first few groups (otherwise the model might have trouble converging).
+
+Note that predictions from this object use a model fit on all the data.
+
+```{r}
+mc <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week), data = tournament,
+                      subset = points.Home != points.Visitor, k = 0.7, running = TRUE, skip = 5)
+summary(mc)
+predict(mc, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE)) # the same thing
 ```
