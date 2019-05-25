@@ -23,4 +23,12 @@ test_that("elo.markovchain is working correctly", {
   expect_error(predict(tmp.mc, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")), NA)
 })
 
+test_that("elo.markovchain(running=TRUE) works", {
+  tmp.mc.run <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week),
+                                data = trn, k = 0.7, running = TRUE, skip = 5)
 
+  expect_equal(fitted(tmp.mc.run)[1:19], rep(0.5, 19))
+
+  tmp.mc <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = trn, k = 0.7)
+  expect_equal(predict(tmp.mc, newdata=head(trn, 2)), predict(tmp.mc.run, newdata=head(trn, 2)))
+})

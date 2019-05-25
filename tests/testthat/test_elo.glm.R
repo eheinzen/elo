@@ -21,7 +21,7 @@ test_that("elo.glm(running=TRUE) works", {
     unname(predict(glm(wins.A ~ ., data = head(tmp.glm.run$data, -4), family = "binomial"),
                    newdata = tail(tmp.glm.run$data, 4), type = "response"))
   )
-  expect_equal(tmp.glm.run$running.values[1:19], rep(0.5, 19))
+  expect_equal(fitted(tmp.glm.run)[1:19], rep(0.5, 19))
 
   tmp.glm <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn)
   expect_equal(predict(tmp.glm, newdata=head(trn, 2)), predict(tmp.glm.run, newdata=head(trn, 2)))
