@@ -4,12 +4,12 @@
 #'
 #' @inheritParams elo.glm
 #' @param weights A vector of weights.
-#' @param k A vector of probabilities. See details.
+#' @param k The probability that the winning team is better given that they won. See details.
 #' @examples
 #' elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
 #'   subset = points.Home != points.Visitor, k = 0.7)
 #' @details
-#'   See the vignette for details on this method. The probabilities we call 'k' purely for conenience.
+#'   See the vignette for details on this method. The probabilities we call 'k' purely for convenience.
 #'   The differences in assigned scores (from the stationary distribution pi) are fed into a logistic
 #'   regression model to predict wins. This logistic regession accepts the arguments of \code{\link{adjust}()}
 #'   in \code{formula}. See the vignette for more details

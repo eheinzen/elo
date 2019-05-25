@@ -18,7 +18,7 @@ elo.markovchain(formula, data, weights, na.action, subset, k = NULL, ...,
 
 \item{subset}{An optional vector specifying a subset of observations.}
 
-\item{k}{A vector of probabilities. See details.}
+\item{k}{The probability that the winning team is better given that they won. See details.}
 
 \item{...}{Arguments passed to \code{\link[stats]{glm}}.}
 
@@ -35,7 +35,7 @@ set to 0.5 for the skipped groups.}
 Compute a Markov chain model for a matchup.
 }
 \details{
-See the vignette for details on this method. The probabilities we call 'k' purely for conenience.
+See the vignette for details on this method. The probabilities we call 'k' purely for convenience.
   The differences in assigned scores (from the stationary distribution pi) are fed into a logistic
   regression model to predict wins. This logistic regession accepts the arguments of \code{\link{adjust}()}
   in \code{formula}. See the vignette for more details
