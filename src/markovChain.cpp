@@ -28,7 +28,10 @@ List eloMarkovChain(NumericVector teamA, NumericVector teamB, NumericVector wins
 
   for(int j = 0; j < nTeams; j++)
   {
-    out(_, j) = out(_, j) / N_i[j];
+    if(N_i[j] > 0.0)
+    {
+      out(_, j) = out(_, j) / N_i[j];
+    }
   }
 
   return List::create(out, N_i);
