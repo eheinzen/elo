@@ -91,5 +91,5 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
     dat.glm$running.values <- dat.glm$family$linkinv(ftd)
   }
 
-  structure(dat.glm, class = c(if(running) "elo.glm.running", "elo.glm", class(dat.glm)))
+  structure(dat.glm, class = c(if(running) "elo.running", "elo.glm", class(dat.glm)))
 }
