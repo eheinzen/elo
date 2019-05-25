@@ -21,6 +21,8 @@
   with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`, `auc()`, and `favored()`.
   
 * Added `weights=` to `elo.glm()`.
+
+* Added support for `adjust()` in `elo.glm()` to include adjustments in the logistic regression.
   
 * Added `brier()` as a synonym for `mse()`.
 

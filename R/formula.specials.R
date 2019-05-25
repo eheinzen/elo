@@ -10,7 +10,8 @@
 #' @param by Numeric: by how much should Elos be regressed toward \code{to}.
 #' @param regress.unused Logical: whether to continue regressing teams which have stopped playing.
 #' @param ... Vectors to be coerced to character, which comprise of the players of a team.
-#' @param weights A vector giving the weights of Elo updates for the players in \code{...}.
+#' @param weights A vector giving the weights of Elo updates for the players in \code{...}. Ignored for
+#'   \code{\link{elo.glm}}.
 #' @details
 #' In the functions in this package, \code{formula} is usually of the form \code{wins.A ~ elo.A + elo.B},
 #'   where \code{elo.A} and \code{elo.B} are vectors of Elos, and \code{wins.A} is between 0 and 1,
@@ -19,15 +20,19 @@
 #'   requires \code{elo.A} to be a vector of teams or a players matrix from \code{players()}
 #'   (sometimes denoted by \code{"team.A"}), but \code{elo.B} can be either a vector of teams or
 #'   players matrix (\code{"team.B"}) or else a numeric column (denoting a fixed-Elo opponent).
-#'   \code{elo.glm} requires both to be a vector of teams or players matrix.
+#'   \code{elo.glm} requires both to be a vector of teams or players matrix. \code{\link{elo.markovchain}}
+#'   requires both to be a vector of teams.
 #'
-#' \code{formula} accepts five special functions in it:
+#' \code{formula} accepts six special functions in it:
 #'
 #' \code{k()} allows for complicated Elo updates. For
 #'   constant Elo updates, use the \code{k = } argument instead of this special function.
+#'   Note that \code{\link{elo.markovchain}} uses this function (or argument) as a convenient
+#'   way of specifying transition probabilities.
 #'
 #' \code{adjust()} allows for Elos to be adjusted for, e.g., home-field advantage. The second argument
-#'   to this function can be a scalar or vector of appropriate length.
+#'   to this function can be a scalar or vector of appropriate length. This can also be used in
+#'   \code{\link{elo.glm}} and \code{\link{elo.markovchain}} as an adjuster to the logistic regressions.
 #'
 #' \code{regress()} can be used to regress Elos back to a fixed value
 #'   after certain matches. Giving a logical vector identifies these matches after which to
@@ -38,10 +43,11 @@
 #'   default = \code{TRUE}).
 #'
 #' \code{group()} is used to group matches (by, e.g., week). It is fed to \code{\link{as.matrix.elo.run}}
-#'   to produce only certain rows of matrix output.
+#'   to produce only certain rows of matrix output. It also determines how many models to run (and on what data)
+#'   for \code{\link{elo.glm}} and \code{\link{elo.markovchain}} when \code{running=TRUE}.
 #'
 #' \code{players()} is used for multiple players on a team contributing to an overall Elo. The Elo updates
-#'   are then assigned based on the specified weights.
+#'   are then assigned based on the specified weights. The weights are ignored in \code{\link{elo.glm}}.
 #' @name formula.specials
 NULL
 #> NULL

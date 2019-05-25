@@ -39,10 +39,12 @@ Compute a logistic regression model for a matchup.
 \details{
 The formula syntax is the same as other \code{elo} functions. A data.frame
   of indicator variables is built, where an entry is 1 if a team is home, 0 if
-  a team didn't play, and -1 if a team is a visitor. A \code{\link{glm}} model is then
+  a team didn't play, and -1 if a team is a visitor. Anything passed to \code{\link{adjust}()} in
+  \code{formula} is also put in the data.frame. A \code{\link{glm}} model is then
   run to predict wins.
 
-  With this setup, the intercept represents the home-field advantage.
+  With this setup, the intercept represents the home-field advantage. Neutral fields can be indicated
+  using the \code{\link{adjust}()} function.
 }
 \examples{
 data(tournament)

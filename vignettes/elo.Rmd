@@ -202,12 +202,17 @@ elo.calc(wins.A ~ adjust(elo.A, 10) + elo.B + k(k), data = dat)
 
 It's also possible to compare teams' skills using logistic regression. A matrix of dummy variables is constructed, one for each team,
 where a value of 1 indicates a home team and -1 indicates a visiting team. The intercept then indicates a home-field advantage.
+Including an adjustment using `adjust()` in the formula also includes that in the model.
 
 ```{r}
 results <- elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week), data = tournament,
                    subset = points.Home != points.Visitor) # to get rid of ties for now
 summary(results)
 predict(results, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE))
+
+tournament$neutral <- replace(rep(0, nrow(tournament)), 30:35, 1)
+summary(elo.glm(score(points.Home, points.Visitor) ~ adjust(team.Home, neutral) + team.Visitor + group(week),
+                data = tournament, subset = points.Home != points.Visitor))
 ```
 
 The models can be built "running", where predictions for the next group of games are made based on past data. Consider using the `skip=` argument
@@ -229,15 +234,20 @@ It's also possible to compare teams' skills using a Markov-chain-based model, as
 In short, imagine a judge who randomly picks one of two teams in a matchup, where the winner gets chosen with
 probability p (here, for convenience, 'k') and the loser with probability 1-p (1-k). This forms a transition
 matrix, whose stationary distribution gives a ranking of teams. The differences in ranking are then fed
-into a logistic regession model to predict win status.
+into a logistic regession model to predict win status. Any adjustments made using `adjust()` are also included
+in this logistic regression. In this way, you could adjust the intercept for games played on neutral fields (for
+example).
 
 Note that by assigning probabilities in the right way, this function emits the Logistic Regression Markov Chain
-model (LRMC).
+model (LRMC). Consider using the in-formula function `k()` for this.
 
 ```{r}
 mc <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
                       subset = points.Home != points.Visitor, k = 0.7)
+summary(mc)
 predict(mc, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE))
+summary(elo.markovchain(score(points.Home, points.Visitor) ~ adjust(team.Home, neutral) + team.Visitor,
+                        data = tournament, subset = points.Home != points.Visitor, k = 0.7))
 ```
 
 These models can also be built "running", where predictions for the next group of games are made based on past data.

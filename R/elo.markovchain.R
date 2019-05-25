@@ -11,10 +11,12 @@
 #' @details
 #'   See the vignette for details on this method. The probabilities we call 'k' purely for conenience.
 #'   The differences in assigned scores (from the stationary distribution pi) are fed into a logistic
-#'   regression model to predict wins.
+#'   regression model to predict wins. This logistic regession accepts the arguments of \code{\link{adjust}()}
+#'   in \code{formula}. See the vignette for more details
 #'
 #'   Note that by assigning probabilities in the right way, this function emits the
-#'   Logistic Regression Markov Chain model (LRMC).
+#'   Logistic Regression Markov Chain model (LRMC). It is also possible to adjust the logistic
+#'   regression for home/away/neutral status by setting the second argument of \code{\link{adjust}()}.
 #' @references Kvam, P. and Sokol, J.S. A logistic regression/Markov chain model for NCAA basketball.
 #'   Naval Research Logistics. 2006. 53; 788-803.
 #' @name elo.markovchain
