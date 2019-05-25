@@ -17,7 +17,7 @@ List eloMarkovChain(NumericVector teamA, NumericVector teamB, NumericVector wins
     int i = teamA[g], j = teamB[g];
     N_i[i] += weights[g];
     N_i[j] += weights[g];
-    int iWon = (winsA[g] == 1.0);
+    double iWon = winsA[g];
 
     out(j, i) += weights[g]*(k[g]*(1 - iWon) + (1.0 - k[g])*iWon); // if j won, go to j with prob=k; else if i won, go with prob=(1-k)
     out(i, j) += weights[g]*(k[g]*iWon + (1.0 - k[g])*(1 - iWon));

@@ -36,11 +36,6 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
   all.teams <- attr(dat, "teams")
   grp <- mf$group
 
-  idx <- dat$winsA %in% 0:1
-  if(!all(idx)) warning("Removing wins not in c(0, 1)")
-  grp <- grp[idx]
-  dat <- dat[idx, , drop = FALSE]
-
   # we use the convention Ax = x
   out <- do.call(eloMarkovChain, c(as.list(dat), list(nTeams = length(all.teams))))
   if(any(abs(colSums(out[[1]]) - 1) > sqrt(.Machine$double.eps))) warning("colSums(transition matrix) may not be 1")
