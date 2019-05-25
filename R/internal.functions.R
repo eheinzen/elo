@@ -97,13 +97,14 @@ check_final_elos <- function(x, len)
 
 null_or_length0 <- function(x) is.null(x) || length(x) == 0
 
-clean_elo_formula <- function(Terms)
+clean_elo_formula <- function(Terms, drop.neutral = TRUE)
 {
   k.col <- attr(Terms, "specials")$k
   grp.col <- attr(Terms, "specials")$group
   reg.col <- attr(Terms, "specials")$regress
+  neu.col <- attr(Terms, "specials")$neutral
 
-  if(!null_or_length0(cols <- c(k.col, grp.col, reg.col)))
+  if(!null_or_length0(cols <- c(k.col, grp.col, reg.col, if(drop.neutral) neu.col)))
   {
     Terms <- stats::drop.terms(Terms, dropx = cols - 1, keep.response = TRUE)
   }
@@ -132,6 +133,8 @@ mf_to_wide <- function(mf, teams = NULL)
 
   dat <- lapply(all.teams, function(tm) (rowSums(t1 == tm) > 0) - (rowSums(t2 == tm) > 0))
   names(dat) <- all.teams
+  dat$home.field <- mf$home.field
+  dat <- dat[c("home.field", all.teams)] # rearrange to put home field first
   dat$adj.A <- mf$adj.A
   dat$adj.B <- mf$adj.B
   structure(dat, class = "data.frame", row.names = c(NA_integer_, nrow(mf)), all.teams = all.teams)

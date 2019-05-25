@@ -30,7 +30,7 @@ predict.elo.glm <- function(object, newdata, type = "response", ...)
 {
   if(missing(newdata)) return(fitted(object))
   form <- clean_elo_formula(object$elo.terms)
-  mf <- elo.model.frame(form, data = newdata, required.vars = "elos")
+  mf <- elo.model.frame(form, data = newdata, required.vars = c("elos", "neutral"))
   newdata.wide <- mf_to_wide(mf, teams = object$teams)
   stats::predict.glm(object, newdata = newdata.wide, type = type, ...)
 }

@@ -7,6 +7,7 @@
 \alias{adjust}
 \alias{regress}
 \alias{group}
+\alias{neutral}
 \title{Details on \code{elo} formulas and the specials therein}
 \usage{
 players(..., weights = NULL)
@@ -18,6 +19,8 @@ adjust(x, adjustment)
 regress(x, to, by, regress.unused = TRUE)
 
 group(x)
+
+neutral(x)
 }
 \arguments{
 \item{...}{Vectors to be coerced to character, which comprise of the players of a team.}
@@ -72,6 +75,10 @@ In the functions in this package, \code{formula} is usually of the form \code{wi
 \code{group()} is used to group matches (by, e.g., week). It is fed to \code{\link{as.matrix.elo.run}}
   to produce only certain rows of matrix output. It also determines how many models to run (and on what data)
   for \code{\link{elo.glm}} and \code{\link{elo.markovchain}} when \code{running=TRUE}.
+
+\code{neutral()} is used in \code{\link{elo.glm}} and \code{\link{elo.markovchain}} to determine the intercept.
+  In short, the intercept is \code{1 - neutral()}, denoting home field advantage. If omitted, all matches
+  are assumed to have home field advantage.
 
 \code{players()} is used for multiple players on a team contributing to an overall Elo. The Elo updates
   are then assigned based on the specified weights. The weights are ignored in \code{\link{elo.glm}}.

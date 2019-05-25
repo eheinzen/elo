@@ -46,7 +46,8 @@ The formula syntax is the same as other \code{elo} functions. A data.frame
 }
 \examples{
 data(tournament)
-elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament)
+elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+  subset = points.Home != points.Visitor)
 
 }
 \seealso{

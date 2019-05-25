@@ -16,13 +16,13 @@
 elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "elos")
 {
   Call <- match.call()
-  required.vars <- match.arg(required.vars, c("wins", "elos", "k", "group", "regress", "weights"), several.ok = TRUE)
+  required.vars <- match.arg(required.vars, c("wins", "elos", "k", "group", "regress", "neutral", "weights"), several.ok = TRUE)
   indx <- match(c("formula", "data", "subset", "na.action", "weights"), names(Call), nomatch = 0)
   if(indx[1] == 0) stop("A formula argument is required.")
 
   temp.call <- Call[c(1, indx)]
   temp.call[[1L]] <- quote(stats::model.frame)
-  specials <- c("adjust", "k", "group", "regress", "players")
+  specials <- c("adjust", "k", "group", "regress", "neutral", "players")
 
   temp.call$formula <- if(missing(data))
   {
@@ -44,6 +44,7 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
 
   grp.col <- attr(Terms, "specials")$group
   reg.col <- attr(Terms, "specials")$regress
+  neu.col <- attr(Terms, "specials")$neutral
   wts.col <- which(names(mf) == "(weights)")
 
   if("wins" %in% required.vars && !has.wins)
@@ -60,7 +61,8 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   }
 
   # need all the parens b/c ! is a low-precident operator
-  sum.nonempty <- (!null_or_length0(k.col)) + (!null_or_length0(grp.col)) + (!null_or_length0(reg.col)) + (!null_or_length0(wts.col))
+  sum.nonempty <- (!null_or_length0(k.col)) + (!null_or_length0(grp.col)) + (!null_or_length0(reg.col)) +
+    (!null_or_length0(neu.col)) + (!null_or_length0(wts.col))
 
   if(has.wins + sum.nonempty + 2 != ncol(mf))
   {
@@ -72,7 +74,7 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   elo.cols <- if(sum.nonempty == 0)
   {
     (1:2) + has.wins
-  } else setdiff(1:ncol(mf), c(if(has.wins) 1, k.col, grp.col, reg.col, wts.col))
+  } else setdiff(1:ncol(mf), c(if(has.wins) 1, k.col, grp.col, reg.col, neu.col, wts.col))
   if(length(elo.cols) != 2) stop("Trouble finding the Elo columns.")
 
   #####################################################################
@@ -97,6 +99,10 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
     {
       regress(rep(FALSE, times = nrow(out)), 1500, 0, FALSE)
     } else mf[[reg.col]]
+  }
+  if("neutral" %in% required.vars)
+  {
+    out$home.field <- if(null_or_length0(neu.col)) rep(1, times = nrow(out)) else 1 - mf[[neu.col]]
   }
   if("weights" %in% required.vars)
   {

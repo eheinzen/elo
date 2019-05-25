@@ -7,18 +7,18 @@ context("Testing the elo.glm function")
 trn <- tournament
 trn$diff <- score(trn$points.Home, trn$points.Visitor)
 trn <- trn[trn$diff %in% 0:1, ]
-trn$neutral <- replace(rep(0, times = nrow(trn)), c(3, 30), 1)
+trn$neut <- replace(rep(0, times = nrow(trn)), c(3, 30), 1)
 
 test_that("elo.glm(running=TRUE) works", {
   tmp.glm.run <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn, running = TRUE, skip = 5)
   expect_equal(
     tmp.glm.run$running.values[44:47],
-    unname(predict(glm(wins.A ~ ., data = head(tmp.glm.run$data, -8), family = "binomial"),
+    unname(predict(glm(wins.A ~ . - 1, data = head(tmp.glm.run$data, -8), family = "binomial"),
                    newdata = tmp.glm.run$data[44:47, ], type = "response"))
   )
   expect_equal(
     tail(tmp.glm.run$running.values, 4),
-    unname(predict(glm(wins.A ~ ., data = head(tmp.glm.run$data, -4), family = "binomial"),
+    unname(predict(glm(wins.A ~ . - 1, data = head(tmp.glm.run$data, -4), family = "binomial"),
                    newdata = tail(tmp.glm.run$data, 4), type = "response"))
   )
   expect_equal(fitted(tmp.glm.run)[1:19], rep(0.5, 19))
@@ -41,7 +41,7 @@ test_that("Running elo.glm works with weights", {
                          skip = 5, weights = wts)
   expect_equal(
     tail(tmp.glm.run$running.values, 4),
-    unname(predict(glm(wins.A ~ ., data = head(tmp.glm.run$data, -4), family = "binomial", weights = head(trn2$wts, -4)),
+    unname(predict(glm(wins.A ~ . - 1, data = head(tmp.glm.run$data, -4), family = "binomial", weights = head(trn2$wts, -4)),
                    newdata = tail(tmp.glm.run$data, 4), type = "response"))
   )
 })
@@ -61,8 +61,8 @@ test_that("predict.elo.glm works correctly", {
     unname(predict(tmp.glm, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Helpless Hyenas")))
   )
 
-  tmp.glm.adj <- elo.glm(diff ~ team.Home + adjust(team.Visitor, neutral) + group(week), data = trn)
-  expect_error(predict(tmp.glm.adj, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")), "neutral")
+  tmp.glm.adj <- elo.glm(diff ~ team.Home + adjust(team.Visitor, neut) + group(week), data = trn)
+  expect_error(predict(tmp.glm.adj, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")), "neut")
 })
 
 test_that("adjust() works in elo.glm()", {

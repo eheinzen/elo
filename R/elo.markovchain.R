@@ -29,7 +29,7 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
-  Call$required.vars <- c("wins", "elos", "group", "weights", "k")
+  Call$required.vars <- c("wins", "elos", "group", "neutral", "weights", "k")
   mf <- eval(Call, parent.frame())
   if(nrow(mf) == 0) stop("No (non-missing) observations")
   Terms <- stats::terms(mf)
@@ -46,10 +46,10 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
   vec <- as.numeric(eig$vectors[, 1])
   vec <- stats::setNames(vec / sum(vec), all.teams)
 
-  mc.dat <- data.frame(wins.A = dat$winsA, difference = vec[dat$teamA+1] - vec[dat$teamB+1])
+  mc.dat <- data.frame(wins.A = dat$winsA, home.field = mf$home.field, difference = vec[dat$teamA+1] - vec[dat$teamB+1])
   if(!all(mf$adj.A == 0)) mc.dat$adj.A <- mf$adj.A
   if(!all(mf$adj.B == 0)) mc.dat$adj.B <- mf$adj.B
-  mc.glm <- stats::glm(wins.A ~ ., family = "binomial", data = mc.dat)
+  mc.glm <- stats::glm(wins.A ~ . - 1, family = "binomial", data = mc.dat)
   out <- list(
     fit = mc.glm,
     weights = mf$weights,
@@ -70,7 +70,7 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
     ftd <- rep(0, times = nrow(dat))
     grp2 <- group_to_int(grp, skip)
     y <- dat$winsA
-    adj <- cbind(1, mf$adj.A, mf$adj.B)
+    adj <- cbind(mf$home.field, mf$adj.A, mf$adj.B)
 
     for(i in setdiff(seq_len(max(grp2)), seq_len(skip)))
     {

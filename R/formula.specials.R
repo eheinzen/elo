@@ -46,6 +46,10 @@
 #'   to produce only certain rows of matrix output. It also determines how many models to run (and on what data)
 #'   for \code{\link{elo.glm}} and \code{\link{elo.markovchain}} when \code{running=TRUE}.
 #'
+#' \code{neutral()} is used in \code{\link{elo.glm}} and \code{\link{elo.markovchain}} to determine the intercept.
+#'   In short, the intercept is \code{1 - neutral()}, denoting home field advantage. If omitted, all matches
+#'   are assumed to have home field advantage.
+#'
 #' \code{players()} is used for multiple players on a team contributing to an overall Elo. The Elo updates
 #'   are then assigned based on the specified weights. The weights are ignored in \code{\link{elo.glm}}.
 #' @name formula.specials
@@ -123,3 +127,11 @@ regress <- function(x, to, by, regress.unused = TRUE) {
 #' @rdname formula.specials
 #' @export
 group <- function(x) structure(x, class = c("elo.group", class(x)))
+
+#' @rdname formula.specials
+#' @export
+neutral <- function(x)
+{
+  if(!all(x %in% c(0:1, NA))) warning("Some 'neutral()' values aren't 0 or 1.")
+  structure(x, class = c("elo.neutral", class(x)))
+}

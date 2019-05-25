@@ -25,7 +25,8 @@
 #'   using the \code{\link{adjust}()} function.
 #' @examples
 #' data(tournament)
-#' elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament)
+#' elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+#'   subset = points.Home != points.Visitor)
 #'
 #' @seealso \code{\link[stats]{glm}}, \code{\link{summary.elo.glm}}, \code{\link{score}}, \code{\link{elo.model.frame}}
 #' @name elo.glm
@@ -38,7 +39,7 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
-  Call$required.vars <- c("wins", "elos", "group", "weights")
+  Call$required.vars <- c("wins", "elos", "group", "neutral", "weights")
   mf <- eval(Call, parent.frame())
   if(nrow(mf) == 0) stop("No (non-missing) observations")
   Terms <- stats::terms(mf)
@@ -47,14 +48,14 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
   all.teams <- attr(dat, "all.teams")
 
   # find spanning set
-  QR <- qr(cbind(intercept = 1, dat))
-  dat <- dat[QR$pivot[seq_len(QR$rank)] - 1]
+  QR <- qr(dat)
+  dat <- dat[QR$pivot[seq_len(QR$rank)]]
 
   dat$wins.A <- mf$wins.A
   grp <- mf$group
 
   wts <- mf$weights
-  dat.glm <- stats::glm(wins.A ~ ., data = dat, family = family, na.action = stats::na.pass, subset = NULL, weights = wts, ...)
+  dat.glm <- stats::glm(wins.A ~ . - 1, data = dat, family = family, na.action = stats::na.pass, subset = NULL, weights = wts, ...)
   dat.glm$teams <- all.teams
   dat.glm$group <- grp
   dat.glm$elo.terms <- Terms
@@ -62,7 +63,7 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
 
   if(running)
   {
-    dat.mat <- cbind(1, as.matrix(dat[names(dat) != "wins.A"]))
+    dat.mat <- as.matrix(dat[names(dat) != "wins.A"])
     y <- dat$wins.A
 
     ftd <- rep(0, times = nrow(dat))
@@ -73,11 +74,11 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
       if(i == 1) next
       sbst <- grp2 %in% 1:(i-1)
 
-      # tmpfit <- stats::glm(wins.A ~ ., data = dat, subset = sbst, weights = wts, family = family)
+      # tmpfit <- stats::glm(wins.A ~ . - 1, data = dat, subset = sbst, weights = wts, family = family)
       # ftd[grp2 == i] <- predict(tmpfit, newdata = dat[grp2 == i, ], type = "link")
 
       coeff <- stats::glm.fit(dat.mat[sbst, , drop = FALSE], y[sbst], wts[sbst], family = dat.glm$family,
-                                control = dat.glm$control)$coefficients
+                              control = dat.glm$control)$coefficients
       ftd[grp2 == i] <- apply(dat.mat[grp2 == i, , drop = FALSE], 1, function(x) sum(x * coeff, na.rm = TRUE))
     }
     dat.glm$running.values <- dat.glm$family$linkinv(ftd)
