@@ -5,7 +5,6 @@
 #'
 #' @inheritParams elo.calc
 #' @param family,weights,... Arguments passed to \code{\link[stats]{glm}}.
-#' @param rm.ties Logical, denoting whether to remove ties on the left-hand side.
 #' @param running Logical, denoting whether to calculate "running" projected probabilities. If true, a model is fit for
 #'   group 1 on its own to predict group 2, then groups 1 and 2 to predict 3, then groups 1 through 3 to predict 4, etc.
 #'   Groups are determined in \code{formula}. Omitting a group term re-runs a glm model to predict each
@@ -35,7 +34,7 @@ NULL
 
 #' @rdname elo.glm
 #' @export
-elo.glm <- function(formula, data, weights, na.action, subset, family = "binomial", ..., rm.ties = FALSE, running = FALSE, skip = 0)
+elo.glm <- function(formula, data, weights, na.action, subset, family = "binomial", ..., running = FALSE, skip = 0)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
@@ -53,19 +52,12 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
 
   dat$wins.A <- mf$wins.A
   grp <- mf$group
-  if(rm.ties)
-  {
-    idx <- dat$wins.A %in% 0:1
-    grp <- grp[idx]
-    dat <- dat[idx, , drop = FALSE]
-  }
 
   wts <- mf$weights
   dat.glm <- stats::glm(wins.A ~ ., data = dat, family = family, na.action = stats::na.pass, subset = NULL, weights = wts, ...)
   dat.glm$teams <- all.teams
   dat.glm$group <- grp
   dat.glm$elo.terms <- Terms
-  dat.glm$rm.ties <- rm.ties
   dat.glm$na.action <- stats::na.action(mf)
 
   if(running)

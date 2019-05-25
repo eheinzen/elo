@@ -5,7 +5,7 @@
 \title{\code{elo.glm}}
 \usage{
 elo.glm(formula, data, weights, na.action, subset, family = "binomial",
-  ..., rm.ties = FALSE, running = FALSE, skip = 0)
+  ..., running = FALSE, skip = 0)
 }
 \arguments{
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}
@@ -17,8 +17,6 @@ elo.glm(formula, data, weights, na.action, subset, family = "binomial",
 \item{subset}{An optional vector specifying a subset of observations.}
 
 \item{family, weights, ...}{Arguments passed to \code{\link[stats]{glm}}.}
-
-\item{rm.ties}{Logical, denoting whether to remove ties on the left-hand side.}
 
 \item{running}{Logical, denoting whether to calculate "running" projected probabilities. If true, a model is fit for
 group 1 on its own to predict group 2, then groups 1 and 2 to predict 3, then groups 1 through 3 to predict 4, etc.

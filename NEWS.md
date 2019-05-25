@@ -23,6 +23,9 @@
 * Added `weights=` to `elo.glm()`.
 
 * Added support for `adjust()` in `elo.glm()` to include adjustments in the logistic regression.
+
+* Removed the `rm.ties=` argument from `elo.glm()`. Ties will have to be removed instead with `subset=` or before
+  running the function altogether.
   
 * Added `brier()` as a synonym for `mse()`.
 
