@@ -27,6 +27,9 @@ predict.elo.markovchain <- function(object, newdata, ...)
   if(missing(newdata)) return(fitted(object))
   form <- clean_elo_formula(object$elo.terms)
   mf <- elo.model.frame(form, data = newdata, required.vars = "elos")
-  dat <- data.frame(difference = unname(object$pi[as.character(mf$elo.A)] - object$pi[as.character(mf$elo.B)]))
+  dat <- data.frame(
+    difference = unname(object$pi[as.character(mf$elo.A)] - object$pi[as.character(mf$elo.B)]),
+    adj.A = mf$adj.A, adj.B = mf$adj.B
+  )
   stats::predict.glm(object$fit, newdata = dat, type = "response", ...)
 }

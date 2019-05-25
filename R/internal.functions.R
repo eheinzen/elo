@@ -132,6 +132,8 @@ mf_to_wide <- function(mf, teams = NULL)
 
   dat <- lapply(all.teams, function(tm) (rowSums(t1 == tm) > 0) - (rowSums(t2 == tm) > 0))
   names(dat) <- all.teams
+  dat$adj.A <- mf$adj.A
+  dat$adj.B <- mf$adj.B
   structure(dat, class = "data.frame", row.names = c(NA_integer_, nrow(mf)), all.teams = all.teams)
 }
 

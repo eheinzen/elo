@@ -7,6 +7,7 @@ context("Testing the elo.glm function")
 trn <- tournament
 trn$diff <- score(trn$points.Home, trn$points.Visitor)
 trn <- trn[trn$diff %in% 0:1, ]
+trn$neutral <- replace(rep(0, times = nrow(trn)), c(3, 30), 1)
 
 test_that("elo.glm(running=TRUE) works", {
   tmp.glm.run <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn, running = TRUE, skip = 5)
@@ -59,4 +60,7 @@ test_that("predict.elo.glm works correctly", {
     tmp.glm$family$linkinv(sum(coef(tmp.glm) * c(1, 1, rep(0, 6)))),
     unname(predict(tmp.glm, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Helpless Hyenas")))
   )
+
+  tmp.glm.adj <- elo.glm(diff ~ team.Home + adjust(team.Visitor, neutral) + group(week), data = trn)
+  expect_error(predict(tmp.glm.adj, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")), "neutral")
 })
