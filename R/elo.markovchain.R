@@ -70,6 +70,7 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
     ftd <- rep(0, times = nrow(dat))
     grp2 <- group_to_int(grp, skip)
     y <- dat$winsA
+    adj <- cbind(1, mf$adj.A, mf$adj.B)
 
     for(i in setdiff(seq_len(max(grp2)), seq_len(skip)))
     {
@@ -85,9 +86,9 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
       # tmpfit <- stats::glm(dat$winsA ~ difference, subset = sbst, family = "binomial")
       # ftd[grp2 == i] <- predict(tmpfit, newdata = data.frame(difference = difference[grp2 == i]), type = "link")
 
-      coeff <- stats::glm.fit(cbind(1, difference[sbst]),
+      coeff <- stats::glm.fit(cbind(difference, adj)[sbst, , drop=FALSE],
                               dat.tmp$winsA, family = mc.glm$family, control = mc.glm$control)$coefficients
-      ftd[grp2 == i] <- apply(cbind(1, difference[grp2 == i]), 1, function(x) sum(x * coeff))
+      ftd[grp2 == i] <- apply(cbind(difference, adj)[grp2 == i, , drop=FALSE], 1, function(x) sum(x * coeff, na.rm = TRUE))
     }
     out$running.values <- mc.glm$family$linkinv(ftd)
   }

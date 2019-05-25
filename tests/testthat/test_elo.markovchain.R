@@ -24,11 +24,25 @@ test_that("elo.markovchain is working correctly", {
 })
 
 test_that("elo.markovchain(running=TRUE) works", {
-  tmp.mc.run <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week),
+  tmp.mc.run <- elo.markovchain(diff ~ team.Home + team.Visitor + group(week),
                                 data = trn, k = 0.7, running = TRUE, skip = 5)
 
   expect_equal(fitted(tmp.mc.run)[1:19], rep(0.5, 19))
 
-  tmp.mc <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = trn, k = 0.7)
+  tmp.mc <- elo.markovchain(diff ~ team.Home + team.Visitor, data = trn, k = 0.7)
   expect_equal(predict(tmp.mc, newdata=head(trn, 2)), predict(tmp.mc.run, newdata=head(trn, 2)))
+
+
+})
+
+
+test_that("adjust() works in elo.markovchain()", {
+  tmp.mc.adj0 <- elo.markovchain(diff ~ team.Home + adjust(team.Visitor, 0) + group(week), data = trn,
+                                 running = TRUE, skip = 5, k = 0.7)
+  tmp.mc.adj1 <- elo.markovchain(diff ~ team.Home + adjust(team.Visitor, c(rep(0, 50), 1)) + group(week),
+                                 data = trn, running = TRUE, skip = 5, k = 0.7)
+  tmp.mc.noad <- elo.markovchain(diff ~ team.Home + team.Visitor + group(week), data = trn,
+                                 running = TRUE, skip = 5, k = 0.7)
+  expect_equal(fitted(tmp.mc.adj0), fitted(tmp.mc.adj1))
+  expect_equal(fitted(tmp.mc.adj0), fitted(tmp.mc.noad))
 })

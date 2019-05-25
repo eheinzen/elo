@@ -86,7 +86,7 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
 
       coeff <- stats::glm.fit(dat.mat[sbst, , drop = FALSE], y[sbst], wts[sbst], family = dat.glm$family,
                                 control = dat.glm$control)$coefficients
-      ftd[grp2 == i] <- apply(dat.mat[grp2 == i, , drop = FALSE], 1, function(x) sum(x * coeff))
+      ftd[grp2 == i] <- apply(dat.mat[grp2 == i, , drop = FALSE], 1, function(x) sum(x * coeff, na.rm = TRUE))
     }
     dat.glm$running.values <- dat.glm$family$linkinv(ftd)
   }

@@ -64,3 +64,11 @@ test_that("predict.elo.glm works correctly", {
   tmp.glm.adj <- elo.glm(diff ~ team.Home + adjust(team.Visitor, neutral) + group(week), data = trn)
   expect_error(predict(tmp.glm.adj, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")), "neutral")
 })
+
+test_that("adjust() works in elo.glm()", {
+  tmp.glm.adj0 <- elo.glm(diff ~ team.Home + adjust(team.Visitor, 0) + group(week), data = trn, running = TRUE, skip = 5)
+  tmp.glm.adj1 <- elo.glm(diff ~ team.Home + adjust(team.Visitor, c(rep(0, 50), 1)) + group(week), data = trn, running = TRUE, skip = 5)
+  tmp.glm.noad <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn, running = TRUE, skip = 5)
+  expect_equal(fitted(tmp.glm.adj0), fitted(tmp.glm.adj1))
+  expect_equal(fitted(tmp.glm.adj0), fitted(tmp.glm.noad))
+})
