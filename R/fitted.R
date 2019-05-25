@@ -10,7 +10,7 @@
 NULL
 #> NULL
 
-## we also rely on stats:::terms.default
+## stats:::terms.default and stats:::weights.default also work
 
 #' @rdname elo.fitted
 #' @export

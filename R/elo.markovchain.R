@@ -53,7 +53,7 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
                        data = data.frame(wins.A = dat$winsA, difference = vec[dat$teamA+1] - vec[dat$teamB+1]))
   out <- list(
     fit = mc.glm,
-    mc.weights = mf$weights,
+    weights = mf$weights,
     transition = out[[1]],
     n.games = out[[2]],
     pi = vec,
