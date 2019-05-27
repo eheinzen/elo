@@ -18,8 +18,18 @@ test_that("Basic model.frame stuff works", {
 
   expect_identical(
     dim(elo.model.frame(wins.A ~ team.A + team.B, data = dat, k = 20,
-                        required.vars = c("wins", "elos", "k", "group", "regress"))),
-    c(3L, 8L)
+                        required.vars = c("wins", "elos", "k", "group", "regress", "neutral", "weights"))),
+    c(3L, 10L)
+  )
+
+  expect_identical(
+    elo.model.frame(wins.A ~ team.A + team.B, data = dat, required.vars = c("neutral", "weights"))$home.field,
+    rep(1, nrow(dat))
+  )
+
+  expect_identical(
+    elo.model.frame(wins.A ~ team.A + team.B, data = dat, required.vars = c("neutral", "weights"))$weights,
+    rep(1, nrow(dat))
   )
 
   expect_identical(
@@ -31,6 +41,7 @@ test_that("Basic model.frame stuff works", {
 dat2 <- dat
 dat2$k.column <- "a"
 dat2$wins.A[2] <- 2
+dat2$neutral <- rep(2, nrow(dat2))
 
 test_that("Certain errors are issued appropriately", {
   expect_error(elo.model.frame(wins.A ~ team.A, data = dat), "specified correctly")
@@ -44,6 +55,8 @@ test_that("Certain errors are issued appropriately", {
                "between 0 and 1")
   expect_error(elo.model.frame(~ team.A + team.B + k(k.column), data = dat2, required.vars = c("k", "elos")),
                "numeric and non-NA")
+  expect_warning(elo.model.frame(~ team.A + team.B + neutral(neutral), data = dat2, required.vars = "neutral"),
+                 "values aren't 0 or 1")
   expect_error(elo.model.frame(wins.A ~ team.A + team.B + k(k.column), data = dat2), NA)
 })
 

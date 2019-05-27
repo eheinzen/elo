@@ -16,10 +16,20 @@ test_that("elo.markovchain is working correctly", {
   expect_equal(sum(tmp.mc$pi), 1)
   expect_equal(colSums(tmp.mc$transition), rep(1, ncol(tmp.mc$transition)))
   expect_equal(tmp.mc$n.games, as.vector(table(c(trn$team.Home, trn$team.Visitor))))
+})
 
+test_that("predict.elo.markovchain is working correctly", {
   tmp.mc.adj <- elo.markovchain(score(points.Home, points.Visitor) ~ adjust(team.Home, neut) + team.Visitor,
                                 data = trn, k = 0.7)
-  expect_error(predict(tmp.mc.adj, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")), "neut")
+  expect_error(predict(tmp.mc.adj, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")),
+               "'neut' not found")
+
+  tmp.mc.neu <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + neutral(neut),
+                                data = trn, k = 0.7)
+  expect_error(predict(tmp.mc.neu, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")),
+               "'neut' not found")
+
+  tmp.mc <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = trn, k = 0.7)
   expect_error(predict(tmp.mc, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")), NA)
 })
 

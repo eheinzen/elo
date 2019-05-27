@@ -61,8 +61,23 @@ test_that("predict.elo.glm works correctly", {
     unname(predict(tmp.glm, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Helpless Hyenas")))
   )
 
+  tmp.glm2 <- elo.glm(diff ~ team.Home + team.Visitor + neutral(neut), data = trn)
+  expect_equal(
+    tmp.glm2$family$linkinv(sum(coef(tmp.glm2) * c(1, 1, -1, rep(0, 5)))),
+    unname(predict(tmp.glm2, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", neut = 0)))
+  )
+  expect_equal(
+    tmp.glm2$family$linkinv(sum(coef(tmp.glm2) * c(0, 1, rep(0, 6)))),
+    unname(predict(tmp.glm2, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Helpless Hyenas", neut = 1)))
+  )
+
   tmp.glm.adj <- elo.glm(diff ~ team.Home + adjust(team.Visitor, neut) + group(week), data = trn)
-  expect_error(predict(tmp.glm.adj, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")), "neut")
+  expect_error(predict(tmp.glm.adj, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")),
+               "'neut' not found")
+
+  tmp.glm.neu <- elo.glm(diff ~ team.Home + team.Visitor + neutral(neut) + group(week), data = trn)
+  expect_error(predict(tmp.glm.neu, data.frame(team.Home = "Blundering Baboons", team.Visitor = "Athletic Armadillos")),
+               "'neut' not found")
 })
 
 test_that("adjust() works in elo.glm()", {
