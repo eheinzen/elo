@@ -25,7 +25,7 @@ NULL
 predict.elo.markovchain <- function(object, newdata, ...)
 {
   if(missing(newdata)) return(fitted(object))
-  form <- clean_elo_formula(object$elo.terms)
+  form <- clean_elo_formula(object$elo.terms, drop.neutral = FALSE)
   mf <- elo.model.frame(form, data = newdata, required.vars = c("elos", "neutral"))
   dat <- data.frame(
     difference = unname(object$pi[as.character(mf$elo.A)] - object$pi[as.character(mf$elo.B)]),
