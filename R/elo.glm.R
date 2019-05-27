@@ -22,7 +22,7 @@
 #'   run to predict wins.
 #'
 #'   With this setup, the intercept represents the home-field advantage. Neutral fields can be indicated
-#'   using the \code{\link{adjust}()} function.
+#'   using the \code{\link{neutral}()} function, which sets the intercept to 0.
 #' @examples
 #' data(tournament)
 #' elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,

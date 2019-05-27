@@ -24,6 +24,8 @@
 
 * Added support for `adjust()` in `elo.glm()` to include adjustments in the logistic regression.
 
+* Added a new inline function `neutral()`, to denote neutral field in `elo.glm()` and `elo.markovchain()`.
+
 * Removed the `rm.ties=` argument from `elo.glm()`. Ties will have to be removed instead with `subset=` or before
   running the function altogether.
   

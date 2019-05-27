@@ -202,6 +202,8 @@ elo.calc(wins.A ~ adjust(elo.A, 10) + elo.B + k(k), data = dat)
 
 It's also possible to compare teams' skills using logistic regression. A matrix of dummy variables is constructed, one for each team,
 where a value of 1 indicates a home team and -1 indicates a visiting team. The intercept then indicates a home-field advantage.
+To denote games played in a neutral setting (that is, without home-field advantage), use the `neutral()` function.
+In short, the intercept will then be set to `1 - neutral()`.
 Including an adjustment using `adjust()` in the formula also includes that in the model.
 
 ```{r}
@@ -211,7 +213,7 @@ summary(results)
 predict(results, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE))
 
 tournament$neutral <- replace(rep(0, nrow(tournament)), 30:35, 1)
-summary(elo.glm(score(points.Home, points.Visitor) ~ adjust(team.Home, neutral) + team.Visitor + group(week),
+summary(elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + neutral(neutral) + group(week),
                 data = tournament, subset = points.Home != points.Visitor))
 ```
 
@@ -238,14 +240,14 @@ k, and the probability that the losing team is better than the winning team give
 This forms a transition matrix, whose stationary distribution gives a ranking of teams.
 The differences in ranking are then fed into a logistic regession model to predict win status.
 Any adjustments made using `adjust()` are also included in this logistic regression.
-In this way, you could adjust the intercept for games played on neutral fields (for example).
+You could also adjust the intercept for games played on neutral fields by using the `neutral()` function.
 
 ```{r}
 mc <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
                       subset = points.Home != points.Visitor, k = 0.7)
 summary(mc)
 predict(mc, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE))
-summary(elo.markovchain(score(points.Home, points.Visitor) ~ adjust(team.Home, neutral) + team.Visitor,
+summary(elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + neutral(neutral),
                         data = tournament, subset = points.Home != points.Visitor, k = 0.7))
 ```
 
@@ -288,7 +290,7 @@ elo.markovchain(ifelse(home.points - visitor.points > h, 1, 0) ~ team.home + tea
 In this case, the home team "won" if it scored more than `h` points more than the visiting team. Since
 `rH(x) > 0.5` if `x > h`, then `pmax()` will assign the proper probability to the pseudo-winning team.
 
-Finally, do note that using `adjust()` isn't sufficient for adjusting for games played on neutral ground,
+Finally, do note that using `neutral()` isn't sufficient for adjusting for games played on neutral ground,
 because the adjustment is only taken into account in the logistic regression to produce probabilities, not
 the building of the transition matrix. Therefore, you'll want to also account for neutral wins/losses in
-`k()`.
+`k()` as well.

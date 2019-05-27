@@ -42,7 +42,7 @@ The formula syntax is the same as other \code{elo} functions. A data.frame
   run to predict wins.
 
   With this setup, the intercept represents the home-field advantage. Neutral fields can be indicated
-  using the \code{\link{adjust}()} function.
+  using the \code{\link{neutral}()} function, which sets the intercept to 0.
 }
 \examples{
 data(tournament)

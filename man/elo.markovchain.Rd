@@ -42,7 +42,9 @@ See the vignette for details on this method. The probabilities we call 'k' purel
 
   Note that by assigning probabilities in the right way, this function emits the
   Logistic Regression Markov Chain model (LRMC). It is also possible to adjust the logistic
-  regression for home/away/neutral status by setting the second argument of \code{\link{adjust}()}.
+  regression by setting the second argument of \code{\link{adjust}()}. As in \code{\link{elo.glm}},
+  the intercept represents the home-field advantage. Neutral fields can be indicated
+  using the \code{\link{neutral}()} function, which sets the intercept to 0.
 }
 \examples{
 elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,

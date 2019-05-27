@@ -16,7 +16,9 @@
 #'
 #'   Note that by assigning probabilities in the right way, this function emits the
 #'   Logistic Regression Markov Chain model (LRMC). It is also possible to adjust the logistic
-#'   regression for home/away/neutral status by setting the second argument of \code{\link{adjust}()}.
+#'   regression by setting the second argument of \code{\link{adjust}()}. As in \code{\link{elo.glm}},
+#'   the intercept represents the home-field advantage. Neutral fields can be indicated
+#'   using the \code{\link{neutral}()} function, which sets the intercept to 0.
 #' @references Kvam, P. and Sokol, J.S. A logistic regression/Markov chain model for NCAA basketball.
 #'   Naval Research Logistics. 2006. 53; 788-803.
 #' @name elo.markovchain
