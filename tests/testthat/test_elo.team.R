@@ -1,4 +1,4 @@
-context("Testing the elo.team function")
+context("Testing the players() function")
 
 test_that("elo.run works with players()", {
   expect_identical(

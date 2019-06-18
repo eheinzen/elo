@@ -136,6 +136,7 @@ objects of class `"elo.run"`.
 e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
              data = tournament, k = 20)
 summary(e)
+rank.teams(e)
 ```
 
 `as.matrix.elo.run()` creates a matrix of running Elos.
@@ -210,6 +211,7 @@ Including an adjustment using `adjust()` in the formula also includes that in th
 results <- elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week), data = tournament,
                    subset = points.Home != points.Visitor) # to get rid of ties for now
 summary(results)
+rank.teams(results)
 predict(results, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE))
 
 tournament$neutral <- replace(rep(0, nrow(tournament)), 30:35, 1)
@@ -246,6 +248,7 @@ You could also adjust the intercept for games played on neutral fields by using 
 mc <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
                       subset = points.Home != points.Visitor, k = 0.7)
 summary(mc)
+rank.teams(mc)
 predict(mc, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE))
 summary(elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + neutral(neutral),
                         data = tournament, subset = points.Home != points.Visitor, k = 0.7))

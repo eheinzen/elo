@@ -33,6 +33,8 @@
 
 * Added `elo.markovchain()`, with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`, `auc()`, and
   `favored()`. This also has the `running=TRUE` option.
+  
+* Added `rank.teams()`.
 
 # elo v1.1.0
 

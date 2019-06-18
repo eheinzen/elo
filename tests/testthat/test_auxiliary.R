@@ -53,3 +53,23 @@ test_that("favored.elo.glm works (#38)", {
                     dimnames = list(Favored = c("TRUE", "(tie)", "FALSE"), Actual = c("0", "1"))))
   )
 })
+
+test_that("rank.teams works", {
+  er <- elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 30) + team.Visitor, data = tournament, k = 20,
+                subset = points.Home != points.Visitor)
+  em <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament, k = 0.7,
+                        subset = points.Home != points.Visitor)
+  eg <- elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+                subset = points.Home != points.Visitor)
+  expect_equal(unname(rank.teams(er)), c(1, 7, 3, 8, 5, 2, 4, 6))
+  expect_equal(names(rank.teams(er)), er$teams)
+
+  expect_equal(unname(rank.teams(em)), c(1, 7, 3, 8, 4, 2, 6, 5))
+  expect_equal(names(rank.teams(em)), em$teams)
+
+  expect_equal(unname(rank.teams(eg)), c(1, 7, 3, 8, 5, 2, 4, 6))
+  expect_equal(names(rank.teams(eg)), eg$teams)
+})
+
+
+
