@@ -1,7 +1,7 @@
 
-#' Make Predictions on an \code{elo.markovchain} Object
+#' Make Predictions on an \code{elo.winpct} Object
 #'
-#' @param object An object of class \code{"\link{elo.markovchain}"}.
+#' @param object An object of class \code{"\link{elo.winpct}"}.
 #' @param newdata A new dataset containing the same variables as the call
 #'   that made \code{object}. If missing, the predicted win probabilities from
 #'   \code{object} will be returned.
@@ -11,18 +11,18 @@
 #' data(tournament)
 #' t1 <- head(tournament, -3)
 #' t2 <- tail(tournament, 3)
-#' results <- elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = t1,
+#' results <- elo.winpct(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = t1,
 #'   subset = points.Home != points.Visitor, k = 0.7)
 #' predict(results)
 #' predict(results, newdata = t2)
 #' @seealso \code{\link{predict.elo.running}}
-#' @name predict.elo.markovchain
+#' @name predict.elo.winpct
 NULL
 #> NULL
 
-#' @rdname predict.elo.markovchain
+#' @rdname predict.elo.winpct
 #' @export
-predict.elo.markovchain <- function(object, newdata, ...)
+predict.elo.winpct <- function(object, newdata, ...)
 {
   if(missing(newdata)) return(fitted(object))
   form <- clean_elo_formula(object$elo.terms, drop.neutral = FALSE)
@@ -31,7 +31,7 @@ predict.elo.markovchain <- function(object, newdata, ...)
   if(!is.players(mf$elo.B)) mf$elo.B <- players(mf$elo.B)
 
   dat <- data.frame(
-    difference = mean_vec_subset_matrix(object$pi, mf$elo.A) - mean_vec_subset_matrix(object$pi, mf$elo.B),
+    difference = mean_vec_subset_matrix(object$win.pct, mf$elo.A) - mean_vec_subset_matrix(object$win.pct, mf$elo.B),
     home.field = mf$home.field, adj.A = mf$adj.A, adj.B = mf$adj.B
   )
   stats::predict.glm(object$fit, newdata = dat, type = "response", ...)
