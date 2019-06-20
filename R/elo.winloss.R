@@ -30,7 +30,8 @@ elo.winloss <- function(formula, data, weights, na.action, subset, ..., running 
   out <- do.call(eloWinLoss, dat)
   vec <- stats::setNames(out[[1]], all.teams)
 
-  wl.dat <- data.frame(wins.A = dat$winsA, home.field = mf$home.field, difference = vec[dat$teamA+1] - vec[dat$teamB+1])
+  dif <- apply(dat$teamA + 1, 1, function(x) mean(vec[x])) - apply(dat$teamB + 1, 1, function(x) mean(vec[x]))
+  wl.dat <- data.frame(wins.A = dat$winsA, home.field = mf$home.field, difference = dif)
   if(!all(mf$adj.A == 0)) wl.dat$adj.A <- mf$adj.A
   if(!all(mf$adj.B == 0)) wl.dat$adj.B <- mf$adj.B
   wl.glm <- stats::glm(wins.A ~ . - 1, family = "binomial", data = wl.dat)

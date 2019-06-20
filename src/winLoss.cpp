@@ -14,14 +14,14 @@ List eloWinLoss(NumericVector winsA, NumericMatrix teamA, NumericMatrix teamB,
     {
       double tmA = teamA(i, j);
       out[tmA] += weights[i]*weightsA[j]*winsA[i];
-      N_i[tmA] += weights[i];
+      N_i[tmA] += weights[i]*weightsA[j];
     }
 
     for(int j = 0; j < ncolB; j++)
     {
       double tmB = teamB(i, j);
       out[tmB] += weights[i]*weightsB[j]*(1.0 - winsA[i]);
-      N_i[tmB] += weights[i];
+      N_i[tmB] += weights[i]*weightsB[j];
     }
   }
 
