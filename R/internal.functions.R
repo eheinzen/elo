@@ -173,3 +173,32 @@ group_to_int <- function(grp, skip)
   if(skip > mx || skip < 0) stop("skip must be between 0 and ", mx, " (inclusive)")
   mx + 1 - grp2 # from mx : 1 to 1 : mx
 }
+
+
+
+check_elo_winloss_vars <- function(mf)
+{
+  t1 <- mf$elo.A
+  t2 <- mf$elo.B
+
+  if(is.numeric(t1) || is.numeric(t2)) stop("Neither team should be numeric")
+  if(!is.players(t1)) t1 <- players(t1)
+  if(anyNA(t1)) stop("NAs were found in team.A; check that it can be coerced to character.")
+
+  if(!is.players(t2)) t2 <- players(t2)
+  if(anyNA(t2)) stop("NAs were found in team.B; check that it can be coerced to character.")
+  all.teams <- sort(unique(c(as.character(t1), as.character(t2))))
+
+  tmp <- stats::setNames(seq_along(all.teams) - 1L, all.teams)
+  wts1 <- weights(t1)
+  wts2 <- weights(t2)
+  t1 <- matrix(tmp[t1], nrow = nrow(t1))
+  t2 <- matrix(tmp[t2], nrow = nrow(t2))
+
+  if(!all(mf$weights > 0)) stop("Weights should be positive numbers")
+
+  out <- list(winsA = mf$wins.A, teamA = t1, teamB = t2, weightsA = wts1,
+              weightsB = wts2, weights = mf$weights, nTeams = length(all.teams))
+  attr(out, "teams") <- all.teams
+  out
+}

@@ -21,3 +21,7 @@ eloMarkovChain <- function(teamA, teamB, winsA, weights, k, nTeams) {
     .Call('_elo_eloMarkovChain', PACKAGE = 'elo', teamA, teamB, winsA, weights, k, nTeams)
 }
 
+eloWinLoss <- function(winsA, teamA, teamB, weightsA, weightsB, weights, nTeams) {
+    .Call('_elo_eloWinLoss', PACKAGE = 'elo', winsA, teamA, teamB, weightsA, weightsB, weights, nTeams)
+}
+
