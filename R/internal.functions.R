@@ -178,7 +178,7 @@ group_to_int <- function(grp, skip)
 
 
 
-check_elo_winloss_vars <- function(mf)
+check_elo_winpct_vars <- function(mf)
 {
   t1 <- mf$elo.A
   t2 <- mf$elo.B

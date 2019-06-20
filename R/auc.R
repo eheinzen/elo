@@ -52,5 +52,5 @@ auc.elo.markovchain <- auc.elo.glm
 
 #' @rdname elo.auc
 #' @export
-auc.elo.winloss <- auc.elo.glm
+auc.elo.winpct <- auc.elo.glm
 

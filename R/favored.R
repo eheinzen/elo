@@ -46,7 +46,7 @@ favored.elo.markovchain <- favored.elo.glm
 
 #' @rdname elo.favored
 #' @export
-favored.elo.winloss <- favored.elo.glm
+favored.elo.winpct <- favored.elo.glm
 
 #' @rdname elo.favored
 #' @export

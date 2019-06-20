@@ -87,9 +87,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// eloWinLoss
-List eloWinLoss(NumericVector winsA, NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, NumericVector weightsB, NumericVector weights, int nTeams);
-RcppExport SEXP _elo_eloWinLoss(SEXP winsASEXP, SEXP teamASEXP, SEXP teamBSEXP, SEXP weightsASEXP, SEXP weightsBSEXP, SEXP weightsSEXP, SEXP nTeamsSEXP) {
+// eloWinPct
+List eloWinPct(NumericVector winsA, NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, NumericVector weightsB, NumericVector weights, int nTeams);
+RcppExport SEXP _elo_eloWinPct(SEXP winsASEXP, SEXP teamASEXP, SEXP teamBSEXP, SEXP weightsASEXP, SEXP weightsBSEXP, SEXP weightsSEXP, SEXP nTeamsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -100,7 +100,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type weightsB(weightsBSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
     Rcpp::traits::input_parameter< int >::type nTeams(nTeamsSEXP);
-    rcpp_result_gen = Rcpp::wrap(eloWinLoss(winsA, teamA, teamB, weightsA, weightsB, weights, nTeams));
+    rcpp_result_gen = Rcpp::wrap(eloWinPct(winsA, teamA, teamB, weightsA, weightsB, weights, nTeams));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -111,7 +111,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_elo_eloRun", (DL_FUNC) &_elo_eloRun, 14},
     {"_elo_finalElos", (DL_FUNC) &_elo_finalElos, 2},
     {"_elo_eloMarkovChain", (DL_FUNC) &_elo_eloMarkovChain, 8},
-    {"_elo_eloWinLoss", (DL_FUNC) &_elo_eloWinLoss, 7},
+    {"_elo_eloWinPct", (DL_FUNC) &_elo_eloWinPct, 7},
     {NULL, NULL, 0}
 };
 

@@ -7,7 +7,7 @@
 \alias{favored.elo.glm}
 \alias{favored.elo.running}
 \alias{favored.elo.markovchain}
-\alias{favored.elo.winloss}
+\alias{favored.elo.winpct}
 \alias{favored.default}
 \title{Classify teams that are favored to win}
 \usage{
@@ -21,7 +21,7 @@ favored(x, ...)
 
 \method{favored}{elo.markovchain}(x, ...)
 
-\method{favored}{elo.winloss}(x, ...)
+\method{favored}{elo.winpct}(x, ...)
 
 \method{favored}{default}(x, p.A, ...)
 }

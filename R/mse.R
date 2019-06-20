@@ -59,4 +59,4 @@ mse.elo.markovchain <- mse.elo.glm
 
 #' @rdname elo.mse
 #' @export
-mse.elo.winloss <- mse.elo.glm
+mse.elo.winpct <- mse.elo.glm

@@ -3,8 +3,8 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-List eloWinLoss(NumericVector winsA, NumericMatrix teamA, NumericMatrix teamB,
-                         NumericVector weightsA, NumericVector weightsB, NumericVector weights, int nTeams) {
+List eloWinPct(NumericVector winsA, NumericMatrix teamA, NumericMatrix teamB,
+               NumericVector weightsA, NumericVector weightsB, NumericVector weights, int nTeams) {
   NumericVector out(nTeams), N_i(nTeams);
   int ncolA = teamA.ncol(), ncolB = teamB.ncol();
 

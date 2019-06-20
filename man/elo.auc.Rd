@@ -6,7 +6,7 @@
 \alias{auc.elo.glm}
 \alias{auc.elo.running}
 \alias{auc.elo.markovchain}
-\alias{auc.elo.winloss}
+\alias{auc.elo.winpct}
 \title{Calculate AUC on an \code{elo.run} object}
 \usage{
 \method{auc}{elo.run}(object, ...)
@@ -17,7 +17,7 @@
 
 \method{auc}{elo.markovchain}(object, ...)
 
-\method{auc}{elo.winloss}(object, ...)
+\method{auc}{elo.winpct}(object, ...)
 }
 \arguments{
 \item{object}{An object of class \code{\link{elo.run}}.}

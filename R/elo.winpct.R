@@ -1,20 +1,20 @@
-#' \code{elo.markovchain}
+#' \code{elo.winpct}
 #'
-#' Compute a Markov chain model for a matchup.
+#' Compute a logistic regression based on win percentage for a matchup.
 #'
 #' @inheritParams elo.glm
 #' @param weights A vector of weights. Note that these are used in calculating wins and losses but
 #'   not in the logistic regression.
 #' @examples
-#' elo.winloss(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+#' elo.winpct(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
 #'   subset = points.Home != points.Visitor)
-#' @name elo.winloss
+#' @name elo.winpct
 NULL
 #> NULL
 
-#' @rdname elo.winloss
+#' @rdname elo.winpct
 #' @export
-elo.winloss <- function(formula, data, weights, na.action, subset, ..., running = FALSE, skip = 0)
+elo.winpct <- function(formula, data, weights, na.action, subset, ..., running = FALSE, skip = 0)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
@@ -23,11 +23,11 @@ elo.winloss <- function(formula, data, weights, na.action, subset, ..., running 
   if(nrow(mf) == 0) stop("No (non-missing) observations")
   Terms <- stats::terms(mf)
 
-  dat <- check_elo_winloss_vars(mf)
+  dat <- check_elo_winpct_vars(mf)
   all.teams <- attr(dat, "teams")
   grp <- mf$group
 
-  out <- do.call(eloWinLoss, dat)
+  out <- do.call(eloWinPct, dat)
   vec <- stats::setNames(out[[1]], all.teams)
 
   difference <- mean_vec_subset_matrix(vec, dat$teamA+1) - mean_vec_subset_matrix(vec, dat$teamB+1)
@@ -64,7 +64,7 @@ elo.winloss <- function(formula, data, weights, na.action, subset, ..., running 
       dat.tmp$teamA <- dat.tmp$teamA[sbst, , drop = FALSE]
       dat.tmp$teamB <- dat.tmp$teamB[sbst, , drop = FALSE]
 
-      wl <- do.call(eloWinLoss, dat)
+      wl <- do.call(eloWinPct, dat)
       vec <- stats::setNames(wl[[1]], all.teams)
 
       difference <- mean_vec_subset_matrix(vec, dat$teamA+1) - mean_vec_subset_matrix(vec, dat$teamB+1)
@@ -79,13 +79,13 @@ elo.winloss <- function(formula, data, weights, na.action, subset, ..., running 
     out$running.values <- wl.glm$family$linkinv(ftd)
   }
 
-  structure(out, class = c(if(running) "elo.running", "elo.winloss"))
+  structure(out, class = c(if(running) "elo.running", "elo.winpct"))
 }
 
 #' @export
-print.elo.winloss <- function(x, ...)
+print.elo.winpct <- function(x, ...)
 {
-  cat("\nAn object of class 'elo.winloss', containing information on ", length(x$teams),
+  cat("\nAn object of class 'elo.winpct', containing information on ", length(x$teams),
       " teams and ", sum(x$n.games)/2, " matches.\n\n", sep = "")
   invisible(x)
 }
