@@ -146,23 +146,25 @@ check_elo_markovchain_vars <- function(mf)
   t2 <- mf$elo.B
 
   if(is.numeric(t1) || is.numeric(t2)) stop("Neither team should be numeric")
-  if(is.players(t1) || is.players(t2)) stop("Neither team should be a players() matrix")
-  t1 <- as.character(t1)
-  t2 <- as.character(t2)
+  if(!is.players(t1)) t1 <- players(t1)
   if(anyNA(t1)) stop("NAs were found in team.A; check that it can be coerced to character.")
+
+  if(!is.players(t2)) t2 <- players(t2)
   if(anyNA(t2)) stop("NAs were found in team.B; check that it can be coerced to character.")
-  all.teams <- sort(unique(c(t1, t2)))
+  all.teams <- sort(unique(c(as.character(t1), as.character(t2))))
 
   tmp <- stats::setNames(seq_along(all.teams) - 1L, all.teams)
-  t1 <- tmp[t1]
-  t2 <- tmp[t2]
+  wts1 <- weights(t1)
+  wts2 <- weights(t2)
+  t1 <- matrix(tmp[t1], nrow = nrow(t1))
+  t2 <- matrix(tmp[t2], nrow = nrow(t2))
 
   if(!all(mf$weights > 0)) stop("Weights should be positive numbers")
 
   if(!all(0 <= mf$k & mf$k <= 1)) stop("Probabilities 'k' should be between 0 and 1 (inclusive)")
 
-  structure(list(winsA = mf$wins.A, teamA = t1, teamB = t2, k = mf$k, weights = mf$weights,
-                 nTeams = length(all.teams)), teams = all.teams)
+  structure(list(winsA = mf$wins.A, k = mf$k, weights = mf$weights, teamA = t1, teamB = t2,
+                 weightsA = wts1, weightsB = wts2, nTeams = length(all.teams)), teams = all.teams)
 }
 
 group_to_int <- function(grp, skip)
@@ -197,8 +199,13 @@ check_elo_winloss_vars <- function(mf)
 
   if(!all(mf$weights > 0)) stop("Weights should be positive numbers")
 
-  out <- list(winsA = mf$wins.A, teamA = t1, teamB = t2, weightsA = wts1,
-              weightsB = wts2, weights = mf$weights, nTeams = length(all.teams))
+  out <- list(winsA = mf$wins.A, weights = mf$weights, teamA = t1, teamB = t2,
+              weightsA = wts1, weightsB = wts2, nTeams = length(all.teams))
   attr(out, "teams") <- all.teams
   out
+}
+
+mean_vec_subset_matrix <- function(vec, mat)
+{
+  rowMeans(matrix(vec[mat], nrow = nrow(mat)))
 }

@@ -27,8 +27,11 @@ predict.elo.markovchain <- function(object, newdata, ...)
   if(missing(newdata)) return(fitted(object))
   form <- clean_elo_formula(object$elo.terms, drop.neutral = FALSE)
   mf <- elo.model.frame(form, data = newdata, required.vars = c("elos", "neutral"))
+  if(!is.players(mf$elo.A)) mf$elo.A <- players(mf$elo.A)
+  if(!is.players(mf$elo.B)) mf$elo.B <- players(mf$elo.B)
+
   dat <- data.frame(
-    difference = unname(object$pi[as.character(mf$elo.A)] - object$pi[as.character(mf$elo.B)]),
+    difference = mean_vec_subset_matrix(object$pi, mf$elo.A) - mean_vec_subset_matrix(object$pi, mf$elo.B),
     home.field = mf$home.field, adj.A = mf$adj.A, adj.B = mf$adj.B
   )
   stats::predict.glm(object$fit, newdata = dat, type = "response", ...)

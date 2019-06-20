@@ -17,8 +17,8 @@ finalElos <- function(mat, nTeams) {
     .Call('_elo_finalElos', PACKAGE = 'elo', mat, nTeams)
 }
 
-eloMarkovChain <- function(teamA, teamB, winsA, weights, k, nTeams) {
-    .Call('_elo_eloMarkovChain', PACKAGE = 'elo', teamA, teamB, winsA, weights, k, nTeams)
+eloMarkovChain <- function(teamA, teamB, winsA, weightsA, weightsB, weights, k, nTeams) {
+    .Call('_elo_eloMarkovChain', PACKAGE = 'elo', teamA, teamB, winsA, weightsA, weightsB, weights, k, nTeams)
 }
 
 eloWinLoss <- function(winsA, teamA, teamB, weightsA, weightsB, weights, nTeams) {

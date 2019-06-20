@@ -48,8 +48,8 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
   eig <- eigen(out[[1]])
   vec <- as.numeric(eig$vectors[, 1])
   vec <- stats::setNames(vec / sum(vec), all.teams)
-
-  mc.dat <- data.frame(wins.A = dat$winsA, home.field = mf$home.field, difference = vec[dat$teamA+1] - vec[dat$teamB+1])
+  difference <- mean_vec_subset_matrix(vec, dat$teamA+1) - mean_vec_subset_matrix(vec, dat$teamB+1)
+  mc.dat <- data.frame(wins.A = dat$winsA, home.field = mf$home.field, difference = difference)
   if(!all(mf$adj.A == 0)) mc.dat$adj.A <- mf$adj.A
   if(!all(mf$adj.B == 0)) mc.dat$adj.B <- mf$adj.B
   mc.glm <- stats::glm(wins.A ~ . - 1, family = "binomial", data = mc.dat)
@@ -80,12 +80,14 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
       if(i == 1) next
       sbst <- grp2 %in% 1:(i-1)
       dat.tmp <- dat
-      dat.tmp[-6] <- lapply(dat.tmp[-6], `[`, sbst)
+      dat.tmp[1:3] <- lapply(dat.tmp[1:3], `[`, sbst)
+      dat.tmp$teamA <- dat.tmp$teamA[sbst, , drop = FALSE]
+      dat.tmp$teamB <- dat.tmp$teamB[sbst, , drop = FALSE]
 
       eig <- eigen(do.call(eloMarkovChain, dat.tmp)[[1]])
       vec <- as.numeric(eig$vectors[, 1])
       vec <- stats::setNames(vec / sum(vec), all.teams)
-      difference <- vec[dat$teamA+1] - vec[dat$teamB+1]
+      difference <- mean_vec_subset_matrix(vec, dat$teamA+1) - mean_vec_subset_matrix(vec, dat$teamB+1)
 
       # tmpfit <- stats::glm(dat$winsA ~ difference, subset = sbst, family = "binomial")
       # ftd[grp2 == i] <- predict(tmpfit, newdata = data.frame(difference = difference[grp2 == i]), type = "link")

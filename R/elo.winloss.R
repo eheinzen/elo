@@ -30,8 +30,8 @@ elo.winloss <- function(formula, data, weights, na.action, subset, ..., running 
   out <- do.call(eloWinLoss, dat)
   vec <- stats::setNames(out[[1]], all.teams)
 
-  dif <- apply(dat$teamA + 1, 1, function(x) mean(vec[x])) - apply(dat$teamB + 1, 1, function(x) mean(vec[x]))
-  wl.dat <- data.frame(wins.A = dat$winsA, home.field = mf$home.field, difference = dif)
+  difference <- mean_vec_subset_matrix(vec, dat$teamA+1) - mean_vec_subset_matrix(vec, dat$teamB+1)
+  wl.dat <- data.frame(wins.A = dat$winsA, home.field = mf$home.field, difference = difference)
   if(!all(mf$adj.A == 0)) wl.dat$adj.A <- mf$adj.A
   if(!all(mf$adj.B == 0)) wl.dat$adj.B <- mf$adj.B
   wl.glm <- stats::glm(wins.A ~ . - 1, family = "binomial", data = wl.dat)
@@ -60,12 +60,14 @@ elo.winloss <- function(formula, data, weights, na.action, subset, ..., running 
       if(i == 1) next
       sbst <- grp2 %in% 1:(i-1)
       dat.tmp <- dat
-      dat.tmp[c(1:3, 6)] <- lapply(dat.tmp[c(1:3, 6)], `[`, sbst)
+      dat.tmp[1:2] <- lapply(dat.tmp[1:2], `[`, sbst)
+      dat.tmp$teamA <- dat.tmp$teamA[sbst, , drop = FALSE]
+      dat.tmp$teamB <- dat.tmp$teamB[sbst, , drop = FALSE]
 
       wl <- do.call(eloWinLoss, dat)
       vec <- stats::setNames(wl[[1]], all.teams)
 
-      difference <- vec[dat$teamA+1] - vec[dat$teamB+1]
+      difference <- mean_vec_subset_matrix(vec, dat$teamA+1) - mean_vec_subset_matrix(vec, dat$teamB+1)
 
       # tmpfit <- stats::glm(dat$winsA ~ difference, subset = sbst, family = "binomial")
       # ftd[grp2 == i] <- predict(tmpfit, newdata = data.frame(difference = difference[grp2 == i]), type = "link")
