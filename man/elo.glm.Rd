@@ -43,6 +43,8 @@ The formula syntax is the same as other \code{elo} functions. A data.frame
 
   With this setup, the intercept represents the home-field advantage. Neutral fields can be indicated
   using the \code{\link{neutral}()} function, which sets the intercept to 0.
+
+  Note that any weights specified in \code{players()} will be ignored.
 }
 \examples{
 data(tournament)
