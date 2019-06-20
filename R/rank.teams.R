@@ -49,6 +49,12 @@ rank.teams.elo.markovchain <- function(object, ties.method = "min", ...)
   rank(-object$pi, ties.method = ties.method)
 }
 
+#' @rdname rank.teams
+#' @export
+rank.teams.elo.winpct <- function(object, ties.method = "min", ...)
+{
+  rank(-object$win.pct, ties.method = ties.method)
+}
 
 
 

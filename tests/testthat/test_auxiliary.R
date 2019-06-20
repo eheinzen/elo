@@ -61,6 +61,10 @@ test_that("rank.teams works", {
                         subset = points.Home != points.Visitor)
   eg <- elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
                 subset = points.Home != points.Visitor)
+  ew <- elo.winpct(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+                   subset = points.Home != points.Visitor)
+
+
   expect_equal(unname(rank.teams(er)), c(1, 7, 3, 8, 5, 2, 4, 6))
   expect_equal(names(rank.teams(er)), er$teams)
 
@@ -69,6 +73,9 @@ test_that("rank.teams works", {
 
   expect_equal(unname(rank.teams(eg)), c(1, 7, 3, 8, 5, 2, 4, 6))
   expect_equal(names(rank.teams(eg)), eg$teams)
+
+  expect_equal(unname(rank.teams(ew)), c(1, 7, 4, 8, 5, 2, 3, 6))
+  expect_equal(names(rank.teams(ew)), ew$teams)
 })
 
 

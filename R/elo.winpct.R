@@ -38,7 +38,7 @@ elo.winpct <- function(formula, data, weights, na.action, subset, ..., running =
   out <- list(
     fit = wl.glm,
     weights = mf$weights,
-    win.pct = out[[1]],
+    win.pct = stats::setNames(out[[1]], all.teams),
     n.games = out[[2]],
     y = wl.glm$y,
     fitted.values = wl.glm$fitted.values,
