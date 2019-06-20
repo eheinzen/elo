@@ -199,6 +199,36 @@ elo.calc(wins.A ~ adjust(elo.A, 10) + elo.B + k(k), data = dat)
 
 # Comparison Models
 
+## Win/Loss Logistic Regression
+
+The first model computes teams' win percentages, and feeds the differences of percentages into a logistic regression.
+Including an adjustment using `adjust()` in the formula also includes that in the model.
+You could also adjust the intercept for games played on neutral fields by using the `neutral()` function.
+
+```{r}
+e.winpct <- elo.winpct(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week), data = tournament,
+                       subset = points.Home != points.Visitor) # to get rid of ties for now
+summary(e.winpct)
+rank.teams(e.winpct)
+predict(e.winpct, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE))
+
+tournament$neutral <- replace(rep(0, nrow(tournament)), 30:35, 1)
+summary(elo.winpct(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + neutral(neutral) + group(week),
+                   data = tournament, subset = points.Home != points.Visitor))
+```
+
+The models can be built "running", where predictions for the next group of games are made based on past data. Consider using the `skip=` argument
+to skip the first few groups (otherwise the model might have trouble converging).
+
+Note that predictions from this object use a model fit on all the data.
+
+```{r}
+e.winpct <- elo.winpct(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week), data = tournament,
+                       subset = points.Home != points.Visitor, running = TRUE, skip = 5)
+summary(e.winpct)
+predict(e.winpct, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE)) # the same thing
+```
+
 ## Logistic Regression
 
 It's also possible to compare teams' skills using logistic regression. A matrix of dummy variables is constructed, one for each team,
@@ -214,7 +244,6 @@ summary(results)
 rank.teams(results)
 predict(results, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE))
 
-tournament$neutral <- replace(rep(0, nrow(tournament)), 30:35, 1)
 summary(elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + neutral(neutral) + group(week),
                 data = tournament, subset = points.Home != points.Visitor))
 ```
