@@ -56,3 +56,7 @@ mse.elo.running <- function(object, subset, running = TRUE, ...)
 #' @rdname elo.mse
 #' @export
 mse.elo.markovchain <- mse.elo.glm
+
+#' @rdname elo.mse
+#' @export
+mse.elo.winloss <- mse.elo.glm

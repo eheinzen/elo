@@ -7,6 +7,7 @@
 \alias{fitted.elo.running}
 \alias{fitted.elo.glm}
 \alias{fitted.elo.markovchain}
+\alias{fitted.elo.winloss}
 \title{Extract model values}
 \usage{
 \method{fitted}{elo.run}(object, ...)
@@ -18,6 +19,8 @@
 \method{fitted}{elo.glm}(object, ...)
 
 \method{fitted}{elo.markovchain}(object, ...)
+
+\method{fitted}{elo.winloss}(object, ...)
 }
 \arguments{
 \item{object}{An object.}

@@ -12,7 +12,8 @@ elo.markovchain(formula, data, weights, na.action, subset, k = NULL, ...,
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 
-\item{weights}{A vector of weights.}
+\item{weights}{A vector of weights. Note that these weights are used in the Markov Chain model,
+but not the logistic regression.}
 
 \item{na.action}{A function which indicates what should happen when the data contain NAs.}
 

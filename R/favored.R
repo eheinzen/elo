@@ -46,6 +46,10 @@ favored.elo.markovchain <- favored.elo.glm
 
 #' @rdname elo.favored
 #' @export
+favored.elo.winloss <- favored.elo.glm
+
+#' @rdname elo.favored
+#' @export
 favored.default <- function(x, p.A, ...)
 {
   table(factor(score(p.A, 0.5), levels = c(1, 0.5, 0), labels = c("TRUE", "(tie)", "FALSE")),

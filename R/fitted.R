@@ -46,3 +46,7 @@ fitted.elo.glm <- function(object, ...)
 #' @rdname elo.fitted
 #' @export
 fitted.elo.markovchain <- fitted.elo.glm
+
+#' @rdname elo.fitted
+#' @export
+fitted.elo.winloss <- fitted.elo.glm
