@@ -1,4 +1,4 @@
-# elo v1.1.0.9000
+# elo v1.1.0.9007
 
 * Added `auc.elo.glm()`. (#37)
 
@@ -35,6 +35,9 @@
   `favored()`. This also has the `running=TRUE` option.
   
 * Added `rank.teams()`.
+
+* Added `elo.winpct()`, with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`, `auc()`, and
+ `favored()`. This also has the `running=TRUE` option.
 
 # elo v1.1.0
 
