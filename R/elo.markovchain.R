@@ -3,7 +3,8 @@
 #' Compute a Markov chain model for a matchup.
 #'
 #' @inheritParams elo.glm
-#' @param weights A vector of weights.
+#' @param weights A vector of weights. Note that these weights are used in the Markov Chain model,
+#'   but not the logistic regression.
 #' @param k The probability that the winning team is better given that they won. See details.
 #' @examples
 #' elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
@@ -41,7 +42,7 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
   grp <- mf$group
 
   # we use the convention Ax = x
-  out <- do.call(eloMarkovChain, c(as.list(dat), list(nTeams = length(all.teams))))
+  out <- do.call(eloMarkovChain, dat)
   if(any(abs(colSums(out[[1]]) - 1) > sqrt(.Machine$double.eps))) warning("colSums(transition matrix) may not be 1")
 
   eig <- eigen(out[[1]])
@@ -69,7 +70,7 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
 
   if(running)
   {
-    ftd <- rep(0, times = nrow(dat))
+    ftd <- rep(0, times = nrow(mc.dat))
     grp2 <- group_to_int(grp, skip)
     y <- dat$winsA
     adj <- cbind(mf$home.field, mf$adj.A, mf$adj.B)
@@ -78,9 +79,10 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
     {
       if(i == 1) next
       sbst <- grp2 %in% 1:(i-1)
-      dat.tmp <- dat[sbst, ]
+      dat.tmp <- dat
+      dat.tmp[-6] <- lapply(dat.tmp[-6], `[`, sbst)
 
-      eig <- eigen(do.call(eloMarkovChain, c(as.list(dat.tmp), list(nTeams = length(all.teams))))[[1]])
+      eig <- eigen(do.call(eloMarkovChain, dat.tmp)[[1]])
       vec <- as.numeric(eig$vectors[, 1])
       vec <- stats::setNames(vec / sum(vec), all.teams)
       difference <- vec[dat$teamA+1] - vec[dat$teamB+1]

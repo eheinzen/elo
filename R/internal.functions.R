@@ -161,9 +161,8 @@ check_elo_markovchain_vars <- function(mf)
 
   if(!all(0 <= mf$k & mf$k <= 1)) stop("Probabilities 'k' should be between 0 and 1 (inclusive)")
 
-  out <- data.frame(winsA = mf$wins.A, teamA = t1, teamB = t2, k = mf$k, weights = mf$weights)
-  attr(out, "teams") <- all.teams
-  out
+  structure(list(winsA = mf$wins.A, teamA = t1, teamB = t2, k = mf$k, weights = mf$weights,
+                 nTeams = length(all.teams)), teams = all.teams)
 }
 
 group_to_int <- function(grp, skip)
