@@ -19,7 +19,7 @@ summary.elo.glm <- function(object, ...)
   out <- NextMethod()
   out$favored <- favored(object, ...)
   out$mse <- mse(object, ...)
-  out$auc <- auc.elo.glm(object, ...)
+  out$auc <- if(object$outcome == "mov") NA_real_ else auc.elo.glm(object, ...)
   class(out) <- c("summary.elo.glm", class(out))
   out
 }

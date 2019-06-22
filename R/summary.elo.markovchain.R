@@ -19,7 +19,7 @@ summary.elo.markovchain <- function(object, ...)
 {
   object$favored <- favored(object, ...)
   object$mse <- mse(object, ...)
-  object$auc <- auc.elo.markovchain(object, ...)
+  object$auc <- if(object$outcome == "mov") NA_real_ else auc.elo.markovchain(object, ...)
   class(object) <- c("summary.elo.markovchain", class(object))
   object
 }

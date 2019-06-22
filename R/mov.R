@@ -24,3 +24,10 @@ mov <- function(score.A, score.B = 0)
   out <- score.A - score.B
   structure(out, class = c("elo.mov", class(out)[class(out) != "elo.mov"]))
 }
+
+#' @export
+`[.elo.mov` <- function(x, i)
+{
+  out <- NextMethod()
+  mov(out)
+}

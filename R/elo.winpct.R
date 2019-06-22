@@ -8,13 +8,16 @@
 #' @examples
 #' elo.winpct(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
 #'   subset = points.Home != points.Visitor)
+#'
+#' elo.winpct(mov(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+#'   family = "gaussian")
 #' @name elo.winpct
 NULL
 #> NULL
 
 #' @rdname elo.winpct
 #' @export
-elo.winpct <- function(formula, data, weights, na.action, subset, ..., running = FALSE, skip = 0)
+elo.winpct <- function(formula, data, family = "binomial", weights, na.action, subset, ..., running = FALSE, skip = 0)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
@@ -31,10 +34,10 @@ elo.winpct <- function(formula, data, weights, na.action, subset, ..., running =
   vec <- stats::setNames(out[[1]], all.teams)
 
   difference <- mean_vec_subset_matrix(vec, dat$teamA+1) - mean_vec_subset_matrix(vec, dat$teamB+1)
-  wl.dat <- data.frame(wins.A = dat$winsA, home.field = mf$home.field, difference = difference)
+  wl.dat <- data.frame(wins.A = mf$wins.A, home.field = mf$home.field, difference = difference)
   if(!all(mf$adj.A == 0)) wl.dat$adj.A <- mf$adj.A
   if(!all(mf$adj.B == 0)) wl.dat$adj.B <- mf$adj.B
-  wl.glm <- stats::glm(wins.A ~ . - 1, family = "binomial", data = wl.dat)
+  wl.glm <- stats::glm(wins.A ~ . - 1, family = family, data = wl.dat)
   out <- list(
     fit = wl.glm,
     weights = mf$weights,
@@ -45,7 +48,8 @@ elo.winpct <- function(formula, data, weights, na.action, subset, ..., running =
     teams = all.teams,
     group = grp,
     elo.terms = Terms,
-    na.action = stats::na.action(mf)
+    na.action = stats::na.action(mf),
+    outcome = attr(mf, "outcome")
   )
 
   if(running)

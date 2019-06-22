@@ -162,8 +162,8 @@ check_elo_markovchain_vars <- function(mf)
   if(!all(mf$weights > 0)) stop("Weights should be positive numbers")
 
   if(!all(0 <= mf$k & mf$k <= 1)) stop("Probabilities 'k' should be between 0 and 1 (inclusive)")
-
-  structure(list(winsA = mf$wins.A, k = mf$k, weights = mf$weights, teamA = t1, teamB = t2,
+  winsA <- if(attr(mf, "outcome") == "mov") score(mf$wins.A, 0) else mf$wins.A
+  structure(list(winsA = winsA, k = mf$k, weights = mf$weights, teamA = t1, teamB = t2,
                  weightsA = wts1, weightsB = wts2, nTeams = length(all.teams)), teams = all.teams)
 }
 
@@ -199,7 +199,8 @@ check_elo_winpct_vars <- function(mf)
 
   if(!all(mf$weights > 0)) stop("Weights should be positive numbers")
 
-  out <- list(winsA = mf$wins.A, weights = mf$weights, teamA = t1, teamB = t2,
+  winsA <- if(attr(mf, "outcome") == "mov") score(mf$wins.A, 0) else mf$wins.A
+  out <- list(winsA = winsA, weights = mf$weights, teamA = t1, teamB = t2,
               weightsA = wts1, weightsB = wts2, nTeams = length(all.teams))
   attr(out, "teams") <- all.teams
   out

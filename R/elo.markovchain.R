@@ -9,6 +9,9 @@
 #' @examples
 #' elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
 #'   subset = points.Home != points.Visitor, k = 0.7)
+#'
+#' elo.markovchain(mov(points.Home, points.Visitor) ~ team.Home + team.Visitor, family = "gaussian",
+#'   data = tournament, k = 0.7)
 #' @details
 #'   See the vignette for details on this method. The probabilities we call 'k' purely for convenience.
 #'   The differences in assigned scores (from the stationary distribution pi) are fed into a logistic
@@ -28,7 +31,7 @@ NULL
 
 #' @rdname elo.markovchain
 #' @export
-elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL, ..., running = FALSE, skip = 0)
+elo.markovchain <- function(formula, data, family = "binomial", weights, na.action, subset, k = NULL, ..., running = FALSE, skip = 0)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
@@ -49,10 +52,10 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
   vec <- as.numeric(eig$vectors[, 1])
   vec <- stats::setNames(vec / sum(vec), all.teams)
   difference <- mean_vec_subset_matrix(vec, dat$teamA+1) - mean_vec_subset_matrix(vec, dat$teamB+1)
-  mc.dat <- data.frame(wins.A = dat$winsA, home.field = mf$home.field, difference = difference)
+  mc.dat <- data.frame(wins.A = mf$wins.A, home.field = mf$home.field, difference = difference)
   if(!all(mf$adj.A == 0)) mc.dat$adj.A <- mf$adj.A
   if(!all(mf$adj.B == 0)) mc.dat$adj.B <- mf$adj.B
-  mc.glm <- stats::glm(wins.A ~ . - 1, family = "binomial", data = mc.dat)
+  mc.glm <- stats::glm(wins.A ~ . - 1, family = family, data = mc.dat)
   out <- list(
     fit = mc.glm,
     weights = mf$weights,
@@ -65,7 +68,8 @@ elo.markovchain <- function(formula, data, weights, na.action, subset, k = NULL,
     teams = all.teams,
     group = grp,
     elo.terms = Terms,
-    na.action = stats::na.action(mf)
+    na.action = stats::na.action(mf),
+    outcome = attr(mf, "outcome")
   )
 
   if(running)

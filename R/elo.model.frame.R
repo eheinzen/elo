@@ -83,7 +83,11 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   out$elo.A <- remove_elo_adjust(mf[[elo.cols[1]]])
   out$elo.B <- remove_elo_adjust(mf[[elo.cols[2]]])
 
-  if("wins" %in% required.vars) out$wins.A <- validate_score(as.numeric(mf[[1]]))
+  if("wins" %in% required.vars)
+  {
+    out$wins.A <- as.numeric(mf[[1]])
+    if(!(is.mov <- inherits(mf[[1]], "elo.mov"))) validate_score(out$wins.A)
+  } else is.mov <- FALSE
   if("k" %in% required.vars)
   {
     out$k <- if(null_or_length0(k.col)) k else mf[[k.col]]
@@ -121,5 +125,6 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
 
   attr(out, "terms") <- Terms
   attr(out, "na.action") <- naaction
+  attr(out, "outcome") <- if(is.mov) "mov" else "score"
   out
 }

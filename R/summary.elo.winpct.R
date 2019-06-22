@@ -19,7 +19,7 @@ summary.elo.winpct <- function(object, ...)
 {
   object$favored <- favored(object, ...)
   object$mse <- mse(object, ...)
-  object$auc <- auc.elo.winpct(object, ...)
+  object$auc <- if(object$outcome == "mov") NA_real_ else auc.elo.winpct(object, ...)
   class(object) <- c("summary.elo.winpct", class(object))
   object
 }

@@ -29,7 +29,8 @@
 #' data(tournament)
 #' elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
 #'   subset = points.Home != points.Visitor)
-#'
+#' elo.glm(mov(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+#'   family = "gaussian")
 #' @seealso \code{\link[stats]{glm}}, \code{\link{summary.elo.glm}}, \code{\link{score}}, \code{\link{elo.model.frame}}
 #' @name elo.glm
 NULL
@@ -37,7 +38,7 @@ NULL
 
 #' @rdname elo.glm
 #' @export
-elo.glm <- function(formula, data, weights, na.action, subset, family = "binomial", ..., running = FALSE, skip = 0)
+elo.glm <- function(formula, data, family = "binomial", weights, na.action, subset, ..., running = FALSE, skip = 0)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
@@ -62,6 +63,7 @@ elo.glm <- function(formula, data, weights, na.action, subset, family = "binomia
   dat.glm$group <- grp
   dat.glm$elo.terms <- Terms
   dat.glm$na.action <- stats::na.action(mf)
+  dat.glm$outcome <- attr(mf, "outcome")
 
   if(running)
   {

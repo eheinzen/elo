@@ -25,11 +25,15 @@ favored.elo.run <- function(x, ...)
   favored.default(x$elos[, sum(x$n.players) + 2], fitted(x))
 }
 
+truetiefalse <- function(x) factor(x, levels = c(1, 0.5, 0), labels = c("TRUE", "(tie)", "FALSE"))
+
 #' @rdname elo.favored
 #' @export
 favored.elo.glm <- function(x, ...)
 {
-  favored.default(x$y, x$fitted.values)
+  if(x$outcome == "score") return(favored.default(x$y, x$fitted.values))
+  table(truetiefalse(score(x$fitted.values, 0)),
+        truetiefalse(score(x$y, 0)), dnn = c("Favored", "Actual"))
 }
 
 #' @rdname elo.favored
@@ -52,6 +56,5 @@ favored.elo.winpct <- favored.elo.glm
 #' @export
 favored.default <- function(x, p.A, ...)
 {
-  table(factor(score(p.A, 0.5), levels = c(1, 0.5, 0), labels = c("TRUE", "(tie)", "FALSE")),
-        x, dnn = c("Favored", "Actual"))
+  table(truetiefalse(score(p.A, 0.5)), x, dnn = c("Favored", "Actual"))
 }
