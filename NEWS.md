@@ -38,6 +38,9 @@
 
 * Added `elo.winpct()`, with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`, `auc()`, and
  `favored()`. This also has the `running=TRUE` option.
+ 
+* Added a function to denote margin of victory, for continuous modeling in `elo.glm()`,
+  `elo.markovchain()`, and `elo.winpct()`: `mov()`.
 
 # elo v1.1.0
 

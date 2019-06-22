@@ -29,3 +29,6 @@ score(12, 10)
 score(10, 10)
 score(10, 12)
 }
+\seealso{
+\code{\link{score}}
+}

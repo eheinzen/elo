@@ -9,6 +9,7 @@
 #' @return For \code{score}, a vector containing 0, 1, and 0.5 (for ties). For
 #'   \code{is.score}, \code{TRUE} or \code{FALSE} depending on whether all values of
 #'   \code{x} are between 0 and 1 (inclusive).
+#' @seealso \code{\link{score}}
 #' @examples
 #' score(12, 10)
 #' score(10, 10)
