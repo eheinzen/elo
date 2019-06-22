@@ -12,7 +12,7 @@
 #' @examples
 #' mov(12, 10)
 #' mov(10, 10)
-#' move(10, 12)
+#' mov(10, 12)
 #' @name elo.mov
 NULL
 #> NULL

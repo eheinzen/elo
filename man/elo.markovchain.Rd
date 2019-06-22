@@ -4,16 +4,18 @@
 \alias{elo.markovchain}
 \title{\code{elo.markovchain}}
 \usage{
-elo.markovchain(formula, data, weights, na.action, subset, k = NULL, ...,
-  running = FALSE, skip = 0)
+elo.markovchain(formula, data, family = "binomial", weights, na.action,
+  subset, k = NULL, ..., running = FALSE, skip = 0)
 }
 \arguments{
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 
+\item{family}{Arguments passed to \code{\link[stats]{glm}}.}
+
 \item{weights}{A vector of weights. Note that these weights are used in the Markov Chain model,
-but not the logistic regression.}
+but not the regression.}
 
 \item{na.action}{A function which indicates what should happen when the data contain NAs.}
 
@@ -38,20 +40,28 @@ Compute a Markov chain model for a matchup.
 \details{
 See the vignette for details on this method. The probabilities we call 'k' purely for convenience.
   The differences in assigned scores (from the stationary distribution pi) are fed into a logistic
-  regression model to predict wins. This logistic regession accepts the arguments of \code{\link{adjust}()}
-  in \code{formula}. See the vignette for more details
-
-  Note that by assigning probabilities in the right way, this function emits the
-  Logistic Regression Markov Chain model (LRMC). It is also possible to adjust the logistic
-  regression by setting the second argument of \code{\link{adjust}()}. As in \code{\link{elo.glm}},
+  regression model to predict wins or (usually) a linear model to predict margin of victory.
+  It is also possible to adjust the regression by setting the second argument of
+   \code{\link{adjust}()}. As in \code{\link{elo.glm}},
   the intercept represents the home-field advantage. Neutral fields can be indicated
   using the \code{\link{neutral}()} function, which sets the intercept to 0.
+  See the vignette for more details.
+
+  Note that by assigning probabilities in the right way, this function emits the
+  Logistic Regression Markov Chain model (LRMC).
 }
 \examples{
 elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
   subset = points.Home != points.Visitor, k = 0.7)
+
+elo.markovchain(mov(points.Home, points.Visitor) ~ team.Home + team.Visitor, family = "gaussian",
+  data = tournament, k = 0.7)
 }
 \references{
 Kvam, P. and Sokol, J.S. A logistic regression/Markov chain model for NCAA basketball.
   Naval Research Logistics. 2006. 53; 788-803.
+}
+\seealso{
+\code{\link[stats]{glm}}, \code{\link{summary.elo.markovchain}}, \code{\link{score}},
+  \code{\link{mov}}, \code{\link{elo.model.frame}}
 }

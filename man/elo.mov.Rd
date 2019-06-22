@@ -5,7 +5,7 @@
 \alias{mov}
 \title{Create a "margin of victory" column}
 \usage{
-mov(score.A, score.B)
+mov(score.A, score.B = 0)
 }
 \arguments{
 \item{score.A}{Numeric; the score of the first team. Alternatively, this can
@@ -23,7 +23,7 @@ Create a "margin of victory" based on two teams' scores
 \examples{
 mov(12, 10)
 mov(10, 10)
-move(10, 12)
+mov(10, 12)
 }
 \seealso{
 \code{\link{score}}

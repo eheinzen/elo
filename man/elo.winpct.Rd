@@ -4,16 +4,18 @@
 \alias{elo.winpct}
 \title{\code{elo.winpct}}
 \usage{
-elo.winpct(formula, data, weights, na.action, subset, ...,
-  running = FALSE, skip = 0)
+elo.winpct(formula, data, family = "binomial", weights, na.action,
+  subset, ..., running = FALSE, skip = 0)
 }
 \arguments{
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 
+\item{family}{Arguments passed to \code{\link[stats]{glm}}.}
+
 \item{weights}{A vector of weights. Note that these are used in calculating wins and losses but
-not in the logistic regression.}
+not in the regression.}
 
 \item{na.action}{A function which indicates what should happen when the data contain NAs.}
 
@@ -31,9 +33,24 @@ groups are small, where glm would have trouble converging for the first few grou
 set to 0.5 for the skipped groups.}
 }
 \description{
-Compute a logistic regression based on win percentage for a matchup.
+Compute a (usually logistic) regression based on win percentage for a matchup.
+}
+\details{
+Win percentages are first calculated. Anything passed to \code{\link{adjust}()} in
+  \code{formula} is also put in the data.frame. A \code{\link{glm}} model is then
+  run to predict wins or margin of victory.
+
+  With this setup, the intercept represents the home-field advantage. Neutral fields can be indicated
+  using the \code{\link{neutral}()} function, which sets the intercept to 0.
 }
 \examples{
 elo.winpct(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
   subset = points.Home != points.Visitor)
+
+elo.winpct(mov(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+  family = "gaussian")
+}
+\seealso{
+\code{\link[stats]{glm}}, \code{\link{summary.elo.winpct}}, \code{\link{score}},
+  \code{\link{mov}}, \code{\link{elo.model.frame}}
 }

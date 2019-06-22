@@ -201,7 +201,7 @@ elo.calc(wins.A ~ adjust(elo.A, 10) + elo.B + k(k), data = dat)
 
 ## Win/Loss Logistic Regression
 
-The first model computes teams' win percentages, and feeds the differences of percentages into a logistic regression.
+The first model computes teams' win percentages, and feeds the differences of percentages into a regression.
 Including an adjustment using `adjust()` in the formula also includes that in the model.
 You could also adjust the intercept for games played on neutral fields by using the `neutral()` function.
 
@@ -326,3 +326,14 @@ Finally, do note that using `neutral()` isn't sufficient for adjusting for games
 because the adjustment is only taken into account in the logistic regression to produce probabilities, not
 the building of the transition matrix. Therefore, you'll want to also account for neutral wins/losses in
 `k()` as well.
+
+# Modeling Margin of Victory Instead of Wins
+
+`elo.glm()`, `elo.markovchain()`, and `elo.winpct()` all allow for modeling of margins of
+victory instead of simple win/loss using the `mov()` function. Note that one must set the
+`family="gaussian"` argument to get linear regression instead of logistic regression.
+
+```{r}
+summary(elo.glm(mov(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+                family = "gaussian"))
+```

@@ -1,7 +1,7 @@
 
 #' \code{elo.glm}
 #'
-#' Compute a logistic regression model for a matchup.
+#' Compute a (usually logistic) regression model for a matchup.
 #'
 #' @inheritParams elo.calc
 #' @param family,weights,... Arguments passed to \code{\link[stats]{glm}}.
@@ -19,7 +19,7 @@
 #'   of indicator variables is built, where an entry is 1 if a team is home, 0 if
 #'   a team didn't play, and -1 if a team is a visitor. Anything passed to \code{\link{adjust}()} in
 #'   \code{formula} is also put in the data.frame. A \code{\link{glm}} model is then
-#'   run to predict wins.
+#'   run to predict wins or margin of victory.
 #'
 #'   With this setup, the intercept represents the home-field advantage. Neutral fields can be indicated
 #'   using the \code{\link{neutral}()} function, which sets the intercept to 0.
@@ -31,7 +31,8 @@
 #'   subset = points.Home != points.Visitor)
 #' elo.glm(mov(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
 #'   family = "gaussian")
-#' @seealso \code{\link[stats]{glm}}, \code{\link{summary.elo.glm}}, \code{\link{score}}, \code{\link{elo.model.frame}}
+#' @seealso \code{\link[stats]{glm}}, \code{\link{summary.elo.glm}}, \code{\link{score}},
+#'   \code{\link{mov}}, \code{\link{elo.model.frame}}
 #' @name elo.glm
 NULL
 #> NULL

@@ -4,7 +4,7 @@
 \alias{elo.glm}
 \title{\code{elo.glm}}
 \usage{
-elo.glm(formula, data, weights, na.action, subset, family = "binomial",
+elo.glm(formula, data, family = "binomial", weights, na.action, subset,
   ..., running = FALSE, skip = 0)
 }
 \arguments{
@@ -12,11 +12,11 @@ elo.glm(formula, data, weights, na.action, subset, family = "binomial",
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 
+\item{family, weights, ...}{Arguments passed to \code{\link[stats]{glm}}.}
+
 \item{na.action}{A function which indicates what should happen when the data contain NAs.}
 
 \item{subset}{An optional vector specifying a subset of observations.}
-
-\item{family, weights, ...}{Arguments passed to \code{\link[stats]{glm}}.}
 
 \item{running}{Logical, denoting whether to calculate "running" projected probabilities. If true, a model is fit for
 group 1 on its own to predict group 2, then groups 1 and 2 to predict 3, then groups 1 through 3 to predict 4, etc.
@@ -32,14 +32,14 @@ An object of class \code{c("elo.glm", "glm")}. If \code{running==TRUE}, the clas
   is prepended.
 }
 \description{
-Compute a logistic regression model for a matchup.
+Compute a (usually logistic) regression model for a matchup.
 }
 \details{
 The formula syntax is the same as other \code{elo} functions. A data.frame
   of indicator variables is built, where an entry is 1 if a team is home, 0 if
   a team didn't play, and -1 if a team is a visitor. Anything passed to \code{\link{adjust}()} in
   \code{formula} is also put in the data.frame. A \code{\link{glm}} model is then
-  run to predict wins.
+  run to predict wins or margin of victory.
 
   With this setup, the intercept represents the home-field advantage. Neutral fields can be indicated
   using the \code{\link{neutral}()} function, which sets the intercept to 0.
@@ -50,8 +50,10 @@ The formula syntax is the same as other \code{elo} functions. A data.frame
 data(tournament)
 elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
   subset = points.Home != points.Visitor)
-
+elo.glm(mov(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+  family = "gaussian")
 }
 \seealso{
-\code{\link[stats]{glm}}, \code{\link{summary.elo.glm}}, \code{\link{score}}, \code{\link{elo.model.frame}}
+\code{\link[stats]{glm}}, \code{\link{summary.elo.glm}}, \code{\link{score}},
+  \code{\link{mov}}, \code{\link{elo.model.frame}}
 }

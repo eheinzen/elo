@@ -4,7 +4,7 @@
 #'
 #' @inheritParams elo.glm
 #' @param weights A vector of weights. Note that these weights are used in the Markov Chain model,
-#'   but not the logistic regression.
+#'   but not the regression.
 #' @param k The probability that the winning team is better given that they won. See details.
 #' @examples
 #' elo.markovchain(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
@@ -15,16 +15,19 @@
 #' @details
 #'   See the vignette for details on this method. The probabilities we call 'k' purely for convenience.
 #'   The differences in assigned scores (from the stationary distribution pi) are fed into a logistic
-#'   regression model to predict wins. This logistic regession accepts the arguments of \code{\link{adjust}()}
-#'   in \code{formula}. See the vignette for more details
-#'
-#'   Note that by assigning probabilities in the right way, this function emits the
-#'   Logistic Regression Markov Chain model (LRMC). It is also possible to adjust the logistic
-#'   regression by setting the second argument of \code{\link{adjust}()}. As in \code{\link{elo.glm}},
+#'   regression model to predict wins or (usually) a linear model to predict margin of victory.
+#'   It is also possible to adjust the regression by setting the second argument of
+#'    \code{\link{adjust}()}. As in \code{\link{elo.glm}},
 #'   the intercept represents the home-field advantage. Neutral fields can be indicated
 #'   using the \code{\link{neutral}()} function, which sets the intercept to 0.
+#'   See the vignette for more details.
+#'
+#'   Note that by assigning probabilities in the right way, this function emits the
+#'   Logistic Regression Markov Chain model (LRMC).
 #' @references Kvam, P. and Sokol, J.S. A logistic regression/Markov chain model for NCAA basketball.
 #'   Naval Research Logistics. 2006. 53; 788-803.
+#' @seealso \code{\link[stats]{glm}}, \code{\link{summary.elo.markovchain}}, \code{\link{score}},
+#'   \code{\link{mov}}, \code{\link{elo.model.frame}}
 #' @name elo.markovchain
 NULL
 #> NULL
