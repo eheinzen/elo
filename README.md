@@ -14,8 +14,8 @@ library(elo)
 ```
 
 It also includes comparable models for accuracy (auc, MSE) benchmarking (see, e.g., `elo.glm()` which fits a logistic regression model,
-and `elo.markovchain()` which fits a Markov chain model).
-Please see the vignette for examples. Note that v1.0.0 is very much not backwards-compatible.
+`elo.winpct()` which fits a model based on win percentage, and `elo.markovchain()` which fits a Markov chain model).
+Please see the vignette for examples.
 
 # Naming Schema
 

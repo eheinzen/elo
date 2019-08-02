@@ -1,25 +1,10 @@
-# elo v1.1.0.9007
+# elo v2.0.0
 
-* Added `auc.elo.glm()`. (#37)
-
-* Made `favored()` S3 and added `favored.elo.glm()`. (#38)
-
-* Made `mse()` S3 and added `mse.elo.glm()`. (#43)
-
-* Fixed a bug with adding NAs back in to fitted values and residuals with `na.exclude()` in `elo.glm()` and `elo.run()`.
-  (#39, #42)
-
-* Fixed a bug with `adjust()` variables not getting subsetted correctly with `na.action` in `model.frame()`. (#40)
-
-* Added `is.na.elo.adjust()` to test for NAs in the adjustment vector. (#41)
-
-* Added `summary.elo.glm()`.
-
-* Added `predict.elo.glm()`.
+## New functions/functionality:
 
 * Added the `running=TRUE` option to `elo.glm()`. This gives an object of class `"elo.running"`,
   with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`, `auc()`, and `favored()`.
-  
+
 * Added `weights=` to `elo.glm()`.
 
 * Added support for `adjust()` in `elo.glm()` to include adjustments in the logistic regression.
@@ -28,19 +13,40 @@
 
 * Removed the `rm.ties=` argument from `elo.glm()`. Ties will have to be removed instead with `subset=` or before
   running the function altogether.
-  
-* Added `brier()` as a synonym for `mse()`.
 
 * Added `elo.markovchain()`, with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`, `auc()`, and
   `favored()`. This also has the `running=TRUE` option.
-  
-* Added `rank.teams()`.
 
 * Added `elo.winpct()`, with corresponding methods for `summary()`, `fitted()`, `predict()`, `mse()`, `auc()`, and
  `favored()`. This also has the `running=TRUE` option.
- 
+
 * Added a function to denote margin of victory, for continuous modeling in `elo.glm()`,
   `elo.markovchain()`, and `elo.winpct()`: `mov()`.
+
+## New helper methods:
+
+* Added `auc.elo.glm()`. (#37)
+
+* Made `favored()` S3 and added `favored.elo.glm()`. (#38)
+
+* Made `mse()` S3 and added `mse.elo.glm()`. (#43)
+
+* Added `summary.elo.glm()`.
+
+* Added `predict.elo.glm()`.
+
+* Added `brier()` as a synonym for `mse()`.
+
+* Added `rank.teams()`.
+
+## Bug fixes:
+
+* Fixed a bug with adding NAs back in to fitted values and residuals with `na.exclude()` in `elo.glm()` and `elo.run()`.
+  (#39, #42)
+
+* Fixed a bug with `adjust()` variables not getting subsetted correctly with `na.action` in `model.frame()`. (#40)
+
+* Added `is.na.elo.adjust()` to test for NAs in the adjustment vector. (#41)
 
 # elo v1.1.0
 
