@@ -24,7 +24,7 @@ NULL
 #' @export
 predict.elo.winpct <- function(object, newdata, ...)
 {
-  if(missing(newdata)) return(fitted(object))
+  if(missing(newdata) || is.null(newdata)) return(fitted(object))
   form <- clean_elo_formula(object$elo.terms, drop.neutral = FALSE)
   mf <- elo.model.frame(form, data = newdata, required.vars = c("elos", "neutral"))
   if(!is.players(mf$elo.A)) mf$elo.A <- players(mf$elo.A)

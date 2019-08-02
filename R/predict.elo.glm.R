@@ -28,7 +28,7 @@ NULL
 #' @export
 predict.elo.glm <- function(object, newdata, type = "response", ...)
 {
-  if(missing(newdata)) return(fitted(object))
+  if(missing(newdata) || is.null(newdata)) return(stats::predict.glm(object, newdata = NULL, type = type, ...))
   form <- clean_elo_formula(object$elo.terms, drop.neutral = FALSE)
   mf <- elo.model.frame(form, data = newdata, required.vars = c("elos", "neutral"))
   newdata.wide <- mf_to_wide(mf, teams = object$teams)
@@ -40,9 +40,9 @@ predict.elo.glm <- function(object, newdata, type = "response", ...)
 #' @export
 predict.elo.running <- function(object, newdata, running = TRUE, ...)
 {
-  if(missing(newdata) && running)
+  if((missing(newdata) || is.null(newdata)) && running)
   {
     return(fitted(object, running = TRUE))
-  } else if(missing(newdata)) return(fitted(object, running = FALSE))
+  } else if(missing(newdata) || is.null(newdata)) return(fitted(object, running = FALSE))
   NextMethod()
 }

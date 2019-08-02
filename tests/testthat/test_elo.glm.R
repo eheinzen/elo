@@ -61,6 +61,15 @@ test_that("predict.elo.glm works correctly", {
     unname(predict(tmp.glm, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Helpless Hyenas")))
   )
 
+  expect_equal(
+    sum(coef(tmp.glm) * c(1, 1, -1, rep(0, 5))),
+    unname(predict(tmp.glm, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons"), type = "link"))
+  )
+  expect_equal(
+    sum(coef(tmp.glm) * c(1, 1, rep(0, 6))),
+    unname(predict(tmp.glm, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Helpless Hyenas"), type = "link"))
+  )
+
   tmp.glm2 <- elo.glm(diff ~ team.Home + team.Visitor + neutral(neut), data = trn)
   expect_equal(
     tmp.glm2$family$linkinv(sum(coef(tmp.glm2) * c(1, 1, -1, rep(0, 5)))),
