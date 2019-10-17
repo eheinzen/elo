@@ -54,6 +54,10 @@ favored.elo.winpct <- favored.elo.glm
 
 #' @rdname elo.favored
 #' @export
+favored.elo.colley <- favored.elo.glm
+
+#' @rdname elo.favored
+#' @export
 favored.default <- function(x, p.A, ...)
 {
   table(truetiefalse(score(p.A, 0.5)), x, dnn = c("Favored", "Actual"))
