@@ -9,6 +9,7 @@
 \alias{mse.elo.running}
 \alias{mse.elo.markovchain}
 \alias{mse.elo.winpct}
+\alias{mse.elo.colley}
 \title{Calculate the mean square error}
 \usage{
 brier(object, subset, ...)
@@ -24,6 +25,8 @@ mse(object, subset, ...)
 \method{mse}{elo.markovchain}(object, subset, ...)
 
 \method{mse}{elo.winpct}(object, subset, ...)
+
+\method{mse}{elo.colley}(object, subset, ...)
 }
 \arguments{
 \item{object}{An object}
