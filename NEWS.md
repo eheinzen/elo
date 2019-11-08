@@ -1,3 +1,7 @@
+# elo v2.0.0.9000
+
+* Added `elo.colley()`, with its corresponding helper functions.
+
 # elo v2.0.0
 
 ## New functions/functionality:
