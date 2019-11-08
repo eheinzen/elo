@@ -333,6 +333,9 @@ It's also possible to compare teams' skills using the Colley Matrix method, as o
 [Colley (2002)](http://www.colleyrankings.com/matrate.pdf).
 The coefficients to the Colley matrix formulation gives a ranking of teams.
 The differences in ranking are then fed into a logistic regession model to predict win status.
+Here 'k' denotes how convincing a win is; it represents the fraction of the win assigned to the winning
+team and the fraction of the loss assigned to the losing team. Setting 'k' = 1 emits the bias-free method
+presented by Colley.
 Any adjustments made using `adjust()` are also included in this logistic regression.
 You could also adjust the intercept for games played on neutral fields by using the `neutral()` function.
 

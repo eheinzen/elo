@@ -4,7 +4,7 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 List eloMarkovChain(NumericMatrix teamA, NumericMatrix teamB, NumericVector winsA, NumericVector weightsA, NumericVector weightsB,
-                             NumericVector weights, NumericVector k, int nTeams)
+                    NumericVector weights, NumericVector k, int nTeams)
 {
   // this function uses 0-based indexing, since the incoming vectors used -1L
   int nGames = winsA.size();

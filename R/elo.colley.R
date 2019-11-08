@@ -5,6 +5,7 @@
 #' @inheritParams elo.glm
 #' @param weights A vector of weights. Note that these weights are used in the Colley matrix creation,
 #'   but not the regression.
+#' @param k The fraction of a win to be assigned to the winning team. See "details".
 #' @examples
 #' elo.colley(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
 #'   subset = points.Home != points.Visitor)
@@ -12,11 +13,14 @@
 #'   See the vignette for details on this method.
 #'   The differences in assigned scores (from the coefficients of the Colley matrix regression) are fed into a logistic
 #'   regression model to predict wins or (usually) a linear model to predict margin of victory.
+#'   In this setting, 'k' indicates the fraction of a win to be assigned to the winning team
+#'   (and the fraction of a loss to be assigned to the losing team); setting \code{k = 1} (the default)
+#'   emits the "Bias Free" ranking method presented by Colley.
 #'   It is also possible to adjust the regression by setting the second argument of
 #'    \code{\link{adjust}()}. As in \code{\link{elo.glm}},
 #'   the intercept represents the home-field advantage. Neutral fields can be indicated
 #'   using the \code{\link{neutral}()} function, which sets the intercept to 0.
-#'   See the vignette for more details.
+#'
 #' @references Colley W.N. Colley's Bias Free College Football Ranking Method: The Colley Matrix Explained. 2002.
 #' @seealso \code{\link[stats]{glm}}, \code{\link{summary.elo.colley}}, \code{\link{score}},
 #'   \code{\link{mov}}, \code{\link{elo.model.frame}}
@@ -26,17 +30,18 @@ NULL
 
 #' @rdname elo.colley
 #' @export
-elo.colley <- function(formula, data, family = "binomial", weights, na.action, subset, ..., running = FALSE, skip = 0)
+elo.colley <- function(formula, data, family = "binomial", weights, na.action, subset, k = 1, ..., running = FALSE, skip = 0)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
-  Call$required.vars <- c("wins", "elos", "group", "neutral", "weights")
+  Call$required.vars <- c("wins", "elos", "group", "neutral", "weights", "k")
+  if(is.null(Call$k)) Call$k <- 1
+  Call$warn.k <- FALSE
   mf <- eval(Call, parent.frame())
   if(nrow(mf) == 0) stop("No (non-missing) observations")
   Terms <- stats::terms(mf)
 
-  dat <- check_elo_markovchain_vars(mf, check.k = FALSE)
-  dat$k <- NULL
+  dat <- check_elo_markovchain_vars(mf)
   all.teams <- attr(dat, "teams")
   grp <- mf$group
 
@@ -79,7 +84,7 @@ elo.colley <- function(formula, data, family = "binomial", weights, na.action, s
       if(i == 1) next
       sbst <- grp2 %in% 1:(i-1)
       dat.tmp <- dat
-      dat.tmp[1:2] <- lapply(dat.tmp[1:2], `[`, sbst)
+      dat.tmp[1:3] <- lapply(dat.tmp[1:3], `[`, sbst)
       dat.tmp$teamA <- dat.tmp$teamA[sbst, , drop = FALSE]
       dat.tmp$teamB <- dat.tmp$teamB[sbst, , drop = FALSE]
 

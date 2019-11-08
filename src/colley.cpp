@@ -4,7 +4,7 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 List eloColley(NumericMatrix teamA, NumericMatrix teamB, NumericVector winsA, NumericVector weightsA, NumericVector weightsB,
-               NumericVector weights, int nTeams)
+               NumericVector weights, NumericVector k, int nTeams)
 {
   // this function uses 0-based indexing, since the incoming vectors used -1L
   int nGames = winsA.size();
@@ -28,7 +28,7 @@ List eloColley(NumericMatrix teamA, NumericMatrix teamB, NumericVector winsA, Nu
       {
         int a = teamA(g, i), b = teamB(g, j);
         double w = weights[g]*weightsA[i]*weightsB[j];
-        double iWon = winsA[g] - 0.5;
+        double iWon = (winsA[g] - 0.5)*k[g];
 
         out(b, a) -= w;
         out(a, b) -= w;

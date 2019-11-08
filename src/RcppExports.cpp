@@ -34,8 +34,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // eloColley
-List eloColley(NumericMatrix teamA, NumericMatrix teamB, NumericVector winsA, NumericVector weightsA, NumericVector weightsB, NumericVector weights, int nTeams);
-RcppExport SEXP _elo_eloColley(SEXP teamASEXP, SEXP teamBSEXP, SEXP winsASEXP, SEXP weightsASEXP, SEXP weightsBSEXP, SEXP weightsSEXP, SEXP nTeamsSEXP) {
+List eloColley(NumericMatrix teamA, NumericMatrix teamB, NumericVector winsA, NumericVector weightsA, NumericVector weightsB, NumericVector weights, NumericVector k, int nTeams);
+RcppExport SEXP _elo_eloColley(SEXP teamASEXP, SEXP teamBSEXP, SEXP winsASEXP, SEXP weightsASEXP, SEXP weightsBSEXP, SEXP weightsSEXP, SEXP kSEXP, SEXP nTeamsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -45,8 +45,9 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type weightsA(weightsASEXP);
     Rcpp::traits::input_parameter< NumericVector >::type weightsB(weightsBSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type k(kSEXP);
     Rcpp::traits::input_parameter< int >::type nTeams(nTeamsSEXP);
-    rcpp_result_gen = Rcpp::wrap(eloColley(teamA, teamB, winsA, weightsA, weightsB, weights, nTeams));
+    rcpp_result_gen = Rcpp::wrap(eloColley(teamA, teamB, winsA, weightsA, weightsB, weights, k, nTeams));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -125,7 +126,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_elo_eloRunAsMatrix", (DL_FUNC) &_elo_eloRunAsMatrix, 3},
     {"_elo_eloRunRegressedAsMatrix", (DL_FUNC) &_elo_eloRunRegressedAsMatrix, 5},
-    {"_elo_eloColley", (DL_FUNC) &_elo_eloColley, 7},
+    {"_elo_eloColley", (DL_FUNC) &_elo_eloColley, 8},
     {"_elo_eloRun", (DL_FUNC) &_elo_eloRun, 14},
     {"_elo_finalElos", (DL_FUNC) &_elo_finalElos, 2},
     {"_elo_eloMarkovChain", (DL_FUNC) &_elo_eloMarkovChain, 8},

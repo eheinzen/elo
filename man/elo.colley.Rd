@@ -5,7 +5,7 @@
 \title{\code{elo.colley}}
 \usage{
 elo.colley(formula, data, family = "binomial", weights, na.action,
-  subset, ..., running = FALSE, skip = 0)
+  subset, k = 1, ..., running = FALSE, skip = 0)
 }
 \arguments{
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}
@@ -20,6 +20,8 @@ but not the regression.}
 \item{na.action}{A function which indicates what should happen when the data contain NAs.}
 
 \item{subset}{An optional vector specifying a subset of observations.}
+
+\item{k}{The fraction of a win to be assigned to the winning team. See "details".}
 
 \item{...}{Arguments passed to \code{\link[stats]{glm}}.}
 
@@ -39,11 +41,13 @@ Compute a Colley matrix model for a matchup.
 See the vignette for details on this method.
   The differences in assigned scores (from the coefficients of the Colley matrix regression) are fed into a logistic
   regression model to predict wins or (usually) a linear model to predict margin of victory.
+  In this setting, 'k' indicates the fraction of a win to be assigned to the winning team
+  (and the fraction of a loss to be assigned to the losing team); setting \code{k = 1} (the default)
+  emits the "Bias Free" ranking method presented by Colley.
   It is also possible to adjust the regression by setting the second argument of
    \code{\link{adjust}()}. As in \code{\link{elo.glm}},
   the intercept represents the home-field advantage. Neutral fields can be indicated
   using the \code{\link{neutral}()} function, which sets the intercept to 0.
-  See the vignette for more details.
 }
 \examples{
 elo.colley(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,

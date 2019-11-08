@@ -9,8 +9,8 @@ eloRunRegressedAsMatrix <- function(mat, initialElos, regMat, regress, group) {
     .Call('_elo_eloRunRegressedAsMatrix', PACKAGE = 'elo', mat, initialElos, regMat, regress, group)
 }
 
-eloColley <- function(teamA, teamB, winsA, weightsA, weightsB, weights, nTeams) {
-    .Call('_elo_eloColley', PACKAGE = 'elo', teamA, teamB, winsA, weightsA, weightsB, weights, nTeams)
+eloColley <- function(teamA, teamB, winsA, weightsA, weightsB, weights, k, nTeams) {
+    .Call('_elo_eloColley', PACKAGE = 'elo', teamA, teamB, winsA, weightsA, weightsB, weights, k, nTeams)
 }
 
 eloRun <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTeamB, regress, to, by, regressUnused, initialElos, flag) {

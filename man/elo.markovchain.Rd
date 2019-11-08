@@ -45,7 +45,6 @@ See the vignette for details on this method. The probabilities we call 'k' purel
    \code{\link{adjust}()}. As in \code{\link{elo.glm}},
   the intercept represents the home-field advantage. Neutral fields can be indicated
   using the \code{\link{neutral}()} function, which sets the intercept to 0.
-  See the vignette for more details.
 
   Note that by assigning probabilities in the right way, this function emits the
   Logistic Regression Markov Chain model (LRMC).

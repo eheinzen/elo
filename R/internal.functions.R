@@ -140,7 +140,7 @@ mf_to_wide <- function(mf, teams = NULL)
   structure(dat, class = "data.frame", row.names = c(NA_integer_, nrow(mf)), all.teams = all.teams)
 }
 
-check_elo_markovchain_vars <- function(mf, check.k = TRUE)
+check_elo_markovchain_vars <- function(mf)
 {
   t1 <- mf$elo.A
   t2 <- mf$elo.B
@@ -161,7 +161,7 @@ check_elo_markovchain_vars <- function(mf, check.k = TRUE)
 
   if(!all(mf$weights > 0)) stop("Weights should be positive numbers")
 
-  if(check.k && !all(0 <= mf$k & mf$k <= 1)) stop("Probabilities 'k' should be between 0 and 1 (inclusive)")
+  if(!all(0 <= mf$k & mf$k <= 1)) stop("'k' should be between 0 and 1 (inclusive)")
   winsA <- if(attr(mf, "outcome") == "mov") score(mf$wins.A, 0) else mf$wins.A
   structure(list(winsA = winsA, k = mf$k, weights = mf$weights, teamA = t1, teamB = t2,
                  weightsA = wts1, weightsB = wts2, nTeams = length(all.teams)), teams = all.teams)

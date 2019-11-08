@@ -11,9 +11,10 @@
 #' @param ... Other arguments (not in use at this time).
 #' @param required.vars One or more of \code{c("wins", "elos", "k", "group", "regress")},
 #'   denoting which variables are required to appear in the final model.frame.
+#' @param warn.k Should a warning be issued if \code{k} is specified as an argument and in \code{formula}?
 #' @seealso \code{\link{elo.run}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}}
 #' @export
-elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "elos")
+elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "elos", warn.k = TRUE)
 {
   Call <- match.call()
   required.vars <- match.arg(required.vars, c("wins", "elos", "k", "group", "regress", "neutral", "weights"), several.ok = TRUE)
@@ -55,7 +56,7 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   if("k" %in% required.vars && !has.k)
   {
     stop("'k' is not in 'formula' or specified as an argument.")
-  } else if(!null_or_length0(k.col) && !is.null(k))
+  } else if(!null_or_length0(k.col) && !is.null(k) && warn.k)
   {
     warning("'k = ' argument being ignored.")
   }
