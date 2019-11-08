@@ -8,6 +8,7 @@
 \alias{fitted.elo.glm}
 \alias{fitted.elo.markovchain}
 \alias{fitted.elo.winpct}
+\alias{fitted.elo.colley}
 \title{Extract model values}
 \usage{
 \method{fitted}{elo.run}(object, ...)
@@ -21,6 +22,8 @@
 \method{fitted}{elo.markovchain}(object, ...)
 
 \method{fitted}{elo.winpct}(object, ...)
+
+\method{fitted}{elo.colley}(object, ...)
 }
 \arguments{
 \item{object}{An object.}

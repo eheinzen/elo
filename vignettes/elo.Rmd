@@ -327,6 +327,37 @@ because the adjustment is only taken into account in the logistic regression to 
 the building of the transition matrix. Therefore, you'll want to also account for neutral wins/losses in
 `k()` as well.
 
+## Colley Matrix Method
+
+It's also possible to compare teams' skills using the Colley Matrix method, as outlined in
+[Colley (2002)](http://www.colleyrankings.com/matrate.pdf).
+The coefficients to the Colley matrix formulation gives a ranking of teams.
+The differences in ranking are then fed into a logistic regession model to predict win status.
+Any adjustments made using `adjust()` are also included in this logistic regression.
+You could also adjust the intercept for games played on neutral fields by using the `neutral()` function.
+
+```{r}
+co <- elo.colley(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
+                 subset = points.Home != points.Visitor)
+summary(co)
+rank.teams(co)
+predict(co, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE))
+summary(elo.colley(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + neutral(neutral),
+                   data = tournament, subset = points.Home != points.Visitor))
+```
+
+These models can also be built "running", where predictions for the next group of games are made based on past data.
+Consider using the `skip=` argument to skip the first few groups (otherwise the model might have trouble converging).
+
+Note that predictions from this object use a model fit on all the data.
+
+```{r}
+co <- elo.colley(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + group(week), data = tournament,
+                      subset = points.Home != points.Visitor, running = TRUE, skip = 5)
+summary(co)
+predict(co, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE)) # the same thing
+```
+
 # Modeling Margin of Victory Instead of Wins
 
 `elo.glm()`, `elo.markovchain()`, and `elo.winpct()` all allow for modeling of margins of

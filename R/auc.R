@@ -54,3 +54,6 @@ auc.elo.markovchain <- auc.elo.glm
 #' @export
 auc.elo.winpct <- auc.elo.glm
 
+#' @rdname elo.auc
+#' @export
+auc.elo.colley <- auc.elo.glm

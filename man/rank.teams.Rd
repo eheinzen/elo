@@ -7,6 +7,7 @@
 \alias{rank.teams.elo.glm}
 \alias{rank.teams.elo.markovchain}
 \alias{rank.teams.elo.winpct}
+\alias{rank.teams.elo.colley}
 \title{Rank teams}
 \usage{
 rank.teams(object, ties.method = "min", ...)
@@ -21,6 +22,8 @@ rank.teams(object, ties.method = "min", ...)
 \method{rank.teams}{elo.markovchain}(object, ties.method = "min", ...)
 
 \method{rank.teams}{elo.winpct}(object, ties.method = "min", ...)
+
+\method{rank.teams}{elo.colley}(object, ties.method = "min", ...)
 }
 \arguments{
 \item{object}{An object.}
