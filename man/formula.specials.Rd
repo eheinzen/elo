@@ -12,7 +12,7 @@
 \usage{
 players(..., weights = NULL)
 
-k(x)
+k(x, y = NULL)
 
 adjust(x, adjustment)
 
@@ -28,7 +28,7 @@ neutral(x)
 \item{weights}{A vector giving the weights of Elo updates for the players in \code{...}. Ignored for
 \code{\link{elo.glm}}.}
 
-\item{x}{A vector.}
+\item{x, y}{A vector.}
 
 \item{adjustment}{A single value or a vector of the same length as \code{x}: how much to adjust the Elos in \code{x}.}
 
@@ -58,7 +58,8 @@ In the functions in this package, \code{formula} is usually of the form \code{wi
 \code{k()} allows for complicated Elo updates. For
   constant Elo updates, use the \code{k = } argument instead of this special function.
   Note that \code{\link{elo.markovchain}} uses this function (or argument) as a convenient
-  way of specifying transition probabilities.
+  way of specifying transition probabilities. \code{\link{elo.colley}} uses this to indicate
+  the fraction of a win to be assigned to the winning team.
 
 \code{adjust()} allows for Elos to be adjusted for, e.g., home-field advantage. The second argument
   to this function can be a scalar or vector of appropriate length. This can also be used in

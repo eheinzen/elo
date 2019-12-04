@@ -16,7 +16,7 @@ bool anyZero(NumericVector x)
 // [[Rcpp::export]]
 NumericVector finalElos(NumericMatrix mat, int nTeams)
 {
-  int nBoth = (mat.ncol() - 3) / 2;
+  int nBoth = (mat.ncol() - 4) / 2;
   NumericVector out(nTeams);
   for(int row = mat.nrow() - 1; row > -1; row--)
   {
@@ -25,7 +25,7 @@ NumericVector finalElos(NumericMatrix mat, int nTeams)
       double tm = mat(row, j) - 1;
       if(tm >= 0 && out[tm] == 0)
       {
-        out[tm] = mat(row, nBoth + 3 + j);
+        out[tm] = mat(row, nBoth + 4 + j);
       }
     }
 

@@ -6,12 +6,7 @@ double eloProb(double eloA, double eloB)
   return 1/(1 + exp(log(10.0)*(eloB - eloA)/400.0));
 }
 
-double eloUpdate(double eloA, double eloB, double winsA, double k)
-{
-  return k*(winsA - eloProb(eloA, eloB));
-}
-
-double eloUpdate2(double prob, double winsA, double k)
+double eloUpdate(double prob, double winsA, double k)
 {
   return k*(winsA - prob);
 }
@@ -31,7 +26,7 @@ NumericVector eloRegress(NumericVector eloA, NumericVector to, double by, Logica
 
 // [[Rcpp::export]]
 List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, NumericVector weightsB,
-            NumericVector winsA, NumericVector k, NumericVector adjTeamA, NumericVector adjTeamB,
+            NumericVector winsA, NumericMatrix k, NumericVector adjTeamA, NumericVector adjTeamB,
             LogicalVector regress, NumericVector to, double by, bool regressUnused,
             NumericVector initialElos, int flag)
 {
@@ -47,7 +42,7 @@ List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, Nu
   LogicalVector usedYet(nTeams);
   currElo = clone(initialElos);
 
-  NumericMatrix out(nGames, 3 + 2*nBoth);
+  NumericMatrix out(nGames, 4 + 2*nBoth);
   NumericMatrix regOut(nRegress, nTeams);
 
   int regRow = 0;
@@ -83,17 +78,19 @@ List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, Nu
 
     // calculate and store the update
     double prb = eloProb(sum(e1) + adjTeamA[i], sum(e2) + adjTeamB[i]);
-    double updt = eloUpdate2(prb, winsA[i], k[i]);
+    double updt1 = eloUpdate(prb, winsA[i], k(i, 0));
+    double updt2 = eloUpdate(prb, winsA[i], k(i, 1)) * -1.0;
 
     out(i, nBoth) = prb;
     out(i, nBoth + 1) = winsA[i];
-    out(i, nBoth + 2) = updt;
+    out(i, nBoth + 2) = updt1;
+    out(i, nBoth + 3) = updt2;
 
     // store new Elos for team A
     for(int j = 0; j < ncolA; j++)
     {
-      double tmp = e1[j] + updt * weightsA[j];
-      out(i, nBoth + 3 + j) = tmp;
+      double tmp = e1[j] + updt1 * weightsA[j];
+      out(i, nBoth + 4 + j) = tmp;
       currElo[teamA(i, j)] = tmp;
     }
 
@@ -102,11 +99,11 @@ List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, Nu
     {
       if(flag == 2)
       {
-        out(i, nBoth + 3 + ncolA + l) = e2[l];
+        out(i, nBoth + 4 + ncolA + l) = e2[l];
       } else
       {
-        double tmp = e2[l] - updt * weightsB[l];
-        out(i, nBoth + 3 + ncolA + l) = tmp;
+        double tmp = e2[l] + updt2 * weightsB[l];
+        out(i, nBoth + 4 + ncolA + l) = tmp;
         currElo[teamB(i, l)] = tmp;
       }
     }

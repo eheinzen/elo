@@ -3,7 +3,7 @@
 #'
 #' Details on \code{elo} functions and the special functions allowed in them to change functions' behaviors.
 #'
-#' @param x A vector.
+#' @param x,y A vector.
 #' @param adjustment A single value or a vector of the same length as \code{x}: how much to adjust the Elos in \code{x}.
 #' @param to Numeric: what Elo to regress to. Can be a single value or named vector the same length
 #'   as the number of teams.
@@ -28,7 +28,8 @@
 #' \code{k()} allows for complicated Elo updates. For
 #'   constant Elo updates, use the \code{k = } argument instead of this special function.
 #'   Note that \code{\link{elo.markovchain}} uses this function (or argument) as a convenient
-#'   way of specifying transition probabilities.
+#'   way of specifying transition probabilities. \code{\link{elo.colley}} uses this to indicate
+#'   the fraction of a win to be assigned to the winning team.
 #'
 #' \code{adjust()} allows for Elos to be adjusted for, e.g., home-field advantage. The second argument
 #'   to this function can be a scalar or vector of appropriate length. This can also be used in
@@ -59,7 +60,17 @@ NULL
 
 #' @rdname formula.specials
 #' @export
-k <- function(x) structure(x, class = c("elo.k", class(x)))
+k <- function(x, y = NULL)
+{
+  if(!is.null(y)) x <- matrix(c(x, y), ncol = 2)
+  structure(x, class = c("elo.k", class(x)))
+}
+
+remove_elo_k <- function(x)
+{
+  class(x) <- class(x)[!(class(x) %in% "elo.k")]
+  x
+}
 
 #' @rdname formula.specials
 #' @export

@@ -82,3 +82,21 @@ test_that("elo.calc works", {
     elo.calc(wins.A ~ dummy.A + dummy.B + k(k.column), data = dat)
   )
 })
+
+test_that("k works with two columns (#45)", {
+  expect_equal(
+    elo.calc(wins.A ~ dummy.A + dummy.B + k(k.column, 2*k.column), data = dat),
+    data.frame(elo.A = c(1510, 1510, 1490), elo.B = c(1480, 1480, 1520))
+  )
+  expect_equal(
+    elo.calc(dat$wins.A, dat$dummy.A, dat$dummy.B, k = cbind(dat$k.column, 2*dat$k.column)),
+    elo.calc(wins.A ~ dummy.A + dummy.B + k(k.column, 2*k.column), data = dat)
+  )
+  expect_equal(
+    elo.calc(dat$wins.A, dat$dummy.A, dat$dummy.B, k = cbind(dat$k.column, 2*dat$k.column), adjust.A = 10, adjust.B = 20),
+    elo.calc(wins.A ~ adjust(dummy.A, 10) + adjust(dummy.B, 20) + k(k.column, 2*k.column), data = dat)
+  )
+})
+
+
+

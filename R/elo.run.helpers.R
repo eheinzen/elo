@@ -54,7 +54,7 @@ as.matrix.elo.run.regressed <- function(x, ..., group = x$group)
 as.data.frame.elo.run <- function(x, ...)
 {
   out <- as.data.frame(x$elos)
-  colnames(out) <- c("team.A", "team.B", "p.A", "wins.A", "update", "elo.A", "elo.B")
+  colnames(out) <- c("team.A", "team.B", "p.A", "wins.A", "update.A", "update.B", "elo.A", "elo.B")
   out$team.A <- factor(out$team.A, levels = seq_along(x$teams), labels = x$teams)
   out$team.B <- factor(out$team.B, levels = seq_along(x$teams), labels = x$teams)
   out

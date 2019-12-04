@@ -35,6 +35,11 @@ test_that("'k' specification works either as vector or constant", {
     elo.run(wins.A ~ team.A + team.B + k(k.column), data = dat)$elos,
     elo.run(wins.A ~ team.A + team.B, k = 20, data = dat)$elos
   )
+  expect_identical(
+    elo.run(wins.A ~ team.A + team.B + k(k.column), data = dat)$elos,
+    elo.run(wins.A ~ team.A + team.B, k = dat$k.column, data = dat)$elos
+  )
+  expect_error(elo.run(wins.A ~ team.A + team.B, k = c(20, 20), data = dat), "must be length 1 or")
 })
 
 test_that("'adjust' specification works either as a vector or constant", {
@@ -54,7 +59,22 @@ test_that("prediction works correctly", {
   expect_equal(length(predict(results)), nrow(dat))
 })
 
-test_that("#25: Deep copying", {
+test_that("Deep copying (#25)", {
   expect_equal(results$initial.elos, c("Team A" = 1500, "Team B" = 1500, "Team C" = 1500))
   expect_equal(unname(as.matrix(results)[1, "Team C"]), 1500)
 })
+
+test_that("Multiple k's (#45)", {
+  expect_identical(
+    elo.run(wins.A ~ adjust(team.A, 10) + team.B + k(k.column), data = dat)$elos,
+    elo.run(wins.A ~ adjust(team.A, 10) + team.B + k(k.column), data = dat)$elos
+  )
+
+  results <- elo.run(wins.A ~ adjust(team.A, 10) + team.B + k(k.column, 2*k.column), data = dat)
+  expect_identical(
+    rnd.mat(results, 3),
+    c("Team A" = 1519.145, "Team B" = 1501.183, "Team C" = 1470.830)
+  )
+})
+
+

@@ -35,7 +35,8 @@ elo.calc.default <- function(wins.A, elo.A, elo.B, k, ..., adjust.A = 0, adjust.
   validate_score(wins.A)
   elo.up <- elo.update(wins.A = wins.A, elo.A = elo.A, elo.B = elo.B, k = k, ...,
                        adjust.A = adjust.A, adjust.B = adjust.B)
-  data.frame(elo.A = elo.A + elo.up, elo.B = elo.B - elo.up)
+  if(NCOL(elo.up) == 1) elo.up <- matrix(c(elo.up, elo.up), ncol = 2)
+  data.frame(elo.A = elo.A + elo.up[, 1], elo.B = elo.B - elo.up[, 2])
 }
 
 #' @rdname elo.calc
