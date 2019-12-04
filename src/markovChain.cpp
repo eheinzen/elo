@@ -4,7 +4,7 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 List eloMarkovChain(NumericMatrix teamA, NumericMatrix teamB, NumericVector winsA, NumericVector weightsA, NumericVector weightsB,
-                    NumericVector weights, NumericVector k, int nTeams)
+                    NumericVector weights, NumericMatrix k, int nTeams)
 {
   // this function uses 0-based indexing, since the incoming vectors used -1L
   int nGames = winsA.size();
@@ -25,11 +25,11 @@ List eloMarkovChain(NumericMatrix teamA, NumericMatrix teamB, NumericVector wins
         N_i[b] += w;
         double iWon = winsA[g];
         // (to, from)
-        out(b, a) += w*(k[g]*(1.0 - iWon) + (1.0 - k[g])*iWon); // if j won, go to j with prob=k; else if i won, go with prob=(1-k)
-        out(a, b) += w*(k[g]*iWon + (1.0 - k[g])*(1.0 - iWon));
+        out(b, a) += w*(k(g, 0)*(1.0 - iWon) + (1.0 - k(g, 0))*iWon); // if j won, go to j with prob=k; else if i won, go with prob=(1-k)
+        out(a, b) += w*(k(g, 1)*iWon + (1.0 - k(g, 1))*(1.0 - iWon));
 
-        out(a, a) += w*(k[g]*iWon + (1.0 - k[g])*(1.0 - iWon));
-        out(b, b) += w*(k[g]*(1.0 - iWon) + (1.0 - k[g])*iWon);
+        out(a, a) += w*(k(g, 0)*iWon + (1.0 - k(g, 0))*(1.0 - iWon));
+        out(b, b) += w*(k(g, 1)*(1.0 - iWon) + (1.0 - k(g, 1))*iWon);
       }
     }
   }
