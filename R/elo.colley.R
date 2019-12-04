@@ -37,6 +37,7 @@ elo.colley <- function(formula, data, family = "binomial", weights, na.action, s
   Call$required.vars <- c("wins", "elos", "group", "neutral", "weights", "k")
   if(is.null(Call$k)) Call$k <- 1
   Call$warn.k <- FALSE
+  Call$ncol.k <- 2
   mf <- eval(Call, parent.frame())
   if(nrow(mf) == 0) stop("No (non-missing) observations")
   Terms <- stats::terms(mf)
@@ -84,7 +85,9 @@ elo.colley <- function(formula, data, family = "binomial", weights, na.action, s
       if(i == 1) next
       sbst <- grp2 %in% 1:(i-1)
       dat.tmp <- dat
-      dat.tmp[1:3] <- lapply(dat.tmp[1:3], `[`, sbst)
+      dat.tmp$winsA <- dat.tmp$winsA[sbst]
+      dat.tmp$k <- dat.tmp$k[sbst, , drop = FALSE]
+      dat.tmp$weights <- dat.tmp$weights[sbst]
       dat.tmp$teamA <- dat.tmp$teamA[sbst, , drop = FALSE]
       dat.tmp$teamB <- dat.tmp$teamB[sbst, , drop = FALSE]
 

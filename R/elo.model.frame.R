@@ -12,9 +12,10 @@
 #' @param required.vars One or more of \code{c("wins", "elos", "k", "group", "regress")},
 #'   denoting which variables are required to appear in the final model.frame.
 #' @param warn.k Should a warning be issued if \code{k} is specified as an argument and in \code{formula}?
+#' @param ncol.k How many columns (\code{NCOL}) should \code{k} have?
 #' @seealso \code{\link{elo.run}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}}
 #' @export
-elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "elos", warn.k = TRUE)
+elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "elos", warn.k = TRUE, ncol.k = 1)
 {
   Call <- match.call()
   required.vars <- match.arg(required.vars, c("wins", "elos", "k", "group", "regress", "neutral", "weights"), several.ok = TRUE)
@@ -91,7 +92,15 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   } else is.mov <- FALSE
   if("k" %in% required.vars)
   {
-    out$k <- if(null_or_length0(k.col)) k else mf[[k.col]]
+    k <- if(null_or_length0(k.col))
+    {
+      if(!(length(k) %in% c(1, nrow(mf)))) stop("'k' must be length 1 or the number of rows of data")
+      if(length(k) == 1) k <- rep(k, nrow(mf))
+      k
+    } else mf[[k.col]]
+    stopifnot(ncol.k %in% 1:2)
+    if(ncol.k == 2 && NCOL(k) == 1) k <- matrix(c(k, k), ncol = 2)
+    out$k <- k
     if(!is.numeric(out$k) || anyNA(out$k)) stop("'k' should be numeric and non-NA.")
   }
   if("group" %in% required.vars)

@@ -42,6 +42,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
   Call$required.vars <- c("wins", "elos", "k", "group", "regress")
+  Call$ncol.k <- 2
   mf <- eval(Call, parent.frame())
   if(nrow(mf) == 0) stop("No (non-missing) observations")
   Terms <- stats::terms(mf)

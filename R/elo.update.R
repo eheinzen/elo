@@ -30,7 +30,7 @@ elo.update <- function(wins.A, ...)
 elo.update.default <- function(wins.A, elo.A, elo.B, k, ..., adjust.A = 0, adjust.B = 0)
 {
   validate_score(wins.A)
-  as.numeric(k*(wins.A - elo.prob(elo.A, elo.B, ..., adjust.A = adjust.A, adjust.B = adjust.B)))
+  remove_elo_k(k)*(wins.A - elo.prob(elo.A, elo.B, ..., adjust.A = adjust.A, adjust.B = adjust.B))
 }
 
 #' @rdname elo.update
