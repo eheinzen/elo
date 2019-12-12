@@ -4,8 +4,17 @@
 \alias{elo.model.frame}
 \title{Interpret formulas in \code{elo} functions}
 \usage{
-elo.model.frame(formula, data, na.action, subset, k = NULL, ...,
-  required.vars = "elos", warn.k = TRUE, ncol.k = 1)
+elo.model.frame(
+  formula,
+  data,
+  na.action,
+  subset,
+  k = NULL,
+  ...,
+  required.vars = "elos",
+  warn.k = TRUE,
+  ncol.k = 1
+)
 }
 \arguments{
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}
