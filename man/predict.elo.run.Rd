@@ -7,8 +7,7 @@
 \usage{
 \method{predict}{elo.run}(object, newdata, ...)
 
-\method{predict}{elo.run.regressed}(object, newdata, regressed = FALSE,
-  ...)
+\method{predict}{elo.run.regressed}(object, newdata, regressed = FALSE, ...)
 }
 \arguments{
 \item{object}{An object of class \code{"\link{elo.run}"}.}

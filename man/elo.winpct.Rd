@@ -4,8 +4,17 @@
 \alias{elo.winpct}
 \title{\code{elo.winpct}}
 \usage{
-elo.winpct(formula, data, family = "binomial", weights, na.action,
-  subset, ..., running = FALSE, skip = 0)
+elo.winpct(
+  formula,
+  data,
+  family = "binomial",
+  weights,
+  na.action,
+  subset,
+  ...,
+  running = FALSE,
+  skip = 0
+)
 }
 \arguments{
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}

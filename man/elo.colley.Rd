@@ -4,8 +4,18 @@
 \alias{elo.colley}
 \title{\code{elo.colley}}
 \usage{
-elo.colley(formula, data, family = "binomial", weights, na.action,
-  subset, k = 1, ..., running = FALSE, skip = 0)
+elo.colley(
+  formula,
+  data,
+  family = "binomial",
+  weights,
+  na.action,
+  subset,
+  k = 1,
+  ...,
+  running = FALSE,
+  skip = 0
+)
 }
 \arguments{
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}

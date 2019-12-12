@@ -4,8 +4,18 @@
 \alias{elo.markovchain}
 \title{\code{elo.markovchain}}
 \usage{
-elo.markovchain(formula, data, family = "binomial", weights, na.action,
-  subset, k = NULL, ..., running = FALSE, skip = 0)
+elo.markovchain(
+  formula,
+  data,
+  family = "binomial",
+  weights,
+  na.action,
+  subset,
+  k = NULL,
+  ...,
+  running = FALSE,
+  skip = 0
+)
 }
 \arguments{
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}

@@ -14,8 +14,7 @@ rank.teams(object, ties.method = "min", ...)
 
 \method{rank.teams}{elo.run}(object, ties.method = "min", ...)
 
-\method{rank.teams}{elo.run.regressed}(object, ties.method = "min",
-  regressed = FALSE, ...)
+\method{rank.teams}{elo.run.regressed}(object, ties.method = "min", regressed = FALSE, ...)
 
 \method{rank.teams}{elo.glm}(object, ties.method = "min", ...)
 
