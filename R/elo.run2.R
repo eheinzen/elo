@@ -1,4 +1,6 @@
 #' @rdname elo.run
+#' @param prob.fun A function with at least 4 arguments: elo.A, elo.B, adjust.A, and adjust.B. It should return a predicted probability
+#'   that team A wins. The values passed in will be scalars, and a scalar is expected as output.
 #' @param update.fun A function with at least 6 arguments: the same as \code{\link{elo.update.default}}. The function takes
 #'   in the Elos, the win indicator, k, and any adjustments, and returns a value by which to update the Elos. The values passed in
 #'   will be scalars, and a scalar is expected as output.
@@ -6,7 +8,7 @@
 #'   \code{elo.run} and \code{elo.run2} by default return the exact same thing. \code{elo.run} uses C++ and may be up to 50 times faster,
 #'   while \code{elo.run2} uses R but also supports custom update functions. Prefer the first unless you really need a custom update function.
 #' @export
-elo.run2 <- function(formula, data, na.action, subset, k = NULL, initial.elos = NULL, ..., update.fun = elo.update)
+elo.run2 <- function(formula, data, na.action, subset, k = NULL, initial.elos = NULL, ..., prob.fun = elo.prob, update.fun = elo.update)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
@@ -17,6 +19,7 @@ elo.run2 <- function(formula, data, na.action, subset, k = NULL, initial.elos = 
   Terms <- stats::terms(mf)
 
   checked <- check_elo_run_vars(mf, initial.elos)
+  checked$prob.fun <- match.fun(prob.fun)
   checked$update.fun <- match.fun(update.fun)
   out <- do.call(eloRun2, checked)
   any.regr <- any(checked$regress)
@@ -34,7 +37,7 @@ elo.run2 <- function(formula, data, na.action, subset, k = NULL, initial.elos = 
   ), class = c(if(any.regr) "elo.run.regressed", "elo.run"))
 }
 
-eloRun2 <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTeamB, regress, to, by, regressUnused, initialElos, flag, update.fun)
+eloRun2 <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTeamB, regress, to, by, regressUnused, initialElos, flag, prob.fun, update.fun)
 {
   eloRegress <- function(eloA, to, by, idx) ifelse(idx, eloA + by*(to - eloA), eloA)
 
@@ -84,7 +87,7 @@ eloRun2 <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTea
     }
 
     # calculate and store the update
-    prb <- elo.prob(elo.A = sum(e1), elo.B = sum(e2), adjust.A = adjTeamA[i], adjust.B = adjTeamB[i])
+    prb <- prob.fun(elo.A = sum(e1), elo.B = sum(e2), adjust.A = adjTeamA[i], adjust.B = adjTeamB[i])
     updt1 <- update.fun(wins.A = winsA[i], elo.A = sum(e1), elo.B = sum(e2), k = k[i, 1], adjust.A = adjTeamA[i], adjust.B = adjTeamB[i])
     updt2 <- update.fun(wins.A = winsA[i], elo.A = sum(e1), elo.B = sum(e2), k = k[i, 2], adjust.A = adjTeamA[i], adjust.B = adjTeamB[i]) * -1
 
