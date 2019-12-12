@@ -83,6 +83,13 @@ elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor +
         k(20*log(abs(points.Home - points.Visitor) + 1)), data = tournament)
 ```
 
+You can also adjust the home and visitor teams with different k's:
+
+```{r}
+k1 <- 20*log(abs(tournament$points.Home - tournament$points.Visitor) + 1)
+elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + k(k1, k1/2), data = tournament)
+```
+
 It's also possible to adjust one team's Elo for a variety of factors
 (e.g., home-field advantage). The `adjust()` special function will take as its second
 argument a vector or a constant.
