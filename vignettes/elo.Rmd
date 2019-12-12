@@ -171,6 +171,38 @@ newdat <- data.frame(
 predict(results, newdata = newdat)
 ```
 
+## Advanced: custom probability and updates
+
+We now get to `elo.run2()`, a copy of `elo.run()` (but implemented in R) that allows for custom probability calculations and Elo updates.
+
+For instance, suppose you want to change the adjustment based on team A's current Elo:
+
+```{r}
+custom_update <- function(wins.A, elo.A, elo.B, k, adjust.A, adjust.B, ...)
+{
+  k*(wins.A - elo.prob(elo.A, elo.B, adjust.B = adjust.B,
+                       adjust.A = ifelse(elo.A > 1500, adjust.A / 2, adjust.A)))
+}
+custom_prob <- function(elo.A, elo.B, adjust.A, adjust.B)
+{
+  1/(1 + 10^(((elo.B + adjust.B) - (elo.A + ifelse(elo.A > 1500, adjust.A / 2, adjust.A)))/400.0))
+}
+er2 <- elo.run2(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+                data = tournament, k = 20, prob.fun = custom_prob, update.fun = custom_update)
+final.elos(er2)
+```
+
+Compare this to the results from the default:
+
+```{r}
+er3 <- elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+               data = tournament, k = 20)
+final.elos(er3)
+```
+
+This example is a bit contrived, as it'd be easier just to use `adjust()` (actually, this is tested for in the tests), but the point remains.
+
+
 # Basic Functions Revisited - Formula Interface
 
 All three of the "basic" functions accept formulas as input, just like
