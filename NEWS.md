@@ -1,9 +1,11 @@
-# elo v2.0.0.9001
+# elo v2.0.0.9003
 
 * Added `elo.colley()`, with its corresponding helper functions.
 
 * Allowed `k()` to take two arguments, to give differential updates to "team.A" and "team.B". This has one user-visible effect:
-  `as.data.frame.elo.run()` now has one more column than it did before, and its column names have changed.
+  `as.data.frame.elo.run()` now has one more column than it did before, and its column names have changed. (#45)
+  
+* Added `elo.run2()`, which allows for custom probabilities and updates, but by default returns the same as `elo.run()` (except more slowly). (#47)
 
 # elo v2.0.0
 
