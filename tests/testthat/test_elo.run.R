@@ -6,23 +6,29 @@ context("Testing the elo.run function")
 
 test_that("Basic Elo calculations work", {
 
-  expect_identical(
+  expect_ident(
     rnd.mat(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat), 3),
+    rnd.mat(elo.run2(wins.A ~ team.A + team.B, k = 20, data = dat), 3),
     c("Team A" = 1519.712, "Team B" = 1500.008, "Team C" = 1480.279)
   )
 
-  expect_identical(
+  expect_ident(
     rnd.mat(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat), 3),
-    rnd.fin(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat))
+    rnd.fin(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat)),
+    rnd.mat(elo.run2(wins.A ~ team.A + team.B, k = 20, data = dat), 3),
+    rnd.fin(elo.run2(wins.A ~ team.A + team.B, k = 20, data = dat))
   )
 
-  expect_identical(
+  expect_ident(
     rnd.fin(elo.run(wins.A ~ team.A + dummy.B + k(k.column), data = dat)),
+    rnd.fin(elo.run2(wins.A ~ team.A + dummy.B + k(k.column), data = dat)),
     c("Team A" = 1519.712, "Team C" = 1490)
   )
 
   expect_error(elo.run(wins.A ~ dummy.B + team.B, k = 20, data = dat))
   expect_error(elo.run(wins.A ~ dummy.A + dummy.B, k = 20, data = dat))
+  expect_error(elo.run2(wins.A ~ dummy.B + team.B, k = 20, data = dat))
+  expect_error(elo.run2(wins.A ~ dummy.A + dummy.B, k = 20, data = dat))
 
   expect_identical(
     elo.calc(dat$wins.A, dat$dummy.A, dat$dummy.B, k = 20),
@@ -31,32 +37,44 @@ test_that("Basic Elo calculations work", {
 })
 
 test_that("'k' specification works either as vector or constant", {
-  expect_identical(
+  expect_ident(
     elo.run(wins.A ~ team.A + team.B + k(k.column), data = dat)$elos,
-    elo.run(wins.A ~ team.A + team.B, k = 20, data = dat)$elos
+    elo.run(wins.A ~ team.A + team.B, k = 20, data = dat)$elos,
+    elo.run2(wins.A ~ team.A + team.B + k(k.column), data = dat)$elos,
+    elo.run2(wins.A ~ team.A + team.B, k = 20, data = dat)$elos
   )
-  expect_identical(
+  expect_ident(
     elo.run(wins.A ~ team.A + team.B + k(k.column), data = dat)$elos,
-    elo.run(wins.A ~ team.A + team.B, k = dat$k.column, data = dat)$elos
+    elo.run(wins.A ~ team.A + team.B, k = dat$k.column, data = dat)$elos,
+    elo.run2(wins.A ~ team.A + team.B + k(k.column), data = dat)$elos,
+    elo.run2(wins.A ~ team.A + team.B, k = dat$k.column, data = dat)$elos
   )
   expect_error(elo.run(wins.A ~ team.A + team.B, k = c(20, 20), data = dat), "must be length 1 or")
+  expect_error(elo.run2(wins.A ~ team.A + team.B, k = c(20, 20), data = dat), "must be length 1 or")
 })
 
 test_that("'adjust' specification works either as a vector or constant", {
-  expect_identical(
+  expect_ident(
     elo.run(wins.A ~ adjust(team.A, 10) + team.B, data = dat, k = 20)$elos,
-    elo.run(wins.A ~ adjust(team.A, home.field) + team.B, data = dat, k = 20)$elos
+    elo.run(wins.A ~ adjust(team.A, home.field) + team.B, data = dat, k = 20)$elos,
+    elo.run2(wins.A ~ adjust(team.A, 10) + team.B, data = dat, k = 20)$elos,
+    elo.run2(wins.A ~ adjust(team.A, home.field) + team.B, data = dat, k = 20)$elos
   )
 })
 
 results <- elo.run(wins.A ~ adjust(team.A, 10) + team.B, data = dat, k = 20)
+results2 <- elo.run2(wins.A ~ adjust(team.A, 10) + team.B, data = dat, k = 20)
+
 test_that("prediction works correctly", {
   newdat <- data.frame(team.A = "Team A", team.B = "Team B")
   expect_identical(
     predict(results, newdata = newdat),
-    elo.prob(final.elos(results)["Team A"], final.elos(results)["Team B"], adjust.A = 10)
+    elo.prob(final.elos(results)["Team A"], final.elos(results)["Team B"], adjust.A = 10),
+    predict(results2, newdata = newdat),
+    elo.prob(final.elos(results2)["Team A"], final.elos(results2)["Team B"], adjust.A = 10)
   )
   expect_equal(length(predict(results)), nrow(dat))
+  expect_equal(length(predict(results2)), nrow(dat))
 })
 
 test_that("Deep copying (#25)", {
@@ -67,12 +85,16 @@ test_that("Deep copying (#25)", {
 test_that("Multiple k's (#45)", {
   expect_identical(
     elo.run(wins.A ~ adjust(team.A, 10) + team.B + k(k.column), data = dat)$elos,
-    elo.run(wins.A ~ adjust(team.A, 10) + team.B + k(k.column), data = dat)$elos
+    elo.run(wins.A ~ adjust(team.A, 10) + team.B + k(k.column, k.column), data = dat)$elos,
+    elo.run2(wins.A ~ adjust(team.A, 10) + team.B + k(k.column), data = dat)$elos,
+    elo.run2(wins.A ~ adjust(team.A, 10) + team.B + k(k.column, k.column), data = dat)$elos
   )
 
   results <- elo.run(wins.A ~ adjust(team.A, 10) + team.B + k(k.column, 2*k.column), data = dat)
+  results2 <- elo.run2(wins.A ~ adjust(team.A, 10) + team.B + k(k.column, 2*k.column), data = dat)
   expect_identical(
     rnd.mat(results, 3),
+    rnd.mat(results2, 3),
     c("Team A" = 1519.145, "Team B" = 1501.183, "Team C" = 1470.830)
   )
 })
