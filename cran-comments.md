@@ -1,7 +1,7 @@
-## Submission for elo 2.0.0
+## Submission for elo 2.1.0
 
-This is a new version of the package. This version includes several major new functions,
-plus several new features.
+This is a new version of the package. This version includes two major new functions,
+plus one new feature. We also added a URL linking to our new "pkgdown" site.
 
 ## Test environments
 

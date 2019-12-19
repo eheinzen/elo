@@ -1,4 +1,4 @@
-# elo v2.0.0.9003
+# elo v2.1.0
 
 * Added `elo.colley()`, with its corresponding helper functions.
 
@@ -6,6 +6,8 @@
   `as.data.frame.elo.run()` now has one more column than it did before, and its column names have changed. (#45)
   
 * Added `elo.run2()`, which allows for custom probabilities and updates, but by default returns the same as `elo.run()` (except more slowly). (#47)
+
+* Added a `pkgdown` site: https://eheinzen.github.io/elo
 
 # elo v2.0.0
 
