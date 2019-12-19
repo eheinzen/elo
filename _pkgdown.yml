@@ -1,0 +1,34 @@
+destination: docs
+reference:
+  - title: "Basic Elo Calculations"
+    contents:
+      - elo.prob
+      - elo.update
+      - elo.calc
+      - elo.run
+  - title: Formula Specials
+    contents:
+      - k
+      - mov
+      - score
+  - title: "Comparison Methods"
+    contents:
+      - elo.glm
+      - elo.winpct
+      - elo.markovchain
+      - elo.colley
+  - title: "Model Assessment"
+    contents:
+      - auc.elo
+      - mse
+      - favored
+      - rank.teams
+      - summary.elo
+      - fitted.elo
+      - predict.elo
+  - title: "Other helpful utilities"
+    contents:
+      - final.elos
+      - tournament
+      - elo.model.frame
+      - elo
