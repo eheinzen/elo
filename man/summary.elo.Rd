@@ -7,7 +7,7 @@
 \alias{summary.elo.markovchain}
 \alias{summary.elo.colley}
 \alias{summary.elo.winpct}
-\title{Summarize an \code{elo.run} Object}
+\title{Summarize an \code{elo} Object}
 \usage{
 \method{summary}{elo.run}(object, ...)
 
@@ -20,7 +20,7 @@
 \method{summary}{elo.winpct}(object, ...)
 }
 \arguments{
-\item{object}{An object resulting from \code{\link{elo.run}}.}
+\item{object}{An object to summarize.}
 
 \item{...}{Other arguments}
 }
@@ -28,7 +28,7 @@
 A summary of \code{object}.
 }
 \description{
-Summarize an \code{elo.run} Object
+Summarize an \code{elo} Object
 }
 \examples{
 summary(elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,

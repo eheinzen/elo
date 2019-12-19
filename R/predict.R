@@ -1,5 +1,5 @@
 
-#' Make Predictions on an \code{elo.run} Object
+#' Make Predictions on an \code{elo} Object
 #'
 #' @param object An model from which to get predictions.
 #' @param newdata A new dataset containing the same variables as the call

@@ -1,7 +1,7 @@
 
-#' Summarize an \code{elo.run} Object
+#' Summarize an \code{elo} Object
 #'
-#' @param object An object resulting from \code{\link{elo.run}}.
+#' @param object An object to summarize.
 #' @param ... Other arguments
 #' @return A summary of \code{object}.
 #' @examples

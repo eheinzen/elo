@@ -9,7 +9,7 @@
 \alias{predict.elo.markovchain}
 \alias{predict.elo.colley}
 \alias{predict.elo.winpct}
-\title{Make Predictions on an \code{elo.run} Object}
+\title{Make Predictions on an \code{elo} Object}
 \usage{
 \method{predict}{elo.run}(object, newdata, ...)
 
@@ -45,7 +45,7 @@ sense if \code{newdata} is missing.}
 A vector of win probabilities.
 }
 \description{
-Make Predictions on an \code{elo.run} Object
+Make Predictions on an \code{elo} Object
 }
 \details{
 Note that the \code{"elo.glm.running"} objects will use a model fit on all the data to predict.
