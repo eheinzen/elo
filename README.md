@@ -19,11 +19,11 @@ It also includes comparable models for accuracy (auc, MSE) benchmarking:
 
 - `elo.glm()` which fits a logistic regression model
 
-- `elo.winpct()` which fits a model based on win percentage
-
 - `elo.markovchain()` which fits a Markov chain model
 
 - `elo.colley()` for a method based on the Colley matrix.
+
+- `elo.winpct()` which fits a model based on win percentage
 
 Please see the vignette for examples.
 
