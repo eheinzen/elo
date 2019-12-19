@@ -2,16 +2,10 @@
 % Please edit documentation in R/elo.run.R, R/elo.run2.R
 \name{elo.run}
 \alias{elo.run}
-\alias{print.elo.run}
-\alias{print.elo.run.regressed}
 \alias{elo.run2}
 \title{\code{elo.run}}
 \usage{
 elo.run(formula, data, na.action, subset, k = NULL, initial.elos = NULL, ...)
-
-\method{print}{elo.run}(x, ...)
-
-\method{print}{elo.run.regressed}(x, ...)
 
 elo.run2(
   formula,
@@ -39,8 +33,6 @@ elo.run2(
 \item{initial.elos}{An optional named vector containing initial Elo ratings for all teams in \code{formula}.}
 
 \item{...}{Other arguments (not used at this time).}
-
-\item{x}{An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.}
 
 \item{prob.fun}{A function with at least 4 arguments: elo.A, elo.B, adjust.A, and adjust.B. It should return a predicted probability
 that team A wins. The values passed in will be scalars, and a scalar is expected as output.}

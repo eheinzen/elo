@@ -6,7 +6,6 @@
 #' @inheritParams elo.calc
 #' @param initial.elos An optional named vector containing initial Elo ratings for all teams in \code{formula}.
 #' @param ... Other arguments (not used at this time).
-#' @param x An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
 #' @return An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
 #' @examples
 #' data(tournament)
@@ -64,7 +63,6 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
   ), class = c(if(any.regr) "elo.run.regressed", "elo.run"))
 }
 
-#' @rdname elo.run
 #' @export
 print.elo.run <- function(x, ...)
 {
@@ -74,7 +72,6 @@ print.elo.run <- function(x, ...)
 }
 
 
-#' @rdname elo.run
 #' @export
 print.elo.run.regressed <- function(x, ...)
 {
