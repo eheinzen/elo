@@ -23,7 +23,7 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 License: GPL (>= 2)
-URL: https://github.com/eheinzen/elo, https://cran.r-project.org/package=elo, https://eheinzen.github.io/elo
+URL: https://github.com/eheinzen/elo, https://cran.r-project.org/package=elo, https://eheinzen.github.io/elo/
 BugReports: https://github.com/eheinzen/elo/issues
 RoxygenNote: 7.0.2
 LazyData: true

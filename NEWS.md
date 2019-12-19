@@ -7,7 +7,7 @@
   
 * Added `elo.run2()`, which allows for custom probabilities and updates, but by default returns the same as `elo.run()` (except more slowly). (#47)
 
-* Added a `pkgdown` site: https://eheinzen.github.io/elo
+* Added a `pkgdown` site: https://eheinzen.github.io/elo/
 
 # elo v2.0.0
 
