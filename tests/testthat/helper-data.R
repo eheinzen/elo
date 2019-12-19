@@ -22,9 +22,9 @@ init.ply2 <- c("Player 1" = 750, "Player 2" = 700, "Player 3" = 650,
                "Player 4" = 600, "Player 5" = 900, "Player 6" = 750)
 rnd.mat <- function(x, i) round(as.matrix(x)[i, ], 3)
 rnd.fin <- function(x, ...) round(final.elos(x, ...), 3)
-expect_ident <- function(x, y, z, w = NULL)
+expect_eq <- function(x, y, z, w = NULL)
 {
-  expect_identical(x, y)
-  expect_identical(x, z)
-  if(!is.null(w)) expect_identical(x, w)
+  expect_equal(x, y)
+  expect_equal(x, z)
+  if(!is.null(w)) expect_equal(x, w)
 }
