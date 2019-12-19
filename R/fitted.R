@@ -6,13 +6,13 @@
 #' @param object An object.
 #' @param ... Other arguments
 #' @param running logical, denoting whether to use the running predicted values.
-#' @name elo.fitted
+#' @name fitted.elo
 NULL
 #> NULL
 
 ## stats:::terms.default and stats:::weights.default also work
 
-#' @rdname elo.fitted
+#' @rdname fitted.elo
 #' @export
 fitted.elo.run <- function(object, ...)
 {
@@ -20,7 +20,7 @@ fitted.elo.run <- function(object, ...)
   stats::napredict(object$na.action, out)
 }
 
-#' @rdname elo.fitted
+#' @rdname fitted.elo
 #' @export
 residuals.elo.run <- function(object, ...)
 {
@@ -28,7 +28,7 @@ residuals.elo.run <- function(object, ...)
   stats::naresid(object$na.action, out)
 }
 
-#' @rdname elo.fitted
+#' @rdname fitted.elo
 #' @export
 fitted.elo.running <- function(object, running = TRUE, ...)
 {
@@ -36,21 +36,21 @@ fitted.elo.running <- function(object, running = TRUE, ...)
   stats::napredict(object$na.action, object$running.values)
 }
 
-#' @rdname elo.fitted
+#' @rdname fitted.elo
 #' @export
 fitted.elo.glm <- function(object, ...)
 {
   stats::napredict(object$na.action, object$fitted.values)
 }
 
-#' @rdname elo.fitted
+#' @rdname fitted.elo
 #' @export
 fitted.elo.markovchain <- fitted.elo.glm
 
-#' @rdname elo.fitted
+#' @rdname fitted.elo
 #' @export
 fitted.elo.winpct <- fitted.elo.glm
 
-#' @rdname elo.fitted
+#' @rdname fitted.elo
 #' @export
 fitted.elo.colley <- fitted.elo.glm

@@ -7,18 +7,18 @@
 #' @param p.A A vector of predicted win probabilities.
 #' @param running logical, denoting whether to use the running predicted values.
 #' @param ... Other arguments (not in use at this time).
-#' @name elo.favored
+#' @name favored.elo
 NULL
 #> NULL
 
-#' @rdname elo.favored
+#' @rdname favored.elo
 #' @export
 favored <- function(x, ...)
 {
   UseMethod("favored")
 }
 
-#' @rdname elo.favored
+#' @rdname favored.elo
 #' @export
 favored.elo.run <- function(x, ...)
 {
@@ -27,7 +27,7 @@ favored.elo.run <- function(x, ...)
 
 truetiefalse <- function(x) factor(x, levels = c(1, 0.5, 0), labels = c("TRUE", "(tie)", "FALSE"))
 
-#' @rdname elo.favored
+#' @rdname favored.elo
 #' @export
 favored.elo.glm <- function(x, ...)
 {
@@ -36,7 +36,7 @@ favored.elo.glm <- function(x, ...)
         truetiefalse(score(x$y, 0)), dnn = c("Favored", "Actual"))
 }
 
-#' @rdname elo.favored
+#' @rdname favored.elo
 #' @export
 favored.elo.running <- function(x, running = TRUE, ...)
 {
@@ -44,19 +44,19 @@ favored.elo.running <- function(x, running = TRUE, ...)
   favored.default(x$y, x$running.values)
 }
 
-#' @rdname elo.favored
+#' @rdname favored.elo
 #' @export
 favored.elo.markovchain <- favored.elo.glm
 
-#' @rdname elo.favored
+#' @rdname favored.elo
 #' @export
 favored.elo.winpct <- favored.elo.glm
 
-#' @rdname elo.favored
+#' @rdname favored.elo
 #' @export
 favored.elo.colley <- favored.elo.glm
 
-#' @rdname elo.favored
+#' @rdname favored.elo
 #' @export
 favored.default <- function(x, p.A, ...)
 {
