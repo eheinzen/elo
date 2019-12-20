@@ -118,7 +118,7 @@
 <li><p>Added <code><a href="../reference/elo.colley.html">elo.colley()</a></code>, with its corresponding helper functions.</p></li>
 <li><p>Allowed <code><a href="../reference/formula.specials.html">k()</a></code> to take two arguments, to give differential updates to “team.A” and “team.B”. This has one user-visible effect: <code><a href="../reference/elo.run.helpers.html">as.data.frame.elo.run()</a></code> now has one more column than it did before, and its column names have changed. (<a href='https://github.com/eheinzen/elo/issues/45'>#45</a>)</p></li>
 <li><p>Added <code><a href="../reference/elo.run.html">elo.run2()</a></code>, which allows for custom probabilities and updates, but by default returns the same as <code><a href="../reference/elo.run.html">elo.run()</a></code> (except more slowly). (<a href='https://github.com/eheinzen/elo/issues/47'>#47</a>)</p></li>
-<li><p>Added a <code>pkgdown</code> site: <a href="https://eheinzen.github.io/elo" class="uri">https://eheinzen.github.io/elo</a></p></li>
+<li><p>Added a <code>pkgdown</code> site: <a href="https://eheinzen.github.io/elo/" class="uri">https://eheinzen.github.io/elo/</a></p></li>
 </ul>
 </div>
     <div id="elo-v2-0-0" class="section level1">
@@ -129,13 +129,13 @@
 <h2 class="hasAnchor">
 <a href="#new-functionsfunctionality" class="anchor"></a>New functions/functionality:</h2>
 <ul>
-<li><p>Added the <code>running=TRUE</code> option to <code><a href="../reference/elo.glm.html">elo.glm()</a></code>. This gives an object of class <code>"elo.running"</code>, with corresponding methods for <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, <code><a href="https://rdrr.io/r/stats/fitted.values.html">fitted()</a></code>, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>, <code><a href="../reference/elo.mse.html">mse()</a></code>, <code>auc()</code>, and <code><a href="../reference/elo.favored.html">favored()</a></code>.</p></li>
+<li><p>Added the <code>running=TRUE</code> option to <code><a href="../reference/elo.glm.html">elo.glm()</a></code>. This gives an object of class <code>"elo.running"</code>, with corresponding methods for <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, <code><a href="https://rdrr.io/r/stats/fitted.values.html">fitted()</a></code>, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>, <code><a href="../reference/elo.mse.html">mse()</a></code>, <code>auc()</code>, and <code><a href="../reference/favored.elo.html">favored()</a></code>.</p></li>
 <li><p>Added <code>weights=</code> to <code><a href="../reference/elo.glm.html">elo.glm()</a></code>.</p></li>
 <li><p>Added support for <code><a href="../reference/formula.specials.html">adjust()</a></code> in <code><a href="../reference/elo.glm.html">elo.glm()</a></code> to include adjustments in the logistic regression.</p></li>
 <li><p>Added a new inline function <code><a href="../reference/formula.specials.html">neutral()</a></code>, to denote neutral field in <code><a href="../reference/elo.glm.html">elo.glm()</a></code> and <code><a href="../reference/elo.markovchain.html">elo.markovchain()</a></code>.</p></li>
 <li><p>Removed the <code>rm.ties=</code> argument from <code><a href="../reference/elo.glm.html">elo.glm()</a></code>. Ties will have to be removed instead with <code>subset=</code> or before running the function altogether.</p></li>
-<li><p>Added <code><a href="../reference/elo.markovchain.html">elo.markovchain()</a></code>, with corresponding methods for <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, <code><a href="https://rdrr.io/r/stats/fitted.values.html">fitted()</a></code>, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>, <code><a href="../reference/elo.mse.html">mse()</a></code>, <code>auc()</code>, and <code><a href="../reference/elo.favored.html">favored()</a></code>. This also has the <code>running=TRUE</code> option.</p></li>
-<li><p>Added <code><a href="../reference/elo.winpct.html">elo.winpct()</a></code>, with corresponding methods for <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, <code><a href="https://rdrr.io/r/stats/fitted.values.html">fitted()</a></code>, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>, <code><a href="../reference/elo.mse.html">mse()</a></code>, <code>auc()</code>, and <code><a href="../reference/elo.favored.html">favored()</a></code>. This also has the <code>running=TRUE</code> option.</p></li>
+<li><p>Added <code><a href="../reference/elo.markovchain.html">elo.markovchain()</a></code>, with corresponding methods for <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, <code><a href="https://rdrr.io/r/stats/fitted.values.html">fitted()</a></code>, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>, <code><a href="../reference/elo.mse.html">mse()</a></code>, <code>auc()</code>, and <code><a href="../reference/favored.elo.html">favored()</a></code>. This also has the <code>running=TRUE</code> option.</p></li>
+<li><p>Added <code><a href="../reference/elo.winpct.html">elo.winpct()</a></code>, with corresponding methods for <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, <code><a href="https://rdrr.io/r/stats/fitted.values.html">fitted()</a></code>, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>, <code><a href="../reference/elo.mse.html">mse()</a></code>, <code>auc()</code>, and <code><a href="../reference/favored.elo.html">favored()</a></code>. This also has the <code>running=TRUE</code> option.</p></li>
 <li><p>Added a function to denote margin of victory, for continuous modeling in <code><a href="../reference/elo.glm.html">elo.glm()</a></code>, <code><a href="../reference/elo.markovchain.html">elo.markovchain()</a></code>, and <code><a href="../reference/elo.winpct.html">elo.winpct()</a></code>: <code><a href="../reference/elo.mov.html">mov()</a></code>.</p></li>
 </ul>
 </div>
@@ -143,11 +143,11 @@
 <h2 class="hasAnchor">
 <a href="#new-helper-methods" class="anchor"></a>New helper methods:</h2>
 <ul>
-<li><p>Added <code><a href="../reference/elo.auc.html">auc.elo.glm()</a></code>. (<a href='https://github.com/eheinzen/elo/issues/37'>#37</a>)</p></li>
-<li><p>Made <code><a href="../reference/elo.favored.html">favored()</a></code> S3 and added <code><a href="../reference/elo.favored.html">favored.elo.glm()</a></code>. (<a href='https://github.com/eheinzen/elo/issues/38'>#38</a>)</p></li>
+<li><p>Added <code><a href="../reference/auc.elo.html">auc.elo.glm()</a></code>. (<a href='https://github.com/eheinzen/elo/issues/37'>#37</a>)</p></li>
+<li><p>Made <code><a href="../reference/favored.elo.html">favored()</a></code> S3 and added <code><a href="../reference/favored.elo.html">favored.elo.glm()</a></code>. (<a href='https://github.com/eheinzen/elo/issues/38'>#38</a>)</p></li>
 <li><p>Made <code><a href="../reference/elo.mse.html">mse()</a></code> S3 and added <code><a href="../reference/elo.mse.html">mse.elo.glm()</a></code>. (<a href='https://github.com/eheinzen/elo/issues/43'>#43</a>)</p></li>
-<li><p>Added <code><a href="../reference/summary.elo.glm.html">summary.elo.glm()</a></code>.</p></li>
-<li><p>Added <code><a href="../reference/predict.elo.glm.html">predict.elo.glm()</a></code>.</p></li>
+<li><p>Added <code><a href="../reference/summary.elo.html">summary.elo.glm()</a></code>.</p></li>
+<li><p>Added <code><a href="../reference/predict.elo.html">predict.elo.glm()</a></code>.</p></li>
 <li><p>Added <code><a href="../reference/elo.mse.html">brier()</a></code> as a synonym for <code><a href="../reference/elo.mse.html">mse()</a></code>.</p></li>
 <li><p>Added <code><a href="../reference/rank.teams.html">rank.teams()</a></code>.</p></li>
 </ul>
@@ -170,7 +170,7 @@
 <li><p>Widened the version dependency to R 3.3.0.</p></li>
 <li><p>Allowed <code><a href="../reference/formula.specials.html">players()</a></code> matrices in <code><a href="../reference/elo.run.html">elo.run()</a></code> to find Elos of individual players playing at the same time.</p></li>
 <li><p>Added <code><a href="../reference/elo.glm.html">elo.glm()</a></code>, a simple function to run logistic regressions on Elo setups.</p></li>
-<li><p>Fixed a bug in the <code><a href="../reference/elo.favored.html">favored()</a></code> function (used in <code><a href="../reference/summary.elo.run.html">summary.elo.run()</a></code>). (<a href='https://github.com/eheinzen/elo/issues/29'>#29</a>)</p></li>
+<li><p>Fixed a bug in the <code><a href="../reference/favored.elo.html">favored()</a></code> function (used in <code><a href="../reference/summary.elo.html">summary.elo.run()</a></code>). (<a href='https://github.com/eheinzen/elo/issues/29'>#29</a>)</p></li>
 <li><p>Exported and revamped the class structure of the specials allowed in formulas. (<a href='https://github.com/eheinzen/elo/issues/30'>#30</a>)</p></li>
 <li><p>Allowed access to <code><a href="../reference/elo.model.frame.html">elo.model.frame()</a></code> even when the package isn’t loaded. (<a href='https://github.com/eheinzen/elo/issues/34'>#34</a>)</p></li>
 <li><p>Allowed regression to different values for each team. (<a href='https://github.com/eheinzen/elo/issues/35'>#35</a>)</p></li>
@@ -205,7 +205,7 @@
 <ul>
 <li><p><code><a href="../reference/elo.run.html">elo.run()</a></code> no longer accepts numeric values for <code>team.A</code>.</p></li>
 <li><p><code><a href="../reference/elo.run.html">elo.run()</a></code> now accepts special functions <code><a href="../reference/formula.specials.html">group()</a></code> and <code><a href="../reference/formula.specials.html">regress()</a></code>. If the latter is used, the class of the returned object becomes <code>"elo.run.regressed"</code>. (<a href='https://github.com/eheinzen/elo/issues/11'>#11</a>, <a href='https://github.com/eheinzen/elo/issues/12'>#12</a>, <a href='https://github.com/eheinzen/elo/issues/19'>#19</a>, <a href='https://github.com/eheinzen/elo/issues/22'>#22</a>)</p></li>
-<li><p>The <code>$elos</code> component of <code>"elo.run"</code> objects has been completely reworked, and now uses 1-based indexing. Because of this, the <code><a href="../reference/elo.run.html">print.elo.run()</a></code> method also had to be fixed. (<a href='https://github.com/eheinzen/elo/issues/16'>#16</a>)</p></li>
+<li><p>The <code>$elos</code> component of <code>"elo.run"</code> objects has been completely reworked, and now uses 1-based indexing. Because of this, the <code>print.elo.run()</code> method also had to be fixed. (<a href='https://github.com/eheinzen/elo/issues/16'>#16</a>)</p></li>
 </ul>
 </li>
 <li><p>Renamed <code>last()</code> to <code><a href="../reference/elo.run.helpers.html">final.elos()</a></code> (<a href='https://github.com/eheinzen/elo/issues/9'>#9</a>).</p></li>
@@ -226,9 +226,9 @@
 <a href="#new-functions" class="anchor"></a>New Functions:</h2>
 <ul>
 <li><p>Implemented <code><a href="../reference/elo.model.frame.html">elo.model.frame()</a></code>. The output is a <code>data.frame</code> with appropriately named columns.</p></li>
-<li><p>Implemented <code><a href="../reference/predict.elo.run.html">predict.elo.run()</a></code> and <code><a href="../reference/predict.elo.run.html">predict.elo.run.regressed()</a></code>. (<a href='https://github.com/eheinzen/elo/issues/2'>#2</a>, <a href='https://github.com/eheinzen/elo/issues/19'>#19</a>)</p></li>
+<li><p>Implemented <code><a href="../reference/predict.elo.html">predict.elo.run()</a></code> and <code><a href="../reference/predict.elo.html">predict.elo.run.regressed()</a></code>. (<a href='https://github.com/eheinzen/elo/issues/2'>#2</a>, <a href='https://github.com/eheinzen/elo/issues/19'>#19</a>)</p></li>
 <li><p>Added <code><a href="../reference/score.html">is.score()</a></code> to test for “score-ness”.</p></li>
-<li><p>Implemented <code><a href="../reference/summary.elo.run.html">summary.elo.run()</a></code>, along with helpers to calculate AUC and MSE (<code>auc()</code> and <code><a href="../reference/elo.mse.html">mse()</a></code>). (<a href='https://github.com/eheinzen/elo/issues/15'>#15</a>)</p></li>
+<li><p>Implemented <code><a href="../reference/summary.elo.html">summary.elo.run()</a></code>, along with helpers to calculate AUC and MSE (<code>auc()</code> and <code><a href="../reference/elo.mse.html">mse()</a></code>). (<a href='https://github.com/eheinzen/elo/issues/15'>#15</a>)</p></li>
 </ul>
 </div>
 </div>
