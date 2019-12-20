@@ -17,4 +17,4 @@ plus one new feature. We also added a URL linking to our new "pkgdown" site.
 
 ## Reverse dependencies
 
-There are no reverse dependencies.
+fitzRoy: OK
