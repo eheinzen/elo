@@ -7,7 +7,7 @@ plus one new feature. We also added a URL linking to our new "pkgdown" site.
 
 * R 3.6.1 (local Linux install)
 
-* ubuntu 16.04 (on travis-ci): R devel, R 3.6.1, R 3.5.3, R 3.4.2, R 3.3.1
+* ubuntu 16.04 (on travis-ci): R devel, R 3.6.2, R 3.5.3, R 3.4.2, R 3.3.1
 
 * win-builder (devel and release)
 
