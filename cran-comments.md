@@ -1,3 +1,8 @@
+## Submission for elo 2.1.1
+
+2.1.0 had a date field that was one year off (2019 instead of 2020). For some reason this was not caught
+when running R CMD check.
+
 ## Submission for elo 2.1.0
 
 This is a new version of the package. This version includes two major new functions,
