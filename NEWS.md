@@ -1,3 +1,7 @@
+# elo v2.1.1
+
+* Fixed the "Date" in DESCRIPTION.
+
 # elo v2.1.0
 
 * Added `elo.colley()`, with its corresponding helper functions.
