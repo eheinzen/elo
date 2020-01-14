@@ -8,11 +8,13 @@
 
 <title>Details on <code>elo</code> formulas and the specials therein — players • elo</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,10 +34,11 @@
 
 
 
-<meta property="og:title" content="Details on <code>elo</code> formulas and the specials therein — players" />
 
+<meta property="og:title" content="Details on <code>elo</code> formulas and the specials therein — players" />
 <meta property="og:description" content="Details on elo functions and the special functions allowed in them to change functions' behaviors." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -88,7 +91,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/eheinzen/elo">
@@ -115,9 +117,7 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Details on <code>elo</code> functions and the special functions allowed in them to change functions' behaviors.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>players</span>(<span class='no'>...</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -131,7 +131,7 @@
 <span class='fu'>group</span>(<span class='no'>x</span>)
 
 <span class='fu'>neutral</span>(<span class='no'>x</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -166,7 +166,7 @@ as the number of teams.</p></td>
       <td><p>Logical: whether to continue regressing teams which have stopped playing.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>In the functions in this package, <code>formula</code> is usually of the form <code>wins.A ~ elo.A + elo.B</code>,
@@ -203,16 +203,14 @@ as the number of teams.</p></td>
   are assumed to have home field advantage.</p>
 <p><code>players()</code> is used for multiple players on a team contributing to an overall Elo. The Elo updates
   are then assigned based on the specified weights. The weights are ignored in <code><a href='elo.glm.html'>elo.glm</a></code>.</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#details">Details</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>

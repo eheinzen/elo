@@ -8,11 +8,13 @@
 
 <title><code>elo.run</code> — elo.run • elo</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,10 +34,11 @@
 
 
 
-<meta property="og:title" content="<code>elo.run</code> — elo.run" />
 
+<meta property="og:title" content="<code>elo.run</code> — elo.run" />
 <meta property="og:description" content="Calculate Elos for a series of matches." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -88,7 +91,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/eheinzen/elo">
@@ -115,9 +117,7 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Calculate Elos for a series of matches.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>elo.run</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='no'>na.action</span>, <span class='no'>subset</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>initial.elos</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
@@ -133,7 +133,7 @@
   <span class='kw'>prob.fun</span> <span class='kw'>=</span> <span class='no'>elo.prob</span>,
   <span class='kw'>update.fun</span> <span class='kw'>=</span> <span class='no'>elo.update</span>
 )</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -177,21 +177,18 @@ in the Elos, the win indicator, k, and any adjustments, and returns a value by w
 will be scalars, and a scalar is expected as output.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"elo.run"</code> or class <code>"elo.run.regressed"</code>.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>elo.run</code> and <code>elo.run2</code> by default return the exact same thing. <code>elo.run</code> uses C++ and may be up to 50 times faster,
   while <code>elo.run2</code> uses R but also supports custom update functions. Prefer the first unless you really need a custom update function.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='score.html'>score</a></code>, <a href='elo.run.helpers.html'>elo.run.helpers</a>elo.run helpers, <code><a href='elo.calc.html'>elo.calc</a></code>,
   <code><a href='elo.update.html'>elo.update</a></code>, <code><a href='elo.prob.html'>elo.prob</a></code>, <code><a href='elo.model.frame.html'>elo.model.frame</a></code>.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>tournament</span>)
@@ -225,13 +222,9 @@ will be scalars, and a scalar is expected as output.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
