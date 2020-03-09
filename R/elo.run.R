@@ -5,6 +5,8 @@
 #'
 #' @inheritParams elo.calc
 #' @param initial.elos An optional named vector containing initial Elo ratings for all teams in \code{formula}.
+#'   If a single (unnamed) value is supplied, that value is applied to all teams. \code{NULL} (the default)
+#'   sets all elos to 1500.
 #' @param ... Other arguments (not used at this time).
 #' @return An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
 #' @examples
