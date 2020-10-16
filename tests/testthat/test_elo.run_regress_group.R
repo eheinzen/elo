@@ -66,34 +66,33 @@ test_that("multiple regress 'to' works", {
 
 test_that("group works()", {
   expect_eq(
-    as.matrix(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat))[2:3, ],
     as.matrix(elo.run(wins.A ~ team.A + team.B + group(week), k = 20, data = dat)),
-    as.matrix(elo.run2(wins.A ~ team.A + team.B, k = 20, data = dat))[2:3, ],
-    as.matrix(elo.run2(wins.A ~ team.A + team.B + group(week), k = 20, data = dat))
+    as.matrix(elo.run2(wins.A ~ team.A + team.B + group(week), k = 20, data = dat)),
+    matrix(c(1520, 1520, 1490, 1500, 1490, 1480), nrow = 2, dimnames = list(NULL, names(init)))
   )
   expect_eq(
-    as.matrix(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat))[2:3, ],
     as.matrix(elo.run(wins.A ~ team.A + team.B + group(c(FALSE, TRUE, TRUE)), k = 20, data = dat)),
-    as.matrix(elo.run2(wins.A ~ team.A + team.B, k = 20, data = dat))[2:3, ],
-    as.matrix(elo.run2(wins.A ~ team.A + team.B + group(c(FALSE, TRUE, TRUE)), k = 20, data = dat))
+    as.matrix(elo.run2(wins.A ~ team.A + team.B + group(c(FALSE, TRUE, TRUE)), k = 20, data = dat)),
+    matrix(c(1520, 1520, 1490, 1500, 1490, 1480), nrow = 2, dimnames = list(NULL, names(init)))
   )
 })
 
 test_that("'group()' and 'regress()' both work", {
+  expect_error(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2) + group(week), k = 20, data = dat), "regress mid-group")
   expect_eq(
-    rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2), k = 20, data = dat), 2:3),
-    rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2) + group(week), k = 20, data = dat)),
-    rnd.mat(elo.run2(wins.A ~ team.A + team.B + regress(season, 1500, 0.2), k = 20, data = dat), 2:3),
-    rnd.mat(elo.run2(wins.A ~ team.A + team.B + regress(season, 1500, 0.2) + group(week), k = 20, data = dat))
+    rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(week, 1500, 0.2) + group(week), k = 20, data = dat)),
+    rnd.mat(elo.run2(wins.A ~ team.A + team.B + regress(week, 1500, 0.2) + group(week), k = 20, data = dat)),
+    matrix(c(1520, 1516, 1490, 1502, 1490, 1482), nrow = 2, dimnames = list(NULL, names(init)))
   )
 })
 
 test_that("'formula' can be in any order", {
   expect_eq(
-    rnd.mat(elo.run(wins.A ~ team.A + team.B + regress(season, 1500, 0.2), k = 20, data = dat), 2:3),
-    rnd.mat(elo.run(wins.A ~ k(k.column) + team.A + regress(season, 1500, 0.2) + group(week) + team.B, data = dat)),
-    rnd.mat(elo.run2(wins.A ~ team.A + team.B + regress(season, 1500, 0.2), k = 20, data = dat), 2:3),
-    rnd.mat(elo.run2(wins.A ~ k(k.column) + team.A + regress(season, 1500, 0.2) + group(week) + team.B, data = dat))
+    rnd.mat(elo.run(wins.A ~ team.A + team.B + group(week) + regress(week, 1500, 0.2), k = 20, data = dat)),
+    rnd.mat(elo.run(wins.A ~ k(k.column) + team.A + regress(week, 1500, 0.2) + group(week) + team.B, data = dat)),
+
+    rnd.mat(elo.run2(wins.A ~ team.A + group(week) + team.B + regress(week, 1500, 0.2), k = 20, data = dat)),
+    rnd.mat(elo.run2(wins.A ~ k(k.column) + team.A + regress(week, 1500, 0.2) + group(week) + team.B, data = dat))
   )
 })
 

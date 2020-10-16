@@ -74,11 +74,11 @@ test_that("'group()' and 'regress()' work with players()", {
 
   # as.matrix works right for grouping
   expect_identical(
-    rnd.mat(elo.run(wins.A ~ players(p1.A, p2.A) + players(p1.B, p2.B) + regress(season, 750, 0.2),
-                    k = 20, data = dat, initial.elos = init.ply), 2:3),
     rnd.mat(elo.run(wins.A ~ players(p1.A, p2.A) + players(p1.B, p2.B) +
-                      regress(season, 750, 0.2) + group(week),
-                    k = 20, data = dat, initial.elos = init.ply))
+                      regress(week, 750, 0.2) + group(week),
+                    k = 20, data = dat, initial.elos = init.ply)),
+    matrix(c(755, 747.137, 760, 758, 755, 747.137, 590, 628.863, 890, 862, 750, 756.863), nrow = 2,
+           dimnames = list(NULL, names(init.ply)))
   )
 })
 
