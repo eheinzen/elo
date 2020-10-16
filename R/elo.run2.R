@@ -37,7 +37,7 @@ elo.run2 <- function(formula, data, na.action, subset, k = NULL, initial.elos = 
   ), class = c(if(any.regr) "elo.run.regressed", "elo.run"))
 }
 
-eloRun2 <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTeamB, regress, to, by, regressUnused, initialElos, flag, prob.fun, update.fun)
+eloRun2 <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTeamB, regress, to, by, regressUnused, group, initialElos, flag, prob.fun, update.fun)
 {
   eloRegress <- function(eloA, to, by, idx) ifelse(idx, eloA + by*(to - eloA), eloA)
 
@@ -51,6 +51,8 @@ eloRun2 <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTea
   currElo <- numeric(nTeams)
   usedYet <- logical(nTeams)
   currElo <- initialElos # R automatically deep copies
+  groupElo <- numeric(nTeams)
+  groupElo <- initialElos # R automatically deep copies
 
   out <- matrix(0, nrow = nGames, ncol = 4 + 2*nBoth)
   regOut <- matrix(0, nrow = nRegress, ncol = nTeams)
@@ -60,12 +62,15 @@ eloRun2 <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTea
   {
     e1 <- numeric(ncolA)
     e2 <- numeric(ncolB)
+    curr1 <- numeric(ncolA)
+    curr2 <- numeric(ncolB)
 
     # get initial Elos for team A
     for(j in seq_len(ncolA))
     {
       tmA <- teamA[i, j] + 1
-      e1[j] <- currElo[tmA]
+      e1[j] <- groupElo[tmA]
+      curr1[j] <- currElo[tmA]
       usedYet[tmA] <- TRUE
       out[i, j] <- tmA
     }
@@ -76,11 +81,13 @@ eloRun2 <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTea
       if(flag == 2)
       {
         e2[l] <- teamB[i, l]
+        curr2[l] <- teamB[i, l]
         out[i, ncolA + l] <- 0
       } else
       {
         tmB <- teamB[i, l] + 1
-        e2[l] <- currElo[tmB]
+        e2[l] <- groupElo[tmB]
+        curr2[l] <- currElo[tmB]
         usedYet[tmB] <- TRUE
         out[i, ncolA + l] <- tmB
       }
@@ -99,7 +106,7 @@ eloRun2 <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTea
     # store new Elos for team A
     for(j in seq_len(ncolA))
     {
-      tmp <- e1[j] + updt1 * weightsA[j]
+      tmp <- curr1[j] + updt1 * weightsA[j]
       out[i, nBoth + 4 + j] <- tmp
       currElo[teamA[i, j] + 1] <- tmp
     }
@@ -109,10 +116,10 @@ eloRun2 <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTea
     {
       if(flag == 2)
       {
-        out[i, nBoth + 4 + ncolA + l] <- e2[l]
+        out[i, nBoth + 4 + ncolA + l] <- curr2[l]
       } else
       {
-        tmp <- e2[l] + updt2 * weightsB[l]
+        tmp <- curr2[l] + updt2 * weightsB[l]
         out[i, nBoth + 4 + ncolA + l] <- tmp
         currElo[teamB[i, l] + 1] <- tmp
       }
@@ -131,6 +138,11 @@ eloRun2 <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTea
           usedYet[l] <- FALSE
         }
       }
+    }
+
+    if(group[i])
+    {
+      groupElo = currElo;
     }
   }
 

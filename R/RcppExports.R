@@ -13,8 +13,8 @@ eloColley <- function(teamA, teamB, winsA, weightsA, weightsB, weights, k, nTeam
     .Call('_elo_eloColley', PACKAGE = 'elo', teamA, teamB, winsA, weightsA, weightsB, weights, k, nTeams)
 }
 
-eloRun <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTeamB, regress, to, by, regressUnused, initialElos, flag) {
-    .Call('_elo_eloRun', PACKAGE = 'elo', teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTeamB, regress, to, by, regressUnused, initialElos, flag)
+eloRun <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTeamB, regress, to, by, regressUnused, group, initialElos, flag) {
+    .Call('_elo_eloRun', PACKAGE = 'elo', teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTeamB, regress, to, by, regressUnused, group, initialElos, flag)
 }
 
 finalElos <- function(mat, nTeams) {

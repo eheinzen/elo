@@ -29,6 +29,9 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   regress <- check_group_regress(mf$regress)
   to <- check_named_elos(attr(mf$regress, "to"), all.teams)
 
+  group <- check_group_regress(mf$group, gt.zero = TRUE)
+  if(any(regress & !group)) stop("You can't regress mid-group")
+
   tmp <- stats::setNames(seq_along(initial.elos) - 1L, names(initial.elos))
   t1 <- matrix(tmp[t1], nrow = nrow(t1))
   if(flag != 2) t2 <- matrix(tmp[t2], nrow = nrow(t2))
@@ -37,6 +40,7 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
        k = mf$k, adjTeamA = mf$adj.A, adjTeamB = mf$adj.B, regress = regress,
        to = to, by = attr(mf$regress, "by"),
        regressUnused = attr(mf$regress, "regress.unused"),
+       group = group,
        initialElos = initial.elos, flag = flag)
 }
 
