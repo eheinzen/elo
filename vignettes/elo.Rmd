@@ -129,8 +129,20 @@ elo.run(score(points.Home, points.Visitor) ~ team.Home + elo.Visitor +
 
 ## Group matches
 
-The special function `group()` doesn't affect `elo.run()`, but determines matches
-to group together in `as.matrix()` (below).
+The special function `group()` tells `elo.run()` when to update Elos. It also determines matches
+to group together in `as.matrix()`.
+
+```{r}
+er <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor +
+                group(week),
+              data = tournament, k = 20)
+as.matrix(er)
+```
+
+This can be useful in situations when using the Elo framework for games which aren't explicitly head-to-head (e.g., golf, swimming).
+For those situations, the person who won can be considered as having beaten (head-to-head) every other person.
+The person who came in second "beat" everyone but the first. However, we wouldn't want to update Elos after every "head-to-head";
+rather, they should all be considered together in updating Elo.
 
 ## Helper functions
 

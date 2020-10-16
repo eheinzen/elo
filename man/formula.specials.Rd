@@ -73,7 +73,8 @@ In the functions in this package, \code{formula} is usually of the form \code{wi
   (\code{by = }), and whether to continue regressing teams which have stopped playing (\code{regress.unused},
   default = \code{TRUE}).
 
-\code{group()} is used to group matches (by, e.g., week). It is fed to \code{\link{as.matrix.elo.run}}
+\code{group()} is used to group matches (by, e.g., week). For \code{\link{elo.run}}, Elos are not updated until
+  the group changes. It is also fed to \code{\link{as.matrix.elo.run}}, giving the number of rows to return.
   to produce only certain rows of matrix output. It also determines how many models to run (and on what data)
   for \code{\link{elo.glm}} and \code{\link{elo.markovchain}} when \code{running=TRUE}.
 

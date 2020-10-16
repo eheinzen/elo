@@ -1,3 +1,11 @@
+# elo v2.1.1.9000
+
+* Improved documentation
+
+* Fixed a bug with the `as.data.frame()` method for `elo.run()` when `players()` are involved. (#55)
+
+* Changed the impact of the `group()` formula special in `elo.run()`. It now indicates when to update Elos. (#54)
+
 # elo v2.1.1
 
 * Fixed the "Date" in DESCRIPTION.
