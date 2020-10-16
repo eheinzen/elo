@@ -54,9 +54,14 @@ as.matrix.elo.run.regressed <- function(x, ...)
 as.data.frame.elo.run <- function(x, ...)
 {
   out <- as.data.frame(x$elos)
-  colnames(out) <- c("team.A", "team.B", "p.A", "wins.A", "update.A", "update.B", "elo.A", "elo.B")
-  out$team.A <- factor(out$team.A, levels = seq_along(x$teams), labels = x$teams)
-  out$team.B <- factor(out$team.B, levels = seq_along(x$teams), labels = x$teams)
+  nm.a <- if(x$n.players[1] > 1) paste0(".", seq_len(x$n.players[1])) else ""
+  nm.b <- if(x$n.players[2] > 1) paste0(".", seq_len(x$n.players[2])) else ""
+
+  colnames(out) <- c(paste0("team.A", nm.a), paste0("team.B", nm.b),
+                     "p.A", "wins.A", "update.A", "update.B",
+                     paste0("elo.A", nm.a), paste0("elo.B", nm.b))
+  out[paste0("team.A", nm.a)] <- lapply(out[paste0("team.A", nm.a)], factor, levels = seq_along(x$teams), labels = x$teams)
+  out[paste0("team.B", nm.b)] <- lapply(out[paste0("team.B", nm.b)], factor, levels = seq_along(x$teams), labels = x$teams)
   out
 }
 
