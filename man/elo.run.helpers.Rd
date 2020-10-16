@@ -10,9 +10,9 @@
 \alias{final.elos.elo.run.regressed}
 \title{Helper functions for \code{elo.run}}
 \usage{
-\method{as.matrix}{elo.run}(x, ..., group = x$group)
+\method{as.matrix}{elo.run}(x, ...)
 
-\method{as.matrix}{elo.run.regressed}(x, ..., group = x$group)
+\method{as.matrix}{elo.run.regressed}(x, ...)
 
 \method{as.data.frame}{elo.run}(x, ...)
 
@@ -27,8 +27,6 @@ final.elos(x, ...)
 
 \item{...}{Other arguments (Not in use at this time).}
 
-\item{group}{A grouping vector, telling which rows to output in the matrix.}
-
 \item{regressed}{Logical, denoting whether to use the post-regressed (\code{TRUE}) or
 pre-regressed (\code{FALSE}) final Elos. Note that \code{TRUE} only makes sense when the
 final Elos were regressed one last time (i.e., if the last element of the \code{regress()})
@@ -38,7 +36,8 @@ vector yields \code{TRUE}).}
 A matrix, a data.frame, or a named vector.
 }
 \description{
-\code{as.matrix} converts an Elo object into a matrix of running Elos.
+\code{as.matrix} converts an Elo object into a matrix of running Elos. These are the Elos at the time of grouping,
+  but before any regression takes place.
 }
 \details{
 \code{as.data.frame} converts the \code{"elos"} component of an object

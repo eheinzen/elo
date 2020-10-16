@@ -1,7 +1,8 @@
 
 #' Helper functions for \code{elo.run}
 #'
-#' \code{as.matrix} converts an Elo object into a matrix of running Elos.
+#' \code{as.matrix} converts an Elo object into a matrix of running Elos. These are the Elos at the time of grouping,
+#'   but before any regression takes place.
 #'
 #' \code{as.data.frame} converts the \code{"elos"} component of an object
 #'   from \code{\link{elo.run}} into a data.frame.
@@ -10,7 +11,6 @@
 #'
 #' @param x An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
 #' @param ... Other arguments (Not in use at this time).
-#' @param group A grouping vector, telling which rows to output in the matrix.
 #' @param regressed Logical, denoting whether to use the post-regressed (\code{TRUE}) or
 #'   pre-regressed (\code{FALSE}) final Elos. Note that \code{TRUE} only makes sense when the
 #'   final Elos were regressed one last time (i.e., if the last element of the \code{regress()})
@@ -29,9 +29,9 @@ NULL
 
 #' @rdname elo.run.helpers
 #' @export
-as.matrix.elo.run <- function(x, ..., group = x$group)
+as.matrix.elo.run <- function(x, ...)
 {
-  group <- check_as_matrix(x, group)
+  group <- check_as_matrix(x, x$group)
   out <- eloRunAsMatrix(x$elos, x$initial.elos, group)
   colnames(out) <- x$teams
   out
@@ -39,9 +39,9 @@ as.matrix.elo.run <- function(x, ..., group = x$group)
 
 #' @rdname elo.run.helpers
 #' @export
-as.matrix.elo.run.regressed <- function(x, ..., group = x$group)
+as.matrix.elo.run.regressed <- function(x, ...)
 {
-  group <- check_as_matrix(x, group, regr = TRUE)
+  group <- check_as_matrix(x, x$group, regr = TRUE)
   out <- eloRunRegressedAsMatrix(x$elos, x$initial.elos, x$elos.regressed,
                                  check_group_regress(x$regress),
                                  group)
