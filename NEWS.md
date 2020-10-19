@@ -1,10 +1,16 @@
 # elo v2.1.1.9000
 
+Breaking changes: 
+
+* Changed the impact of the `group()` formula special in `elo.run()`. It now indicates when to update Elos. (#54)
+
+* Removed `elo.run2()`, to be replaced by passing arguments to `elo.run()`. A message is issued when the R backend is used.
+
+Other changes:
+
 * Improved documentation
 
 * Fixed a bug with the `as.data.frame()` method for `elo.run()` when `players()` are involved. (#55)
-
-* Changed the impact of the `group()` formula special in `elo.run()`. It now indicates when to update Elos. (#54)
 
 * Changed how `tournament` is created (though the data didn't actually change).
 

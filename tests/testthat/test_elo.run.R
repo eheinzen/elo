@@ -100,21 +100,27 @@ test_that("Multiple k's (#45)", {
 })
 
 test_that("Custom updates (#47)", {
+
+  expect_message(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat, update.fun = elo.update), "Using R")
+  expect_message(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat, update.fun = elo.update, prob.fun = elo.prob), "Using R")
+  expect_message(elo.run(wins.A ~ team.A + team.B, k = 20, data = dat, prob.fun = elo.prob), "Using R")
+  expect_message(elo.run2(wins.A ~ team.A + team.B, k = 20, data = dat))
+
   custom_fun <- function(wins.A, elo.A, elo.B, k, adjust.A, adjust.B, ...)
   {
     wins.A - elo.prob(elo.A, elo.B, adjust.A = adjust.A, adjust.B = adjust.B)
   }
   expect_eq(
-    elo.run2(wins.A ~ adjust(team.A, 10) + team.B + k(k.column), data = dat, update.fun = custom_fun)$elos,
-    elo.run2(wins.A ~ adjust(team.A, 10) + team.B, k = 20, data = dat, update.fun = custom_fun)$elos,
-    elo.run2(wins.A ~ adjust(team.A, 10) + team.B, k = 1, data = dat)$elos
+    elo.run(wins.A ~ adjust(team.A, 10) + team.B + k(k.column), data = dat, update.fun = custom_fun)$elos,
+    elo.run(wins.A ~ adjust(team.A, 10) + team.B, k = 20, data = dat, update.fun = custom_fun)$elos,
+    elo.run(wins.A ~ adjust(team.A, 10) + team.B, k = 1, data = dat)$elos
   )
   custom_fun2 <- function(wins.A, elo.A, elo.B, k, adjust.A, adjust.B, ...)
   {
     k*(wins.A - elo.prob(elo.A, elo.B, adjust.A = ifelse(elo.A > 1500, adjust.A / 2, adjust.A), adjust.B = adjust.B))
   }
   expect_identical(
-    elo.run2(wins.A ~ adjust(team.A, 10) + team.B, k = 20, data = dat, update.fun = custom_fun2)$elos[, -3],
+    elo.run(wins.A ~ adjust(team.A, 10) + team.B, k = 20, data = dat, update.fun = custom_fun2)$elos[, -3],
     elo.run2(wins.A ~ adjust(team.A, c(10, 5, 10)) + team.B, k = 20, data = dat)$elos[, -3]
   )
   custom_prob <- function(elo.A, elo.B, adjust.A, adjust.B)
@@ -122,8 +128,8 @@ test_that("Custom updates (#47)", {
     unname(1/(1 + 10^(((elo.B + adjust.B) - (elo.A + ifelse(elo.A > 1500, adjust.A / 2, adjust.A)))/400.0)))
   }
   expect_identical(
-    elo.run2(wins.A ~ adjust(team.A, 10) + team.B, k = 20, data = dat, prob.fun = custom_prob, update.fun = custom_fun2)$elos,
-    elo.run2(wins.A ~ adjust(team.A, c(10, 5, 10)) + team.B, k = 20, data = dat)$elos
+    elo.run(wins.A ~ adjust(team.A, 10) + team.B, k = 20, data = dat, prob.fun = custom_prob, update.fun = custom_fun2)$elos,
+    elo.run(wins.A ~ adjust(team.A, c(10, 5, 10)) + team.B, k = 20, data = dat)$elos
   )
 })
 

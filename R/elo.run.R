@@ -8,6 +8,16 @@
 #'   If a single (unnamed) value is supplied, that value is applied to all teams. \code{NULL} (the default)
 #'   sets all elos to 1500.
 #' @param ... Other arguments (not used at this time).
+#' @param prob.fun A function with at least 4 arguments: elo.A, elo.B, adjust.A, and adjust.B. It should return a predicted probability
+#'   that team A wins. The values passed in will be scalars, and a scalar is expected as output.
+#' @param update.fun A function with at least 6 arguments: the same as \code{\link{elo.update.default}}. The function takes
+#'   in the Elos, the win indicator, k, and any adjustments, and returns a value by which to update the Elos. The values passed in
+#'   will be scalars, and a scalar is expected as output.
+#' @param verbose Should a message be issued when R is used (over C++)?
+#' @details
+#'   \code{elo.run} is run two different ways: the first (default) uses C++ and may be up to 50 times faster,
+#'   while the second (when \code{prob.fun} or \code{update.fun} are specified) uses R but also supports custom update functions.
+#'   Prefer the first unless you really need a custom update function.
 #' @return An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
 #' @examples
 #' data(tournament)
@@ -38,7 +48,7 @@ NULL
 
 #' @rdname elo.run
 #' @export
-elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = NULL, ...)
+elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = NULL, ..., prob.fun = elo.prob, update.fun = elo.update, verbose = TRUE)
 {
   Call <- match.call()
   Call[[1L]] <- quote(elo::elo.model.frame)
@@ -49,7 +59,16 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
   Terms <- stats::terms(mf)
 
   checked <- check_elo_run_vars(mf, initial.elos)
-  out <- do.call(eloRun, checked)
+  if(missing(prob.fun) && missing(update.fun))
+  {
+    out <- do.call(eloRun, checked)
+  } else
+  {
+    if(verbose) message("Using R instead of C++")
+    checked$prob.fun <- match.fun(prob.fun)
+    checked$update.fun <- match.fun(update.fun)
+    out <- do.call(eloRun2, checked)
+  }
   any.regr <- any(checked$regress)
 
   structure(list(

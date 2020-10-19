@@ -28,3 +28,12 @@ expect_eq <- function(x, y, z, w = NULL)
   expect_equal(x, z)
   if(!is.null(w)) expect_equal(x, w)
 }
+
+elo.run2 <- function(...)
+{
+  Call <- match.call()
+  Call[[1]] <- quote(elo::elo.run)
+  Call$update.fun <- quote(elo::elo.update)
+  Call$prob.fun <- quote(elo::elo.prob)
+  eval(Call, parent.frame())
+}

@@ -192,7 +192,8 @@ predict(results, newdata = newdat)
 
 ## Advanced: custom probability and updates
 
-We now get to `elo.run2()`, a copy of `elo.run()` (but implemented in R) that allows for custom probability calculations and Elo updates.
+We now get to `elo.run()` when custom probability calculations and Elo updates are needed. Note that
+these use cases are coded in R instead of C++ and may run as much as 50x slower than the default.
 
 For instance, suppose you want to change the adjustment based on team A's current Elo:
 
@@ -206,8 +207,8 @@ custom_prob <- function(elo.A, elo.B, adjust.A, adjust.B)
 {
   1/(1 + 10^(((elo.B + adjust.B) - (elo.A + ifelse(elo.A > 1500, adjust.A / 2, adjust.A)))/400.0))
 }
-er2 <- elo.run2(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
-                data = tournament, k = 20, prob.fun = custom_prob, update.fun = custom_update)
+er2 <- elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+               data = tournament, k = 20, prob.fun = custom_prob, update.fun = custom_update)
 final.elos(er2)
 ```
 
