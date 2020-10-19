@@ -6,6 +6,8 @@
 
 * Changed the impact of the `group()` formula special in `elo.run()`. It now indicates when to update Elos. (#54)
 
+* Changed how `tournament` is created (though the data didn't actually change).
+
 # elo v2.1.1
 
 * Fixed the "Date" in DESCRIPTION.
