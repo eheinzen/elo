@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">elo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1.9000</span>
       </span>
     </div>
 
@@ -113,17 +113,33 @@
       <small>Source: <a href='https://github.com/eheinzen/elo/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="elo-v2-1-1" class="section level1">
+    <div id="elo-v2119000" class="section level1">
 <h1 class="page-header">
-<a href="#elo-v2-1-1" class="anchor"></a>elo v2.1.1<small> Unreleased </small>
+<a href="#elo-v2119000" class="anchor"></a>elo v2.1.1.9000<small> Unreleased </small>
+</h1>
+<p>Breaking changes:</p>
+<ul>
+<li><p>Changed the impact of the <code><a href="../reference/formula.specials.html">group()</a></code> formula special in <code><a href="../reference/elo.run.html">elo.run()</a></code>. It now indicates when to update Elos. (<a href='https://github.com/eheinzen/elo/issues/54'>#54</a>)</p></li>
+<li><p>Removed <code><a href="../reference/elo.run.html">elo.run2()</a></code>, to be replaced by passing arguments to <code><a href="../reference/elo.run.html">elo.run()</a></code>. A message is issued when the R backend is used.</p></li>
+</ul>
+<p>Other changes:</p>
+<ul>
+<li><p>Improved documentation</p></li>
+<li><p>Fixed a bug with the <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> method for <code><a href="../reference/elo.run.html">elo.run()</a></code> when <code><a href="../reference/formula.specials.html">players()</a></code> are involved. (<a href='https://github.com/eheinzen/elo/issues/55'>#55</a>)</p></li>
+<li><p>Changed how <code>tournament</code> is created (though the data didn’t actually change).</p></li>
+</ul>
+</div>
+    <div id="elo-v211" class="section level1">
+<h1 class="page-header">
+<a href="#elo-v211" class="anchor"></a>elo v2.1.1<small> 2020-01-14 </small>
 </h1>
 <ul>
 <li>Fixed the “Date” in DESCRIPTION.</li>
 </ul>
 </div>
-    <div id="elo-v2-1-0" class="section level1">
+    <div id="elo-v210" class="section level1">
 <h1 class="page-header">
-<a href="#elo-v2-1-0" class="anchor"></a>elo v2.1.0<small> Unreleased </small>
+<a href="#elo-v210" class="anchor"></a>elo v2.1.0<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>Added <code><a href="../reference/elo.colley.html">elo.colley()</a></code>, with its corresponding helper functions.</p></li>
@@ -132,9 +148,9 @@
 <li><p>Added a <code>pkgdown</code> site: <a href="https://eheinzen.github.io/elo/" class="uri">https://eheinzen.github.io/elo/</a></p></li>
 </ul>
 </div>
-    <div id="elo-v2-0-0" class="section level1">
+    <div id="elo-v200" class="section level1">
 <h1 class="page-header">
-<a href="#elo-v2-0-0" class="anchor"></a>elo v2.0.0<small> 2019-08-02 </small>
+<a href="#elo-v200" class="anchor"></a>elo v2.0.0<small> 2019-08-02 </small>
 </h1>
 <div id="new-functionsfunctionality" class="section level2">
 <h2 class="hasAnchor">
@@ -173,9 +189,9 @@
 </ul>
 </div>
 </div>
-    <div id="elo-v1-1-0" class="section level1">
+    <div id="elo-v110" class="section level1">
 <h1 class="page-header">
-<a href="#elo-v1-1-0" class="anchor"></a>elo v1.1.0<small> 2019-01-21 </small>
+<a href="#elo-v110" class="anchor"></a>elo v1.1.0<small> 2019-01-21 </small>
 </h1>
 <ul>
 <li><p>Widened the version dependency to R 3.3.0.</p></li>
@@ -187,9 +203,9 @@
 <li><p>Allowed regression to different values for each team. (<a href='https://github.com/eheinzen/elo/issues/35'>#35</a>)</p></li>
 </ul>
 </div>
-    <div id="elo-v1-0-1" class="section level1">
+    <div id="elo-v101" class="section level1">
 <h1 class="page-header">
-<a href="#elo-v1-0-1" class="anchor"></a>elo v1.0.1<small> 2017-12-14 </small>
+<a href="#elo-v101" class="anchor"></a>elo v1.0.1<small> 2017-12-14 </small>
 </h1>
 <div id="smaller-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -200,9 +216,9 @@
 </ul>
 </div>
 </div>
-    <div id="elo-v1-0-0" class="section level1">
+    <div id="elo-v100" class="section level1">
 <h1 class="page-header">
-<a href="#elo-v1-0-0" class="anchor"></a>elo v1.0.0<small> 2017-11-20 </small>
+<a href="#elo-v100" class="anchor"></a>elo v1.0.0<small> 2017-11-20 </small>
 </h1>
 <p>This version is not backwards compatible!</p>
 <div id="major-changes" class="section level2">
@@ -243,17 +259,17 @@
 </ul>
 </div>
 </div>
-    <div id="elo-0-1-2" class="section level1">
+    <div id="elo-012" class="section level1">
 <h1 class="page-header">
-<a href="#elo-0-1-2" class="anchor"></a>elo 0.1.2<small> 2017-08-16 </small>
+<a href="#elo-012" class="anchor"></a>elo 0.1.2<small> 2017-08-16 </small>
 </h1>
 <ul>
 <li>Fixed a spelling error in DESCRIPTION.</li>
 </ul>
 </div>
-    <div id="elo-0-1-1" class="section level1">
+    <div id="elo-011" class="section level1">
 <h1 class="page-header">
-<a href="#elo-0-1-1" class="anchor"></a>elo 0.1.1<small> Unreleased </small>
+<a href="#elo-011" class="anchor"></a>elo 0.1.1<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>Made the title more succinct.</p></li>
@@ -262,9 +278,9 @@
 <li><p>Tweaked the README and vignette.</p></li>
 </ul>
 </div>
-    <div id="elo-0-1-0" class="section level1">
+    <div id="elo-010" class="section level1">
 <h1 class="page-header">
-<a href="#elo-0-1-0" class="anchor"></a>elo 0.1.0<small> Unreleased </small>
+<a href="#elo-010" class="anchor"></a>elo 0.1.0<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>Submit first version of <code>elo</code> to CRAN.</p></li>
@@ -277,15 +293,16 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#elo-v2-1-1">2.1.1</a></li>
-        <li><a href="#elo-v2-1-0">2.1.0</a></li>
-        <li><a href="#elo-v2-0-0">2.0.0</a></li>
-        <li><a href="#elo-v1-1-0">1.1.0</a></li>
-        <li><a href="#elo-v1-0-1">1.0.1</a></li>
-        <li><a href="#elo-v1-0-0">1.0.0</a></li>
-        <li><a href="#elo-0-1-2">0.1.2</a></li>
-        <li><a href="#elo-0-1-1">0.1.1</a></li>
-        <li><a href="#elo-0-1-0">0.1.0</a></li>
+        <li><a href="#elo-v2119000">2.1.1.9000</a></li>
+        <li><a href="#elo-v211">2.1.1</a></li>
+        <li><a href="#elo-v210">2.1.0</a></li>
+        <li><a href="#elo-v200">2.0.0</a></li>
+        <li><a href="#elo-v110">1.1.0</a></li>
+        <li><a href="#elo-v101">1.0.1</a></li>
+        <li><a href="#elo-v100">1.0.0</a></li>
+        <li><a href="#elo-012">0.1.2</a></li>
+        <li><a href="#elo-011">0.1.1</a></li>
+        <li><a href="#elo-010">0.1.0</a></li>
       </ul>
     </div>
   </div>

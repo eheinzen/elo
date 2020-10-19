@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">elo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1.9000</span>
       </span>
     </div>
 
@@ -194,7 +194,8 @@ as the number of teams.</p></td>
   what Elo to regress to (<code>to = </code>), by how much to regress toward that value
   (<code>by = </code>), and whether to continue regressing teams which have stopped playing (<code>regress.unused</code>,
   default = <code>TRUE</code>).</p>
-<p><code>group()</code> is used to group matches (by, e.g., week). It is fed to <code><a href='elo.run.helpers.html'>as.matrix.elo.run</a></code>
+<p><code>group()</code> is used to group matches (by, e.g., week). For <code><a href='elo.run.html'>elo.run</a></code>, Elos are not updated until
+  the group changes. It is also fed to <code><a href='elo.run.helpers.html'>as.matrix.elo.run</a></code>, giving the number of rows to return.
   to produce only certain rows of matrix output. It also determines how many models to run (and on what data)
   for <code><a href='elo.glm.html'>elo.glm</a></code> and <code><a href='elo.markovchain.html'>elo.markovchain</a></code> when <code>running=TRUE</code>.</p>
 <p><code>neutral()</code> is used in <code><a href='elo.glm.html'>elo.glm</a></code> and <code><a href='elo.markovchain.html'>elo.markovchain</a></code> to determine the intercept.

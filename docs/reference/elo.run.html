@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">elo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1.9000</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1><code>elo.run</code></h1>
-    <small class="dont-index">Source: <a href='https://github.com/eheinzen/elo/blob/master/R/elo.run.R'><code>R/elo.run.R</code></a>, <a href='https://github.com/eheinzen/elo/blob/master/R/elo.run2.R'><code>R/elo.run2.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/eheinzen/elo/blob/master/R/elo.run.R'><code>R/elo.run.R</code></a></small>
     <div class="hidden name"><code>elo.run.Rd</code></div>
     </div>
 
@@ -120,9 +120,7 @@
     <p>Calculate Elos for a series of matches.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>elo.run</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='no'>na.action</span>, <span class='no'>subset</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>initial.elos</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='fu'>elo.run2</span>(
+    <pre class="usage"><span class='fu'>elo.run</span>(
   <span class='no'>formula</span>,
   <span class='no'>data</span>,
   <span class='no'>na.action</span>,
@@ -131,7 +129,8 @@
   <span class='kw'>initial.elos</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>,
   <span class='kw'>prob.fun</span> <span class='kw'>=</span> <span class='no'>elo.prob</span>,
-  <span class='kw'>update.fun</span> <span class='kw'>=</span> <span class='no'>elo.update</span>
+  <span class='kw'>update.fun</span> <span class='kw'>=</span> <span class='no'>elo.update</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -159,7 +158,9 @@
     </tr>
     <tr>
       <th>initial.elos</th>
-      <td><p>An optional named vector containing initial Elo ratings for all teams in <code>formula</code>.</p></td>
+      <td><p>An optional named vector containing initial Elo ratings for all teams in <code>formula</code>.
+If a single (unnamed) value is supplied, that value is applied to all teams. <code>NULL</code> (the default)
+sets all elos to 1500.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -176,6 +177,10 @@ that team A wins. The values passed in will be scalars, and a scalar is expected
 in the Elos, the win indicator, k, and any adjustments, and returns a value by which to update the Elos. The values passed in
 will be scalars, and a scalar is expected as output.</p></td>
     </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Should a message be issued when R is used (over C++)?</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -183,8 +188,9 @@ will be scalars, and a scalar is expected as output.</p></td>
     <p>An object of class <code>"elo.run"</code> or class <code>"elo.run.regressed"</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>elo.run</code> and <code>elo.run2</code> by default return the exact same thing. <code>elo.run</code> uses C++ and may be up to 50 times faster,
-  while <code>elo.run2</code> uses R but also supports custom update functions. Prefer the first unless you really need a custom update function.</p>
+    <p><code>elo.run</code> is run two different ways: the first (default) uses C++ and may be up to 50 times faster,
+  while the second (when <code>prob.fun</code> or <code>update.fun</code> are specified) uses R but also supports custom update functions.
+  Prefer the first unless you really need a custom update function.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='score.html'>score</a></code>, <a href='elo.run.helpers.html'>elo.run.helpers</a>elo.run helpers, <code><a href='elo.calc.html'>elo.calc</a></code>,
