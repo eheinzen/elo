@@ -8,6 +8,8 @@ Breaking changes:
 
 * The `[.elo.k()` (new) and `[.elo.players.matrix()` methods now drop any extra classes when `j=` is specified.
 
+* Changed a warning to an error in `final.elos()` when using `regressed=TRUE` without regression after the last game.
+
 Other changes:
 
 * Improved documentation
