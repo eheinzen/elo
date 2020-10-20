@@ -7,6 +7,9 @@ players <- function(..., weights = NULL)
   as.elo.players.matrix(do.call(cbind, args), weights = weights)
 }
 
+#' @export
+is.na.elo.players.matrix <- function(x) rowSums(is.na(unclass(x))) > 0
+
 as.elo.players.matrix <- function(x, weights = attr(x, "weights"))
 {
   if(!is.matrix(x)) stop("'x' isn't a matrix.")
@@ -30,7 +33,8 @@ as.matrix.elo.players.matrix <- function(x, ...)
 #' @export
 `[.elo.players.matrix` <- function(x, i, j, drop = FALSE)
 {
-  as.elo.players.matrix(as.matrix(x)[i, j, drop = FALSE], attr(x, "weights")[j])
+  if(!missing(j)) return(NextMethod())
+  as.elo.players.matrix(as.matrix(x)[i, , drop = FALSE], attr(x, "weights"))
 }
 
 #' @export
@@ -40,3 +44,4 @@ length.elo.players.matrix <- function(x) nrow(x)
 weights.elo.players.matrix <- function(object, ...) attr(object, "weights")
 
 is.players <- function(x) inherits(x, "elo.players.matrix")
+

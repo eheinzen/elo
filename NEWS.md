@@ -6,6 +6,8 @@ Breaking changes:
 
 * Removed `elo.run2()`, to be replaced by passing arguments to `elo.run()`. A message is issued when the R backend is used.
 
+* The `[.elo.k()` (new) and `[.elo.players.matrix()` methods now drop any extra classes when `j=` is specified.
+
 Other changes:
 
 * Improved documentation
@@ -13,6 +15,8 @@ Other changes:
 * Fixed a bug with the `as.data.frame()` method for `elo.run()` when `players()` are involved. (#55)
 
 * Changed how `tournament` is created (though the data didn't actually change).
+
+* Made some methods more explicit: `length.elo.k()`, `is.na.elo.k()`, `[.elo.k()`, `is.na.elo.players.matrix()`
 
 # elo v2.1.1
 

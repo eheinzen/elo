@@ -64,7 +64,25 @@ NULL
 k <- function(x, y = NULL)
 {
   if(!is.null(y)) x <- matrix(c(x, y), ncol = 2)
-  structure(x, class = c("elo.k", class(x)))
+  structure(x, class = c("elo.k", class(x)[class(x) != "elo.k"]))
+}
+
+#' @export
+length.elo.k <- function(x) NROW(unclass(x))
+
+#' @export
+is.na.elo.k <- function(x)
+{
+  if(NCOL(x) == 1) NextMethod() else rowSums(is.na(unclass(x))) > 0
+}
+
+#' @export
+`[.elo.k` <- function(x, i, j, drop = FALSE)
+{
+  if(!missing(j)) return(NextMethod())
+  y <- if(NCOL(x) == 1) NextMethod() else unclass(x)[i, , drop = FALSE]
+  class(y) <- class(x)
+  y
 }
 
 remove_elo_k <- function(x)
