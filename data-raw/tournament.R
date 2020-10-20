@@ -31,3 +31,17 @@ rownames(tournament) <- NULL
 attr(tournament, "out.attrs") <- NULL
 
 usethis::use_data(tournament)
+
+
+
+library(tidyverse)
+tournament.multiteam <- tournament %>%
+  pivot_longer(c(-week, -half), names_pattern = "(.*)\\.(.*)", names_to = c(".value", "home.vis")) %>%
+  arrange(week, home.vis, desc(points), team) %>%
+  group_by(week, home.vis) %>%
+  mutate(place = paste0("Place_", 1:n())) %>%
+  ungroup() %>%
+  select(-points) %>%
+  pivot_wider(names_from = place, values_from = team) %>%
+  select(-home.vis)
+usethis::use_data(tournament.multiteam)

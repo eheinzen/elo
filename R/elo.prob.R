@@ -78,3 +78,16 @@ elo.prob.formula <- function(formula, data, na.action, subset, ..., elos = NULL)
 
   elo.prob(mf$elo.A, mf$elo.B, ..., adjust.A = mf$adj.A, adjust.B = mf$adj.B, elos = elos)
 }
+
+#' @rdname elo.prob
+#' @export
+elo.prob.elo.multiteam.matrix <- function(elo.A, ..., elos = NULL)
+{
+  elo.A <- unclass(elo.A)
+  all.teams <- sort(unique(as.vector(elo.A)))
+  elos <- check_named_elos(elos, all.teams)
+
+  elo.A <- matrix(elos[elo.A], nrow = nrow(elo.A))
+  out <- 10^(elo.A/400.0)
+  out / rowSums(out, na.rm = TRUE)
+}

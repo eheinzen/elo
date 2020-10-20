@@ -12,6 +12,8 @@ elo.prob(elo.A, ...)
 \method{elo.prob}{default}(elo.A, elo.B, ..., elos = NULL, adjust.A = 0, adjust.B = 0)
 
 \method{elo.prob}{formula}(formula, data, na.action, subset, ..., elos = NULL)
+
+\method{elo.prob}{elo.multiteam.matrix}(elo.A, ..., elos = NULL)
 }
 \arguments{
 \item{elo.A, elo.B}{Numeric vectors of elo scores, or else vectors of teams.}

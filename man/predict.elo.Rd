@@ -4,6 +4,7 @@
 \alias{predict.elo}
 \alias{predict.elo.run}
 \alias{predict.elo.run.regressed}
+\alias{predict.elo.run.multiteam}
 \alias{predict.elo.glm}
 \alias{predict.elo.running}
 \alias{predict.elo.markovchain}
@@ -14,6 +15,8 @@
 \method{predict}{elo.run}(object, newdata, ...)
 
 \method{predict}{elo.run.regressed}(object, newdata, regressed = FALSE, ...)
+
+\method{predict}{elo.run.multiteam}(object, newdata, ...)
 
 \method{predict}{elo.glm}(object, newdata, type = "response", ...)
 

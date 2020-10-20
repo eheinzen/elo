@@ -12,6 +12,8 @@ Breaking changes:
 
 Other changes:
 
+* Added `elo.run.multiteam()` for when matchups consist of multiple teams. (#54)
+
 * Improved documentation
 
 * Fixed a bug with the `as.data.frame()` method for `elo.run()` when `players()` are involved. (#55)

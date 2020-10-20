@@ -66,6 +66,18 @@ predict.elo.run.regressed <- function(object, newdata, regressed = FALSE, ...)
 
 #' @rdname predict.elo
 #' @export
+predict.elo.run.multiteam <- function(object, newdata, ...)
+{
+  if(missing(newdata) || is.null(newdata)) return(fitted(object))
+  form <- clean_elo_formula(stats::terms(object))
+  mf <- elo.model.frame(form, data = newdata, ncol.elos = 1)
+  if(any(mf$adjust.A != 0)) warning("Any adjustments using 'adjust()' are being ignored.")
+
+  elo.prob(mf$elo.A, ..., elos = final.elos(object, ...))
+}
+
+#' @rdname predict.elo
+#' @export
 predict.elo.glm <- function(object, newdata, type = "response", ...)
 {
   if(missing(newdata) || is.null(newdata)) return(stats::predict.glm(object, newdata = NULL, type = type, ...))

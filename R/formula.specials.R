@@ -55,6 +55,8 @@
 #'
 #' \code{players()} is used for multiple players on a team contributing to an overall Elo. The Elo updates
 #'   are then assigned based on the specified weights. The weights are ignored in \code{\link{elo.glm}}.
+#'
+#' \code{multiteam()} is used for matchups consisting of multiple teams and is only valid in \code{\link{elo.run.multiteam}}.
 #' @name formula.specials
 NULL
 #> NULL

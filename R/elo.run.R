@@ -71,6 +71,7 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
 
   structure(list(
     elos = out[[1]],
+    n.matches = nrow(out[[1]]),
     n.players = c(ncol(checked$teamA), ncol(checked$teamB)),
     initial.elos = checked$initialElos,
     elos.regressed = if(any.regr) out[[2]] else NULL,
@@ -85,8 +86,8 @@ elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = N
 #' @export
 print.elo.run <- function(x, ...)
 {
-  cat("\nAn object of class 'elo.run', containing information on ",
-      length(x$teams), " teams and ", nrow(x$elos), " matches.\n\n", sep = "")
+  cat("\nAn object of class '", class(x)[1], "', containing information on ",
+      length(x$teams), " teams and ", x$n.matches, " matches.\n\n", sep = "")
   invisible(x)
 }
 
@@ -94,8 +95,8 @@ print.elo.run <- function(x, ...)
 #' @export
 print.elo.run.regressed <- function(x, ...)
 {
-  cat("\nAn object of class 'elo.run.regressed', containing information on ",
-      length(x$teams), " teams and ", nrow(x$elos), " matches, with ",
+  cat("\nAn object of class '", class(x)[1], "', containing information on ",
+      length(x$teams), " teams and ", x$n.matches, " matches, with ",
       nrow(x$elos.regressed), " regressions.\n\n", sep = "")
   invisible(x)
 }
