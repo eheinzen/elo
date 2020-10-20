@@ -51,6 +51,7 @@ NULL
 elo.run <- function(formula, data, na.action, subset, k = NULL, initial.elos = NULL, ..., prob.fun = elo.prob, update.fun = elo.update, verbose = TRUE)
 {
   Call <- match.call()
+  Call <- Call[c(1, match(c("formula", "data", "subset", "na.action", "k"), names(Call), nomatch = 0))]
   Call[[1L]] <- quote(elo::elo.model.frame)
   Call$required.vars <- c("wins", "elos", "k", "group", "regress")
   Call$ncol.k <- 2

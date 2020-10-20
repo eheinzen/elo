@@ -38,6 +38,7 @@ elo.update.default <- function(wins.A, elo.A, elo.B, k, ..., adjust.A = 0, adjus
 elo.update.formula <- function(formula, data, na.action, subset, k = NULL, ...)
 {
   Call <- match.call()
+  Call <- Call[c(1, match(c("formula", "data", "subset", "na.action", "k"), names(Call), nomatch = 0))]
   Call[[1L]] <- quote(elo::elo.model.frame)
   Call$required.vars <- c("wins", "elos", "k")
   mf <- eval(Call, parent.frame())

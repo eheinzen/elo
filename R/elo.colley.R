@@ -33,6 +33,7 @@ NULL
 elo.colley <- function(formula, data, family = "binomial", weights, na.action, subset, k = 1, ..., running = FALSE, skip = 0)
 {
   Call <- match.call()
+  Call <- Call[c(1, match(c("formula", "data", "weights", "subset", "na.action", "k"), names(Call), nomatch = 0))]
   Call[[1L]] <- quote(elo::elo.model.frame)
   Call$required.vars <- c("wins", "elos", "group", "neutral", "weights", "k")
   if(is.null(Call$k)) Call$k <- 1

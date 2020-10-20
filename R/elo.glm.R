@@ -42,6 +42,7 @@ NULL
 elo.glm <- function(formula, data, family = "binomial", weights, na.action, subset, ..., running = FALSE, skip = 0)
 {
   Call <- match.call()
+  Call <- Call[c(1, match(c("formula", "data", "weights", "subset", "na.action"), names(Call), nomatch = 0))]
   Call[[1L]] <- quote(elo::elo.model.frame)
   Call$required.vars <- c("wins", "elos", "group", "neutral", "weights")
   mf <- eval(Call, parent.frame())
