@@ -4,7 +4,7 @@
 \alias{elo.calc}
 \alias{elo.calc.default}
 \alias{elo.calc.formula}
-\title{Elo functions}
+\title{Post-update Elo values}
 \usage{
 elo.calc(wins.A, ...)
 

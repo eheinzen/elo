@@ -2,7 +2,7 @@
 % Please edit documentation in R/elo.markovchain.R
 \name{elo.markovchain}
 \alias{elo.markovchain}
-\title{\code{elo.markovchain}}
+\title{Compute a Markov chain model for a series of matches.}
 \usage{
 elo.markovchain(
   formula,
@@ -45,7 +45,7 @@ groups are small, where glm would have trouble converging for the first few grou
 set to 0.5 for the skipped groups.}
 }
 \description{
-Compute a Markov chain model for a matchup.
+Compute a Markov chain model for a series of matches.
 }
 \details{
 See the vignette for details on this method. The probabilities we call 'k' purely for convenience.

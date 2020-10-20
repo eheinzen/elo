@@ -1,6 +1,4 @@
-#' \code{elo.markovchain}
-#'
-#' Compute a Markov chain model for a matchup.
+#' Compute a Markov chain model for a series of matches.
 #'
 #' @inheritParams elo.glm
 #' @param weights A vector of weights. Note that these weights are used in the Markov Chain model,

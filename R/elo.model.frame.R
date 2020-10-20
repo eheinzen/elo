@@ -13,9 +13,10 @@
 #'   denoting which variables are required to appear in the final model.frame.
 #' @param warn.k Should a warning be issued if \code{k} is specified as an argument and in \code{formula}?
 #' @param ncol.k How many columns (\code{NCOL}) should \code{k} have?
+#' @param ncol.elos How many Elo columns are expected?
 #' @seealso \code{\link{elo.run}}, \code{\link{elo.calc}}, \code{\link{elo.update}}, \code{\link{elo.prob}}
 #' @export
-elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "elos", warn.k = TRUE, ncol.k = 1)
+elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., required.vars = "elos", warn.k = TRUE, ncol.k = 1, ncol.elos = 2)
 {
   Call <- match.call()
   required.vars <- match.arg(required.vars, c("wins", "elos", "k", "group", "regress", "neutral", "weights"), several.ok = TRUE)
@@ -66,24 +67,25 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   sum.nonempty <- (!null_or_length0(k.col)) + (!null_or_length0(grp.col)) + (!null_or_length0(reg.col)) +
     (!null_or_length0(neu.col)) + (!null_or_length0(wts.col))
 
-  if(has.wins + sum.nonempty + 2 != ncol(mf))
+  if(has.wins + sum.nonempty + ncol.elos != ncol(mf))
   {
     stop("'formula' not specified correctly: found ", ncol(mf), " columns; expected ",
-         has.wins + sum.nonempty + 2)
+         has.wins + sum.nonempty + ncol.elos)
   }
 
   # figure out which columns are the "real" ones
   elo.cols <- if(sum.nonempty == 0)
   {
-    (1:2) + has.wins
+    (1:ncol.elos) + has.wins
   } else setdiff(1:ncol(mf), c(if(has.wins) 1, k.col, grp.col, reg.col, neu.col, wts.col))
-  if(length(elo.cols) != 2) stop("Trouble finding the Elo columns.")
+  stopifnot(ncol.elos %in% 1:2)
+  if(length(elo.cols) != ncol.elos) stop("Trouble finding the Elo columns.")
 
   #####################################################################
 
   out <- data.frame(row.names = 1:nrow(mf)) # in case one of the next two lines is a matrix
   out$elo.A <- remove_elo_adjust(mf[[elo.cols[1]]])
-  out$elo.B <- remove_elo_adjust(mf[[elo.cols[2]]])
+  if(ncol.elos == 2) out$elo.B <- remove_elo_adjust(mf[[elo.cols[2]]])
 
   if("wins" %in% required.vars)
   {
@@ -129,9 +131,9 @@ elo.model.frame <- function(formula, data, na.action, subset, k = NULL, ..., req
   adjs <- attr(Terms, "specials")$adjust
 
   out$adj.A <- if(null_or_length0(adjs) || !any(adjs == elo.cols[1])) 0 else attr(fix_adjust(mf[[elo.cols[1]]], naaction), "adjust")
-  out$adj.B <- if(null_or_length0(adjs) || !any(adjs == elo.cols[2])) 0 else attr(fix_adjust(mf[[elo.cols[2]]], naaction), "adjust")
+  if(ncol.elos == 2) out$adj.B <- if(null_or_length0(adjs) || !any(adjs == elo.cols[2])) 0 else attr(fix_adjust(mf[[elo.cols[2]]], naaction), "adjust")
 
-  if(!is.numeric(out$adj.A) || !is.numeric(out$adj.B)) stop("Any Elo adjustments should be numeric!")
+  if(!is.numeric(out$adj.A) || (!is.null(out$adj.B) && !is.numeric(out$adj.B))) stop("Any Elo adjustments should be numeric!")
 
   attr(out, "terms") <- Terms
   attr(out, "na.action") <- naaction

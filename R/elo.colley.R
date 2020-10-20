@@ -1,5 +1,3 @@
-#' \code{elo.colley}
-#'
 #' Compute a Colley matrix model for a matchup.
 #'
 #' @inheritParams elo.glm

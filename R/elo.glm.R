@@ -1,7 +1,4 @@
-
-#' \code{elo.glm}
-#'
-#' Compute a (usually logistic) regression model for a matchup.
+#' Compute a (usually logistic) regression model for a series of matches.
 #'
 #' @inheritParams elo.calc
 #' @param family,weights,... Arguments passed to \code{\link[stats]{glm}}.

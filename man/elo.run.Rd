@@ -2,7 +2,7 @@
 % Please edit documentation in R/elo.run.R
 \name{elo.run}
 \alias{elo.run}
-\title{\code{elo.run}}
+\title{Calculate running Elos for a series of matches.}
 \usage{
 elo.run(
   formula,
@@ -30,7 +30,7 @@ elo.run(
 
 \item{initial.elos}{An optional named vector containing initial Elo ratings for all teams in \code{formula}.
 If a single (unnamed) value is supplied, that value is applied to all teams. \code{NULL} (the default)
-sets all elos to 1500.}
+sets all Elos to 1500.}
 
 \item{...}{Other arguments (not used at this time).}
 
@@ -47,7 +47,7 @@ will be scalars, and a scalar is expected as output.}
 An object of class \code{"elo.run"} or class \code{"elo.run.regressed"}.
 }
 \description{
-Calculate Elos for a series of matches.
+Calculate running Elos for a series of matches.
 }
 \details{
 \code{elo.run} is run two different ways: the first (default) uses C++ and may be up to 50 times faster,

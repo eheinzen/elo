@@ -1,4 +1,4 @@
-#' Elo functions
+#' Elo probability
 #'
 #' Calculate the probability that team A beats team B. This is vectorized.
 #'

@@ -1,5 +1,5 @@
 
-#' Elo functions
+#' Post-update Elo values
 #'
 #' Calculate post-update Elo values. This is vectorized.
 #'

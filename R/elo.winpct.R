@@ -1,6 +1,4 @@
-#' \code{elo.winpct}
-#'
-#' Compute a (usually logistic) regression based on win percentage for a matchup.
+#' Compute a (usually logistic) regression based on win percentage for a series of matches.
 #'
 #' @inheritParams elo.glm
 #' @param weights A vector of weights. Note that these are used in calculating wins and losses but

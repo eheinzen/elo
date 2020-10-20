@@ -1,12 +1,9 @@
-
-#' \code{elo.run}
-#'
-#' Calculate Elos for a series of matches.
+#' Calculate running Elos for a series of matches.
 #'
 #' @inheritParams elo.calc
 #' @param initial.elos An optional named vector containing initial Elo ratings for all teams in \code{formula}.
 #'   If a single (unnamed) value is supplied, that value is applied to all teams. \code{NULL} (the default)
-#'   sets all elos to 1500.
+#'   sets all Elos to 1500.
 #' @param ... Other arguments (not used at this time).
 #' @param prob.fun A function with at least 4 arguments: elo.A, elo.B, adjust.A, and adjust.B. It should return a predicted probability
 #'   that team A wins. The values passed in will be scalars, and a scalar is expected as output.

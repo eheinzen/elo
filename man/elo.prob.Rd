@@ -4,7 +4,8 @@
 \alias{elo.prob}
 \alias{elo.prob.default}
 \alias{elo.prob.formula}
-\title{Elo functions}
+\alias{elo.prob.elo.multiteam.matrix}
+\title{Elo probability}
 \usage{
 elo.prob(elo.A, ...)
 

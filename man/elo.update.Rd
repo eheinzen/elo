@@ -4,7 +4,7 @@
 \alias{elo.update}
 \alias{elo.update.default}
 \alias{elo.update.formula}
-\title{Elo functions}
+\title{Elo updates}
 \usage{
 elo.update(wins.A, ...)
 

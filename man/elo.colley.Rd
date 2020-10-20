@@ -2,7 +2,7 @@
 % Please edit documentation in R/elo.colley.R
 \name{elo.colley}
 \alias{elo.colley}
-\title{\code{elo.colley}}
+\title{Compute a Colley matrix model for a matchup.}
 \usage{
 elo.colley(
   formula,

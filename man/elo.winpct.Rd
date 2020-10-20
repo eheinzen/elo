@@ -2,7 +2,7 @@
 % Please edit documentation in R/elo.winpct.R
 \name{elo.winpct}
 \alias{elo.winpct}
-\title{\code{elo.winpct}}
+\title{Compute a (usually logistic) regression based on win percentage for a series of matches.}
 \usage{
 elo.winpct(
   formula,
@@ -42,7 +42,7 @@ groups are small, where glm would have trouble converging for the first few grou
 set to 0.5 for the skipped groups.}
 }
 \description{
-Compute a (usually logistic) regression based on win percentage for a matchup.
+Compute a (usually logistic) regression based on win percentage for a series of matches.
 }
 \details{
 Win percentages are first calculated. Anything passed to \code{\link{adjust}()} in

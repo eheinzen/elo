@@ -2,7 +2,7 @@
 % Please edit documentation in R/elo.glm.R
 \name{elo.glm}
 \alias{elo.glm}
-\title{\code{elo.glm}}
+\title{Compute a (usually logistic) regression model for a series of matches.}
 \usage{
 elo.glm(
   formula,
@@ -41,7 +41,7 @@ An object of class \code{c("elo.glm", "glm")}. If \code{running==TRUE}, the clas
   is prepended.
 }
 \description{
-Compute a (usually logistic) regression model for a matchup.
+Compute a (usually logistic) regression model for a series of matches.
 }
 \details{
 The formula syntax is the same as other \code{elo} functions. A data.frame

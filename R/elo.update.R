@@ -1,5 +1,5 @@
 
-#' Elo functions
+#' Elo updates
 #'
 #' Calculate the update value for a given Elo matchup. This is used in
 #' \code{\link{elo.calc}}, which reports the post-update Elo values. This is vectorized.
