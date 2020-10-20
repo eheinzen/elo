@@ -47,5 +47,6 @@ adjustments.
 }
 \examples{
 data(tournament.multiteam)
-elo.run.multiteam(~ multiteam(Place_1, Place_2, Place_3, Place_4), data = tournament.multiteam, subset = -28, k = 20)
+elo.run.multiteam(~ multiteam(Place_1, Place_2, Place_3, Place_4),
+                  data = tournament.multiteam, subset = -28, k = 20)
 }

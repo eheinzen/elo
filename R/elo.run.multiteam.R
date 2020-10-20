@@ -16,7 +16,8 @@
 #'
 #' @examples
 #' data(tournament.multiteam)
-#' elo.run.multiteam(~ multiteam(Place_1, Place_2, Place_3, Place_4), data = tournament.multiteam, subset = -28, k = 20)
+#' elo.run.multiteam(~ multiteam(Place_1, Place_2, Place_3, Place_4),
+#'                   data = tournament.multiteam, subset = -28, k = 20)
 #' @export
 elo.run.multiteam <- function(formula, data, na.action, subset, k = NULL, initial.elos = NULL, ...)
 {
@@ -47,7 +48,7 @@ multiteam_model_frame <- function(mf)
     row <- as.character(mf$elo.A[i, ])
     row <- row[!is.na(row)]
     if(length(row) < 2) stop("One or more row of 'multiteam()' has fewer than two (non-NA) teams")
-    out <- as.data.frame(t(combn(row, 2)), stringsAsFactors = FALSE)
+    out <- as.data.frame(t(utils::combn(row, 2)), stringsAsFactors = FALSE)
     names(out) <- c("elo.A", "elo.B")
     out$wins.A <- +(match(out$elo.A, row) < match(out$elo.B, row))
     out$i <- i
