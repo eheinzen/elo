@@ -1,0 +1,240 @@
+---
+title: "Calculating Running Elo Updates"
+author: "Ethan Heinzen"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Calculating Running Elo Updates}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+library(elo)
+```
+
+# The `elo.run()` function
+
+It is useful to allow Elos to update as matches occur. We refer to this as "running" Elo scores.
+
+## With two variable Elos
+
+To calculate a series of Elo updates, use `elo.run()`. This function has a `formula = ` and 
+`data = ` interface. We first load the dataset `tournament`.
+
+```{r}
+data(tournament)
+str(tournament)
+```
+
+`formula = ` should be in the format of `wins.A ~ team.A + team.B`. The `score()` function
+will help to calculate winners on the fly (1 = win, 0.5 = tie, 0 = loss).
+
+```{r}
+tournament$wins.A <- tournament$points.Home > tournament$points.Visitor
+elo.run(wins.A ~ team.Home + team.Visitor, data = tournament, k = 20)
+# on the fly
+elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament, k = 20)
+```
+
+For more complicated Elo updates, you can include the special function `k()` in the
+`formula = ` argument. Here we're taking the log of the win margin as part of our update.
+
+```{r}
+elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor +
+        k(20*log(abs(points.Home - points.Visitor) + 1)), data = tournament)
+```
+
+You can also adjust the home and visitor teams with different k's (but note that this no longer conserves total Elo score!):
+
+```{r}
+k1 <- 20*log(abs(tournament$points.Home - tournament$points.Visitor) + 1)
+elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + k(k1, k1/2), data = tournament)
+```
+
+It's also possible to adjust one team's Elo for a variety of factors
+(e.g., home-field advantage). The `adjust()` special function will take as its second
+argument a vector or a constant.
+
+```{r}
+elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+        data = tournament, k = 20)
+```
+
+## With a fixed-Elo opponent
+
+`elo.run()` also recognizes if the second column is numeric,
+and interprets that as a fixed-Elo opponent.
+
+```{r}
+tournament$elo.Visitor <- 1500
+elo.run(score(points.Home, points.Visitor) ~ team.Home + elo.Visitor,
+        data = tournament, k = 20)
+```
+
+Why would you want to do this? One instance might be when a person plays against a computer whose Elo score is known (or estimated).
+
+## Regress Elos back to the mean
+
+The special function `regress()` can be used to regress Elos back to a fixed value
+after certain matches. Giving a logical vector identifies these matches after which to
+regress back to the mean. Giving any other kind of vector regresses after the appropriate
+groupings (e.g., `duplicated(..., fromLast = TRUE)`). The other three arguments determine
+what Elo to regress to (`to = `, which could be a different value for different teams),
+by how much to regress toward that value (`by = `), and whether to regress teams which aren't
+actively playing (`regress.unused = `). Note here again that total Elo score might not be conserved.
+
+```{r}
+tournament$elo.Visitor <- 1500
+elo.run(score(points.Home, points.Visitor) ~ team.Home + elo.Visitor +
+        regress(half, 1500, 0.2),
+        data = tournament, k = 20)
+```
+
+## Group matches
+
+The special function `group()` tells `elo.run()` when to update Elos. It also determines matches
+to group together in `as.matrix()`.
+
+```{r}
+er <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor +
+                group(week),
+              data = tournament, k = 20)
+as.matrix(er)
+```
+
+This can be useful in situations when using the Elo framework for games which aren't explicitly head-to-head (e.g., golf, swimming).
+For those situations, the person who won can be considered as having beaten (head-to-head) every other person.
+The person who came in second "beat" everyone but the first. However, we wouldn't want to update Elos after every "head-to-head";
+rather, they should all be considered together in updating Elo.
+
+An example might help clarify. Suppose participants 1-3 go head-to-head in a game, with participant 2 coming in first, participant 1 coming in second,
+and participant 3 coming in last. Then we might have a dataset like
+
+```{r}
+d <- data.frame(
+  team1 = c("Part 2", "Part 2", "Part 1"),
+  team2 = c("Part 1", "Part 3", "Part 3"),
+  won = 1
+)
+d
+```
+
+We would want to consider all three of these matches at the same time, so we add a grouping variable and run `elo.run()`:
+
+```{r}
+d$group <- 1
+final.elos(elo.run(won ~ team1 + team2 + group(group), data = d, k = 20))
+```
+
+# `elo.run.multiteam()`
+
+The situation described immediately above (multiple teams instead of pairwise head-to-head) has a shortcut implemented: `elo.run.multiteam()`.
+The helper function `multiteam()` takes vectors of first-place teams (first column), second place teams (second column), etc., and does
+the heavy lifting of data manipulation for you. Note that this runs `elo.run()` in the background, but is less flexible than `elo.run()` because
+(1) there cannot be ties; (2) it does not accept adjustments; and (3) k-values are constant for each "game" (sets of head-to-head matchups).
+
+```{r}
+d2 <- data.frame(
+  first = "Part 2",
+  second = "Part 1",
+  third = "Part 3"
+)
+final.elos(elo.run.multiteam(~ multiteam(first, second, third), k = 20, data = d2))
+```
+
+A larger example shows the utility of this function:
+
+```{r}
+data("tournament.multiteam")
+str(tournament.multiteam)
+erm <- elo.run.multiteam(~ multiteam(Place_1, Place_2, Place_3, Place_4),
+                         data = tournament.multiteam, k = 20)
+final.elos(erm)
+```
+
+# Helper functions
+
+There are several helper functions that are useful to use when interacting with
+objects of class `"elo.run"`.
+
+`summary.elo.run()` reports some summary statistics.
+
+```{r}
+e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
+             data = tournament, k = 20)
+summary(e)
+rank.teams(e)
+```
+
+`as.matrix.elo.run()` creates a matrix of running Elos.
+
+```{r}
+head(as.matrix(e))
+```
+
+`as.data.frame.elo.run()` gives the long version (perfect, for, e.g., `ggplot2`).
+
+```{r}
+str(as.data.frame(e))
+```
+
+Finally, `final.elos()` will extract the final Elos per team.
+
+```{r}
+final.elos(e)
+```
+
+# Making Predictions
+
+It is also possible to use the Elos calculated by `elo.run()` to make predictions on future match-ups.
+
+```{r}
+results <- elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+                   data = tournament, k = 20)
+newdat <- data.frame(
+  team.Home = "Athletic Armadillos",
+  team.Visitor = "Blundering Baboons"
+)
+predict(results, newdata = newdat)
+```
+
+# Advanced: custom probability and updates
+
+We now get to `elo.run()` when custom probability calculations and Elo updates are needed. Note that
+these use cases are coded in R instead of C++ and may run as much as 50x slower than the default.
+
+For instance, suppose you want to change the adjustment based on team A's current Elo:
+
+```{r}
+custom_update <- function(wins.A, elo.A, elo.B, k, adjust.A, adjust.B, ...)
+{
+  k*(wins.A - elo.prob(elo.A, elo.B, adjust.B = adjust.B,
+                       adjust.A = ifelse(elo.A > 1500, adjust.A / 2, adjust.A)))
+}
+custom_prob <- function(elo.A, elo.B, adjust.A, adjust.B)
+{
+  1/(1 + 10^(((elo.B + adjust.B) - (elo.A + ifelse(elo.A > 1500, adjust.A / 2, adjust.A)))/400.0))
+}
+er2 <- elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+               data = tournament, k = 20, prob.fun = custom_prob, update.fun = custom_update)
+final.elos(er2)
+```
+
+Compare this to the results from the default:
+
+```{r}
+er3 <- elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
+               data = tournament, k = 20)
+final.elos(er3)
+```
+
+This example is a bit contrived, as it'd be easier just to use `adjust()` (actually, this is tested for in the tests), but the point remains.
+
+Why would you want this? Consider [fivethirtyeight's NFL Elo model](https://fivethirtyeight.com/methodology/how-our-nfl-predictions-work/),
+which uses a custom Elo update.
+
+# Final Thoughts
+
+Elo is great, but is it the best ranking/rating system? The third vignette discusses alternatives implemented in the `elo` package.

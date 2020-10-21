@@ -13,7 +13,7 @@ The `elo` package includes functions to address all kinds of Elo calculations.
 
 - `elo.calc()`: calculate post-update Elo values
 
-- `elo.run()` and `elo.run2()`: calculate "running" Elo values for a series of matches
+- `elo.run()` and `elo.run.multiteam()`: calculate "running" Elo values for a series of matches
 
 It also includes comparable models for accuracy (auc, MSE) benchmarking:
 
@@ -25,7 +25,7 @@ It also includes comparable models for accuracy (auc, MSE) benchmarking:
 
 - `elo.winpct()` which fits a model based on win percentage
 
-Please see the vignette for examples.
+Please see the vignettes for examples.
 
 # Naming Schema
 

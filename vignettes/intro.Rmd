@@ -1,0 +1,110 @@
+---
+title: "Introduction to Elo Rankings and the 'elo' Package"
+author: "Ethan Heinzen"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Introduction to Elo Rankings and the 'elo' Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction to Elo Rankings
+
+Elo is a system of ratings/rankings (named after its creator, Arpad Elo) for pairwise matchups.
+In short, pairs of "teams" ("A" and "B") begin a match with rankings $R_A$ and $R_B$.
+The result ("score") of the game is coded as 0/0.5/1 for loss/tie/win, respectively.
+The prior expectation of this result can be expressed as
+$$P_A = \frac{1}{1 + 10^{(R_B - R_A) / 400}}$$
+$$P_B = \frac{1}{1 + 10^{(R_A - R_B) / 400}} = 1 - P_A$$
+where $$P_i$$ is the prior probability that team $i$ wins the match.
+
+After each match, ratings are updated as follows:
+$$R^{new}_A = R_A + K(S_A - P_A)$$
+$$R^{new}_B = R_B + K(S_B - P_B) = R_B + K(1 - S_A - (1 - P_A)) = R_B - K(S_A - P_A)$$
+where $S_i$ is the score of team $i$ (0/0.5/1) and $K$ is an update weight (commonly called the "k-factor").
+
+Therefore, we see that the system as a whole (all teams) retains ("conserves") its total sum of Elo ratings;
+for every rating point team A gains/loses, team B loses/gains the same amount.
+
+
+# The `elo` Package
+
+The `elo` package includes functions to address all kinds of Elo calculations.
+
+```{r}
+library(elo)
+```
+
+## Naming Schema
+
+Most functions begin with the prefix "elo.", for easy autocompletion.
+
+- Vectors or scalars of Elo scores are denoted `elo.A` or `elo.B`.
+
+- Vectors or scalars of wins by team A are denoted by `wins.A`.
+
+- Vectors or scalars of win probabilities are denoted by `p.A`.
+
+- Vectors of team names are denoted `team.A` or `team.B`.
+
+# Basic Functions
+
+To calculate the probability team.A beats team.B, use `elo.prob()`:
+
+```{r}
+elo.A <- c(1500, 1500)
+elo.B <- c(1500, 1600)
+elo.prob(elo.A, elo.B)
+```
+
+To calculate the score update after the two teams play, use `elo.update()`:
+
+```{r}
+wins.A <- c(1, 0)
+elo.update(wins.A, elo.A, elo.B, k = 20)
+```
+
+To calculate the new Elo scores after the update, use `elo.calc()`:
+
+```{r}
+elo.calc(wins.A, elo.A, elo.B, k = 20)
+```
+
+It may be helpful to calculate `wins.A` from raw scores:
+
+```{r}
+points.A <- c(4, 1)
+points.B <- c(3, 3)
+elo.calc(score(points.A, points.B), elo.A, elo.B, k = 20)
+```
+
+# Formula Interface
+
+All of the "basic" functions accept formulas as input:
+
+```{r}
+dat <- data.frame(elo.A = c(1500, 1500), elo.B = c(1500, 1600),
+                  wins.A = c(1, 0), k = 20)
+form <- wins.A ~ elo.A + elo.B + k(k)
+elo.prob(form, data = dat)
+elo.update(form, data = dat)
+elo.calc(form, data = dat)
+```
+
+Note that for `elo.prob()`, `formula = ` can be more succinct:
+
+```{r}
+elo.prob(~ elo.A + elo.B, data = dat)
+```
+
+We can even adjust the Elos, for, e.g., home-field advantage.
+
+```{r}
+elo.calc(wins.A ~ adjust(elo.A, 10) + elo.B + k(k), data = dat)
+```
+
+# Final Thoughts
+
+All of these functions assume that Elo scores are constant. The next vignette explores calculating "running" Elos.

@@ -1,279 +1,24 @@
 ---
-title: "The 'elo' Package"
+title: "Comparison Methods"
 author: "Ethan Heinzen"
-date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{The 'elo' Package}
+  %\VignetteIndexEntry{Comparison Methods}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-# The `elo` Package
-
-The `elo` package includes functions to address all kinds of Elo calculations.
 
 ```{r}
 library(elo)
 ```
 
-## Naming Schema
-
-Most functions begin with the prefix "elo.", for easy autocompletion.
-
-- Vectors or scalars of Elo scores are denoted `elo.A` or `elo.B`.
-
-- Vectors or scalars of wins by team A are denoted by `wins.A`.
-
-- Vectors or scalars of win probabilities are denoted by `p.A`.
-
-- Vectors of team names are denoted `team.A` or `team.B`.
-
-# Basic Functions
-
-To calculate the probability team.A beats team.B, use `elo.prob()`:
-
-```{r}
-elo.A <- c(1500, 1500)
-elo.B <- c(1500, 1600)
-elo.prob(elo.A, elo.B)
-```
-
-To calculate the score update after the two teams play, use `elo.update()`:
-
-```{r}
-wins.A <- c(1, 0)
-elo.update(wins.A, elo.A, elo.B, k = 20)
-```
-
-To calculate the new Elo scores after the update, use `elo.calc()`:
-
-```{r}
-elo.calc(wins.A, elo.A, elo.B, k = 20)
-```
-
-# The `elo.run()` function
-
-## With two variable Elos
-
-To calculate a series of Elo updates, use `elo.run()`. This function has a `formula = ` and 
-`data = ` interface. We first load the dataset `tournament`.
-
-```{r}
-data(tournament)
-str(tournament)
-```
-
-`formula = ` should be in the format of `wins.A ~ team.A + team.B`. The `score()` function
-will help to calculate winners on the fly (1 = win, 0.5 = tie, 0 = loss).
-
-```{r}
-tournament$wins.A <- tournament$points.Home > tournament$points.Visitor
-elo.run(wins.A ~ team.Home + team.Visitor, data = tournament, k = 20)
-elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament, k = 20)
-```
-
-For more complicated Elo updates, you can include the special function `k()` in the
-`formula = ` argument. Here we're taking the log of the win margin as part of our update.
-
-```{r}
-elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor +
-        k(20*log(abs(points.Home - points.Visitor) + 1)), data = tournament)
-```
-
-You can also adjust the home and visitor teams with different k's:
-
-```{r}
-k1 <- 20*log(abs(tournament$points.Home - tournament$points.Visitor) + 1)
-elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor + k(k1, k1/2), data = tournament)
-```
-
-It's also possible to adjust one team's Elo for a variety of factors
-(e.g., home-field advantage). The `adjust()` special function will take as its second
-argument a vector or a constant.
-
-```{r}
-elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
-        data = tournament, k = 20)
-```
-
-## With a fixed-Elo opponent
-
-`elo.run()` also recognizes if the second column is numeric,
-and interprets that as a fixed-Elo opponent.
-
-```{r}
-tournament$elo.Visitor <- 1500
-elo.run(score(points.Home, points.Visitor) ~ team.Home + elo.Visitor,
-        data = tournament, k = 20)
-```
-
-## Regress Elos back to the mean
-
-The special function `regress()` can be used to regress Elos back to a fixed value
-after certain matches. Giving a logical vector identifies these matches after which to
-regress back to the mean. Giving any other kind of vector regresses after the appropriate
-groupings (see, e.g., `duplicated(..., fromLast = TRUE)`). The other three arguments determine
-what Elo to regress to (`to = `, which could be a different value for different teams),
-by how much to regress toward that value (`by = `), and whether to regress teams which aren't
-actively playing (`regress.unused = `).
-
-```{r}
-tournament$elo.Visitor <- 1500
-elo.run(score(points.Home, points.Visitor) ~ team.Home + elo.Visitor +
-        regress(half, 1500, 0.2),
-        data = tournament, k = 20)
-```
-
-## Group matches
-
-The special function `group()` tells `elo.run()` when to update Elos. It also determines matches
-to group together in `as.matrix()`.
-
-```{r}
-er <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor +
-                group(week),
-              data = tournament, k = 20)
-as.matrix(er)
-```
-
-This can be useful in situations when using the Elo framework for games which aren't explicitly head-to-head (e.g., golf, swimming).
-For those situations, the person who won can be considered as having beaten (head-to-head) every other person.
-The person who came in second "beat" everyone but the first. However, we wouldn't want to update Elos after every "head-to-head";
-rather, they should all be considered together in updating Elo.
-
-An example might help clarify. Suppose participants 1-3 go head-to-head in a game, with participant 2 coming in first, participant 1 coming in second,
-and participant 3 coming in last. Then we might have a dataset like
-
-```{r echo=FALSE}
-d <- data.frame(
-  team1 = c("Part 2", "Part 2", "Part 1"),
-  team2 = c("Part 1", "Part 3", "Part 3"),
-  won = 1
-)
-```
-
-```{r}
-d
-```
-
-We would want to consider all three of these matches at the same time, so we add a grouping variable and run `elo.run()`:
-
-```{r}
-d$group <- 1
-final.elos(elo.run(won ~ team1 + team2 + group(group), data = d, k = 20))
-```
-
-## Helper functions
-
-There are several helper functions that are useful to use when interacting with
-objects of class `"elo.run"`.
-
-`summary.elo.run()` reports some summary statistics.
-
-```{r}
-e <- elo.run(score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
-             data = tournament, k = 20)
-summary(e)
-rank.teams(e)
-```
-
-`as.matrix.elo.run()` creates a matrix of running Elos.
-
-```{r}
-head(as.matrix(e))
-```
-
-`as.data.frame.elo.run()` gives the long version (perfect, for, e.g., `ggplot2`).
-
-```{r}
-str(as.data.frame(e))
-```
-
-Finally, `final.elos()` will extract the final Elos per team.
-
-```{r}
-final.elos(e)
-```
-
-## Making Predictions
-
-It is also possible to use the Elos calculated by `elo.run()` to make predictions on future match-ups.
-
-```{r}
-results <- elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
-                   data = tournament, k = 20)
-newdat <- data.frame(
-  team.Home = "Athletic Armadillos",
-  team.Visitor = "Blundering Baboons"
-)
-predict(results, newdata = newdat)
-```
-
-## Advanced: custom probability and updates
-
-We now get to `elo.run()` when custom probability calculations and Elo updates are needed. Note that
-these use cases are coded in R instead of C++ and may run as much as 50x slower than the default.
-
-For instance, suppose you want to change the adjustment based on team A's current Elo:
-
-```{r}
-custom_update <- function(wins.A, elo.A, elo.B, k, adjust.A, adjust.B, ...)
-{
-  k*(wins.A - elo.prob(elo.A, elo.B, adjust.B = adjust.B,
-                       adjust.A = ifelse(elo.A > 1500, adjust.A / 2, adjust.A)))
-}
-custom_prob <- function(elo.A, elo.B, adjust.A, adjust.B)
-{
-  1/(1 + 10^(((elo.B + adjust.B) - (elo.A + ifelse(elo.A > 1500, adjust.A / 2, adjust.A)))/400.0))
-}
-er2 <- elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
-               data = tournament, k = 20, prob.fun = custom_prob, update.fun = custom_update)
-final.elos(er2)
-```
-
-Compare this to the results from the default:
-
-```{r}
-er3 <- elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visitor,
-               data = tournament, k = 20)
-final.elos(er3)
-```
-
-This example is a bit contrived, as it'd be easier just to use `adjust()` (actually, this is tested for in the tests), but the point remains.
-
-
-# Basic Functions Revisited - Formula Interface
-
-All three of the "basic" functions accept formulas as input, just like
-`elo.run()`.
-
-```{r}
-dat <- data.frame(elo.A = c(1500, 1500), elo.B = c(1500, 1600),
-                  wins.A = c(1, 0), k = 20)
-form <- wins.A ~ elo.A + elo.B + k(k)
-elo.prob(form, data = dat)
-elo.update(form, data = dat)
-elo.calc(form, data = dat)
-```
-
-Note that for `elo.prob()`, `formula = ` can be more succinct:
-
-```{r}
-elo.prob(~ elo.A + elo.B, data = dat)
-```
-
-We can even adjust the Elos:
-
-```{r}
-elo.calc(wins.A ~ adjust(elo.A, 10) + elo.B + k(k), data = dat)
-```
-
 # Comparison Models
 
-## Win/Loss Logistic Regression
+Now that we've explored the Elo setup, we turn our attention to other methodologies implemented in the `elo` package.
+
+# Win/Loss Logistic Regression
 
 The first model computes teams' win percentages, and feeds the differences of percentages into a regression.
 Including an adjustment using `adjust()` in the formula also includes that in the model.
@@ -303,7 +48,7 @@ summary(e.winpct)
 predict(e.winpct, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE)) # the same thing
 ```
 
-## Logistic Regression
+# Logistic Regression
 
 It's also possible to compare teams' skills using logistic regression. A matrix of dummy variables is constructed, one for each team,
 where a value of 1 indicates a home team and -1 indicates a visiting team. The intercept then indicates a home-field advantage.
@@ -334,7 +79,7 @@ summary(results)
 predict(results, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE)) # the same thing
 ```
 
-## Markov Chain
+# Markov Chain
 
 It's also possible to compare teams' skills using a Markov-chain-based model, as outlined in
 [Kvam and Sokol (2006)](https://scholarship.richmond.edu/cgi/viewcontent.cgi?article=1207&context=mathcs-faculty-publications).
@@ -369,7 +114,7 @@ summary(mc)
 predict(mc, newdata = data.frame(team.Home = "Athletic Armadillos", team.Visitor = "Blundering Baboons", stringsAsFactors = FALSE)) # the same thing
 ```
 
-### A note about LRMC
+## A note about LRMC
 
 Note that by assigning probabilities in the right way, this function emits the Logistic Regression Markov Chain
 model (LRMC). Use the in-formula function `k()` for this. IMPORTANT: note that `k()` denotes the probability
@@ -401,7 +146,7 @@ because the adjustment is only taken into account in the logistic regression to 
 the building of the transition matrix. Therefore, you'll want to also account for neutral wins/losses in
 `k()` as well.
 
-## Colley Matrix Method
+# Colley Matrix Method
 
 It's also possible to compare teams' skills using the Colley Matrix method, as outlined in
 [Colley (2002)](http://www.colleyrankings.com/matrate.pdf).

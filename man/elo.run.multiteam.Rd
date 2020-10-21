@@ -42,8 +42,8 @@ This is like \code{\link{elo.run}} (and in fact it runs \code{\link{elo.run}} in
   that the second place team loses to the first but beats the others, etc. In that regard,
   \code{elo.run.multiteam} reduces to \code{elo.run} when the number of teams (\code{ncol(multiteam())}) is 2
 
-However, this is less flexible than \code{elo.run}, because (1) there cannot be ties and (2) it does not accept
-adjustments.
+However, this is less flexible than \code{elo.run}, because (1) there cannot be ties; (2) it does not accept
+adjustments; and (3) k is constant within a "game"
 }
 \examples{
 data(tournament.multiteam)
