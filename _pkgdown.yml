@@ -5,7 +5,10 @@ reference:
       - elo.prob
       - elo.update
       - elo.calc
+  - title: "Running Elo Calculations"
+    contents:
       - elo.run
+      - elo.run.multiteam
   - title: Formula Specials
     contents:
       - k
@@ -30,5 +33,14 @@ reference:
     contents:
       - final.elos
       - tournament
+      - tournament.multiteam
       - elo.model.frame
       - elo
+
+articles:
+  - title: "Vignettes"
+    navbar: ~
+    contents:
+      - intro
+      - running_elos
+      - comparison_methods

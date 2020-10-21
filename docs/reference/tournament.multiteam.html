@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rank teams — rank.teams • elo</title>
+<title>tournament.multiteam: Mock data for examples — tournament.multiteam • elo</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Rank teams — rank.teams" />
-<meta property="og:description" content="Extract the rankings from Elo objects." />
+<meta property="og:title" content="tournament.multiteam: Mock data for examples — tournament.multiteam" />
+<meta property="og:description" content="A fake dataset containing results from &quot;animal-ball&quot; matches." />
 
 
 
@@ -129,55 +129,28 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Rank teams</h1>
-    <small class="dont-index">Source: <a href='https://github.com/eheinzen/elo/blob/master/R/rank.teams.R'><code>R/rank.teams.R</code></a></small>
-    <div class="hidden name"><code>rank.teams.Rd</code></div>
+    <h1><code>tournament.multiteam</code>: Mock data for examples</h1>
+    <small class="dont-index">Source: <a href='https://github.com/eheinzen/elo/blob/master/R/tournament.multiteam.R'><code>R/tournament.multiteam.R</code></a></small>
+    <div class="hidden name"><code>tournament.multiteam.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extract the rankings from Elo objects.</p>
+    <p>A fake dataset containing results from "animal-ball" matches.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for elo.run</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for elo.run.regressed</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, regressed <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-<span class='co'># S3 method for elo.glm</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for elo.markovchain</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for elo.winpct</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for elo.colley</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>object</th>
-      <td><p>An object.</p></td>
-    </tr>
-    <tr>
-      <th>ties.method</th>
-      <td><p>Passed to <code><a href='https://rdrr.io/r/base/rank.html'>rank</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Other arguments</p></td>
-    </tr>
-    <tr>
-      <th>regressed</th>
-      <td><p>Passed to <code><a href='elo.run.helpers.html'>final.elos</a></code>.</p></td>
-    </tr>
-    </table>
+    <p>A data frame with 56 observations on the following 4 variables:</p><dl>
+    <dt><code>week</code></dt><dd><p>Week Number</p></dd>
+    <dt><code>half</code></dt><dd><p>The half of the season in which the match was played</p></dd>
+    <dt><code>Place_1</code></dt><dd><p>The first-place team</p></dd>
+    <dt><code>Place_2</code></dt><dd><p>The second-place team</p></dd>
+    <dt><code>Place_3</code></dt><dd><p>The third-place team</p></dd>
+    <dt><code>Place_4</code></dt><dd><p>The fourth-place team</p></dd>
+  
+</dl>
 
 
   </div>

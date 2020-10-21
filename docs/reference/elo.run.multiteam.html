@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rank teams — rank.teams • elo</title>
+<title>Calculate running Elos for a series of multi-team matches. — elo.run.multiteam • elo</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Rank teams — rank.teams" />
-<meta property="og:description" content="Extract the rankings from Elo objects." />
+<meta property="og:title" content="Calculate running Elos for a series of multi-team matches. — elo.run.multiteam" />
+<meta property="og:description" content="Calculate running Elos for a series of multi-team matches." />
 
 
 
@@ -129,57 +129,78 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Rank teams</h1>
-    <small class="dont-index">Source: <a href='https://github.com/eheinzen/elo/blob/master/R/rank.teams.R'><code>R/rank.teams.R</code></a></small>
-    <div class="hidden name"><code>rank.teams.Rd</code></div>
+    <h1>Calculate running Elos for a series of multi-team matches.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/eheinzen/elo/blob/master/R/elo.run.multiteam.R'><code>R/elo.run.multiteam.R</code></a></small>
+    <div class="hidden name"><code>elo.run.multiteam.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extract the rankings from Elo objects.</p>
+    <p>Calculate running Elos for a series of multi-team matches.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for elo.run</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for elo.run.regressed</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, regressed <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for elo.glm</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for elo.markovchain</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for elo.winpct</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for elo.colley</span>
-<span class='fu'>rank.teams</span><span class='op'>(</span><span class='va'>object</span>, ties.method <span class='op'>=</span> <span class='st'>"min"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>elo.run.multiteam</span><span class='op'>(</span>
+  <span class='va'>formula</span>,
+  <span class='va'>data</span>,
+  <span class='va'>na.action</span>,
+  <span class='va'>subset</span>,
+  k <span class='op'>=</span> <span class='cn'>NULL</span>,
+  initial.elos <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>An object.</p></td>
+      <th>formula</th>
+      <td><p>A one-sided formula with a <code><a href='players.html'>multiteam</a>()</code> object.
+See also the <a href='players.html'>the help page for formulas</a> for details.</p></td>
     </tr>
     <tr>
-      <th>ties.method</th>
-      <td><p>Passed to <code><a href='https://rdrr.io/r/base/rank.html'>rank</a></code>.</p></td>
+      <th>data</th>
+      <td><p>A <code>data.frame</code> in which to look for objects in <code>formula</code>.</p></td>
+    </tr>
+    <tr>
+      <th>na.action</th>
+      <td><p>A function which indicates what should happen when the data contain NAs.</p></td>
+    </tr>
+    <tr>
+      <th>subset</th>
+      <td><p>An optional vector specifying a subset of observations.</p></td>
+    </tr>
+    <tr>
+      <th>k</th>
+      <td><p>A constant k-value (or a vector, where appropriate).</p></td>
+    </tr>
+    <tr>
+      <th>initial.elos</th>
+      <td><p>An optional named vector containing initial Elo ratings for all teams in <code>formula</code>.
+If a single (unnamed) value is supplied, that value is applied to all teams. <code>NULL</code> (the default)
+sets all Elos to 1500.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other arguments</p></td>
-    </tr>
-    <tr>
-      <th>regressed</th>
-      <td><p>Passed to <code><a href='elo.run.helpers.html'>final.elos</a></code>.</p></td>
+      <td><p>Other arguments (not used at this time).</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>This is like <code><a href='elo.run.html'>elo.run</a></code> (and in fact it runs <code><a href='elo.run.html'>elo.run</a></code> in the background).
+  The formula takes a <code><a href='players.html'>multiteam</a>()</code> object, which assumes that teams "win"
+  in a well-ordered ranking. It assumes that the first place team beats all other teams,
+  that the second place team loses to the first but beats the others, etc. In that regard,
+  <code>elo.run.multiteam</code> reduces to <code>elo.run</code> when the number of teams (<code><a href='https://rdrr.io/r/base/nrow.html'>ncol(multiteam())</a></code>) is 2</p>
+<p>However, this is less flexible than <code>elo.run</code>, because (1) there cannot be ties; (2) it does not accept
+adjustments; and (3) k is constant within a "game"</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>tournament.multiteam</span><span class='op'>)</span>
+<span class='fu'>elo.run.multiteam</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='players.html'>multiteam</a></span><span class='op'>(</span><span class='va'>Place_1</span>, <span class='va'>Place_2</span>, <span class='va'>Place_3</span>, <span class='va'>Place_4</span><span class='op'>)</span>,
+                  data <span class='op'>=</span> <span class='va'>tournament.multiteam</span>, subset <span class='op'>=</span> <span class='op'>-</span><span class='fl'>28</span>, k <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; An object of class 'elo.run.multiteam', containing information on 8 teams and 27 matches.
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
