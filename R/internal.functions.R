@@ -24,6 +24,10 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
   }
 
   all.teams <- sort(unique(all.teams))
+  tmp <- stats::setNames(seq_along(all.teams) - 1L, all.teams)
+  t1 <- matrix(tmp[t1], nrow = nrow(t1))
+  if(flag != 2) t2 <- matrix(tmp[t2], nrow = nrow(t2))
+
   initial.elos <- check_named_elos(initial.elos, all.teams)
 
   regress <- check_group_regress(mf$regress)
@@ -31,10 +35,6 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
 
   group <- check_group_regress(mf$group, gt.zero = TRUE)
   if(any(regress & !group)) stop("You can't regress mid-group")
-
-  tmp <- stats::setNames(seq_along(initial.elos) - 1L, names(initial.elos))
-  t1 <- matrix(tmp[t1], nrow = nrow(t1))
-  if(flag != 2) t2 <- matrix(tmp[t2], nrow = nrow(t2))
 
   list(winsA = mf$wins.A, teamA = t1, teamB = t2, weightsA = wts1, weightsB = wts2,
        k = mf$k, adjTeamA = mf$adj.A, adjTeamB = mf$adj.B, regress = regress,
