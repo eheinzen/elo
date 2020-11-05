@@ -66,7 +66,7 @@ check_elo_beta_vars <- function(mf, initial.alphas = NULL, initial.betas = NULL)
   if(any(regress & !group)) stop("You can't regress mid-group")
 
   list(winsA = mf$wins.A, teamA = t1, teamB = t2, weightsA = wts1, weightsB = wts2,
-       k = mf$k, adjTeamA = mf$adj.A, adjTeamB = mf$adj.B, regress = regress,
+       adjTeamA = mf$adj.A, adjTeamB = mf$adj.B, regress = regress,
        toAlpha = toAlpha, toBeta = toBeta, by = attr(mf$regress, "by"),
        regressUnused = attr(mf$regress, "regress.unused"),
        group = group,
@@ -77,10 +77,11 @@ check_elo_beta_vars <- function(mf, initial.alphas = NULL, initial.betas = NULL)
 eloBeta <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTeamB, regress, toAlpha, toBeta, by, regressUnused, group, initialAlphas, initialBetas)
 {
   eloRegress <- function(eloA, to, by, idx) ifelse(idx, eloA + by*(to - eloA), eloA)
-  betaProb <- function(alpha1, beta1, alpha2, beta2, adjust.A, adjust.B)
+  betaProb <- function(alpha1, beta1, alpha2, beta2, adjust.A, adjust.B, wtsA, wtsB)
   {
-    f <- function(x) mean(pbeta(x, alpha2 + adjust.B, beta2))*mean(dbeta(x, alpha1 + adjust.A, beta1))
-    integrate(Vectorize(f), lower = 0, upper = 1)$value
+    f <- function(x) sum(wtsA*pbeta(x, alpha2 + adjust.B, beta2))*sum(wtsB*dbeta(x, alpha1 + adjust.A, beta1))
+    f2 <- function(y) vapply(y, f, NA_real_)
+    integrate(f2, lower = 0, upper = 1)$value
   }
 
   nTeams <- length(initialAlphas)
@@ -136,7 +137,7 @@ eloBeta <- function(teamA, teamB, weightsA, weightsB, winsA, k, adjTeamA, adjTea
     }
 
     # calculate and store the update
-    prb <- betaProb(alpha1 = a1, beta1 = b1, alpha2 = a2, beta2 = b2, adjust.A = adjTeamA[i], adjust.B = adjTeamB[i])
+    prb <- betaProb(alpha1 = a1, beta1 = b1, alpha2 = a2, beta2 = b2, adjust.A = adjTeamA[i], adjust.B = adjTeamB[i], wtsA = weightsA, wtsB = weightsB)
     updt1 <- max(winsA[i] - prb, 0)
     updt2 <- max(prb - winsA[i], 0)
 
