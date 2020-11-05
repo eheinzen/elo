@@ -50,6 +50,8 @@ List eloRun(NumericMatrix teamA, NumericMatrix teamB, NumericVector weightsA, Nu
   int regRow = 0;
   for(int i = 0; i < nGames; i++)
   {
+    if(i % 1000 == 0) Rcpp::checkUserInterrupt();
+
     NumericVector e1(ncolA);
     NumericVector e2(ncolB);
     NumericVector curr1(ncolA);

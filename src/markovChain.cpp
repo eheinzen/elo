@@ -15,6 +15,8 @@ List eloMarkovChain(NumericMatrix teamA, NumericMatrix teamB, NumericVector wins
 
   for(int g = 0; g < nGames; g++)
   {
+    if(g % 1000 == 0) Rcpp::checkUserInterrupt();
+
     for(int i = 0; i < ncolA; i++)
     {
       for(int j = 0; j < ncolB; j++)

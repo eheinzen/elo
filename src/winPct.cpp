@@ -10,6 +10,8 @@ List eloWinPct(NumericVector winsA, NumericMatrix teamA, NumericMatrix teamB,
 
   for(int i = 0; i < winsA.size(); i++)
   {
+    if(i % 1000 == 0) Rcpp::checkUserInterrupt();
+
     for(int j = 0; j < ncolA; j++)
     {
       double tmA = teamA(i, j);
