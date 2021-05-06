@@ -12,6 +12,10 @@ Breaking changes:
 
 Other changes:
 
+* Added `subset=` argument to `auc()` and `favored()`.
+
+* Added `ignore.skipped=FALSE` argument to `auc()`, `favored()`, and `mse()` running methods.
+
 * Added attributes to `fitted.elo.running(..., running=TRUE)` to indicate the group (i.e., model) from which the prediction arises.
 
 * Added `elo.run.multiteam()` for when matchups consist of multiple teams. (#54)

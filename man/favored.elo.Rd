@@ -12,19 +12,19 @@
 \alias{favored.default}
 \title{Classify teams that are favored to win}
 \usage{
-favored(x, ...)
+favored(x, ..., subset = TRUE)
 
-\method{favored}{elo.run}(x, ...)
+\method{favored}{elo.run}(x, ..., subset = TRUE)
 
-\method{favored}{elo.glm}(x, ...)
+\method{favored}{elo.glm}(x, ..., subset = TRUE)
 
-\method{favored}{elo.running}(x, running = TRUE, ...)
+\method{favored}{elo.running}(x, running = TRUE, discard.skipped = FALSE, ..., subset = TRUE)
 
-\method{favored}{elo.markovchain}(x, ...)
+\method{favored}{elo.markovchain}(x, ..., subset = TRUE)
 
-\method{favored}{elo.winpct}(x, ...)
+\method{favored}{elo.winpct}(x, ..., subset = TRUE)
 
-\method{favored}{elo.colley}(x, ...)
+\method{favored}{elo.colley}(x, ..., subset = TRUE)
 
 \method{favored}{default}(x, p.A, ...)
 }
@@ -32,9 +32,13 @@ favored(x, ...)
 \item{x}{An object from \code{\link{elo.run}} or \code{\link{elo.glm}}, or for the default method
 a vector representing wins.A.}
 
-\item{...}{Other arguments (not in use at this time).}
+\item{...}{Other arguments (not used at this time).}
+
+\item{subset}{(optional) A vector of indices on which to calculate}
 
 \item{running}{logical, denoting whether to use the running predicted values.}
+
+\item{discard.skipped}{Logical, denoting whether to ignore the skipped observations in the calculation}
 
 \item{p.A}{A vector of predicted win probabilities.}
 }

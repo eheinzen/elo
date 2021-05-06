@@ -2,8 +2,8 @@
 % Please edit documentation in R/mse.R
 \name{elo.mse}
 \alias{elo.mse}
-\alias{brier}
 \alias{mse}
+\alias{brier}
 \alias{mse.elo.run}
 \alias{mse.elo.glm}
 \alias{mse.elo.running}
@@ -12,30 +12,32 @@
 \alias{mse.elo.colley}
 \title{Calculate the mean square error}
 \usage{
-brier(object, subset, ...)
+mse(object, ..., subset = TRUE)
 
-mse(object, subset, ...)
+brier(object, ..., subset = TRUE)
 
-\method{mse}{elo.run}(object, subset, ...)
+\method{mse}{elo.run}(object, ..., subset = TRUE)
 
-\method{mse}{elo.glm}(object, subset, ...)
+\method{mse}{elo.glm}(object, ..., subset = TRUE)
 
-\method{mse}{elo.running}(object, subset, running = TRUE, ...)
+\method{mse}{elo.running}(object, running = TRUE, discard.skipped = FALSE, ..., subset = TRUE)
 
-\method{mse}{elo.markovchain}(object, subset, ...)
+\method{mse}{elo.markovchain}(object, ..., subset = TRUE)
 
-\method{mse}{elo.winpct}(object, subset, ...)
+\method{mse}{elo.winpct}(object, ..., subset = TRUE)
 
-\method{mse}{elo.colley}(object, subset, ...)
+\method{mse}{elo.colley}(object, ..., subset = TRUE)
 }
 \arguments{
 \item{object}{An object}
 
-\item{subset}{(optional) A vector of indices on which to calculate the MSE.}
+\item{...}{Other arguments (not used at this time).}
 
-\item{...}{Other arguments (not in use at this time).}
+\item{subset}{(optional) A vector of indices on which to calculate}
 
 \item{running}{logical, denoting whether to use the running predicted values.}
+
+\item{discard.skipped}{Logical, denoting whether to ignore the skipped observations in the calculation}
 }
 \description{
 Calculate the mean square error (Brier score) for a model.

@@ -10,24 +10,28 @@
 \alias{auc.elo.colley}
 \title{Calculate AUC on an \code{elo.run} object}
 \usage{
-\method{auc}{elo.run}(object, ...)
+\method{auc}{elo.run}(object, ..., subset = TRUE)
 
-\method{auc}{elo.glm}(object, ...)
+\method{auc}{elo.glm}(object, ..., subset = TRUE)
 
-\method{auc}{elo.running}(object, running = TRUE, ...)
+\method{auc}{elo.running}(object, running = TRUE, discard.skipped = FALSE, ..., subset = TRUE)
 
-\method{auc}{elo.markovchain}(object, ...)
+\method{auc}{elo.markovchain}(object, ..., subset = TRUE)
 
-\method{auc}{elo.winpct}(object, ...)
+\method{auc}{elo.winpct}(object, ..., subset = TRUE)
 
-\method{auc}{elo.colley}(object, ...)
+\method{auc}{elo.colley}(object, ..., subset = TRUE)
 }
 \arguments{
 \item{object}{An object of class \code{\link{elo.run}}.}
 
 \item{...}{Other arguments (not used at this time).}
 
+\item{subset}{(optional) A vector of indices on which to calculate}
+
 \item{running}{logical, denoting whether to use the running predicted values.}
+
+\item{discard.skipped}{Logical, denoting whether to ignore the skipped observations in the calculation}
 }
 \value{
 The AUC of the predicted Elo probabilities and the actual win results.

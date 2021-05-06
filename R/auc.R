@@ -2,8 +2,7 @@
 #' Calculate AUC on an \code{elo.run} object
 #'
 #' @param object An object of class \code{\link{elo.run}}.
-#' @param running logical, denoting whether to use the running predicted values.
-#' @param ... Other arguments (not used at this time).
+#' @inheritParams mse
 #' @references Adapted from code here:
 #'   \url{https://stat.ethz.ch/pipermail/r-help/2005-September/079872.html}
 #' @return The AUC of the predicted Elo probabilities and the actual win results.
@@ -24,26 +23,28 @@ get_auc <- function(wins, probs)
 
 #' @rdname auc.elo
 #' @export
-auc.elo.run <- function(object, ...)
+auc.elo.run <- function(object, ..., subset = TRUE)
 {
   probs <- fitted(object)
   wins <- object$elos[, sum(object$n.players) + 2]
-  get_auc(wins, probs)
+  get_auc(wins[subset], probs[subset])
 }
 
 #' @rdname auc.elo
 #' @export
-auc.elo.glm <- function(object, ...)
+auc.elo.glm <- function(object, ..., subset = TRUE)
 {
-  get_auc(object$y, object$fitted.values)
+  get_auc(object$y[subset], object$fitted.values[subset])
 }
 
 #' @rdname auc.elo
 #' @export
-auc.elo.running <- function(object, running = TRUE, ...)
+auc.elo.running <- function(object, running = TRUE, discard.skipped = FALSE, ..., subset = TRUE)
 {
   if(!running) return(NextMethod())
-  get_auc(object$y, object$running.values)
+  if(!is.logical(subset)) stop("'subset' must be logical for this functionality")
+  idx <- attr(object$running.values, "group") > (if(discard.skipped) 0 else -1)
+  get_auc(object$y[idx & subset], object$running.values[idx & subset])
 }
 
 #' @rdname auc.elo
