@@ -74,8 +74,8 @@ elo.glm <- function(formula, data, family = "binomial", weights, na.action, subs
 
     for(i in setdiff(seq_len(max(grp2)), seq_len(skip)))
     {
-      if(i == 1) next
-      sbst <- grp2 %in% 1:(i-1)
+      if(i == 0) next
+      sbst <- grp2 %in% 0:(i-1)
 
       # tmpfit <- stats::glm(wins.A ~ . - 1, data = dat, subset = sbst, weights = wts, family = family)
       # ftd[grp2 == i] <- predict(tmpfit, newdata = dat[grp2 == i, ], type = "link")
@@ -85,6 +85,7 @@ elo.glm <- function(formula, data, family = "binomial", weights, na.action, subs
       ftd[grp2 == i] <- apply(dat.mat[grp2 == i, , drop = FALSE], 1, function(x) sum(x * coeff, na.rm = TRUE))
     }
     dat.glm$running.values <- dat.glm$family$linkinv(ftd)
+    attr(dat.glm$running.values, "group") <- grp2
   }
 
   structure(dat.glm, class = c(if(running) "elo.running", "elo.glm", class(dat.glm)))

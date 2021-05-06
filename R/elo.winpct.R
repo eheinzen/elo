@@ -68,8 +68,8 @@ elo.winpct <- function(formula, data, family = "binomial", weights, na.action, s
 
     for(i in setdiff(seq_len(max(grp2)), seq_len(skip)))
     {
-      if(i == 1) next
-      sbst <- grp2 %in% 1:(i-1)
+      if(i == 0) next
+      sbst <- grp2 %in% 0:(i-1)
       dat.tmp <- dat
       dat.tmp[1:2] <- lapply(dat.tmp[1:2], `[`, sbst)
       dat.tmp$teamA <- dat.tmp$teamA[sbst, , drop = FALSE]
@@ -88,6 +88,7 @@ elo.winpct <- function(formula, data, family = "binomial", weights, na.action, s
       ftd[grp2 == i] <- apply(cbind(difference, adj)[grp2 == i, , drop=FALSE], 1, function(x) sum(x * coeff, na.rm = TRUE))
     }
     out$running.values <- wl.glm$family$linkinv(ftd)
+    attr(out$running.values, "group") <- grp2
   }
 
   structure(out, class = c(if(running) "elo.running", "elo.winpct"))

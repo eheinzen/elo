@@ -32,6 +32,10 @@
 
 \item{running}{logical, denoting whether to use the running predicted values.}
 }
+\value{
+A vector of fitted values. For running values, it has an additional attribute denoting to which
+  group (i.e., which model) the prediction belongs
+}
 \description{
 Extract model values from \code{elo} functions.
 }

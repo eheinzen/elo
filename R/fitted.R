@@ -6,6 +6,8 @@
 #' @param object An object.
 #' @param ... Other arguments
 #' @param running logical, denoting whether to use the running predicted values.
+#' @return A vector of fitted values. For running values, it has an additional attribute denoting to which
+#'   group (i.e., which model) the prediction belongs
 #' @name fitted.elo
 NULL
 #> NULL
@@ -33,7 +35,10 @@ residuals.elo.run <- function(object, ...)
 fitted.elo.running <- function(object, running = TRUE, ...)
 {
   if(!running) return(NextMethod())
-  stats::napredict(object$na.action, object$running.values)
+  a <- stats::napredict(object$na.action, attr(object$running.values, "group"))
+  out <- stats::napredict(object$na.action, object$running.values)
+  attr(out, "group") <- a
+  out
 }
 
 #' @rdname fitted.elo

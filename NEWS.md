@@ -12,6 +12,8 @@ Breaking changes:
 
 Other changes:
 
+* Added attributes to `fitted.elo.running(..., running=TRUE)` to indicate the group (i.e., model) from which the prediction arises.
+
 * Added `elo.run.multiteam()` for when matchups consist of multiple teams. (#54)
 
 * Improved documentation, including expanding from 1 to 3 vignettes
