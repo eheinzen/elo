@@ -84,17 +84,7 @@ summary.elo.markovchain <- function(object, ...)
 }
 
 #' @export
-print.summary.elo.markovchain <- function(x, ...)
-{
-  NextMethod()
-  cat("Mean Square Error: ", round(x$mse, 4), "\n",
-      "AUC: ", round(x$auc, 4), "\n",
-      "Favored Teams vs. Actual Wins: \n",
-      sep = "")
-  print(x$favored)
-
-  invisible(x)
-}
+print.summary.elo.markovchain <- print.summary.elo.glm
 
 #' @rdname summary.elo
 #' @export
@@ -108,17 +98,7 @@ summary.elo.colley <- function(object, ...)
 }
 
 #' @export
-print.summary.elo.colley <- function(x, ...)
-{
-  NextMethod()
-  cat("Mean Square Error: ", round(x$mse, 4), "\n",
-      "AUC: ", round(x$auc, 4), "\n",
-      "Favored Teams vs. Actual Wins: \n",
-      sep = "")
-  print(x$favored)
-
-  invisible(x)
-}
+print.summary.elo.colley <- print.summary.elo.glm
 
 #' @rdname summary.elo
 #' @export
@@ -132,4 +112,4 @@ summary.elo.winpct <- function(object, ...)
 }
 
 #' @export
-print.summary.elo.winpct <- print.summary.elo.markovchain
+print.summary.elo.winpct <- print.summary.elo.glm
