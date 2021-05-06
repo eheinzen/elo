@@ -80,3 +80,28 @@ test_that("rank.teams works", {
 
 
 
+
+
+
+
+
+test_that("#56: running predictions for new teams", {
+  d <- data.frame(
+    team1 = c("A", "B", "A", "A", "B", "C", "C", "C", "B"),
+    team2 = c("B", "A", "B", "B", "A", "A", "B", "A", "C"),
+    win1 = c(1, 1, 0, 0, 1, 1, 1, 0, 1),
+    grp = c(1:5, 7, 7, 7, 8)
+  )
+  eg <- elo.glm(win1 ~ team1 + team2 + group(grp), data = d, running = TRUE, skip = 4)
+  expect_equal(sum(is.na(fitted(eg, running = TRUE))), 3)
+
+  ec <- elo.colley(win1 ~ team1 + team2 + group(grp), data = d, running = TRUE, skip = 4)
+  expect_equal(sum(is.na(fitted(ec, running = TRUE))), 3)
+
+  em <- elo.markovchain(win1 ~ team1 + team2 + group(grp), data = d, running = TRUE, skip = 4, k = 0.9)
+  expect_equal(sum(is.na(fitted(em, running = TRUE))), 3)
+
+  ew <- elo.winpct(win1 ~ team1 + team2 + group(grp), data = d, running = TRUE, skip = 4)
+  expect_equal(sum(is.na(fitted(ew, running = TRUE))), 3)
+
+})

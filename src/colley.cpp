@@ -12,6 +12,7 @@ List eloColley(NumericMatrix teamA, NumericMatrix teamB, NumericVector winsA, Nu
 
   NumericMatrix out(nTeams, nTeams);
   NumericVector B(nTeams);
+  NumericVector N(nTeams);
 
   for(int t = 0; t < nTeams; t++)
   {
@@ -38,10 +39,13 @@ List eloColley(NumericMatrix teamA, NumericMatrix teamB, NumericVector winsA, Nu
 
         B[a] += w*iWon*k(g, 0);
         B[b] -= w*iWon*k(g, 1);
+
+        N[a] += w;
+        N[b] += w;
       }
     }
   }
 
-  return List::create(out, B);
+  return List::create(out, B, N);
 }
 

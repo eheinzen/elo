@@ -215,3 +215,13 @@ mean_vec_subset_matrix <- function(vec, mat)
 {
   rowMeans(matrix(vec[mat], nrow = nrow(mat)))
 }
+
+mult_valid_coef <- function(x, coeff, valid) {
+  if(any(x[!valid] != 0)) NA_real_ else sum(x * coeff, na.rm = TRUE)
+}
+
+mult_na_coef <- function(x, coeff) {
+  if(anyNA(x)) NA_real_ else sum(x * coeff, na.rm = TRUE)
+}
+
+

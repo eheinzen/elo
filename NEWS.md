@@ -10,6 +10,8 @@ Breaking changes:
 
 * Changed a warning to an error in `final.elos()` when using `regressed=TRUE` without regression after the last game.
 
+* `elo.glm()`, `elo.markovchain()`, `elo.winpct()`, `elo.colley()` now emit NAs for running predictions on groups that haven't been seen yet. (#56)
+
 Other changes:
 
 * Added `subset=` argument to `auc()` and `favored()`.

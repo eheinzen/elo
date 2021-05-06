@@ -78,7 +78,6 @@ elo.markovchain <- function(formula, data, family = "binomial", weights, na.acti
   {
     ftd <- rep(0, times = nrow(mc.dat))
     grp2 <- group_to_int(grp, skip)
-    y <- dat$winsA
     adj <- cbind(mf$home.field, mf$adj.A, mf$adj.B)
 
     for(i in setdiff(seq_len(max(grp2)), seq_len(skip)))
@@ -95,6 +94,7 @@ elo.markovchain <- function(formula, data, family = "binomial", weights, na.acti
       eig <- eigen(do.call(eloMarkovChain, dat.tmp)[[1]])
       vec <- as.numeric(eig$vectors[, 1])
       vec <- stats::setNames(vec / sum(vec), all.teams)
+      vec[vec == 0] <- NA
       difference <- mean_vec_subset_matrix(vec, dat$teamA+1) - mean_vec_subset_matrix(vec, dat$teamB+1)
 
       # tmpfit <- stats::glm(dat$winsA ~ difference, subset = sbst, family = "binomial")
@@ -102,7 +102,7 @@ elo.markovchain <- function(formula, data, family = "binomial", weights, na.acti
 
       coeff <- stats::glm.fit(cbind(difference, adj)[sbst, , drop=FALSE],
                               dat.tmp$winsA, family = mc.glm$family, control = mc.glm$control)$coefficients
-      ftd[grp2 == i] <- apply(cbind(difference, adj)[grp2 == i, , drop=FALSE], 1, function(x) sum(x * coeff, na.rm = TRUE))
+      ftd[grp2 == i] <- apply(cbind(difference, adj)[grp2 == i, , drop=FALSE], 1, mult_na_coef, coeff = coeff)
     }
     out$running.values <- mc.glm$family$linkinv(ftd)
     attr(out$running.values, "group") <- grp2

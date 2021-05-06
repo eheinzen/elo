@@ -93,6 +93,7 @@ elo.colley <- function(formula, data, family = "binomial", weights, na.action, s
       colley <- do.call(eloColley, dat.tmp)
       vec <- stats::.lm.fit(colley[[1]], colley[[2]])$coefficients
       vec <- stats::setNames(vec / sum(vec), all.teams)
+      vec[colley[[3]] == 0] <- NA
       difference <- mean_vec_subset_matrix(vec, dat$teamA+1) - mean_vec_subset_matrix(vec, dat$teamB+1)
 
       # tmpfit <- stats::glm(dat$winsA ~ difference, subset = sbst, family = "binomial")
@@ -100,7 +101,7 @@ elo.colley <- function(formula, data, family = "binomial", weights, na.action, s
 
       coeff <- stats::glm.fit(cbind(difference, adj)[sbst, , drop=FALSE],
                               dat.tmp$winsA, family = mc.glm$family, control = mc.glm$control)$coefficients
-      ftd[grp2 == i] <- apply(cbind(difference, adj)[grp2 == i, , drop=FALSE], 1, function(x) sum(x * coeff, na.rm = TRUE))
+      ftd[grp2 == i] <- apply(cbind(difference, adj)[grp2 == i, , drop=FALSE], 1, mult_na_coef, coeff = coeff)
     }
     out$running.values <- mc.glm$family$linkinv(ftd)
     attr(out$running.values, "group") <- grp2
