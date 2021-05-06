@@ -178,7 +178,7 @@ group_to_int <- function(grp, skip)
   mx <- max(grp2)
   if(skip > mx || skip < 0) stop("skip must be between 0 and ", mx, " (inclusive)")
   out <- mx + 1 - grp2 # from mx : 1 to 1 : mx
-  replace(out, out <= skip,)
+  replace(out, out <= skip, 0)
 }
 
 
