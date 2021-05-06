@@ -3,6 +3,7 @@
 \name{auc.elo}
 \alias{auc.elo}
 \alias{auc.elo.run}
+\alias{auc.elo.beta}
 \alias{auc.elo.glm}
 \alias{auc.elo.running}
 \alias{auc.elo.markovchain}
@@ -11,6 +12,8 @@
 \title{Calculate AUC on an \code{elo.run} object}
 \usage{
 \method{auc}{elo.run}(object, ...)
+
+\method{auc}{elo.beta}(object, ...)
 
 \method{auc}{elo.glm}(object, ...)
 

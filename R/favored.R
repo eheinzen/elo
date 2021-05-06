@@ -25,6 +25,13 @@ favored.elo.run <- function(x, ...)
   favored.default(x$elos[, sum(x$n.players) + 2], fitted(x))
 }
 
+#' @rdname favored.elo
+#' @export
+favored.elo.beta <- function(x, ...)
+{
+  favored.default(x$results[, sum(x$n.players) + 2], fitted(x))
+}
+
 truetiefalse <- function(x) factor(x, levels = c(1, 0.5, 0), labels = c("TRUE", "(tie)", "FALSE"))
 
 #' @rdname favored.elo

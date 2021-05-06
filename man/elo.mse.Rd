@@ -5,6 +5,7 @@
 \alias{brier}
 \alias{mse}
 \alias{mse.elo.run}
+\alias{mse.elo.beta}
 \alias{mse.elo.glm}
 \alias{mse.elo.running}
 \alias{mse.elo.markovchain}
@@ -17,6 +18,8 @@ brier(object, subset, ...)
 mse(object, subset, ...)
 
 \method{mse}{elo.run}(object, subset, ...)
+
+\method{mse}{elo.beta}(object, subset, ...)
 
 \method{mse}{elo.glm}(object, subset, ...)
 

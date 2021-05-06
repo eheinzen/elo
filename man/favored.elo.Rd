@@ -4,6 +4,7 @@
 \alias{favored.elo}
 \alias{favored}
 \alias{favored.elo.run}
+\alias{favored.elo.beta}
 \alias{favored.elo.glm}
 \alias{favored.elo.running}
 \alias{favored.elo.markovchain}
@@ -15,6 +16,8 @@
 favored(x, ...)
 
 \method{favored}{elo.run}(x, ...)
+
+\method{favored}{elo.beta}(x, ...)
 
 \method{favored}{elo.glm}(x, ...)
 

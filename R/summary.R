@@ -49,6 +49,20 @@ print.summary.elo.run <- function(x, ...)
 
 #' @rdname summary.elo
 #' @export
+summary.elo.beta <- function(object, ...)
+{
+  object$favored <- favored(object)
+  object$mse <- mse(object)
+  object$auc <- auc.elo.beta(object)
+  class(object) <- c("summary.elo.beta", class(object))
+  object
+}
+
+#' @export
+print.summary.elo.beta <- print.summary.elo.run
+
+#' @rdname summary.elo
+#' @export
 summary.elo.glm <- function(object, ...)
 {
   out <- NextMethod()

@@ -33,6 +33,15 @@ auc.elo.run <- function(object, ...)
 
 #' @rdname auc.elo
 #' @export
+auc.elo.beta <- function(object, ...)
+{
+  probs <- fitted(object)
+  wins <- object$results[, sum(object$n.players) + 2]
+  get_auc(wins, probs)
+}
+
+#' @rdname auc.elo
+#' @export
 auc.elo.glm <- function(object, ...)
 {
   get_auc(object$y, object$fitted.values)

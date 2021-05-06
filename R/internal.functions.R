@@ -44,20 +44,20 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
        initialElos = initial.elos, flag = flag)
 }
 
-check_named_elos <- function(init.elos = NULL, teams)
+check_named_elos <- function(init.elos = NULL, teams, default = 1500, what = "Elos")
 {
   sing <- length(init.elos) == 1 && is.null(names(init.elos))
   if(is.null(init.elos) || sing)
   {
-    init.elos <- rep(if(sing) init.elos else 1500, times = length(teams))
+    init.elos <- rep(if(sing) init.elos else default, times = length(teams))
     names(init.elos) <- teams
   }
 
-  if(!is.numeric(init.elos)) stop("Supplied Elos should be numeric.")
+  if(!is.numeric(init.elos)) stop(paste0("Supplied ", what, " should be numeric."))
   if(is.null(names(init.elos)) || anyDuplicated(names(init.elos)))
-    stop("Supplied Elos should have (unique) names!")
+    stop("Supplied ", what, " should have (unique) names!")
   if(any(!(teams %in% names(init.elos))))
-    stop("Some teams were found without supplied Elos.")
+    stop("Some teams were found without supplied ", what, ".")
 
   init.elos[teams]
 }

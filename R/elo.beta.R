@@ -1,6 +1,10 @@
 
-
-elo.beta <- function(formula, data, na.action, subset, initial.alphas = NULL, initial.betas = NULL, ...)
+#' Compute win probabilities based on the beta distribution
+#'
+#' @inheritParams elo.calc
+#' @param initial.alphas,initial.betas Initial values. Default is 1 (akin to a uniform distribution).
+#' @export
+elo.beta <- function(formula, data, na.action, subset, initial.alphas = NULL, initial.betas = initial.alphas, ...)
 {
   Call <- match.call()
   Call <- Call[c(1, match(c("formula", "data", "subset", "na.action"), names(Call), nomatch = 0))]
@@ -22,12 +26,32 @@ elo.beta <- function(formula, data, na.action, subset, initial.alphas = NULL, in
     initial.alphas = checked$initialAlphas,
     initial.betas = checked$initialBetas,
     results.regressed = if(any.regr) out[[2]] else NULL,
-    teams = names(checked$initialElos),
+    teams = names(checked$initialAlphas),
     group = mf$group,
     regress = if(any.regr) mf$regress else NULL,
     terms = Terms,
     na.action = stats::na.action(mf)
   ), class = c(if(any.regr) "elo.beta.regressed", "elo.beta"))
+}
+
+
+
+#' @export
+print.elo.beta <- function(x, ...)
+{
+  cat("\nAn object of class '", class(x)[1], "', containing information on ",
+      length(x$teams), " teams and ", x$n.matches, " matches.\n\n", sep = "")
+  invisible(x)
+}
+
+
+#' @export
+print.elo.beta.regressed <- function(x, ...)
+{
+  cat("\nAn object of class '", class(x)[1], "', containing information on ",
+      length(x$teams), " teams and ", x$n.matches, " matches, with ",
+      nrow(x$results.regressed), " regressions.\n\n", sep = "")
+  invisible(x)
 }
 
 

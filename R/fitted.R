@@ -28,6 +28,23 @@ residuals.elo.run <- function(object, ...)
   stats::naresid(object$na.action, out)
 }
 
+
+#' @rdname fitted.elo
+#' @export
+fitted.elo.beta <- function(object, ...)
+{
+  out <- object$results[, sum(object$n.players) + 1]
+  stats::napredict(object$na.action, out)
+}
+
+#' @rdname fitted.elo
+#' @export
+residuals.elo.beta <- function(object, ...)
+{
+  out <- object$results[, sum(object$n.players) + 2] - object$results[, sum(object$n.players) + 1]
+  stats::naresid(object$na.action, out)
+}
+
 #' @rdname fitted.elo
 #' @export
 fitted.elo.running <- function(object, running = TRUE, ...)

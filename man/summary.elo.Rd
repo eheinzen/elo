@@ -3,6 +3,7 @@
 \name{summary.elo}
 \alias{summary.elo}
 \alias{summary.elo.run}
+\alias{summary.elo.beta}
 \alias{summary.elo.glm}
 \alias{summary.elo.markovchain}
 \alias{summary.elo.colley}
@@ -10,6 +11,8 @@
 \title{Summarize an \code{elo} Object}
 \usage{
 \method{summary}{elo.run}(object, ...)
+
+\method{summary}{elo.beta}(object, ...)
 
 \method{summary}{elo.glm}(object, ...)
 

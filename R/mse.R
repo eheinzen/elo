@@ -36,6 +36,10 @@ mse.elo.run <- function(object, subset, ...)
 
 #' @rdname elo.mse
 #' @export
+mse.elo.beta <- mse.elo.run
+
+#' @rdname elo.mse
+#' @export
 mse.elo.glm <- function(object, subset, ...)
 {
   r <- object$fitted.values - object$y

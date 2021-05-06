@@ -4,6 +4,8 @@
 \alias{fitted.elo}
 \alias{fitted.elo.run}
 \alias{residuals.elo.run}
+\alias{fitted.elo.beta}
+\alias{residuals.elo.beta}
 \alias{fitted.elo.running}
 \alias{fitted.elo.glm}
 \alias{fitted.elo.markovchain}
@@ -14,6 +16,10 @@
 \method{fitted}{elo.run}(object, ...)
 
 \method{residuals}{elo.run}(object, ...)
+
+\method{fitted}{elo.beta}(object, ...)
+
+\method{residuals}{elo.beta}(object, ...)
 
 \method{fitted}{elo.running}(object, running = TRUE, ...)
 
