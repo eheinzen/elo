@@ -93,6 +93,6 @@ test_that("adjust() works in elo.glm()", {
   tmp.glm.adj0 <- elo.glm(diff ~ team.Home + adjust(team.Visitor, 0) + group(week), data = trn, running = TRUE, skip = 5)
   tmp.glm.adj1 <- elo.glm(diff ~ team.Home + adjust(team.Visitor, c(rep(0, 50), 1)) + group(week), data = trn, running = TRUE, skip = 5)
   tmp.glm.noad <- elo.glm(diff ~ team.Home + team.Visitor + group(week), data = trn, running = TRUE, skip = 5)
-  expect_equal(fitted(tmp.glm.adj0), fitted(tmp.glm.adj1))
+  expect_equal(fitted(tmp.glm.adj0)[-51], fitted(tmp.glm.adj1)[-51])
   expect_equal(fitted(tmp.glm.adj0), fitted(tmp.glm.noad))
 })
