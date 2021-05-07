@@ -41,7 +41,7 @@ favored.elo.running <- function(x, running = TRUE, discard.skipped = FALSE, ...,
 {
   if(!running) return(NextMethod())
   if(!is.logical(subset)) stop("'subset' must be logical for this functionality")
-  idx <- attr(object$running.values, "group") > (if(discard.skipped) 0 else -1)
+  idx <- attr(x$running.values, "group") > (if(discard.skipped) 0 else -1)
   favored.default(x$y[idx & subset], x$running.values[idx & subset])
 }
 
