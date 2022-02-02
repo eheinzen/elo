@@ -160,8 +160,8 @@ check_elo_markovchain_vars <- function(mf)
   tmp <- stats::setNames(seq_along(all.teams) - 1L, all.teams)
   wts1 <- weights(t1)
   wts2 <- weights(t2)
-  t1 <- matrix(tmp[t1], nrow = nrow(t1))
-  t2 <- matrix(tmp[t2], nrow = nrow(t2))
+  t1 <- matrix(tmp[as.matrix(t1)], nrow = nrow(t1))
+  t2 <- matrix(tmp[as.matrix(t2)], nrow = nrow(t2))
 
   if(!all(mf$weights > 0)) stop("Weights should be positive numbers")
 
@@ -199,8 +199,8 @@ check_elo_winpct_vars <- function(mf)
   tmp <- stats::setNames(seq_along(all.teams) - 1L, all.teams)
   wts1 <- weights(t1)
   wts2 <- weights(t2)
-  t1 <- matrix(tmp[t1], nrow = nrow(t1))
-  t2 <- matrix(tmp[t2], nrow = nrow(t2))
+  t1 <- matrix(tmp[as.matrix(t1)], nrow = nrow(t1))
+  t2 <- matrix(tmp[as.matrix(t2)], nrow = nrow(t2))
 
   if(!all(mf$weights > 0)) stop("Weights should be positive numbers")
 
