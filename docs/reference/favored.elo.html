@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">elo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -112,7 +112,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/eheinzen/elo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -138,25 +138,25 @@
     <p>Classify teams that are favored to win</p>
     </div>
 
-    <pre class="usage"><span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, subset <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for elo.run</span>
-<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, subset <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for elo.glm</span>
-<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, subset <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for elo.running</span>
-<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, running <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, running <span class='op'>=</span> <span class='cn'>TRUE</span>, discard.skipped <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span>, subset <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for elo.markovchain</span>
-<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, subset <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for elo.winpct</span>
-<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, subset <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for elo.colley</span>
-<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, subset <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>favored</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>p.A</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -171,11 +171,19 @@ a vector representing wins.A.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other arguments (not in use at this time).</p></td>
+      <td><p>Other arguments (not used at this time).</p></td>
+    </tr>
+    <tr>
+      <th>subset</th>
+      <td><p>(optional) A vector of indices on which to calculate</p></td>
     </tr>
     <tr>
       <th>running</th>
       <td><p>logical, denoting whether to use the running predicted values.</p></td>
+    </tr>
+    <tr>
+      <th>discard.skipped</th>
+      <td><p>Logical, denoting whether to ignore the skipped observations in the calculation</p></td>
     </tr>
     <tr>
       <th>p.A</th>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">elo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -112,7 +112,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/eheinzen/elo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -190,7 +190,7 @@ set to 0.5 for the skipped groups.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code><a href='https://rdrr.io/r/base/c.html'>c("elo.glm", "glm")</a></code>. If <code>running==TRUE</code>, the class <code>"elo.glm.running"</code>
+    <p>An object of class <code>c("elo.glm", "glm")</code>. If <code>running==TRUE</code>, the class <code>"elo.glm.running"</code>
   is prepended.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -208,40 +208,42 @@ set to 0.5 for the skipped groups.</p></td>
   <code><a href='elo.mov.html'>mov</a></code>, <code><a href='elo.model.frame.html'>elo.model.frame</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>tournament</span><span class='op'>)</span>
-<span class='fu'>elo.glm</span><span class='op'>(</span><span class='fu'><a href='score.html'>score</a></span><span class='op'>(</span><span class='va'>points.Home</span>, <span class='va'>points.Visitor</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>team.Home</span> <span class='op'>+</span> <span class='va'>team.Visitor</span>, data <span class='op'>=</span> <span class='va'>tournament</span>,
-  subset <span class='op'>=</span> <span class='va'>points.Home</span> <span class='op'>!=</span> <span class='va'>points.Visitor</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; Call:  stats::glm(formula = wins.A ~ . - 1, family = family, data = dat, 
-#&gt;     weights = wts, subset = NULL, na.action = stats::na.pass)
-#&gt; 
-#&gt; Coefficients:
-#&gt;              home.field    `Athletic Armadillos`     `Blundering Baboons`  
-#&gt;                  1.0307                   1.4289                  -0.9637  
-#&gt;          `Cunning Cats`      `Defense-less Dogs`           `Elegant Emus`  
-#&gt;                  0.5377                  -1.7413                   0.3931  
-#&gt;        `Fabulous Frogs`  `Gallivanting Gorillas`  
-#&gt;                  0.8489                   0.3994  
-#&gt; 
-#&gt; Degrees of Freedom: 51 Total (i.e. Null);  43 Residual
-#&gt; Null Deviance:	    70.7 
-#&gt; Residual Deviance: 48.04 	AIC: 64.04</div><div class='input'><span class='fu'>elo.glm</span><span class='op'>(</span><span class='fu'><a href='elo.mov.html'>mov</a></span><span class='op'>(</span><span class='va'>points.Home</span>, <span class='va'>points.Visitor</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>team.Home</span> <span class='op'>+</span> <span class='va'>team.Visitor</span>, data <span class='op'>=</span> <span class='va'>tournament</span>,
-  family <span class='op'>=</span> <span class='st'>"gaussian"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; Call:  stats::glm(formula = wins.A ~ . - 1, family = family, data = dat, 
-#&gt;     weights = wts, subset = NULL, na.action = stats::na.pass)
-#&gt; 
-#&gt; Coefficients:
-#&gt;              home.field    `Athletic Armadillos`     `Blundering Baboons`  
-#&gt;                  2.6964                   3.1250                  -2.4375  
-#&gt;          `Cunning Cats`      `Defense-less Dogs`           `Elegant Emus`  
-#&gt;                  0.3125                  -3.5000                  -0.9375  
-#&gt;        `Fabulous Frogs`  `Gallivanting Gorillas`  
-#&gt;                  0.6875                   0.2500  
-#&gt; 
-#&gt; Degrees of Freedom: 56 Total (i.e. Null);  48 Residual
-#&gt; Null Deviance:	    2161 
-#&gt; Residual Deviance: 1295 	AIC: 352.8</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>tournament</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>elo.glm</span><span class='op'>(</span><span class='fu'><a href='score.html'>score</a></span><span class='op'>(</span><span class='va'>points.Home</span>, <span class='va'>points.Visitor</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>team.Home</span> <span class='op'>+</span> <span class='va'>team.Visitor</span>, data <span class='op'>=</span> <span class='va'>tournament</span>,</span>
+<span class='r-in'>  subset <span class='op'>=</span> <span class='va'>points.Home</span> <span class='op'>!=</span> <span class='va'>points.Visitor</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:  stats::glm(formula = wins.A ~ . - 1, family = family, data = dat.qr, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     weights = wts, subset = NULL, na.action = stats::na.pass)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              home.field    `Athletic Armadillos`     `Blundering Baboons`  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  1.0307                   1.4289                  -0.9637  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          `Cunning Cats`      `Defense-less Dogs`           `Elegant Emus`  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  0.5377                  -1.7413                   0.3931  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        `Fabulous Frogs`  `Gallivanting Gorillas`  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  0.8489                   0.3994  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Degrees of Freedom: 51 Total (i.e. Null);  43 Residual</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Null Deviance:	    70.7 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual Deviance: 48.04 	AIC: 64.04</span>
+<span class='r-in'><span class='fu'>elo.glm</span><span class='op'>(</span><span class='fu'><a href='elo.mov.html'>mov</a></span><span class='op'>(</span><span class='va'>points.Home</span>, <span class='va'>points.Visitor</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>team.Home</span> <span class='op'>+</span> <span class='va'>team.Visitor</span>, data <span class='op'>=</span> <span class='va'>tournament</span>,</span>
+<span class='r-in'>  family <span class='op'>=</span> <span class='st'>"gaussian"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:  stats::glm(formula = wins.A ~ . - 1, family = family, data = dat.qr, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     weights = wts, subset = NULL, na.action = stats::na.pass)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              home.field    `Athletic Armadillos`     `Blundering Baboons`  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  2.6964                   3.1250                  -2.4375  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          `Cunning Cats`      `Defense-less Dogs`           `Elegant Emus`  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  0.3125                  -3.5000                  -0.9375  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        `Fabulous Frogs`  `Gallivanting Gorillas`  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  0.6875                   0.2500  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Degrees of Freedom: 56 Total (i.e. Null);  48 Residual</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Null Deviance:	    2161 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual Deviance: 1295 	AIC: 352.8</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -1,7 +1,7 @@
 Package: elo
+Version: 3.0.0
 Title: Elo Ratings
-Version: 2.1.1.9000
-Date: 2020-03-09
+Date: 2022-02-02
 Authors@R: c(
     person("Ethan", "Heinzen", email = "heinzen.ethan@mayo.edu", role = c("aut", "cre"))
   )
@@ -12,7 +12,7 @@ Description: A flexible framework for calculating Elo ratings and resulting
     rating system. It also includes methods to benchmark performance,
     including logistic regression and Markov chain models.
 Depends:
-    R (>= 3.3.0),
+    R (>= 3.6.0),
     stats
 Imports:
     Rcpp,
@@ -25,7 +25,7 @@ VignetteBuilder: knitr
 License: GPL (>= 2)
 URL: https://github.com/eheinzen/elo, https://cran.r-project.org/package=elo, https://eheinzen.github.io/elo/
 BugReports: https://github.com/eheinzen/elo/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 LazyData: true
 LinkingTo: Rcpp
 Encoding: UTF-8

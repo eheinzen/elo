@@ -1,6 +1,8 @@
-# elo v2.1.1.9000
+# elo v3.0.0
 
 Breaking changes: 
+
+* Restricted the version of R to >= 3.6.
 
 * Changed the impact of the `group()` formula special in `elo.run()`. It now indicates when to update Elos. (#54)
 
@@ -29,6 +31,8 @@ Other changes:
 * Changed how `tournament` is created (though the data didn't actually change).
 
 * Made some methods more explicit: `length.elo.k()`, `is.na.elo.k()`, `[.elo.k()`, `is.na.elo.players.matrix()`
+
+* Made one fix for R-devel related to subsetting a vector with a classed object.
 
 # elo v2.1.1
 

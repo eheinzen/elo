@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">elo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -112,7 +112,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/eheinzen/elo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -190,17 +190,18 @@ sets all Elos to 1500.</p></td>
   The formula takes a <code><a href='players.html'>multiteam</a>()</code> object, which assumes that teams "win"
   in a well-ordered ranking. It assumes that the first place team beats all other teams,
   that the second place team loses to the first but beats the others, etc. In that regard,
-  <code>elo.run.multiteam</code> reduces to <code>elo.run</code> when the number of teams (<code><a href='https://rdrr.io/r/base/nrow.html'>ncol(multiteam())</a></code>) is 2</p>
+  <code>elo.run.multiteam</code> reduces to <code>elo.run</code> when the number of teams (<code>ncol(multiteam())</code>) is 2</p>
 <p>However, this is less flexible than <code>elo.run</code>, because (1) there cannot be ties; (2) it does not accept
 adjustments; and (3) k is constant within a "game"</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>tournament.multiteam</span><span class='op'>)</span>
-<span class='fu'>elo.run.multiteam</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='players.html'>multiteam</a></span><span class='op'>(</span><span class='va'>Place_1</span>, <span class='va'>Place_2</span>, <span class='va'>Place_3</span>, <span class='va'>Place_4</span><span class='op'>)</span>,
-                  data <span class='op'>=</span> <span class='va'>tournament.multiteam</span>, subset <span class='op'>=</span> <span class='op'>-</span><span class='fl'>28</span>, k <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; An object of class 'elo.run.multiteam', containing information on 8 teams and 27 matches.
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>tournament.multiteam</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>elo.run.multiteam</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='players.html'>multiteam</a></span><span class='op'>(</span><span class='va'>Place_1</span>, <span class='va'>Place_2</span>, <span class='va'>Place_3</span>, <span class='va'>Place_4</span><span class='op'>)</span>,</span>
+<span class='r-in'>                  data <span class='op'>=</span> <span class='va'>tournament.multiteam</span>, subset <span class='op'>=</span> <span class='op'>-</span><span class='fl'>28</span>, k <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> An object of class 'elo.run.multiteam', containing information on 8 teams and 27 matches.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

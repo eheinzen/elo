@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">elo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -71,7 +71,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/eheinzen/elo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -85,7 +85,7 @@
 
       
 
-      </header><script src="comparison_methods_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="comparison_methods_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Comparison Methods</h1>
@@ -99,8 +99,8 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eheinzen/elo">elo</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eheinzen/elo">elo</a></span><span class="op">)</span></code></pre></div>
 <div id="comparison-models" class="section level1">
 <h1 class="hasAnchor">
 <a href="#comparison-models" class="anchor"></a>Comparison Models</h1>
@@ -110,10 +110,10 @@
 <h1 class="hasAnchor">
 <a href="#winloss-logistic-regression" class="anchor"></a>Win/Loss Logistic Regression</h1>
 <p>The first model computes teams’ win percentages, and feeds the differences of percentages into a regression. Including an adjustment using <code><a href="../reference/players.html">adjust()</a></code> in the formula also includes that in the model. You could also adjust the intercept for games played on neutral fields by using the <code><a href="../reference/players.html">neutral()</a></code> function.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">e.winpct</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.winpct.html">elo.winpct</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">e.winpct</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.winpct.html">elo.winpct</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
                        subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span><span class="op">)</span> <span class="co"># to get rid of ties for now</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">e.winpct</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">e.winpct</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.winpct', containing information on 8 teams and 51 matches.
 ## 
@@ -125,22 +125,22 @@
 ##   TRUE   7 32
 ##   (tie)  0  0
 ##   FALSE  9  3</code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/rank.teams.html">rank.teams</a></span><span class="op">(</span><span class="va">e.winpct</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/rank.teams.html">rank.teams</a></span><span class="op">(</span><span class="va">e.winpct</span><span class="op">)</span></code></pre></div>
 <pre><code>##   Athletic Armadillos    Blundering Baboons          Cunning Cats 
 ##                     1                     7                     4 
 ##     Defense-less Dogs          Elegant Emus        Fabulous Frogs 
 ##                     8                     5                     2 
 ## Gallivanting Gorillas       Helpless Hyenas 
 ##                     3                     6</code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">e.winpct</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">e.winpct</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##         1 
 ## 0.9690678</code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">tournament</span><span class="op">$</span><span class="va">neutral</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/replace.html">replace</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">tournament</span><span class="op">)</span><span class="op">)</span>, <span class="fl">30</span><span class="op">:</span><span class="fl">35</span>, <span class="fl">1</span><span class="op">)</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tournament</span><span class="op">$</span><span class="va">neutral</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/replace.html">replace</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">tournament</span><span class="op">)</span><span class="op">)</span>, <span class="fl">30</span><span class="op">:</span><span class="fl">35</span>, <span class="fl">1</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.winpct.html">elo.winpct</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">neutral</a></span><span class="op">(</span><span class="va">neutral</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>,
-                   data <span class="op">=</span> <span class="va">tournament</span>, subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span><span class="op">)</span><span class="op">)</span></pre></div>
+                   data <span class="op">=</span> <span class="va">tournament</span>, subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.winpct', containing information on 8 teams and 51 matches.
 ## 
@@ -154,23 +154,23 @@
 ##   FALSE 10  3</code></pre>
 <p>The models can be built “running”, where predictions for the next group of games are made based on past data. Consider using the <code>skip=</code> argument to skip the first few groups (otherwise the model might have trouble converging).</p>
 <p>Note that predictions from this object use a model fit on all the data.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">e.winpct</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.winpct.html">elo.winpct</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">e.winpct</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.winpct.html">elo.winpct</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
                        subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span>, running <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">e.winpct</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">e.winpct</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.winpct', containing information on 8 teams and 51 matches.
 ## 
-## Mean Square Error: 0.1769
+## Mean Square Error: 0.2141
 ## AUC: 0.8339
 ## Favored Teams vs. Actual Wins: 
 ##        Actual
 ## Favored  0  1
-##   TRUE   5 21
+##   TRUE   5 19
 ##   (tie)  6 13
-##   FALSE  5  1</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">e.winpct</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="co"># the same thing</span></pre></div>
+##   FALSE  5  3</code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">e.winpct</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="co"># the same thing</span></code></pre></div>
 <pre><code>##         1 
 ## 0.9690678</code></pre>
 </div>
@@ -178,13 +178,13 @@
 <h1 class="hasAnchor">
 <a href="#logistic-regression" class="anchor"></a>Logistic Regression</h1>
 <p>It’s also possible to compare teams’ skills using logistic regression. A matrix of dummy variables is constructed, one for each team, where a value of 1 indicates a home team and -1 indicates a visiting team. The intercept then indicates a home-field advantage. To denote games played in a neutral setting (that is, without home-field advantage), use the <code><a href="../reference/players.html">neutral()</a></code> function. In short, the intercept will then be set to <code>1 - neutral()</code>. Including an adjustment using <code><a href="../reference/players.html">adjust()</a></code> in the formula also includes that in the model.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.glm.html">elo.glm</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.glm.html">elo.glm</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
                    subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span><span class="op">)</span> <span class="co"># to get rid of ties for now</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## stats::glm(formula = wins.A ~ . - 1, family = family, data = dat, 
+## stats::glm(formula = wins.A ~ . - 1, family = family, data = dat.qr, 
 ##     weights = wts, subset = NULL, na.action = stats::na.pass)
 ## 
 ## Deviance Residuals: 
@@ -220,24 +220,24 @@
 ##   TRUE   7 32
 ##   (tie)  0  0
 ##   FALSE  9  3</code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="../reference/rank.teams.html">rank.teams</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/rank.teams.html">rank.teams</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></code></pre></div>
 <pre><code>##   Athletic Armadillos    Blundering Baboons          Cunning Cats 
 ##                     1                     7                     3 
 ##     Defense-less Dogs          Elegant Emus        Fabulous Frogs 
 ##                     8                     5                     2 
 ## Gallivanting Gorillas       Helpless Hyenas 
 ##                     4                     6</code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">results</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">results</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##         1 
 ## 0.9684256</code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.glm.html">elo.glm</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">neutral</a></span><span class="op">(</span><span class="va">neutral</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>,
-                data <span class="op">=</span> <span class="va">tournament</span>, subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.glm.html">elo.glm</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">neutral</a></span><span class="op">(</span><span class="va">neutral</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>,
+                data <span class="op">=</span> <span class="va">tournament</span>, subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## stats::glm(formula = wins.A ~ . - 1, family = family, data = dat, 
+## stats::glm(formula = wins.A ~ . - 1, family = family, data = dat.qr, 
 ##     weights = wts, subset = NULL, na.action = stats::na.pass)
 ## 
 ## Deviance Residuals: 
@@ -275,13 +275,13 @@
 ##   FALSE  9  3</code></pre>
 <p>The models can be built “running”, where predictions for the next group of games are made based on past data. Consider using the <code>skip=</code> argument to skip the first few groups (otherwise the model might have trouble converging).</p>
 <p>Note that predictions from this object use a model fit on all the data.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.glm.html">elo.glm</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.glm.html">elo.glm</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
                    subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span>, running <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## stats::glm(formula = wins.A ~ . - 1, family = family, data = dat, 
+## stats::glm(formula = wins.A ~ . - 1, family = family, data = dat.qr, 
 ##     weights = wts, subset = NULL, na.action = stats::na.pass)
 ## 
 ## Deviance Residuals: 
@@ -317,8 +317,8 @@
 ##   TRUE   6 19
 ##   (tie)  6 13
 ##   FALSE  4  3</code></pre>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">results</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="co"># the same thing</span></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">results</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="co"># the same thing</span></code></pre></div>
 <pre><code>##         1 
 ## 0.9684256</code></pre>
 </div>
@@ -326,10 +326,10 @@
 <h1 class="hasAnchor">
 <a href="#markov-chain" class="anchor"></a>Markov Chain</h1>
 <p>It’s also possible to compare teams’ skills using a Markov-chain-based model, as outlined in <a href="https://scholarship.richmond.edu/cgi/viewcontent.cgi?article=1207&amp;context=mathcs-faculty-publications">Kvam and Sokol (2006)</a>. In short, imagine a judge who randomly picks one of two teams in a matchup, where the winner gets chosen with probability p (here, for convenience, ‘k’) and the loser with probability 1-p (1-k). In other words, we assume that the probability that the winning team is better than the losing team given that it won is k, and the probability that the losing team is better than the winning team given that it lost is (1-k). This forms a transition matrix, whose stationary distribution gives a ranking of teams. The differences in ranking are then fed into a logistic regession model to predict win status. Any adjustments made using <code><a href="../reference/players.html">adjust()</a></code> are also included in this logistic regression. You could also adjust the intercept for games played on neutral fields by using the <code><a href="../reference/players.html">neutral()</a></code> function.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="va">mc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.markovchain.html">elo.markovchain</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>, data <span class="op">=</span> <span class="va">tournament</span>,
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.markovchain.html">elo.markovchain</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>, data <span class="op">=</span> <span class="va">tournament</span>,
                       subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span>, k <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mc</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mc</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.markovchain', containing information on 8 teams and 51 matches.
 ## 
@@ -341,21 +341,21 @@
 ##   TRUE  10 29
 ##   (tie)  0  0
 ##   FALSE  6  6</code></pre>
-<div class="sourceCode" id="cb28"><pre class="downlit">
-<span class="fu"><a href="../reference/rank.teams.html">rank.teams</a></span><span class="op">(</span><span class="va">mc</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/rank.teams.html">rank.teams</a></span><span class="op">(</span><span class="va">mc</span><span class="op">)</span></code></pre></div>
 <pre><code>##   Athletic Armadillos    Blundering Baboons          Cunning Cats 
 ##                     1                     7                     3 
 ##     Defense-less Dogs          Elegant Emus        Fabulous Frogs 
 ##                     8                     4                     2 
 ## Gallivanting Gorillas       Helpless Hyenas 
 ##                     6                     5</code></pre>
-<div class="sourceCode" id="cb30"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mc</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mc</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##         1 
 ## 0.9594476</code></pre>
-<div class="sourceCode" id="cb32"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.markovchain.html">elo.markovchain</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">neutral</a></span><span class="op">(</span><span class="va">neutral</span><span class="op">)</span>,
-                        data <span class="op">=</span> <span class="va">tournament</span>, subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span>, k <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.markovchain.html">elo.markovchain</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">neutral</a></span><span class="op">(</span><span class="va">neutral</span><span class="op">)</span>,
+                        data <span class="op">=</span> <span class="va">tournament</span>, subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span>, k <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.markovchain', containing information on 8 teams and 51 matches.
 ## 
@@ -369,10 +369,10 @@
 ##   FALSE  6  7</code></pre>
 <p>These models can also be built “running”, where predictions for the next group of games are made based on past data. Consider using the <code>skip=</code> argument to skip the first few groups (otherwise the model might have trouble converging).</p>
 <p>Note that predictions from this object use a model fit on all the data.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit">
-<span class="va">mc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.markovchain.html">elo.markovchain</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.markovchain.html">elo.markovchain</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
                       subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span>, k <span class="op">=</span> <span class="fl">0.7</span>, running <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mc</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mc</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.markovchain', containing information on 8 teams and 51 matches.
 ## 
@@ -384,20 +384,20 @@
 ##   TRUE   6 19
 ##   (tie)  6 13
 ##   FALSE  4  3</code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mc</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="co"># the same thing</span></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mc</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="co"># the same thing</span></code></pre></div>
 <pre><code>##         1 
 ## 0.9594476</code></pre>
 <div id="a-note-about-lrmc" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-note-about-lrmc" class="anchor"></a>A note about LRMC</h2>
 <p>Note that by assigning probabilities in the right way, this function emits the Logistic Regression Markov Chain model (LRMC). Use the in-formula function <code><a href="../reference/players.html">k()</a></code> for this. IMPORTANT: note that <code><a href="../reference/players.html">k()</a></code> denotes the probability assigned to the <em>winning</em> team, not the <em>home</em> team (for instance). If <code>rH(x)</code> denotes the probability that the home team is better given that they scored <code>x</code> points more than the visiting team (allowing for x to be negative), then an LRMC model might look something like this:</p>
-<div class="sourceCode" id="cb38"><pre class="downlit">
-<span class="fu"><a href="../reference/elo.markovchain.html">elo.markovchain</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">wins.home</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.home</span> <span class="op">+</span> <span class="va">team.visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">k</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fu">rH</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">1</span> <span class="op">-</span> <span class="fu">rH</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/elo.markovchain.html">elo.markovchain</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">wins.home</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.home</span> <span class="op">+</span> <span class="va">team.visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">k</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fu">rH</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">1</span> <span class="op">-</span> <span class="fu">rH</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Why do we use <code><a href="https://rdrr.io/r/base/Round.html">floor()</a></code> here? This takes care of the odd case where teams tie. In this case, <code>rH(x) &lt; 0.5</code> because we expected the home team to win by virtue of being home. By default, <code><a href="../reference/elo.markovchain.html">elo.markovchain()</a></code> will split any ties down the middle (i.e., 0.5 and 0.5 instead of p and 1-p), which isn’t what we want; we want the visiting team to get a larger share than the home team. Telling <code><a href="../reference/elo.markovchain.html">elo.markovchain()</a></code> that the visiting team “won” gives the visiting team its whole share of <code>p</code>.</p>
 <p>Alternatively, if <code>h</code> denotes a home-field advantage (in terms of score), the model becomes:</p>
-<div class="sourceCode" id="cb39"><pre class="downlit">
-<span class="fu"><a href="../reference/elo.markovchain.html">elo.markovchain</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">home.points</span> <span class="op">-</span> <span class="va">visitor.points</span> <span class="op">&gt;</span> <span class="va">h</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.home</span> <span class="op">+</span> <span class="va">team.visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">k</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmax</a></span><span class="op">(</span><span class="fu">rH</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">1</span> <span class="op">-</span> <span class="fu">rH</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/elo.markovchain.html">elo.markovchain</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">home.points</span> <span class="op">-</span> <span class="va">visitor.points</span> <span class="op">&gt;</span> <span class="va">h</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.home</span> <span class="op">+</span> <span class="va">team.visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">k</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmax</a></span><span class="op">(</span><span class="fu">rH</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">1</span> <span class="op">-</span> <span class="fu">rH</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>In this case, the home team “won” if it scored more than <code>h</code> points more than the visiting team. Since <code>rH(x) &gt; 0.5</code> if <code>x &gt; h</code>, then <code><a href="https://rdrr.io/r/base/Extremes.html">pmax()</a></code> will assign the proper probability to the pseudo-winning team.</p>
 <p>Finally, do note that using <code><a href="../reference/players.html">neutral()</a></code> isn’t sufficient for adjusting for games played on neutral ground, because the adjustment is only taken into account in the logistic regression to produce probabilities, not the building of the transition matrix. Therefore, you’ll want to also account for neutral wins/losses in <code><a href="../reference/players.html">k()</a></code> as well.</p>
 </div>
@@ -406,10 +406,10 @@
 <h1 class="hasAnchor">
 <a href="#colley-matrix-method" class="anchor"></a>Colley Matrix Method</h1>
 <p>It’s also possible to compare teams’ skills using the Colley Matrix method, as outlined in <a href="http://www.colleyrankings.com/matrate.pdf">Colley (2002)</a>. The coefficients to the Colley matrix formulation gives a ranking of teams. The differences in ranking are then fed into a logistic regession model to predict win status. Here ‘k’ denotes how convincing a win is; it represents the fraction of the win assigned to the winning team and the fraction of the loss assigned to the losing team. Setting ‘k’ = 1 emits the bias-free method presented by Colley. Any adjustments made using <code><a href="../reference/players.html">adjust()</a></code> are also included in this logistic regression. You could also adjust the intercept for games played on neutral fields by using the <code><a href="../reference/players.html">neutral()</a></code> function.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit">
-<span class="va">co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.colley.html">elo.colley</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>, data <span class="op">=</span> <span class="va">tournament</span>,
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.colley.html">elo.colley</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>, data <span class="op">=</span> <span class="va">tournament</span>,
                  subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">co</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">co</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.colley', containing information on 8 teams and 51 matches.
 ## 
@@ -421,21 +421,21 @@
 ##   TRUE   7 32
 ##   (tie)  0  0
 ##   FALSE  9  3</code></pre>
-<div class="sourceCode" id="cb42"><pre class="downlit">
-<span class="fu"><a href="../reference/rank.teams.html">rank.teams</a></span><span class="op">(</span><span class="va">co</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/rank.teams.html">rank.teams</a></span><span class="op">(</span><span class="va">co</span><span class="op">)</span></code></pre></div>
 <pre><code>##   Athletic Armadillos    Blundering Baboons          Cunning Cats 
 ##                     1                     7                     4 
 ##     Defense-less Dogs          Elegant Emus        Fabulous Frogs 
 ##                     8                     5                     2 
 ## Gallivanting Gorillas       Helpless Hyenas 
 ##                     3                     6</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">co</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">co</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##         1 
 ## 0.9687583</code></pre>
-<div class="sourceCode" id="cb46"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.colley.html">elo.colley</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">neutral</a></span><span class="op">(</span><span class="va">neutral</span><span class="op">)</span>,
-                   data <span class="op">=</span> <span class="va">tournament</span>, subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.colley.html">elo.colley</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">neutral</a></span><span class="op">(</span><span class="va">neutral</span><span class="op">)</span>,
+                   data <span class="op">=</span> <span class="va">tournament</span>, subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.colley', containing information on 8 teams and 51 matches.
 ## 
@@ -449,10 +449,10 @@
 ##   FALSE 10  3</code></pre>
 <p>These models can also be built “running”, where predictions for the next group of games are made based on past data. Consider using the <code>skip=</code> argument to skip the first few groups (otherwise the model might have trouble converging).</p>
 <p>Note that predictions from this object use a model fit on all the data.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit">
-<span class="va">co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.colley.html">elo.colley</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">co</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.colley.html">elo.colley</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span>,
                       subset <span class="op">=</span> <span class="va">points.Home</span> <span class="op">!=</span> <span class="va">points.Visitor</span>, running <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">co</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">co</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.colley', containing information on 8 teams and 51 matches.
 ## 
@@ -464,8 +464,8 @@
 ##   TRUE   4 19
 ##   (tie)  6 13
 ##   FALSE  6  3</code></pre>
-<div class="sourceCode" id="cb50"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">co</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="co"># the same thing</span></pre></div>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">co</span>, newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>, team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="co"># the same thing</span></code></pre></div>
 <pre><code>##         1 
 ## 0.9687583</code></pre>
 </div>
@@ -473,12 +473,12 @@
 <h1 class="hasAnchor">
 <a href="#modeling-margin-of-victory-instead-of-wins" class="anchor"></a>Modeling Margin of Victory Instead of Wins</h1>
 <p><code><a href="../reference/elo.glm.html">elo.glm()</a></code>, <code><a href="../reference/elo.markovchain.html">elo.markovchain()</a></code>, and <code><a href="../reference/elo.winpct.html">elo.winpct()</a></code> all allow for modeling of margins of victory instead of simple win/loss using the <code><a href="../reference/elo.mov.html">mov()</a></code> function. Note that one must set the <code>family="gaussian"</code> argument to get linear regression instead of logistic regression.</p>
-<div class="sourceCode" id="cb52"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.glm.html">elo.glm</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.mov.html">mov</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>, data <span class="op">=</span> <span class="va">tournament</span>,
-                family <span class="op">=</span> <span class="st">"gaussian"</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.glm.html">elo.glm</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.mov.html">mov</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>, data <span class="op">=</span> <span class="va">tournament</span>,
+                family <span class="op">=</span> <span class="st">"gaussian"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## stats::glm(formula = wins.A ~ . - 1, family = family, data = dat, 
+## stats::glm(formula = wins.A ~ . - 1, family = family, data = dat.qr, 
 ##     weights = wts, subset = NULL, na.action = stats::na.pass)
 ## 
 ## Deviance Residuals: 

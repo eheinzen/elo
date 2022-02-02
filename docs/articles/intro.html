@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">elo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -71,7 +71,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/eheinzen/elo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -85,7 +85,7 @@
 
       
 
-      </header><script src="intro_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="intro_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to Elo Rankings and the ‘elo’ Package</h1>
@@ -110,8 +110,8 @@
 <h1 class="hasAnchor">
 <a href="#the-elo-package" class="anchor"></a>The <code>elo</code> Package</h1>
 <p>The <code>elo</code> package includes functions to address all kinds of Elo calculations.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eheinzen/elo">elo</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eheinzen/elo">elo</a></span><span class="op">)</span></code></pre></div>
 <div id="naming-schema" class="section level2">
 <h2 class="hasAnchor">
 <a href="#naming-schema" class="anchor"></a>Naming Schema</h2>
@@ -128,27 +128,27 @@
 <h1 class="hasAnchor">
 <a href="#basic-functions" class="anchor"></a>Basic Functions</h1>
 <p>To calculate the probability team.A beats team.B, use <code><a href="../reference/elo.prob.html">elo.prob()</a></code>:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">elo.A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1500</span>, <span class="fl">1500</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elo.A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1500</span>, <span class="fl">1500</span><span class="op">)</span>
 <span class="va">elo.B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1500</span>, <span class="fl">1600</span><span class="op">)</span>
-<span class="fu"><a href="../reference/elo.prob.html">elo.prob</a></span><span class="op">(</span><span class="va">elo.A</span>, <span class="va">elo.B</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/elo.prob.html">elo.prob</a></span><span class="op">(</span><span class="va">elo.A</span>, <span class="va">elo.B</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 0.500000 0.359935</code></pre>
 <p>To calculate the score update after the two teams play, use <code><a href="../reference/elo.update.html">elo.update()</a></code>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">wins.A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
-<span class="fu"><a href="../reference/elo.update.html">elo.update</a></span><span class="op">(</span><span class="va">wins.A</span>, <span class="va">elo.A</span>, <span class="va">elo.B</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">wins.A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="fu"><a href="../reference/elo.update.html">elo.update</a></span><span class="op">(</span><span class="va">wins.A</span>, <span class="va">elo.A</span>, <span class="va">elo.B</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 10.0000 -7.1987</code></pre>
 <p>To calculate the new Elo scores after the update, use <code><a href="../reference/elo.calc.html">elo.calc()</a></code>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/elo.calc.html">elo.calc</a></span><span class="op">(</span><span class="va">wins.A</span>, <span class="va">elo.A</span>, <span class="va">elo.B</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/elo.calc.html">elo.calc</a></span><span class="op">(</span><span class="va">wins.A</span>, <span class="va">elo.A</span>, <span class="va">elo.B</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <pre><code>##      elo.A    elo.B
 ## 1 1510.000 1490.000
 ## 2 1492.801 1607.199</code></pre>
 <p>It may be helpful to calculate <code>wins.A</code> from raw scores:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">points.A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">points.A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>
 <span class="va">points.B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="fu"><a href="../reference/elo.calc.html">elo.calc</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.A</span>, <span class="va">points.B</span><span class="op">)</span>, <span class="va">elo.A</span>, <span class="va">elo.B</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/elo.calc.html">elo.calc</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.A</span>, <span class="va">points.B</span><span class="op">)</span>, <span class="va">elo.A</span>, <span class="va">elo.B</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <pre><code>##      elo.A    elo.B
 ## 1 1510.000 1490.000
 ## 2 1492.801 1607.199</code></pre>
@@ -157,27 +157,27 @@
 <h1 class="hasAnchor">
 <a href="#formula-interface" class="anchor"></a>Formula Interface</h1>
 <p>All of the “basic” functions accept formulas as input:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>elo.A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1500</span>, <span class="fl">1500</span><span class="op">)</span>, elo.B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1500</span>, <span class="fl">1600</span><span class="op">)</span>,
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>elo.A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1500</span>, <span class="fl">1500</span><span class="op">)</span>, elo.B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1500</span>, <span class="fl">1600</span><span class="op">)</span>,
                   wins.A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
 <span class="va">form</span> <span class="op">&lt;-</span> <span class="va">wins.A</span> <span class="op">~</span> <span class="va">elo.A</span> <span class="op">+</span> <span class="va">elo.B</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">k</a></span><span class="op">(</span><span class="va">k</span><span class="op">)</span>
-<span class="fu"><a href="../reference/elo.prob.html">elo.prob</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/elo.prob.html">elo.prob</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 0.500000 0.359935</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="../reference/elo.update.html">elo.update</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/elo.update.html">elo.update</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 10.0000 -7.1987</code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="fu"><a href="../reference/elo.calc.html">elo.calc</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/elo.calc.html">elo.calc</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></code></pre></div>
 <pre><code>##      elo.A    elo.B
 ## 1 1510.000 1490.000
 ## 2 1492.801 1607.199</code></pre>
 <p>Note that for <code><a href="../reference/elo.prob.html">elo.prob()</a></code>, <code>formula =</code> can be more succinct:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="../reference/elo.prob.html">elo.prob</a></span><span class="op">(</span><span class="op">~</span> <span class="va">elo.A</span> <span class="op">+</span> <span class="va">elo.B</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/elo.prob.html">elo.prob</a></span><span class="op">(</span><span class="op">~</span> <span class="va">elo.A</span> <span class="op">+</span> <span class="va">elo.B</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 0.500000 0.359935</code></pre>
 <p>We can even adjust the Elos, for, e.g., home-field advantage.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="../reference/elo.calc.html">elo.calc</a></span><span class="op">(</span><span class="va">wins.A</span> <span class="op">~</span> <span class="fu"><a href="../reference/players.html">adjust</a></span><span class="op">(</span><span class="va">elo.A</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="va">elo.B</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">k</a></span><span class="op">(</span><span class="va">k</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/elo.calc.html">elo.calc</a></span><span class="op">(</span><span class="va">wins.A</span> <span class="op">~</span> <span class="fu"><a href="../reference/players.html">adjust</a></span><span class="op">(</span><span class="va">elo.A</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="va">elo.B</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">k</a></span><span class="op">(</span><span class="va">k</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></code></pre></div>
 <pre><code>##      elo.A    elo.B
 ## 1 1509.712 1490.288
 ## 2 1492.534 1607.466</code></pre>

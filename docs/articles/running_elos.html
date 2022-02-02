@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">elo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -71,7 +71,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/eheinzen/elo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -85,7 +85,7 @@
 
       
 
-      </header><script src="running_elos_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="running_elos_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Calculating Running Elo Updates</h1>
@@ -99,8 +99,8 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eheinzen/elo">elo</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eheinzen/elo">elo</a></span><span class="op">)</span></code></pre></div>
 <div id="the-elo-run-function" class="section level1">
 <h1 class="hasAnchor">
 <a href="#the-elo-run-function" class="anchor"></a>The <code>elo.run()</code> function</h1>
@@ -109,9 +109,9 @@
 <h2 class="hasAnchor">
 <a href="#with-two-variable-elos" class="anchor"></a>With two variable Elos</h2>
 <p>To calculate a series of Elo updates, use <code><a href="../reference/elo.run.html">elo.run()</a></code>. This function has a <code>formula =</code> and <code>data =</code> interface. We first load the dataset <code>tournament</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">tournament</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">tournament</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">tournament</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">tournament</span><span class="op">)</span></code></pre></div>
 <pre><code>## 'data.frame':    56 obs. of  6 variables:
 ##  $ team.Home     : chr  "Blundering Baboons" "Defense-less Dogs" "Fabulous Frogs" "Helpless Hyenas" ...
 ##  $ team.Visitor  : chr  "Athletic Armadillos" "Cunning Cats" "Elegant Emus" "Gallivanting Gorillas" ...
@@ -120,32 +120,32 @@
 ##  $ week          : num  1 1 1 1 2 2 2 2 3 3 ...
 ##  $ half          : chr  "First Half of Season" "First Half of Season" "First Half of Season" "First Half of Season" ...</code></pre>
 <p><code>formula =</code> should be in the format of <code>wins.A ~ team.A + team.B</code>. The <code><a href="../reference/score.html">score()</a></code> function will help to calculate winners on the fly (1 = win, 0.5 = tie, 0 = loss).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">tournament</span><span class="op">$</span><span class="va">wins.A</span> <span class="op">&lt;-</span> <span class="va">tournament</span><span class="op">$</span><span class="va">points.Home</span> <span class="op">&gt;</span> <span class="va">tournament</span><span class="op">$</span><span class="va">points.Visitor</span>
-<span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="va">wins.A</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>, data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tournament</span><span class="op">$</span><span class="va">wins.A</span> <span class="op">&lt;-</span> <span class="va">tournament</span><span class="op">$</span><span class="va">points.Home</span> <span class="op">&gt;</span> <span class="va">tournament</span><span class="op">$</span><span class="va">points.Visitor</span>
+<span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="va">wins.A</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>, data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.run', containing information on 8 teams and 56 matches.</code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="co"># on the fly</span>
-<span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>, data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># on the fly</span>
+<span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>, data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.run', containing information on 8 teams and 56 matches.</code></pre>
 <p>For more complicated Elo updates, you can include the special function <code><a href="../reference/players.html">k()</a></code> in the <code>formula =</code> argument. Here we’re taking the log of the win margin as part of our update.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span>
-        <span class="fu"><a href="../reference/players.html">k</a></span><span class="op">(</span><span class="fl">20</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">points.Home</span> <span class="op">-</span> <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span>
+        <span class="fu"><a href="../reference/players.html">k</a></span><span class="op">(</span><span class="fl">20</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">points.Home</span> <span class="op">-</span> <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.run', containing information on 8 teams and 56 matches.</code></pre>
 <p>You can also adjust the home and visitor teams with different k’s (but note that this no longer conserves total Elo score!):</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">k1</span> <span class="op">&lt;-</span> <span class="fl">20</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">tournament</span><span class="op">$</span><span class="va">points.Home</span> <span class="op">-</span> <span class="va">tournament</span><span class="op">$</span><span class="va">points.Visitor</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">k</a></span><span class="op">(</span><span class="va">k1</span>, <span class="va">k1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">k1</span> <span class="op">&lt;-</span> <span class="fl">20</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">tournament</span><span class="op">$</span><span class="va">points.Home</span> <span class="op">-</span> <span class="va">tournament</span><span class="op">$</span><span class="va">points.Visitor</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">k</a></span><span class="op">(</span><span class="va">k1</span>, <span class="va">k1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">tournament</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.run', containing information on 8 teams and 56 matches.</code></pre>
 <p>It’s also possible to adjust one team’s Elo for a variety of factors (e.g., home-field advantage). The <code><a href="../reference/players.html">adjust()</a></code> special function will take as its second argument a vector or a constant.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/players.html">adjust</a></span><span class="op">(</span><span class="va">team.Home</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="va">team.Visitor</span>,
-        data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/players.html">adjust</a></span><span class="op">(</span><span class="va">team.Home</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="va">team.Visitor</span>,
+        data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.run', containing information on 8 teams and 56 matches.</code></pre>
 </div>
@@ -153,10 +153,10 @@
 <h2 class="hasAnchor">
 <a href="#with-a-fixed-elo-opponent" class="anchor"></a>With a fixed-Elo opponent</h2>
 <p><code><a href="../reference/elo.run.html">elo.run()</a></code> also recognizes if the second column is numeric, and interprets that as a fixed-Elo opponent.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="va">tournament</span><span class="op">$</span><span class="va">elo.Visitor</span> <span class="op">&lt;-</span> <span class="fl">1500</span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tournament</span><span class="op">$</span><span class="va">elo.Visitor</span> <span class="op">&lt;-</span> <span class="fl">1500</span>
 <span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">elo.Visitor</span>,
-        data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></pre></div>
+        data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.run', containing information on 8 teams and 56 matches.</code></pre>
 <p>Why would you want to do this? One instance might be when a person plays against a computer whose Elo score is known (or estimated).</p>
@@ -164,12 +164,12 @@
 <div id="regress-elos-back-to-the-mean" class="section level2">
 <h2 class="hasAnchor">
 <a href="#regress-elos-back-to-the-mean" class="anchor"></a>Regress Elos back to the mean</h2>
-<p>The special function <code><a href="../reference/players.html">regress()</a></code> can be used to regress Elos back to a fixed value after certain matches. Giving a logical vector identifies these matches after which to regress back to the mean. Giving any other kind of vector regresses after the appropriate groupings (e.g., <code><a href="https://rdrr.io/r/base/duplicated.html">duplicated(..., fromLast = TRUE)</a></code>). The other three arguments determine what Elo to regress to (<code>to =</code>, which could be a different value for different teams), by how much to regress toward that value (<code>by =</code>), and whether to regress teams which aren’t actively playing (<code>regress.unused =</code>). Note here again that total Elo score might not be conserved.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="va">tournament</span><span class="op">$</span><span class="va">elo.Visitor</span> <span class="op">&lt;-</span> <span class="fl">1500</span>
+<p>The special function <code><a href="../reference/players.html">regress()</a></code> can be used to regress Elos back to a fixed value after certain matches. Giving a logical vector identifies these matches after which to regress back to the mean. Giving any other kind of vector regresses after the appropriate groupings (e.g., <code>duplicated(..., fromLast = TRUE)</code>). The other three arguments determine what Elo to regress to (<code>to =</code>, which could be a different value for different teams), by how much to regress toward that value (<code>by =</code>), and whether to regress teams which aren’t actively playing (<code>regress.unused =</code>). Note here again that total Elo score might not be conserved.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tournament</span><span class="op">$</span><span class="va">elo.Visitor</span> <span class="op">&lt;-</span> <span class="fl">1500</span>
 <span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">elo.Visitor</span> <span class="op">+</span>
         <span class="fu"><a href="../reference/players.html">regress</a></span><span class="op">(</span><span class="va">half</span>, <span class="fl">1500</span>, <span class="fl">0.2</span><span class="op">)</span>,
-        data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></pre></div>
+        data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'elo.run.regressed', containing information on 8 teams and 56 matches, with 2 regressions.</code></pre>
 </div>
@@ -177,11 +177,11 @@
 <h2 class="hasAnchor">
 <a href="#group-matches" class="anchor"></a>Group matches</h2>
 <p>The special function <code><a href="../reference/players.html">group()</a></code> tells <code><a href="../reference/elo.run.html">elo.run()</a></code> when to update Elos. It also determines matches to group together in <code><a href="https://rdrr.io/r/base/matrix.html">as.matrix()</a></code>.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="va">er</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">er</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span> <span class="op">+</span>
                 <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>,
               data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">er</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">er</span><span class="op">)</span></code></pre></div>
 <pre><code>##       Athletic Armadillos Blundering Baboons Cunning Cats Defense-less Dogs
 ##  [1,]            1510.000           1490.000     1490.000          1510.000
 ##  [2,]            1499.425           1500.575     1500.575          1499.425
@@ -214,21 +214,21 @@
 ## [14,]     1509.851       1532.986              1513.944        1486.411</code></pre>
 <p>This can be useful in situations when using the Elo framework for games which aren’t explicitly head-to-head (e.g., golf, swimming). For those situations, the person who won can be considered as having beaten (head-to-head) every other person. The person who came in second “beat” everyone but the first. However, we wouldn’t want to update Elos after every “head-to-head”; rather, they should all be considered together in updating Elo.</p>
 <p>An example might help clarify. Suppose participants 1-3 go head-to-head in a game, with participant 2 coming in first, participant 1 coming in second, and participant 3 coming in last. Then we might have a dataset like</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
   team1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Part 2"</span>, <span class="st">"Part 2"</span>, <span class="st">"Part 1"</span><span class="op">)</span>,
   team2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Part 1"</span>, <span class="st">"Part 3"</span>, <span class="st">"Part 3"</span><span class="op">)</span>,
   won <span class="op">=</span> <span class="fl">1</span>
 <span class="op">)</span>
-<span class="va">d</span></pre></div>
+<span class="va">d</span></code></pre></div>
 <pre><code>##    team1  team2 won
 ## 1 Part 2 Part 1   1
 ## 2 Part 2 Part 3   1
 ## 3 Part 1 Part 3   1</code></pre>
 <p>We would want to consider all three of these matches at the same time, so we add a grouping variable and run <code><a href="../reference/elo.run.html">elo.run()</a></code>:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="va">d</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fl">1</span>
-<span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="va">won</span> <span class="op">~</span> <span class="va">team1</span> <span class="op">+</span> <span class="va">team2</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">group</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">d</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+<span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="va">won</span> <span class="op">~</span> <span class="va">team1</span> <span class="op">+</span> <span class="va">team2</span> <span class="op">+</span> <span class="fu"><a href="../reference/players.html">group</a></span><span class="op">(</span><span class="va">group</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Part 1 Part 2 Part 3 
 ##   1500   1520   1480</code></pre>
 </div>
@@ -238,19 +238,19 @@
 <a href="#elo-run-multiteam" class="anchor"></a><code>elo.run.multiteam()</code>
 </h1>
 <p>The situation described immediately above (multiple teams instead of pairwise head-to-head) has a shortcut implemented: <code><a href="../reference/elo.run.multiteam.html">elo.run.multiteam()</a></code>. The helper function <code><a href="../reference/players.html">multiteam()</a></code> takes vectors of first-place teams (first column), second place teams (second column), etc., and does the heavy lifting of data manipulation for you. Note that this runs <code><a href="../reference/elo.run.html">elo.run()</a></code> in the background, but is less flexible than <code><a href="../reference/elo.run.html">elo.run()</a></code> because (1) there cannot be ties; (2) it does not accept adjustments; and (3) k-values are constant for each “game” (sets of head-to-head matchups).</p>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
   first <span class="op">=</span> <span class="st">"Part 2"</span>,
   second <span class="op">=</span> <span class="st">"Part 1"</span>,
   third <span class="op">=</span> <span class="st">"Part 3"</span>
 <span class="op">)</span>
-<span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.run.multiteam.html">elo.run.multiteam</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="../reference/players.html">multiteam</a></span><span class="op">(</span><span class="va">first</span>, <span class="va">second</span>, <span class="va">third</span><span class="op">)</span>, k <span class="op">=</span> <span class="fl">20</span>, data <span class="op">=</span> <span class="va">d2</span><span class="op">)</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="fu"><a href="../reference/elo.run.multiteam.html">elo.run.multiteam</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="../reference/players.html">multiteam</a></span><span class="op">(</span><span class="va">first</span>, <span class="va">second</span>, <span class="va">third</span><span class="op">)</span>, k <span class="op">=</span> <span class="fl">20</span>, data <span class="op">=</span> <span class="va">d2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Part 1 Part 2 Part 3 
 ##   1500   1520   1480</code></pre>
 <p>A larger example shows the utility of this function:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"tournament.multiteam"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">tournament.multiteam</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"tournament.multiteam"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">tournament.multiteam</span><span class="op">)</span></code></pre></div>
 <pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    28 obs. of  6 variables:
 ##  $ week   : num  1 1 2 2 3 3 4 4 5 5 ...
 ##  $ half   : chr  "First Half of Season" "First Half of Season" "First Half of Season" "First Half of Season" ...
@@ -258,10 +258,10 @@
 ##  $ Place_2: chr  "Fabulous Frogs" "Cunning Cats" "Cunning Cats" "Blundering Baboons" ...
 ##  $ Place_3: chr  "Blundering Baboons" "Gallivanting Gorillas" "Gallivanting Gorillas" "Athletic Armadillos" ...
 ##  $ Place_4: chr  "Helpless Hyenas" "Elegant Emus" "Defense-less Dogs" "Fabulous Frogs" ...</code></pre>
-<div class="sourceCode" id="cb28"><pre class="downlit">
-<span class="va">erm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.run.multiteam.html">elo.run.multiteam</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="../reference/players.html">multiteam</a></span><span class="op">(</span><span class="va">Place_1</span>, <span class="va">Place_2</span>, <span class="va">Place_3</span>, <span class="va">Place_4</span><span class="op">)</span>,
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">erm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.run.multiteam.html">elo.run.multiteam</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="../reference/players.html">multiteam</a></span><span class="op">(</span><span class="va">Place_1</span>, <span class="va">Place_2</span>, <span class="va">Place_3</span>, <span class="va">Place_4</span><span class="op">)</span>,
                          data <span class="op">=</span> <span class="va">tournament.multiteam</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
-<span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="va">erm</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="va">erm</span><span class="op">)</span></code></pre></div>
 <pre><code>##   Athletic Armadillos    Blundering Baboons          Cunning Cats 
 ##              1672.333              1439.738              1559.373 
 ##     Defense-less Dogs          Elegant Emus        Fabulous Frogs 
@@ -274,10 +274,10 @@
 <a href="#helper-functions" class="anchor"></a>Helper functions</h1>
 <p>There are several helper functions that are useful to use when interacting with objects of class <code>"elo.run"</code>.</p>
 <p><code><a href="../reference/summary.elo.html">summary.elo.run()</a></code> reports some summary statistics.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit">
-<span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>,
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="va">team.Home</span> <span class="op">+</span> <span class="va">team.Visitor</span>,
              data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## An object of class 'summary.elo.run', containing information on 8 teams and 56 matches.
 ## 
@@ -289,8 +289,8 @@
 ##   TRUE   6   1 16
 ##   (tie)  2   1  9
 ##   FALSE  8   3 10</code></pre>
-<div class="sourceCode" id="cb32"><pre class="downlit">
-<span class="fu"><a href="../reference/rank.teams.html">rank.teams</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/rank.teams.html">rank.teams</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></code></pre></div>
 <pre><code>##   Athletic Armadillos    Blundering Baboons          Cunning Cats 
 ##                     1                     7                     3 
 ##     Defense-less Dogs          Elegant Emus        Fabulous Frogs 
@@ -298,8 +298,8 @@
 ## Gallivanting Gorillas       Helpless Hyenas 
 ##                     4                     6</code></pre>
 <p><code><a href="../reference/elo.run.helpers.html">as.matrix.elo.run()</a></code> creates a matrix of running Elos.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##      Athletic Armadillos Blundering Baboons Cunning Cats Defense-less Dogs
 ## [1,]            1510.000           1490.000     1500.000          1500.000
 ## [2,]            1510.000           1490.000     1490.000          1510.000
@@ -315,8 +315,8 @@
 ## [5,]         1490           1510                  1510            1490
 ## [6,]         1490           1510                  1510            1490</code></pre>
 <p><code><a href="../reference/elo.run.helpers.html">as.data.frame.elo.run()</a></code> gives the long version (perfect, for, e.g., <code>ggplot2</code>).</p>
-<div class="sourceCode" id="cb36"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 'data.frame':    56 obs. of  8 variables:
 ##  $ team.A  : Factor w/ 8 levels "Athletic Armadillos",..: 2 4 6 8 3 4 7 8 4 3 ...
 ##  $ team.B  : Factor w/ 8 levels "Athletic Armadillos",..: 1 3 5 7 1 2 5 6 1 2 ...
@@ -327,8 +327,8 @@
 ##  $ elo.A   : num  1490 1510 1510 1490 1501 ...
 ##  $ elo.B   : num  1510 1490 1490 1510 1499 ...</code></pre>
 <p>Finally, <code><a href="../reference/elo.run.helpers.html">final.elos()</a></code> will extract the final Elos per team.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit">
-<span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></code></pre></div>
 <pre><code>##   Athletic Armadillos    Blundering Baboons          Cunning Cats 
 ##              1564.318              1453.079              1518.019 
 ##     Defense-less Dogs          Elegant Emus        Fabulous Frogs 
@@ -340,14 +340,14 @@
 <h1 class="hasAnchor">
 <a href="#making-predictions" class="anchor"></a>Making Predictions</h1>
 <p>It is also possible to use the Elos calculated by <code><a href="../reference/elo.run.html">elo.run()</a></code> to make predictions on future match-ups.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit">
-<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/players.html">adjust</a></span><span class="op">(</span><span class="va">team.Home</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="va">team.Visitor</span>,
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/players.html">adjust</a></span><span class="op">(</span><span class="va">team.Home</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="va">team.Visitor</span>,
                    data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
 <span class="va">newdat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
   team.Home <span class="op">=</span> <span class="st">"Athletic Armadillos"</span>,
   team.Visitor <span class="op">=</span> <span class="st">"Blundering Baboons"</span>
 <span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">results</span>, newdata <span class="op">=</span> <span class="va">newdat</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">results</span>, newdata <span class="op">=</span> <span class="va">newdat</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 0.6676045</code></pre>
 </div>
 <div id="advanced-custom-probability-and-updates" class="section level1">
@@ -355,8 +355,8 @@
 <a href="#advanced-custom-probability-and-updates" class="anchor"></a>Advanced: custom probability and updates</h1>
 <p>We now get to <code><a href="../reference/elo.run.html">elo.run()</a></code> when custom probability calculations and Elo updates are needed. Note that these use cases are coded in R instead of C++ and may run as much as 50x slower than the default.</p>
 <p>For instance, suppose you want to change the adjustment based on team A’s current Elo:</p>
-<div class="sourceCode" id="cb42"><pre class="downlit">
-<span class="va">custom_update</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">wins.A</span>, <span class="va">elo.A</span>, <span class="va">elo.B</span>, <span class="va">k</span>, <span class="va">adjust.A</span>, <span class="va">adjust.B</span>, <span class="va">...</span><span class="op">)</span>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">custom_update</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">wins.A</span>, <span class="va">elo.A</span>, <span class="va">elo.B</span>, <span class="va">k</span>, <span class="va">adjust.A</span>, <span class="va">adjust.B</span>, <span class="va">...</span><span class="op">)</span>
 <span class="op">{</span>
   <span class="va">k</span><span class="op">*</span><span class="op">(</span><span class="va">wins.A</span> <span class="op">-</span> <span class="fu"><a href="../reference/elo.prob.html">elo.prob</a></span><span class="op">(</span><span class="va">elo.A</span>, <span class="va">elo.B</span>, adjust.B <span class="op">=</span> <span class="va">adjust.B</span>,
                        adjust.A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">elo.A</span> <span class="op">&gt;</span> <span class="fl">1500</span>, <span class="va">adjust.A</span> <span class="op">/</span> <span class="fl">2</span>, <span class="va">adjust.A</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -366,10 +366,10 @@
   <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="va">elo.B</span> <span class="op">+</span> <span class="va">adjust.B</span><span class="op">)</span> <span class="op">-</span> <span class="op">(</span><span class="va">elo.A</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">elo.A</span> <span class="op">&gt;</span> <span class="fl">1500</span>, <span class="va">adjust.A</span> <span class="op">/</span> <span class="fl">2</span>, <span class="va">adjust.A</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">400.0</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span>
 <span class="va">er2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/players.html">adjust</a></span><span class="op">(</span><span class="va">team.Home</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="va">team.Visitor</span>,
-               data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span>, prob.fun <span class="op">=</span> <span class="va">custom_prob</span>, update.fun <span class="op">=</span> <span class="va">custom_update</span><span class="op">)</span></pre></div>
+               data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span>, prob.fun <span class="op">=</span> <span class="va">custom_prob</span>, update.fun <span class="op">=</span> <span class="va">custom_update</span><span class="op">)</span></code></pre></div>
 <pre><code>## Using R instead of C++</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit">
-<span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="va">er2</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="va">er2</span><span class="op">)</span></code></pre></div>
 <pre><code>##   Athletic Armadillos    Blundering Baboons          Cunning Cats 
 ##              1564.660              1452.278              1518.165 
 ##     Defense-less Dogs          Elegant Emus        Fabulous Frogs 
@@ -377,10 +377,10 @@
 ## Gallivanting Gorillas       Helpless Hyenas 
 ##              1514.233              1486.564</code></pre>
 <p>Compare this to the results from the default:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit">
-<span class="va">er3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/players.html">adjust</a></span><span class="op">(</span><span class="va">team.Home</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="va">team.Visitor</span>,
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">er3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elo.run.html">elo.run</a></span><span class="op">(</span><span class="fu"><a href="../reference/score.html">score</a></span><span class="op">(</span><span class="va">points.Home</span>, <span class="va">points.Visitor</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/players.html">adjust</a></span><span class="op">(</span><span class="va">team.Home</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="va">team.Visitor</span>,
                data <span class="op">=</span> <span class="va">tournament</span>, k <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
-<span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="va">er3</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/elo.run.helpers.html">final.elos</a></span><span class="op">(</span><span class="va">er3</span><span class="op">)</span></code></pre></div>
 <pre><code>##   Athletic Armadillos    Blundering Baboons          Cunning Cats 
 ##              1563.967              1452.822              1517.847 
 ##     Defense-less Dogs          Elegant Emus        Fabulous Frogs 
