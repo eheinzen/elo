@@ -1,7 +1,7 @@
 Package: elo
-Version: 3.0.0
-Title: Elo Ratings
-Date: 2022-02-02
+Version: 3.0.1
+Title: Ranking Teams by Elo Rating and Comparable Methods
+Date: 2022-02-03
 Authors@R: c(
     person("Ethan", "Heinzen", email = "heinzen.ethan@mayo.edu", role = c("aut", "cre"))
   )

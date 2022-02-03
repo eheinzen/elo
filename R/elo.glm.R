@@ -22,6 +22,9 @@
 #'   using the \code{\link{neutral}()} function, which sets the intercept to 0.
 #'
 #'   Note that any weights specified in \code{players()} will be ignored.
+#'
+#'   This is essentially the Bradley-Terry model.
+#' @references https://en.wikipedia.org/wiki/Bradley%E2%80%93Terry_model
 #' @examples
 #' data(tournament)
 #' elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,

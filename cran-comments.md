@@ -1,7 +1,8 @@
-## Submission for elo 3.0.0
+## Submission for elo 3.0.1
 
-I was not made aware that this package was going to be removed from CRAN. This is a resubmission to reinstate the package.
-This version includes several breaking changes, and many bug fixes, including the offending one for R-devel.
+This is a resubmission to reinstate the package.
+This version includes a fix for a URL redirect, a change in the title to no longer start with the word "Elo",
+and one additional reference for one method.
 
 ## Test environments
 

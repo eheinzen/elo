@@ -54,6 +54,8 @@ The formula syntax is the same as other \code{elo} functions. A data.frame
   using the \code{\link{neutral}()} function, which sets the intercept to 0.
 
   Note that any weights specified in \code{players()} will be ignored.
+
+  This is essentially the Bradley-Terry model.
 }
 \examples{
 data(tournament)
@@ -61,6 +63,9 @@ elo.glm(score(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = to
   subset = points.Home != points.Visitor)
 elo.glm(mov(points.Home, points.Visitor) ~ team.Home + team.Visitor, data = tournament,
   family = "gaussian")
+}
+\references{
+https://en.wikipedia.org/wiki/Bradley%E2%80%93Terry_model
 }
 \seealso{
 \code{\link[stats]{glm}}, \code{\link{summary.elo.glm}}, \code{\link{score}},

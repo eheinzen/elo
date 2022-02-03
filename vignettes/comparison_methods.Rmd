@@ -50,7 +50,7 @@ predict(e.winpct, newdata = data.frame(team.Home = "Athletic Armadillos", team.V
 
 # Logistic Regression
 
-It's also possible to compare teams' skills using logistic regression. A matrix of dummy variables is constructed, one for each team,
+It's also possible to compare teams' skills using logistic regression. This is essentially the [Bradley-Terry model](https://en.wikipedia.org/wiki/Bradley%E2%80%93Terry_model). A matrix of dummy variables is constructed, one for each team,
 where a value of 1 indicates a home team and -1 indicates a visiting team. The intercept then indicates a home-field advantage.
 To denote games played in a neutral setting (that is, without home-field advantage), use the `neutral()` function.
 In short, the intercept will then be set to `1 - neutral()`.
@@ -149,7 +149,7 @@ the building of the transition matrix. Therefore, you'll want to also account fo
 # Colley Matrix Method
 
 It's also possible to compare teams' skills using the Colley Matrix method, as outlined in
-[Colley (2002)](http://www.colleyrankings.com/matrate.pdf).
+[Colley (2002)](https://www.colleyrankings.com/matrate.pdf).
 The coefficients to the Colley matrix formulation gives a ranking of teams.
 The differences in ranking are then fed into a logistic regession model to predict win status.
 Here 'k' denotes how convincing a win is; it represents the fraction of the win assigned to the winning

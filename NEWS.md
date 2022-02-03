@@ -1,3 +1,11 @@
+# elo v3.0.1
+
+* The package title no longer begins with the word "Elo".
+
+* Fixed one URL redirect
+
+* Added a reference to the help page and vignette for `elo.glm()`.
+
 # elo v3.0.0
 
 Breaking changes: 
