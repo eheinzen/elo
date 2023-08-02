@@ -6,3 +6,7 @@
 *.so
 *.dll
 inst/doc
+renv
+renv.lock
+.Renviron
+.Rprofile

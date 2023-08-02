@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // eloRunAsMatrix
 NumericMatrix eloRunAsMatrix(NumericMatrix mat, NumericVector initialElos, LogicalVector group);
 RcppExport SEXP _elo_eloRunAsMatrix(SEXP matSEXP, SEXP initialElosSEXP, SEXP groupSEXP) {
