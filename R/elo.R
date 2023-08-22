@@ -27,6 +27,7 @@
 #' @importFrom stats predict fitted residuals weights
 #' @importFrom pROC auc
 #' @docType package
+#' @aliases elo-package
 #' @name elo
 #'
 NULL

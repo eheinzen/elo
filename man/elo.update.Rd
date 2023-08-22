@@ -17,15 +17,11 @@ elo.update(wins.A, ...)
 
 \item{...}{Other arguments (not in use at this time).}
 
-\item{elo.A}{Numeric vectors of elo scores.}
-
-\item{elo.B}{Numeric vectors of elo scores.}
+\item{elo.A, elo.B}{Numeric vectors of elo scores.}
 
 \item{k}{A constant k-value (or a vector, where appropriate).}
 
-\item{adjust.A}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
-
-\item{adjust.B}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
+\item{adjust.A, adjust.B}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
 
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}
 

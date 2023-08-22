@@ -23,9 +23,7 @@ elo.prob(elo.A, ...)
 \item{elos}{An optional named vector containing Elo ratings for all teams in \code{formula}
 or \code{elo.A} and \code{elo.B}.}
 
-\item{adjust.A}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
-
-\item{adjust.B}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
+\item{adjust.A, adjust.B}{Numeric vectors to adjust \code{elo.A} and \code{elo.B} by.}
 
 \item{formula}{A formula. See \link[=formula.specials]{the help page for formulas} for details.}
 

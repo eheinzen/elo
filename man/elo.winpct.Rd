@@ -21,7 +21,7 @@ elo.winpct(
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 
-\item{family}{Arguments passed to \code{\link[stats]{glm}}.}
+\item{family}{Argument passed to \code{\link[stats]{glm}}.}
 
 \item{weights}{A vector of weights. Note that these are used in calculating wins and losses but
 not in the regression.}
@@ -30,7 +30,7 @@ not in the regression.}
 
 \item{subset}{An optional vector specifying a subset of observations.}
 
-\item{...}{Arguments passed to \code{\link[stats]{glm}}.}
+\item{...}{Argument passed to \code{\link[stats]{glm}}.}
 
 \item{running}{Logical, denoting whether to calculate "running" projected probabilities. If true, a model is fit for
 group 1 on its own to predict group 2, then groups 1 and 2 to predict 3, then groups 1 through 3 to predict 4, etc.

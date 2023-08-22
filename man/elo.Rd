@@ -3,6 +3,7 @@
 \docType{package}
 \name{elo}
 \alias{elo}
+\alias{elo-package}
 \title{The Elo Package}
 \description{
 An implementation of Elo ratings for general use in 'R'.

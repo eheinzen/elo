@@ -1,7 +1,9 @@
 #' Compute a (usually logistic) regression model for a series of matches.
 #'
 #' @inheritParams elo.calc
-#' @param family,weights,... Arguments passed to \code{\link[stats]{glm}}.
+#' @param family Argument passed to \code{\link[stats]{glm}}.
+#' @param weights Argument passed to \code{\link[stats]{glm}}.
+#' @param ... Argument passed to \code{\link[stats]{glm}}.
 #' @param running Logical, denoting whether to calculate "running" projected probabilities. If true, a model is fit for
 #'   group 1 on its own to predict group 2, then groups 1 and 2 to predict 3, then groups 1 through 3 to predict 4, etc.
 #'   Groups are determined in \code{formula}. Omitting a group term re-runs a glm model to predict each

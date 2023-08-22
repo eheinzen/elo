@@ -22,7 +22,7 @@ elo.colley(
 
 \item{data}{A \code{data.frame} in which to look for objects in \code{formula}.}
 
-\item{family}{Arguments passed to \code{\link[stats]{glm}}.}
+\item{family}{Argument passed to \code{\link[stats]{glm}}.}
 
 \item{weights}{A vector of weights. Note that these weights are used in the Colley matrix creation,
 but not the regression.}
@@ -33,7 +33,7 @@ but not the regression.}
 
 \item{k}{The fraction of a win to be assigned to the winning team. See "details".}
 
-\item{...}{Arguments passed to \code{\link[stats]{glm}}.}
+\item{...}{Argument passed to \code{\link[stats]{glm}}.}
 
 \item{running}{Logical, denoting whether to calculate "running" projected probabilities. If true, a model is fit for
 group 1 on its own to predict group 2, then groups 1 and 2 to predict 3, then groups 1 through 3 to predict 4, etc.
