@@ -1,3 +1,7 @@
+# elo v3.0.2
+
+* Fixed a CRAN comment about the package documentation.
+
 # elo v3.0.1
 
 * The package title no longer begins with the word "Elo".
