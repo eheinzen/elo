@@ -1,12 +1,12 @@
 ## Submission for elo 3.0.1
 
-This is a resubmission to reinstate the package.
-This version includes a fix for a URL redirect, a change in the title to no longer start with the word "Elo",
-and one additional reference for one method.
+This is a resubmission to fix a comment noted by CRAN vis-a-vis the package man page.
 
 ## Test environments
 
-* R 3.6.2, 4.0.3, 4.1.2 (local Linux install)
+* R 4.2.2 (local Linux install)
+
+* Debian, Fedora, Ubuntu: R release with Rhub (using `devtools::check_rhub()`)
 
 * win-builder (devel, release, and old release)
 

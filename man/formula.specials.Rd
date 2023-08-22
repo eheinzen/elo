@@ -83,7 +83,7 @@ In the functions in this package, \code{formula} is usually of the form \code{wi
 
 \code{neutral()} is used in \code{\link{elo.glm}} and \code{\link{elo.markovchain}} to determine the intercept.
   In short, the intercept is \code{1 - neutral()}, denoting home-field advantage. Therefore, the column
-  passed should be 0 (denoting home-field advatange) or 1 (denoting a neutral game). If omitted, all matches
+  passed should be 0 (denoting home-field advantange) or 1 (denoting a neutral game). If omitted, all matches
   are assumed to have home field advantage.
 
 \code{players()} is used for multiple players on a team contributing to an overall Elo. The Elo updates

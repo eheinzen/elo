@@ -88,7 +88,7 @@ probability p (here, for convenience, 'k') and the loser with probability 1-p (1
 we assume that the probability that the winning team is better than the losing team given that it won is
 k, and the probability that the losing team is better than the winning team given that it lost is (1-k).
 This forms a transition matrix, whose stationary distribution gives a ranking of teams.
-The differences in ranking are then fed into a logistic regession model to predict win status.
+The differences in ranking are then fed into a logistic regression model to predict win status.
 Any adjustments made using `adjust()` are also included in this logistic regression.
 You could also adjust the intercept for games played on neutral fields by using the `neutral()` function.
 
