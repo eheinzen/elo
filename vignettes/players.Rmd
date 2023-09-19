@@ -1,0 +1,94 @@
+---
+title: "Adjusting for Players in the Elo Framework"
+author: "Ethan Heinzen"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Adjusting for Players in the Elo Framework}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Adjusting for Players in the Elo Framework
+
+When there are distinct players that you want to model,
+there are two different approaches that might be helpful.
+
+If you know the adjustment you want to give a team based on the presence of
+one of its players, you should use the `adjust()` function.
+
+If you want to *model* the player's impact on the Elo rating,
+it can be helpful to use the `players()` function.
+
+Consider American Football, in which the quarterback can exert a lot of influence
+on whether a team wins or not. If, halfway through a season, a good quarterback
+gets injured and no longer plays, a backup quarterback would fill in, but the 
+team would not expect to keep its high Elo rating.
+
+Consider this set of matchups:
+
+```{r}
+games <- data.frame(
+  team1 = c("A", "B", "A", "A"),
+  team2 = c("B", "C", "C", "B"),
+  quarterback1 = c("1", "2", "1", "4"),
+  quarterback2 = c("2", "3", "3", "2"),
+  won = c(1, 1, 1, 0)
+)
+```
+
+We run `elo.run()` with the `players()` function. Behind the scenes, this is
+calculating an individual Elo score for the team and the quarterback.
+For updates, it sums the two Elos together for a composite Elo, compares this to
+the opponent's composite Elo, and determines the Elo update. It divides this
+update according to the weights specified.
+
+```{r}
+init <- c(A = 1500, B = 1500, C = 1500, "1" = 0, "2" = 0, "3" = 0, "4" = 0)
+er <- elo.run(
+  won ~ players(team1, quarterback1, weights = c(0.75, 0.25)) +
+    players(team2, quarterback2, weights = c(0.75, 0.25)),
+  data = games,
+  k = 40,
+  initial.elos = init
+)
+summary(er)
+final.elos(er)
+```
+
+You can see that quarterback "1" adds 9 points to the effective Elo rating
+when he plays, and that quarterback "4" subtracts 5 points.
+
+This also plays out in predictions on future games:
+
+```{r}
+
+future.game <- data.frame(
+  team1 = "A",
+  team2 = "C",
+  quarterback1 = c("1", "4"),
+  quarterback2 = "3"
+)
+
+predict(er, newdata = future.game)
+```
+
+Notice that the predicted win percentage is slightly lower with quarterback 4.
+
+# Another Application
+
+This methodology has been used before to model an Ultimate Frisbee season.
+In this case, the players on the field at a given time are given a score (1 or 0)
+depending on whether they score. The first term is a `players(player1, ..., player7)`,
+and the second term (because the opponent's *players* weren't kept track of)
+was simply the name of the opponent.
+
+
+
+
+
+
+
+
+
