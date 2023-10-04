@@ -108,3 +108,25 @@ test_that("prediction works correctly with players()", {
 test_that("auc() works correctly with players()", {
   expect_equal(auc(results), 0)
 })
+
+
+test_that("xtfrm error goes away (#61)", {
+  test_players_run <- data.frame(
+    home_team_win = c(1,0,0,1,0,1),
+    playerid_1 = c("1","7","13","14","13","14"),
+    playerid_2 = c("2","8","15","16","15","16"),
+    playerid_3 = c("3","9","17","18","17","18"),
+    playerid_6 = c("4","10","19","20","19","20"),
+    playerid_7 = c("5","11","21","22","21","22"),
+    playerid_8 = c("6","12","23","24","23","24")
+  )
+
+  expect_error(elo.run(home_team_win ~ players(playerid_1, playerid_2, playerid_3) +
+                         players(playerid_6, playerid_7, playerid_8),
+                       data = test_players_run, k = 20), NA)
+})
+
+
+
+
+

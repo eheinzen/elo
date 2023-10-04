@@ -25,8 +25,8 @@ check_elo_run_vars <- function(mf, initial.elos = NULL)
 
   all.teams <- sort(unique(all.teams))
   tmp <- stats::setNames(seq_along(all.teams) - 1L, all.teams)
-  t1 <- matrix(tmp[t1], nrow = nrow(t1))
-  if(flag != 2) t2 <- matrix(tmp[t2], nrow = nrow(t2))
+  t1 <- matrix(tmp[as.matrix(t1)], nrow = nrow(t1))
+  if(flag != 2) t2 <- matrix(tmp[as.matrix(t2)], nrow = nrow(t2))
 
   initial.elos <- check_named_elos(initial.elos, all.teams)
 
