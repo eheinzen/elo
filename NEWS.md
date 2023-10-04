@@ -1,3 +1,7 @@
+# elo v3.0.2.9000
+
+* Fixed a weird `xtfrm()` bug in `elo.run()`. (#61)
+
 # elo v3.0.2
 
 * Fixed a CRAN comment about the package documentation.
