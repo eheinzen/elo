@@ -25,7 +25,7 @@ as.elo.players.matrix <- function(x, weights = attr(x, "weights"))
 as.matrix.elo.players.matrix <- function(x, ...)
 {
   if(!is.matrix(x)) stop("x isn't already a matrix")
-  class(x) <- "matrix"
+  x <- unclass(x)
   attr(x, "weights") <- NULL
   x
 }
