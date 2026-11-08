@@ -8,6 +8,7 @@ reference:
   - title: "Running Elo Calculations"
     contents:
       - elo.run
+      - elo.tune
       - elo.run.multiteam
   - title: Formula Specials
     contents:
