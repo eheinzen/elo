@@ -62,6 +62,39 @@ elo.run(score(points.Home, points.Visitor) ~ adjust(team.Home, 10) + team.Visito
         data = tournament, k = 20)
 ```
 
+## Selecting a constant K
+
+`elo.tune()` compares a grid of constant K values. Supply matches in chronological
+order and identify the evaluation rows explicitly. Every candidate replays all
+supplied matches, including the earlier matches needed to establish ratings.
+Only the evaluation rows contribute to the selection score.
+
+```{r}
+selection <- elo.tune(
+  score(points.Home, points.Visitor) ~ team.Home + team.Visitor,
+  data = tournament, k = c(0, 10, 20, 40),
+  evaluate = tournament$week > 4
+)
+selection$scores
+selection$best.k
+```
+
+The objective is mean squared expected-score error, with ties scored as 0.5.
+An exact tie between candidates selects the smaller K. K = 0 provides a
+no-update baseline under the default update rule. Formula specials such as
+`group()` and `regress()` retain their usual semantics.
+
+The selected fit, `selection$fit`, includes every supplied match, even unscored
+matches after the evaluation window. To obtain ratings at an earlier cutoff,
+supply only matches available by that cutoff. The function does not check dates
+or choose splits. Its minimum MSE is a selection score; assess predictive
+performance on a later test period or with an outer rolling evaluation.
+
+The evaluation mask must have one logical value per data row. Missing model
+values cause an error, and fitting `subset`, `na.action`, and formula `k()` terms
+are not accepted. This keeps the evaluation mask aligned with the fitted
+predictions and ensures that the candidate grid controls K.
+
 ## With a fixed-Elo opponent
 
 `elo.run()` also recognizes if the second column is numeric,
